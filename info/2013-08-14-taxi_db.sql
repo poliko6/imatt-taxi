@@ -1312,11 +1312,11 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `firstName` varchar(50) NOT NULL,
   `lastName` varchar(50) NOT NULL,
   `citizenId` varchar(20) NOT NULL,
+  `gender` varchar(20) NOT NULL,
   `location` varchar(150) NOT NULL,
   `birthday` varchar(20) NOT NULL,
   `mobilePhone` varchar(20) NOT NULL,
   `telephone` varchar(20) NOT NULL,
-  `gender` varchar(20) NOT NULL,
   `dateAdded` timestamp NOT NULL default CURRENT_TIMESTAMP,
   `dateUpdated` datetime NOT NULL,
   PRIMARY KEY  (`customerId`)
@@ -1325,8 +1325,8 @@ CREATE TABLE IF NOT EXISTS `customer` (
 -- Dumping data for table taxi_db.customer: 1 rows
 DELETE FROM `customer`;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` (`customerId`, `facebookId`, `email`, `password`, `firstName`, `lastName`, `citizenId`, `location`, `birthday`, `mobilePhone`, `telephone`, `gender`, `dateAdded`, `dateUpdated`) VALUES
-	(1, '0', 'crizift@hotmail.com', 'testtest', 'Papai', 'Papai', '', 'Chiang Mai', '09/07/2534', '', '0824838633', 'male', '2013-08-14 15:58:35', '0000-00-00 00:00:00');
+INSERT INTO `customer` (`customerId`, `facebookId`, `email`, `password`, `firstName`, `lastName`, `citizenId`, `gender`, `location`, `birthday`, `mobilePhone`, `telephone`, `dateAdded`, `dateUpdated`) VALUES
+	(1, '0', 'crizift@hotmail.com', 'testtest', 'Papai', 'Papai', '', 'male', 'Chiang Mai', '09/07/2534', '', '0824838633', '2013-08-14 15:58:35', '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 
 
@@ -10267,7 +10267,7 @@ CREATE TABLE IF NOT EXISTS `majoradmin` (
   `districtId` int(20) NOT NULL,
   `amphurId` int(20) NOT NULL,
   `provinceId` int(20) NOT NULL,
-  `majorType` varchar(50) NOT NULL,
+  `majorTypeId` int(11) NOT NULL,
   `thaiCompanyName` varchar(255) NOT NULL,
   `englishCompanyName` varchar(255) NOT NULL,
   `managerName` varchar(100) NOT NULL,
@@ -10331,20 +10331,20 @@ DELETE FROM `menulist`;
 DROP TABLE IF EXISTS `minoradmin`;
 CREATE TABLE IF NOT EXISTS `minoradmin` (
   `minorId` int(20) NOT NULL auto_increment,
-  `majorId` int(20) NOT NULL default '0',
   `garageId` int(10) NOT NULL default '0',
   `districtId` int(20) NOT NULL,
   `amphurId` int(20) NOT NULL,
   `provinceId` int(20) NOT NULL,
+  `minorTypeId` int(11) NOT NULL default '0',
   `firstName` varchar(100) NOT NULL default '0',
   `lastName` varchar(100) NOT NULL default '0',
   `address` varchar(150) NOT NULL default '0',
   `zipcode` varchar(20) NOT NULL,
   `mobilePhone` varchar(20) NOT NULL default '0',
+  `telephone` varchar(20) NOT NULL default '0',
   `email` varchar(100) NOT NULL default '0',
   `username` varchar(100) NOT NULL default '0',
   `password` varchar(255) NOT NULL default '0',
-  `minorType` varchar(50) NOT NULL default '0',
   `dateAdded` timestamp NOT NULL default CURRENT_TIMESTAMP,
   `dateUpdated` datetime NOT NULL,
   PRIMARY KEY  (`minorId`)
@@ -10359,13 +10359,13 @@ DELETE FROM `minoradmin`;
 -- Dumping structure for table taxi_db.minortype
 DROP TABLE IF EXISTS `minortype`;
 CREATE TABLE IF NOT EXISTS `minortype` (
-  `minorAdminId` int(10) NOT NULL auto_increment,
+  `minorTypeId` int(10) NOT NULL auto_increment,
   `garageId` int(10) NOT NULL default '0',
   `minorType` varchar(50) NOT NULL default '0',
   `menuId` varchar(255) NOT NULL default '0',
   `dateAdded` timestamp NOT NULL default CURRENT_TIMESTAMP,
   `dateUpdated` datetime NOT NULL,
-  PRIMARY KEY  (`minorAdminId`)
+  PRIMARY KEY  (`minorTypeId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Dumping data for table taxi_db.minortype: 0 rows
