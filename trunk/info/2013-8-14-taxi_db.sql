@@ -10,12 +10,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping database structure for taxi_db
-DROP DATABASE IF EXISTS `taxi_db`;
-CREATE DATABASE IF NOT EXISTS `taxi_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `taxi_db`;
-
-
 -- Dumping structure for table taxi_db.customer
 DROP TABLE IF EXISTS `customer`;
 CREATE TABLE IF NOT EXISTS `customer` (
