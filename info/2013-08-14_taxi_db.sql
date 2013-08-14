@@ -3,7 +3,7 @@
 -- Server version:               5.0.51b-community-nt-log - MySQL Community Edition (GPL)
 -- Server OS:                    Win32
 -- HeidiSQL version:             7.0.0.4053
--- Date/time:                    2013-08-14 16:41:45
+-- Date/time:                    2013-08-14 16:54:31
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -1036,9 +1036,9 @@ CREATE TABLE IF NOT EXISTS `car` (
   `carBannerId` int(10) default '0' COMMENT 'ยี่ห้อรถ',
   `carModelId` int(10) default '0' COMMENT 'รุ่นรถ',
   `carYear` int(10) default '0' COMMENT 'ปีรถ',
-  `carColor` int(10) default '0' COMMENT 'สีรถ',
-  `carFuel` int(10) default '0' COMMENT 'ขนิดน้ำมัน',
-  `carGas` int(10) default '0' COMMENT 'ชนิดแก๊ส',
+  `carColorId` int(10) default '0' COMMENT 'สีรถ',
+  `carFuelId` int(10) default '0' COMMENT 'ขนิดน้ำมัน',
+  `carGasId` int(10) default '0' COMMENT 'ชนิดแก๊ส',
   `carTypeId` int(10) default '0' COMMENT 'รหัสประเภทรถ',
   `carStatusId` int(10) default '0' COMMENT 'รหัสสถานะรถ',
   `carImage` varchar(150) default NULL COMMENT 'รูปภาพ',
@@ -1055,16 +1055,16 @@ DELETE FROM `car`;
 -- Dumping structure for table taxi_db2.carbanner
 DROP TABLE IF EXISTS `carbanner`;
 CREATE TABLE IF NOT EXISTS `carbanner` (
-  `bannerId` int(11) NOT NULL auto_increment,
-  `bannerName` varchar(50) NOT NULL default '',
+  `carBannerId` int(11) NOT NULL auto_increment,
+  `carBannerName` varchar(50) NOT NULL default '',
   `dateAdd` timestamp NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`bannerId`)
+  PRIMARY KEY  (`carBannerId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table taxi_db2.carbanner: 68 rows
 DELETE FROM `carbanner`;
 /*!40000 ALTER TABLE `carbanner` DISABLE KEYS */;
-INSERT INTO `carbanner` (`bannerId`, `bannerName`, `dateAdd`) VALUES
+INSERT INTO `carbanner` (`carBannerId`, `carBannerName`, `dateAdd`) VALUES
 	(1, 'ALFA ROMEO', '2013-08-14 15:03:33'),
 	(2, 'ASTON MARTIN', '2013-08-14 15:03:33'),
 	(3, 'ATTHAM', '2013-08-14 15:03:33'),
@@ -1139,16 +1139,16 @@ INSERT INTO `carbanner` (`bannerId`, `bannerName`, `dateAdd`) VALUES
 -- Dumping structure for table taxi_db2.carcolor
 DROP TABLE IF EXISTS `carcolor`;
 CREATE TABLE IF NOT EXISTS `carcolor` (
-  `colorId` int(11) NOT NULL auto_increment,
-  `colorName` varchar(50) NOT NULL,
+  `carColorId` int(11) NOT NULL auto_increment,
+  `carColorName` varchar(50) NOT NULL,
   `dateAdd` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`colorId`)
+  PRIMARY KEY  (`carColorId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table taxi_db2.carcolor: 15 rows
 DELETE FROM `carcolor`;
 /*!40000 ALTER TABLE `carcolor` DISABLE KEYS */;
-INSERT INTO `carcolor` (`colorId`, `colorName`, `dateAdd`) VALUES
+INSERT INTO `carcolor` (`carColorId`, `carColorName`, `dateAdd`) VALUES
 	(1, 'สีเทา', '2013-08-14 12:00:00'),
 	(2, 'สีครีม', '2013-08-14 12:00:00'),
 	(3, 'สีเงิน (ตะกั่ว)', '2013-08-14 12:00:00'),
@@ -1167,20 +1167,50 @@ INSERT INTO `carcolor` (`colorId`, `colorName`, `dateAdd`) VALUES
 /*!40000 ALTER TABLE `carcolor` ENABLE KEYS */;
 
 
+-- Dumping structure for table taxi_db2.carfuel
+DROP TABLE IF EXISTS `carfuel`;
+CREATE TABLE IF NOT EXISTS `carfuel` (
+  `carFuelId` int(11) NOT NULL auto_increment,
+  `carFuelName` varchar(50) NOT NULL,
+  `dateAdd` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`carFuelId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- Dumping data for table taxi_db2.carfuel: 0 rows
+DELETE FROM `carfuel`;
+/*!40000 ALTER TABLE `carfuel` DISABLE KEYS */;
+/*!40000 ALTER TABLE `carfuel` ENABLE KEYS */;
+
+
+-- Dumping structure for table taxi_db2.cargas
+DROP TABLE IF EXISTS `cargas`;
+CREATE TABLE IF NOT EXISTS `cargas` (
+  `carGasId` int(11) NOT NULL auto_increment,
+  `carGasName` varchar(50) NOT NULL,
+  `dateAdd` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`carGasId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- Dumping data for table taxi_db2.cargas: 0 rows
+DELETE FROM `cargas`;
+/*!40000 ALTER TABLE `cargas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cargas` ENABLE KEYS */;
+
+
 -- Dumping structure for table taxi_db2.carmodel
 DROP TABLE IF EXISTS `carmodel`;
 CREATE TABLE IF NOT EXISTS `carmodel` (
-  `modelId` int(11) NOT NULL auto_increment,
-  `bannerId` int(255) default '0',
-  `modelName` varchar(50) NOT NULL,
+  `carModelId` int(11) NOT NULL auto_increment,
+  `carBannerId` int(255) default '0',
+  `carModelName` varchar(50) NOT NULL,
   `dateAdd` timestamp NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`modelId`)
+  PRIMARY KEY  (`carModelId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=65 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table taxi_db2.carmodel: 59 rows
 DELETE FROM `carmodel`;
 /*!40000 ALTER TABLE `carmodel` DISABLE KEYS */;
-INSERT INTO `carmodel` (`modelId`, `bannerId`, `modelName`, `dateAdd`) VALUES
+INSERT INTO `carmodel` (`carModelId`, `carBannerId`, `carModelName`, `dateAdd`) VALUES
 	(1, 24, 'ACCORD', '2013-07-10 23:06:42'),
 	(2, 24, 'CITY', NULL),
 	(3, 24, 'CIVIC', '2013-07-10 23:08:15'),
@@ -1241,6 +1271,35 @@ INSERT INTO `carmodel` (`modelId`, `bannerId`, `modelName`, `dateAdd`) VALUES
 	(62, 44, 'TRITON', NULL),
 	(63, 44, 'ULTIMA', NULL);
 /*!40000 ALTER TABLE `carmodel` ENABLE KEYS */;
+
+
+-- Dumping structure for table taxi_db2.carstatus
+DROP TABLE IF EXISTS `carstatus`;
+CREATE TABLE IF NOT EXISTS `carstatus` (
+  `carStatusId` int(10) NOT NULL auto_increment,
+  `carStatusName` varchar(50) default NULL COMMENT 'ชื่อสถานะ',
+  PRIMARY KEY  (`carStatusId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- Dumping data for table taxi_db2.carstatus: 0 rows
+DELETE FROM `carstatus`;
+/*!40000 ALTER TABLE `carstatus` DISABLE KEYS */;
+/*!40000 ALTER TABLE `carstatus` ENABLE KEYS */;
+
+
+-- Dumping structure for table taxi_db2.cartype
+DROP TABLE IF EXISTS `cartype`;
+CREATE TABLE IF NOT EXISTS `cartype` (
+  `carTypeId` int(11) NOT NULL auto_increment,
+  `carTypeName` varchar(50) NOT NULL,
+  `dateAdd` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`carTypeId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- Dumping data for table taxi_db2.cartype: 0 rows
+DELETE FROM `cartype`;
+/*!40000 ALTER TABLE `cartype` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cartype` ENABLE KEYS */;
 
 
 -- Dumping structure for table taxi_db2.customer
