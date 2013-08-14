@@ -3,7 +3,7 @@
 -- Server version:               5.0.51b-community-nt-log - MySQL Community Edition (GPL)
 -- Server OS:                    Win32
 -- HeidiSQL version:             7.0.0.4053
--- Date/time:                    2013-08-14 16:54:31
+-- Date/time:                    2013-08-14 17:30:16
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -10502,5 +10502,42 @@ INSERT INTO `province` (`provinceId`, `provinceCode`, `provinceName`, `provinceN
 	(76, '96', 'นราธิวาส   ', 'Narathiwat'),
 	(77, '97', 'บึงกาฬ', 'buogkan');
 /*!40000 ALTER TABLE `province` ENABLE KEYS */;
+
+
+-- Dumping structure for table taxi_db2.timeschedule
+DROP TABLE IF EXISTS `timeschedule`;
+CREATE TABLE IF NOT EXISTS `timeschedule` (
+  `timeScheduleId` int(10) NOT NULL auto_increment,
+  `garageId` int(10) NOT NULL default '0',
+  `scheduleName` varchar(50) NOT NULL,
+  `timeStart` datetime NOT NULL,
+  `timeEnd` datetime NOT NULL,
+  PRIMARY KEY  (`timeScheduleId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- Dumping data for table taxi_db2.timeschedule: 0 rows
+DELETE FROM `timeschedule`;
+/*!40000 ALTER TABLE `timeschedule` DISABLE KEYS */;
+/*!40000 ALTER TABLE `timeschedule` ENABLE KEYS */;
+
+
+-- Dumping structure for table taxi_db2.transportsection
+DROP TABLE IF EXISTS `transportsection`;
+CREATE TABLE IF NOT EXISTS `transportsection` (
+  `transportSectionId` int(10) NOT NULL auto_increment,
+  `garageId` int(10) default '0' COMMENT 'รหัสอู่',
+  `driverId` int(10) default '0' COMMENT 'รหัสคนขับ',
+  `carId` int(10) default '0' COMMENT 'รหัสรถ',
+  `mobileId` int(10) default '0' COMMENT 'รหัสโทรศัพท์',
+  `timeScheduleId` int(10) default '0' COMMENT 'รหัสเวลางาน',
+  `detail` text COMMENT 'รายละเอียด',
+  `dateAdd` timestamp NULL default CURRENT_TIMESTAMP COMMENT 'วันที่เพิ่ม',
+  PRIMARY KEY  (`transportSectionId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- Dumping data for table taxi_db2.transportsection: 0 rows
+DELETE FROM `transportsection`;
+/*!40000 ALTER TABLE `transportsection` DISABLE KEYS */;
+/*!40000 ALTER TABLE `transportsection` ENABLE KEYS */;
 /*!40014 SET FOREIGN_KEY_CHECKS=1 */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
