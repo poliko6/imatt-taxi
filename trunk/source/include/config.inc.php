@@ -2,7 +2,7 @@
 
 	$_config['database']['hostname'] = "localhost";
 	$_config['database']['username'] = "root";
-	$_config['database']['password'] = "1234";
+	$_config['database']['password'] = "root";
 	$_config['database']['database'] = "imattio_taxi";
 
 	# connect the database server
