@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Gebo Admin Panel - Login Page</title>
+        <title>Taxi Admin Panel - Login Page</title>
     
         <!-- Bootstrap framework -->
             <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
@@ -31,7 +31,7 @@
 		<div class="login_box">
 			
 			<form action="dashboard.html" method="post" id="login_form">
-				<div class="top_b">Sign in to Gebo Admin</div>    
+				<div class="top_b">Sign in to Taxi Admin</div>    
 				<div class="alert alert-info alert-login">
 					Clear username and password field to see validation.
 				</div>

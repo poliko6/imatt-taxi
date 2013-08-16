@@ -1,0 +1,1 @@
+<a href="index.php?p=user.minor&menu=main_user"><?=$lang_menu["menu_user_minor"]?></a>
