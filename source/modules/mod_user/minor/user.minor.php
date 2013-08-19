@@ -25,7 +25,7 @@
   <tr>
   	<td colspan="3">
 	<?
-	if ($handle_minor = opendir('modules/mod_user/include/minor')) {
+	if ($handle_minor = opendir('modules/mod_user/minor')) {
  		while (false !== ($file_minor = readdir($handle_minor)))
       	{
         	if ($file_minor != "." && $file_minor != "..")
@@ -48,7 +48,7 @@
 		$ii_minor++;							
 		
 		if($file_menu_minor[$ii_minor]){
-			include("modules/mod_user/include/minor/$file_menu_minor[$ii_minor]");									
+			include("modules/mod_user/minor/$file_menu_minor[$ii_minor]");									
 		}
 	}	
 	?>

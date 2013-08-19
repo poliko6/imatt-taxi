@@ -14,11 +14,12 @@
 
 <div id="left">
   <? 
+  	//pre($_REQUEST);
   	if($_REQUEST['p']<>"")
 	{ 
 		$part_p = explode('.',$_REQUEST['p']);
 		//pre($part_p);
-		include("modules/mod_".$part_p[0]."/".$_REQUEST['p'].".php"); 
+		include("modules/mod_".$part_p[0]."/".$part_p[1]."/".$_REQUEST['p'].".php"); 
 	} else {
   ?>
       <div id="cpanel">
