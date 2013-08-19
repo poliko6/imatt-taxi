@@ -152,6 +152,12 @@ if (empty($_SESSION['pass_actived'])){
         <!-- mailbox functions -->
         <script src="js/gebo_mailbox.js"></script>
         
+        <!-- smoke_js -->
+		<script src="lib/smoke/smoke.js"></script>
+        <!-- notifications functions -->
+        <script src="js/gebo_notifications.js"></script>
+    
+        
         
     </head>
     <body class="sidebar_hidden ptrn_d menu_hover">
