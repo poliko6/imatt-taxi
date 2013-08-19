@@ -3,7 +3,7 @@
 	include("include/class.function.php");
 	include("include/class.mysqldb.php");
 	include("include/config.inc.php");	
-	include("include/class.chklogin.php");
+	//include("include/class.chklogin.php");
 	//pre($_SESSION);
 
 	foreach($_REQUEST as $key => $value)  {
@@ -13,9 +13,22 @@
 	
 	$today = date("Y-m-d H:i:s");  
 	$this_ip = $_SERVER['REMOTE_ADDR']; 
-	
-	
+
 ?>	
+
+
+
+<?
+if (empty($_SESSION['pass_actived'])){
+	?>
+     <META HTTP-EQUIV="Refresh" CONTENT="0;URL=login.php">
+	<?
+} else {
+	$u_username = $_SESSION['u_username'] ; //username มาจากตาราง major และ minor
+	$u_id = $_SESSION['u_id'];	 //id มาจากตาราง major และ minor
+	$u_type = $_SESSION['u_type']; //ถ้าเป็นพนักงานให้เป็น 3
+	$u_garage = $_SESSION['u_garage']; 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -53,6 +66,7 @@
 	
         <!-- Favicon -->
             <link rel="shortcut icon" href="favicon.ico" />
+            
 		
         <!--[if lte IE 8]>
             <link rel="stylesheet" href="css/ie.css" />
@@ -115,6 +129,30 @@
         <script src="lib/list_js/plugins/paging/list.paging.js"></script>
         <!-- dashboard functions -->
         
+        
+        <!-- tooltips -->
+        <script src="lib/qtip2/jquery.qtip.min.js"></script>
+        <!-- jBreadcrumbs -->
+        <script src="lib/jBreadcrumbs/js/jquery.jBreadCrumb.1.1.min.js"></script>
+        <!-- sticky messages -->
+        <script src="lib/sticky/sticky.min.js"></script>
+        <!-- fix for ios orientation change -->
+        <script src="js/ios-orientationchange-fix.js"></script>
+        <!-- scrollbar -->
+        <script src="lib/antiscroll/antiscroll.js"></script>
+        <script src="lib/antiscroll/jquery-mousewheel.js"></script>
+        <!-- common functions -->
+        <script src="js/gebo_common.js"></script>
+            
+        <!-- colorbox -->
+		<script src="lib/colorbox/jquery.colorbox.min.js"></script>
+        <!-- datatable -->
+        <script src="lib/datatables/jquery.dataTables.min.js"></script>
+        <!-- additional sorting for datatables -->
+        <script src="lib/datatables/jquery.dataTables.sorting.js"></script>
+        <!-- tables functions -->
+        <script src="js/gebo_tables.js"></script>
+        
         <!--<script src="js/gebo_dashboard.js"></script> -->
     </head>
     <body class="sidebar_hidden ptrn_d menu_hover">
@@ -147,12 +185,12 @@
                                 </li> -->
                                 <li class="divider-vertical hidden-phone hidden-tablet"></li>
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="img/user_avatar.png" alt="" class="user_avatar" /> Johny Smith <b class="caret"></b></a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="img/user_avatar.png" alt="" class="user_avatar" /> <?=$u_username?> <b class="caret"></b></a>
                                     <ul class="dropdown-menu">
-										<li><a href="user_profile.html">My Profile</a></li>
+										<li><a href="#">My Profile</a></li>
 										<!--<li><a href="javascrip:void(0)">Another action</a></li> -->
 										<li class="divider"></li>
-										<li><a href="logout.php">ออกจากระบบ</a></li>
+										<li><a href="include/class.logout.php">ออกจากระบบ</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -208,3 +246,4 @@
         -->
 	</body>
 </html>
+<? } ?>
