@@ -14,6 +14,7 @@
 	$today = date("Y-m-d H:i:s");  
 	$this_ip = $_SERVER['REMOTE_ADDR']; 
 	
+	
 ?>	
 
 <!DOCTYPE html>
@@ -177,6 +178,7 @@
             <!-- main content -->
             <div id="contentwrapper">
                 <div class="main_content">
+
   					 <? include('modules/mod_body/main.body.php'); ?>
                 </div>
             </div>

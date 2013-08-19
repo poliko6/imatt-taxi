@@ -1,8 +1,8 @@
 <table class="table table-striped table-bordered table-condensed">
   <tr>
-    <td width="5%" align="center"><img src="modules/mod_car/images/type-icon.png" alt="" width="50" height="50" /></td>
-    <td width="29%"><a href="index.php?<?=$_SERVER['QUERY_STRING']?>" style="text-decoration:none;"><?=$lang_menu["menu_car_type"]?></a><br />
-		<span class="normal">เมนูเพิ่ม แก้ไข และลบ ประเภทรถยนต์</span></td>
+    <td width="5%" align="center"><img src="modules/mod_user/images/major-icon.png" alt="" width="50" height="50" /></td>
+    <td width="29%"><a href="index.php?<?=$_SERVER['QUERY_STRING']?>" style="text-decoration:none;"><?=$lang_menu["menu_user_major"]?></a><br />
+		<span class="normal">เมนูเพิ่ม แก้ไข และลบ อู่รถสมาชิก</span></td>
     <td width="66%" style="border:none;">
         <div class="alert" id="alert1" style="display:none;">
             <a class="close" data-dismiss="alert">×</a>
@@ -25,30 +25,30 @@
   <tr>
   	<td colspan="3">
 	<?
-	if ($handle_type = opendir('modules/mod_car/include/type')) {
- 		while (false !== ($file_type = readdir($handle_type)))
+	if ($handle_major = opendir('modules/mod_user/major')) {
+ 		while (false !== ($file_major = readdir($handle_major)))
       	{
-        	if ($file_type != "." && $file_type != "..")
+        	if ($file_major != "." && $file_major != "..")
 			{   				
-				if(strstr("$file_type", "type" ))
+				if(strstr("$file_major", "major" ))
 				{	
-					$data_type = explode('.', $file_type);
-					$file_menu_type[$data_type[1]]=$file_type;
+					$data_major = explode('.', $file_major);
+					$file_menu_major[$data_major[1]]=$file_major;
 				}
 			}
 		}	
 		
-		closedir($handle_type);
+		closedir($handle_major);
 	}
 	
-	$ii_type=0;
+	$ii_major=0;
 	
-	foreach($file_menu_type as $values)
+	foreach($file_menu_major as $values)
 	{		
-		$ii_type++;							
+		$ii_major++;							
 		
-		if($file_menu_type[$ii_type]){
-			include("modules/mod_car/include/type/$file_menu_type[$ii_type]");									
+		if($file_menu_major[$ii_major]){
+			include("modules/mod_user/major/$file_menu_major[$ii_major]");									
 		}
 	}	
 	?>

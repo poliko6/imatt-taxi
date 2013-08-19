@@ -50,7 +50,7 @@ $im = 0;
 
 //Majors Menu
 if ($u_type == 1){
-	$sql_mName = "select * from menuList where majorAllowed = 1 order by menuName";
+	$sql_mName = "select * from menulist where majorAllowed = 1 order by menuName";
 	$rs_mName = mysql_query($sql_mName);
 	while($data_mName = @mysql_fetch_object($rs_mName)) { 
 		$menuname_subarr[$im] = $data_mName->menuName;	
@@ -60,7 +60,7 @@ if ($u_type == 1){
 
 //Minor Menu
 if ($u_type == 2){
-	$sql_mName = "select * from menuList where majorAllowed = 1 order by menuName";
+	$sql_mName = "select * from menulist where majorAllowed = 1 order by menuName";
 	$rs_mName = mysql_query($sql_mName);
 	while($data_mName = @mysql_fetch_object($rs_mName)) { 
 		$menuname_subarr[$im] = $data_mName->menuName;	
@@ -70,10 +70,10 @@ if ($u_type == 2){
 
 //Entry Menu
 if ($u_type == 3){
-	$sql_usemenu = "SELECT * FROM minorAdmin INNER JOIN minorType ON minorAdmin.minorTypeId = minorType.minorTypeId and username='".$u_username."'";
-	$rs_usemenu = mysql_query($sql_usemenu);
-	$data_usemenu = @mysql_fetch_object($rs_usemenu);
-	$menuid = $data_usemenu->menuId;
+	$sql_mName = "SELECT * FROM minoradmin INNER JOIN minorType ON minorAdmin.minorTypeId = minorType.minorTypeId and username='".$u_username."'";
+	$rs_mName = mysql_query($sql_mName);
+	$data_mName = @mysql_fetch_object($rs_mName);
+	$menuid = $data_mName->menuId;
 	$p_menuid = explode(',',$menuid);
 	foreach($p_menuid as $valmenu){
 		$data_mEntry = select_db('menuList',"where menuId='".$valmenu."'");
@@ -81,7 +81,7 @@ if ($u_type == 3){
 		$im++;
 	}
 }
-
+#echo $sql_mName;
 #echo "<pre>"; echo print_r($menuname_subarr); echo "</pre>";
 
 
