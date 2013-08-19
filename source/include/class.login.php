@@ -1,4 +1,4 @@
-<?  ob_start();
+<?  //ob_start();
 	session_start();
 
 	foreach($_REQUEST as $key => $value)  {
@@ -14,21 +14,22 @@
 	$find = 0;
 	
 	$sql = "SELECT COUNT(majorId) AS finddata FROM majoradmin INNER JOIN garagelist ON majoradmin.garageId = garagelist.garageId ";
-	$sql .= "WHERE username = '".trim($username)."' AND password = '".trim($password)."' ";
+	$sql .= "WHERE username = '".trim($username)."' AND password = '".trim(sha1($password))."' ";
 	$sql .= "AND garagelist.garageName = '".trim($garageid)."'";
 	
 	$exe = mysql_query($sql) or die(mysql_error());
 	$data = mysql_fetch_object($exe);
 	$finddata_major = $data->finddata;
 	
+	
 	if ($finddata_major > 0) {
 		
 		$sql_major = "SELECT * FROM majoradmin INNER JOIN garagelist ON majoradmin.garageId = garagelist.garageId ";
-		$sql_major .= "WHERE username = '".trim($username)."' AND password = '".trim($password)."' ";
+		$sql_major .= "WHERE username = '".trim($username)."' AND password = '".trim(sha1($password))."' ";
 		$sql_major .= "AND garagelist.garageName = '".trim($garageid)."'";
 		
-		$exe_major = mysql_query($sql_major) or die(mysql_error());
-		$data_major = mysql_fetch_object($exe_major);
+		$rs_major = mysql_query($sql_major);
+		$data_major = mysql_fetch_object($rs_major);
 		
 		$u_id = $data_major->majorId;
 		$u_garageid = $data_major->garageId;	
@@ -39,7 +40,7 @@
 	} else {
 		
 		$sql = "SELECT COUNT(minorId) AS finddata FROM minoradmin INNER JOIN garagelist ON minoradmin.garageId = garagelist.garageId ";
-		$sql .= "WHERE username = '".trim($username)."' AND password = '".trim($password)."' ";
+		$sql .= "WHERE username = '".trim($username)."' AND password = '".trim(sha1($password))."' ";
 		$sql .= "AND garagelist.garageName = '".trim($garageid)."'";
 		
 		$exe = mysql_query($sql) or die(mysql_error());
@@ -48,7 +49,7 @@
 		
 		if ($finddata_minor > 0) {
 			$sql_minor = "SELECT * FROM minoradmin INNER JOIN garagelist ON minoradmin.garageId = garagelist.garageId ";
-			$sql_minor .= "WHERE username = '".trim($username)."' AND password = '".trim($password)."' ";
+			$sql_minor .= "WHERE username = '".trim($username)."' AND password = '".trim(sha1($password))."' ";
 			$sql_minor .= "AND garagelist.garageName = '".trim($garageid)."'";
 			
 			$exe_minor = mysql_query($sql_minor) or die(mysql_error());
@@ -83,11 +84,11 @@
 			//setcookie("taximeter_[garageid]", $garageid, $time + 3600); // Sets the cookie password 
 			
 		}
-		echo "<script>window.location='index.php';</script>";
-		//echo "<meta http-equiv=\"refresh\" content=\"2;URL=index.php\">";
+		/*echo "<script>window.location='index.php';</script>";*/
+		echo "<meta http-equiv=\"refresh\" content=\"2;URL=index.php\">";
 		
 	} else {
 		echo "<div class='alert alert-login alert-error'>ไม่สามารถเข้าสู่ระบบได้</div>";	
 	}
-	ob_end_flush();
+	//ob_end_flush();
 ?>
