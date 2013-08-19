@@ -128,32 +128,31 @@ if (empty($_SESSION['pass_actived'])){
         <script src="lib/list_js/list.min.js"></script>
         <script src="lib/list_js/plugins/paging/list.paging.js"></script>
         <!-- dashboard functions -->
-        
-        
-        <!-- tooltips -->
-        <script src="lib/qtip2/jquery.qtip.min.js"></script>
-        <!-- jBreadcrumbs -->
-        <script src="lib/jBreadcrumbs/js/jquery.jBreadCrumb.1.1.min.js"></script>
+        <!--<script src="js/gebo_dashboard.js"></script> -->
         <!-- sticky messages -->
-        <script src="lib/sticky/sticky.min.js"></script>
-        <!-- fix for ios orientation change -->
-        <script src="js/ios-orientationchange-fix.js"></script>
-        <!-- scrollbar -->
-        <script src="lib/antiscroll/antiscroll.js"></script>
-        <script src="lib/antiscroll/jquery-mousewheel.js"></script>
-        <!-- common functions -->
-        <script src="js/gebo_common.js"></script>
-            
-        <!-- colorbox -->
-		<script src="lib/colorbox/jquery.colorbox.min.js"></script>
-        <!-- datatable -->
-        <script src="lib/datatables/jquery.dataTables.min.js"></script>
-        <!-- additional sorting for datatables -->
-        <script src="lib/datatables/jquery.dataTables.sorting.js"></script>
+        <script src="lib/sticky/sticky.min.js"></script>       
         <!-- tables functions -->
         <script src="js/gebo_tables.js"></script>
         
-        <!--<script src="js/gebo_dashboard.js"></script> -->
+        <!-- datatable -->
+		<script src="lib/datatables/jquery.dataTables.min.js"></script>
+        <script src="lib/datatables/extras/Scroller/media/js/Scroller.min.js"></script>
+        <!-- datatable functions -->
+        <script src="js/gebo_datatables.js"></script>
+        
+        <!-- additional sorting for datatables -->
+        <script src="lib/datatables/jquery.dataTables.sorting.js"></script>
+        <!-- plupload and all it's runtimes and the jQuery queue widget (attachments) -->
+        <script type="text/javascript" src="lib/plupload/js/plupload.full.js"></script>
+        <script type="text/javascript" src="lib/plupload/js/jquery.plupload.queue/jquery.plupload.queue.full.js"></script>
+        <!-- autosize textareas (new message) -->
+        <script src="js/forms/jquery.autosize.min.js"></script>
+        <!-- tag handler (recipients) -->
+        <script src="lib/tag_handler/jquery.taghandler.min.js"></script>
+        <!-- mailbox functions -->
+        <script src="js/gebo_mailbox.js"></script>
+        
+        
     </head>
     <body class="sidebar_hidden ptrn_d menu_hover">
 		<div id="loading_layer" style="display:none"><img src="img/ajax_loader.gif" alt="" /></div>
