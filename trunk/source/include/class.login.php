@@ -84,8 +84,8 @@
 			//setcookie("taximeter_[garageid]", $garageid, $time + 3600); // Sets the cookie password 
 			
 		}
-		/*echo "<script>window.location='index.php';</script>";*/
-		echo "<meta http-equiv=\"refresh\" content=\"2;URL=index.php\">";
+		echo "<script>window.location='index.php';</script>";
+		/*echo "<meta http-equiv=\"refresh\" content=\"2;URL=index.php\">";*/
 		
 	} else {
 		echo "<div class='alert alert-login alert-error'>ไม่สามารถเข้าสู่ระบบได้</div>";	

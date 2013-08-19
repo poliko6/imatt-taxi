@@ -75,7 +75,8 @@
 	
 	function Thai_date($day){
 		$date = $day;
-		$part = explode('-',$date);
+		$part_0 = explode(' ',$date);
+		$part = explode('-',$part_0[0]);
 		$thyear = $part[0];
 		$month = $part[1];
 		$thday = $part[2];
