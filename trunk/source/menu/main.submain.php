@@ -40,12 +40,6 @@
 
 
 <?	 
-
-$u_username = 'supervisor'; //username มาจากตาราง major และ minor
-$u_id = 1;	 //id มาจากตาราง major และ minor
-$u_type = 1; //ถ้าเป็นพนักงานให้เป็น 3
-
-
 $im = 0;
 
 //Majors Menu
