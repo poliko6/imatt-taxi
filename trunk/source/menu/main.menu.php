@@ -14,9 +14,9 @@
 					
 					//echo $dataMAIN[3]."<br>";
 					#---------------Check permisstion--------------------------------------			
-						//if ((in_array($dataMAIN[3],$menuname_arr)) || ($dataMAIN[3]=='news') || ($dataMAIN[3] == 'logout')){
+						if ((in_array($dataMAIN[3],$menuname_arr))){
 							$file_menuMAIN[$dataMAIN[2]] = $fileMAIN;
-						//}							
+						}							
 					#----------------------------------------------------------------------	
 					
 				}
