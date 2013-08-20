@@ -8,24 +8,24 @@
  
  //=============================== Del 
  if ($act == 'del'){ 
- 	$car_type_chk = select_db('cartype',"where carTypeId = '".$id."'");
- 	$type_name = $car_type_chk[0]['carTypeName'];
+ 	$car_color_chk = select_db('carcolor',"where carColorId = '".$id."'");
+ 	$color_name = $car_color_chk[0]['carColorName'];
 	
 	
-	$car_type_chk2 = select_db('car',"where carTypeId = '".$id."'");
- 	$find_used = count($car_type_chk2);
+	$car_color_chk2 = select_db('car',"where carColorId = '".$id."'");
+ 	$find_used = count($car_color_chk2);
 	
 	if ($find_used == 0){
  	
-		$TableName = 'cartype';
-		$sql = delete_db($TableName, array('carTypeId='=>$id));
+		$TableName = 'carcolor';
+		$sql = delete_db($TableName, array('carColorId='=>$id));
 		//echo $sql;
 		mysql_query($sql);
 		?>
 		<script type="text/javascript">
 		$(document).ready(function(){
 			var delayAlert=null; 
-			$('#msg3').text('ลบประเภทรถ "<?=$type_name?>" เรียบร้อยแล้ว');
+			$('#msg3').text('ลบสีรถ "<?=$color_name?>" เรียบร้อยแล้ว');
 			$('#alert3').fadeIn(500, function() {
 				clearTimeout(delayAlert);  
 				delayAlert=setTimeout(function(){  
@@ -44,7 +44,7 @@
 		<script type="text/javascript">
 		$(document).ready(function(){
 			var delayAlert=null; 
-			$('#msg2').text('ลบประเภทรถ "<?=$type_name?>" ไม่ได้เนื่องจากมีข้อมูลรถในระบบ');
+			$('#msg2').text('ลบสีรถ "<?=$color_name?>" ไม่ได้เนื่องจากมีข้อมูลรถในระบบ');
 			$('#alert2').fadeIn(500, function() {
 				clearTimeout(delayAlert);  
 				delayAlert=setTimeout(function(){  
@@ -66,8 +66,8 @@
 
  
  
- $car_type = select_db('cartype','order by carTypeId');
- $total = count($car_type);
+ $car_color = select_db('carcolor','order by carColorId');
+ $total = count($car_color);
  ?>
  
  
@@ -82,21 +82,21 @@
 	}
 	
 	function reloadPage(){
-		window.location = 'index.php?p=car.type&menu=main_car'; 
+		window.location = 'index.php?p=car.color&menu=main_car'; 
 	}
 	
 	
 	
 	function fn_formAdd(){		
-		if ($('#type_name').val() == ''){
-			$('#type_name').closest('div').addClass("f_error");
+		if ($('#color_name').val() == ''){
+			$('#color_name').closest('div').addClass("f_error");
 			$('#errtxt').fadeIn(500);
 		} else {
-			//$('#fm_addtype').submit();			
+			//$('#fm_addcolor').submit();			
 			jQuery.ajax({
-   				url :'modules/mod_car/type/addtype.php',
+   				url :'modules/mod_car/color/addcolor.php',
    				type: 'GET',
-  				data: 'act=addtype&type_name='+$('#type_name').val()+'',
+  				data: 'act=addcolor&color_name='+$('#color_name').val()+'',
    				dataType: 'jsonp',
    				dataCharset: 'jsonp',
    				success: function (data){
@@ -124,7 +124,7 @@
 					
 					
 					$('#myModalAdd').modal('toggle');
-					$('#type_name').val('');
+					$('#color_name').val('');
    				}
 			});	
 			
@@ -138,14 +138,14 @@
 		//console.log(id);
 		
 		if (process == 'select') {
-			$.post("modules/mod_car/type/gettype.php", { 
+			$.post("modules/mod_car/color/getcolor.php", { 
 					process: process,
 					id: id
 				}, 
 				function(data){
-					$("#type_name_edit").val(data);
+					$("#color_name_edit").val(data);
 					$("#temp").val(data);
-					$("#typeid").val(id);
+					$("#colorid").val(id);
 				}
 			);
 			
@@ -158,19 +158,19 @@
 		
 		if (process == 'update') {
 			
-			var id = $("#typeid").val();
+			var id = $("#colorid").val();
 			
 			
-			if ($('#type_name_edit').val() == ''){
-				$('#type_name_edit').closest('div').addClass("f_error");
+			if ($('#color_name_edit').val() == ''){
+				$('#color_name_edit').closest('div').addClass("f_error");
 				$('#errtxt_edit').fadeIn(500);
 			
 			} else {
 				
 				jQuery.ajax({
-					url :'modules/mod_car/type/edittype.php',
+					url :'modules/mod_car/color/editcolor.php',
 					type: 'GET',
-					data: 'act=update&type_name='+$('#type_name_edit').val()+'&type_name_temp='+$('#temp').val()+'&id='+id+'',
+					data: 'act=update&color_name='+$('#color_name_edit').val()+'&color_name_temp='+$('#temp').val()+'&id='+id+'',
 					dataType: 'jsonp',
 					dataCharset: 'jsonp',
 					success: function (data){
@@ -214,15 +214,15 @@
 <!-- POP UP -->
 <div class="modal hide fade" id="myModalAdd">
     <div class="modal-header">
-        <h3>เพิ่มประเภทรถยนต์</h3>
+        <h3>เพิ่มสีรถยนต์</h3>
     </div>
-    <form action="" name="fm_addtype" id="fm_addtype">
+    <form action="" name="fm_addcolor" id="fm_addcolor">
     <div class="modal-body">
         <div class="formSep">
-            <label>ชื่อประเภทรถยนต์</label>
-            <input type="text" name="type_name" id="type_name" value="" />
+            <label>ชื่อสีรถยนต์</label>
+            <input type="text" name="color_name" id="color_name" value="" />
             <span class="help-inline">ตัวอย่าง : รถเก๋ง</span>
-            <span class="help-block" id="errtxt" style="color:#900; display:none;">กรุณาป้อนประเภทรถ</span>
+            <span class="help-block" id="errtxt" style="color:#900; display:none;">กรุณาป้อนสีรถ</span>
         </div> 
     </div>
     <div class="modal-footer">        
@@ -237,15 +237,15 @@
 <!-- POP UP -->
 <div class="modal hide fade" id="myModalEdit">
     <div class="modal-header">
-        <h3>แก้ไขประเภทรถยนต์</h3>
+        <h3>แก้ไขสีรถยนต์</h3>
     </div>
-    <form action="" name="fm_edittype" id="fm_edittype">
+    <form action="" name="fm_editcolor" id="fm_editcolor">
     <div class="modal-body">
         <div class="formSep">
-            <label>ชื่อประเภทรถยนต์</label>
-            <input type="text" name="type_name_edit" id="type_name_edit" value="<?=$type_name_edit?>" />
+            <label>ชื่อสีรถยนต์</label>
+            <input type="text" name="color_name_edit" id="color_name_edit" value="<?=$color_name_edit?>" />
             <span class="help-inline">ตัวอย่าง : รถเก๋ง</span>
-            <span class="help-block" id="errtxt_edit" style="color:#900; display:none;">กรุณาป้อนประเภทรถ</span>
+            <span class="help-block" id="errtxt_edit" style="color:#900; display:none;">กรุณาป้อนสีรถ</span>
         </div> 
     </div>
     <div class="modal-footer">        
@@ -254,7 +254,7 @@
         <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i>ยกเลิก</a>
     </div>
     <input type="hidden" name="temp" id="temp" value="" />
-    <input type="hidden" name="typeid" id="typeid" value="" />
+    <input type="hidden" name="colorid" id="colorid" value="" />
     </form>
 </div>
 
@@ -265,10 +265,10 @@
 	<div class="span12">
         <div class="well clearfix">
             <div class="row-fluid">
-                <div class="pull-left">รายการประเภทรถทั้งหมด <strong><?=$total?></strong></div>
+                <div class="pull-left">รายการสีรถทั้งหมด <strong><?=$total?></strong></div>
                 <div class="pull-right">
                   <a data-toggle="modal" data-backdrop="static" href="#myModalAdd">
-                  	<button class="btn btn-success" onClick="">เพิ่มประเภทรถ</button></a>  
+                  	<button class="btn btn-success" onClick="">เพิ่มสีรถ</button></a>  
                 </div>
             </div>
         </div>
@@ -281,7 +281,7 @@
                 <thead>
                     <tr>
                         <th style="width:10px">ลำดับ</th>
-                        <th style="width:250px">ชื่อประเภท</th>
+                        <th style="width:250px">ชื่อสี</th>
                         <th style="width:120px">วันที่เพิ่ม</th>
                         <th style="width:100px">เครื่องมือ</th>
                         <th></th>
@@ -297,23 +297,23 @@
                         ?>
                         <tr>                   
                             <td style="text-align:center;"><?=$i+1?></td>
-                            <td><?=$car_type[$i]['carTypeName']?></td>
-                            <td><?=Thai_date($car_type[$i]['dateAdd'])?></td>
+                            <td><?=$car_color[$i]['carColorName']?></td>
+                            <td><?=Thai_date($car_color[$i]['dateAdd'])?></td>
                             <td>
-                            <!--<a data-toggle="modal" data-backdrop="static" href="#myModalAdd"> -->
-                                <!--<a href="index.php?p=car.type&menu=main_car&act=edit&id=<?=$car_type[$i]['carTypeId']?>" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> -->
-                               	<a href="#" data-toggle="modal" data-backdrop="static" title="Edit" onclick="fn_formEdit(<?=$car_type[$i]['carTypeId']?>, 'select');"><i class="icon-pencil"></i></a>
-                                <a href="#myModalDel<?=$car_type[$i]['carTypeId']?>" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a>
+                            	<!--<a data-toggle="modal" data-backdrop="static" href="#myModalAdd"> -->
+                                <!--<a href="index.php?p=car.type&menu=main_car&act=edit&id=<?=$car_color[$i]['carColorId']?>" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> -->
+                               	<a href="#" data-toggle="modal" data-backdrop="static" title="Edit" onclick="fn_formEdit(<?=$car_color[$i]['carColorId']?>, 'select');"><i class="icon-pencil"></i></a>
+                                <a href="#myModalDel<?=$car_color[$i]['carColorId']?>" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a>
                             </td>
                             <td></td>
                         </tr>
                         
                         <!-- POP UP -->
-                        <div class="modal hide fade" id="myModalDel<?=$car_type[$i]['carTypeId']?>" style="text-align:center; width:500px;">
+                        <div class="modal hide fade" id="myModalDel<?=$car_color[$i]['carColorId']?>" style="text-align:center; width:500px;">
                             <div class="alert alert-block alert-error fade in">
-                                <h4 class="alert-heading">คุณต้องการลบข้อมูลประเภทรถ "<?=$car_type[$i]['carTypeName']?>"</h4>
+                                <h4 class="alert-heading">คุณต้องการลบข้อมูลสีรถ "<?=$car_color[$i]['carColorName']?>"</h4>
                                 <div style="height:50px;"></div>
-                                <p><a href="index.php?p=car.type&menu=main_car&act=del&id=<?=$car_type[$i]['carTypeId']?>" class="btn btn-inverse"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> หรือ <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a></p>
+                                <p><a href="index.php?p=car.color&menu=main_car&act=del&id=<?=$car_color[$i]['carColorId']?>" class="btn btn-inverse"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> หรือ <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a></p>
                             </div>
                         </div>
                         

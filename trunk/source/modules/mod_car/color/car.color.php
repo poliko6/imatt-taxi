@@ -1,7 +1,7 @@
 <table class="table table-striped table-bordered table-condensed">
   <tr>
-    <td width="5%" align="center"><img src="modules/mod_car/images/type-icon.png" alt="" width="50" height="50" /></td>
-    <td width="29%"><a href="index.php?p=car.type&menu=main_car" style="text-decoration:none;"><?=$lang_menu["menu_car_type"]?></a><br />
+    <td width="5%" align="center"><img src="modules/mod_car/images/color-icon.png" alt="" width="50" height="50" /></td>
+    <td width="29%"><a href="index.php?p=car.color&menu=main_car" style="text-decoration:none;"><?=$lang_menu["menu_car_color"]?></a><br />
 		<span class="normal">เมนูเพิ่ม แก้ไข และลบ ประเภทรถยนต์</span></td>
     <td width="66%" style="border:none;">
         <div class="alert" id="alert1" style="display:none; margin-top:5px; margin-bottom:5px;">
@@ -25,30 +25,30 @@
   <tr>
   	<td colspan="3">
 	<?
-	if ($handle_type = opendir('modules/mod_car/type')) {
- 		while (false !== ($file_type = readdir($handle_type)))
+	if ($handle_color = opendir('modules/mod_car/color')) {
+ 		while (false !== ($file_color = readdir($handle_color)))
       	{
-        	if ($file_type != "." && $file_type != "..")
+        	if ($file_color != "." && $file_color != "..")
 			{   				
-				if(strstr("$file_type", "type" ))
+				if(strstr("$file_color", "color" ))
 				{	
-					$data_type = explode('.', $file_type);
-					$file_menu_type[$data_type[1]]=$file_type;
+					$data_color = explode('.', $file_color);
+					$file_menu_color[$data_color[1]]=$file_color;
 				}
 			}
 		}	
 		
-		closedir($handle_type);
+		closedir($handle_color);
 	}
 	
-	$ii_type=0;
+	$ii_color=0;
 	
-	foreach($file_menu_type as $values)
+	foreach($file_menu_color as $values)
 	{		
-		$ii_type++;							
+		$ii_color++;							
 		
-		if($file_menu_type[$ii_type]){
-			include("modules/mod_car/type/$file_menu_type[$ii_type]");									
+		if($file_menu_color[$ii_color]){
+			include("modules/mod_car/color/$file_menu_color[$ii_color]");									
 		}
 	}	
 	?>
