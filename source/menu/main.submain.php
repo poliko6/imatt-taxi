@@ -42,9 +42,9 @@
 <?	 
 $im = 0;
 
-//Majors Menu
+//Supervisor Menu
 if ($u_type == 1){
-	$sql_mName = "select * from menulist where majorAllowed = 1 order by menuName";
+	$sql_mName = "select * from menulist where supervisorAllowed = 1 order by menuName";
 	$rs_mName = mysql_query($sql_mName);
 	while($data_mName = @mysql_fetch_object($rs_mName)) { 
 		$menuname_subarr[$im] = $data_mName->menuName;	
@@ -52,7 +52,7 @@ if ($u_type == 1){
 	}
 }
 
-//Minor Menu
+//Majors Menu
 if ($u_type == 2){
 	$sql_mName = "select * from menulist where majorAllowed = 1 order by menuName";
 	$rs_mName = mysql_query($sql_mName);

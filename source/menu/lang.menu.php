@@ -15,5 +15,7 @@ $lang_menu = array(
 	"menu_car_type"			=>  "จัดการประเภทรถ",
 	"menu_car_banner"		=>  "จัดการยี่ห้อรถ",
 	"menu_car_color"		=>  "จัดการสีรถ",
+	"menu_car_fuel"			=>  "ประเภทเชื้อเพลิง",
+	"menu_car_gas"			=>  "ประเภทแก๊ส",
 );
 ?>

@@ -15,7 +15,7 @@
 	
 	$sql = "SELECT COUNT(majorId) AS finddata FROM majoradmin INNER JOIN garagelist ON majoradmin.garageId = garagelist.garageId ";
 	$sql .= "WHERE username = '".trim($username)."' AND password = '".trim(sha1($password))."' ";
-	$sql .= "AND garagelist.garageName = '".trim($garageid)."'";
+	$sql .= "AND garagelist.garagePassword = '".trim($garageid)."'";
 	
 	$exe = mysql_query($sql) or die(mysql_error());
 	$data = mysql_fetch_object($exe);
@@ -26,7 +26,7 @@
 		
 		$sql_major = "SELECT * FROM majoradmin INNER JOIN garagelist ON majoradmin.garageId = garagelist.garageId ";
 		$sql_major .= "WHERE username = '".trim($username)."' AND password = '".trim(sha1($password))."' ";
-		$sql_major .= "AND garagelist.garageName = '".trim($garageid)."'";
+		$sql_major .= "AND garagelist.garagePassword = '".trim($garageid)."'";
 		
 		$rs_major = mysql_query($sql_major);
 		$data_major = mysql_fetch_object($rs_major);
@@ -41,7 +41,7 @@
 		
 		$sql = "SELECT COUNT(minorId) AS finddata FROM minoradmin INNER JOIN garagelist ON minoradmin.garageId = garagelist.garageId ";
 		$sql .= "WHERE username = '".trim($username)."' AND password = '".trim(sha1($password))."' ";
-		$sql .= "AND garagelist.garageName = '".trim($garageid)."'";
+		$sql .= "AND garagelist.garagePassword = '".trim($garageid)."'";
 		
 		$exe = mysql_query($sql) or die(mysql_error());
 		$data = mysql_fetch_object($exe);
@@ -50,7 +50,7 @@
 		if ($finddata_minor > 0) {
 			$sql_minor = "SELECT * FROM minoradmin INNER JOIN garagelist ON minoradmin.garageId = garagelist.garageId ";
 			$sql_minor .= "WHERE username = '".trim($username)."' AND password = '".trim(sha1($password))."' ";
-			$sql_minor .= "AND garagelist.garageName = '".trim($garageid)."'";
+			$sql_minor .= "AND garagelist.garagePassword = '".trim($garageid)."'";
 			
 			$exe_minor = mysql_query($sql_minor) or die(mysql_error());
 			$data_minor = mysql_fetch_object($exe_minor);

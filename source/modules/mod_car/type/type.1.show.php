@@ -5,67 +5,6 @@
  }
  
 
- 
- //=============================== Del 
- if ($act == 'del'){ 
- 	$car_type_chk = select_db('cartype',"where carTypeId = '".$id."'");
- 	$type_name = $car_type_chk[0]['carTypeName'];
-	
-	
-	$car_type_chk2 = select_db('car',"where carTypeId = '".$id."'");
- 	$find_used = count($car_type_chk2);
-	
-	if ($find_used == 0){
- 	
-		$TableName = 'cartype';
-		$sql = delete_db($TableName, array('carTypeId='=>$id));
-		//echo $sql;
-		mysql_query($sql);
-		?>
-		<script type="text/javascript">
-		$(document).ready(function(){
-			var delayAlert=null; 
-			$('#msg3').text('ลบประเภทรถ "<?=$type_name?>" เรียบร้อยแล้ว');
-			$('#alert3').fadeIn(500, function() {
-				clearTimeout(delayAlert);  
-				delayAlert=setTimeout(function(){  
-					//reloadPage();
-					alertFadeOut('alert3'); 
-					delayAlert=null;  
-				},3000);  
-			});
-		});
-		</script>
-		<?
-		
-	} else {
-		
-		?>
-		<script type="text/javascript">
-		$(document).ready(function(){
-			var delayAlert=null; 
-			$('#msg2').text('ลบประเภทรถ "<?=$type_name?>" ไม่ได้เนื่องจากมีข้อมูลรถในระบบ');
-			$('#alert2').fadeIn(500, function() {
-				clearTimeout(delayAlert);  
-				delayAlert=setTimeout(function(){  
-					//reloadPage();
-					alertFadeOut('alert2'); 
-					delayAlert=null;  
-				},3000);  
-			});
-		});
-		</script>
-		<?
-	}
-  
- }
- // End Del
-
-
-
-
- 
- 
  $car_type = select_db('cartype','order by carTypeId');
  $total = count($car_type);
  ?>
@@ -83,6 +22,43 @@
 	
 	function reloadPage(){
 		window.location = 'index.php?p=car.type&menu=main_car'; 
+	}
+	
+	
+	function fn_formDel(id){
+		jQuery.ajax({
+			url :'modules/mod_car/type/deltype.php',
+			type: 'GET',
+			data: 'act=deltype&id='+id+'',
+			dataType: 'jsonp',
+			dataCharset: 'jsonp',
+			success: function (data){
+				console.log(data.success);
+				if (data.success){
+					$('#msg3').text(data.message);
+					$('#alert3').fadeIn(500, function() {
+						clearTimeout(delayAlert);  
+						delayAlert=setTimeout(function(){  
+							alertFadeOut('alert3');
+							reloadPage(); 
+							delayAlert=null;  
+						},2000);  
+					});
+				} else {
+					$('#msg2').text(data.message);
+					$('#alert2').fadeIn(500, function() {
+						clearTimeout(delayAlert);  
+						delayAlert=setTimeout(function(){  
+							alertFadeOut('alert2'); 
+							delayAlert=null;  
+						},2000);  
+					});
+				}
+				
+				
+				$('#myModalDel'+id+'').modal('toggle');
+			}
+		});	
 	}
 	
 	
@@ -277,7 +253,7 @@
   		
   
 		<? if ($total != 0){ ?>
-            <table class="table table-striped table-bordered dTableR" id="smpl_tbl">
+            <table class="table table-striped table-bordered dTableR" id="dt_a">
                 <thead>
                     <tr>
                         <th style="width:10px">ลำดับ</th>
@@ -313,7 +289,11 @@
                             <div class="alert alert-block alert-error fade in">
                                 <h4 class="alert-heading">คุณต้องการลบข้อมูลประเภทรถ "<?=$car_type[$i]['carTypeName']?>"</h4>
                                 <div style="height:50px;"></div>
-                                <p><a href="index.php?p=car.type&menu=main_car&act=del&id=<?=$car_type[$i]['carTypeId']?>" class="btn btn-inverse"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> หรือ <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a></p>
+                                <p>
+                                <!--<a href="index.php?p=car.type&menu=main_car&act=del&id=<?=$car_type[$i]['carTypeId']?>" class="btn btn-inverse"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a>  -->
+                                <a href="#" class="btn btn-inverse" onclick="fn_formDel(<?=$car_type[$i]['carTypeId']?>);"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> 
+                                หรือ 
+                                <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a></p>
                             </div>
                         </div>
                         

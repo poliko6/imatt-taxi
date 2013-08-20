@@ -5,8 +5,8 @@
  }
  
 
- $car_color = select_db('carcolor','order by carColorId');
- $total = count($car_color);
+ $car_gas = select_db('cargas','order by carGasId');
+ $total = count($car_gas);
  ?>
  
  
@@ -21,15 +21,15 @@
 	}
 	
 	function reloadPage(){
-		window.location = 'index.php?p=car.color&menu=main_car'; 
+		window.location = 'index.php?p=car.gas&menu=main_car'; 
 	}
 	
 	
 	function fn_formDel(id){
 		jQuery.ajax({
-			url :'modules/mod_car/color/delcolor.php',
+			url :'modules/mod_car/gas/delgas.php',
 			type: 'GET',
-			data: 'act=delcolor&id='+id+'',
+			data: 'act=delgas&id='+id+'',
 			dataType: 'jsonp',
 			dataCharset: 'jsonp',
 			success: function (data){
@@ -64,15 +64,15 @@
 	
 	
 	function fn_formAdd(){		
-		if ($('#color_name').val() == ''){
-			$('#color_name').closest('div').addClass("f_error");
+		if ($('#gas_name').val() == ''){
+			$('#gas_name').closest('div').addClass("f_error");
 			$('#errtxt').fadeIn(500);
 		} else {
-			//$('#fm_addcolor').submit();			
+			//$('#fm_addgas').submit();			
 			jQuery.ajax({
-   				url :'modules/mod_car/color/addcolor.php',
+   				url :'modules/mod_car/gas/addgas.php',
    				type: 'GET',
-  				data: 'act=addcolor&color_name='+$('#color_name').val()+'',
+  				data: 'act=addgas&gas_name='+$('#gas_name').val()+'',
    				dataType: 'jsonp',
    				dataCharset: 'jsonp',
    				success: function (data){
@@ -100,7 +100,7 @@
 					
 					
 					$('#myModalAdd').modal('toggle');
-					$('#color_name').val('');
+					$('#gas_name').val('');
    				}
 			});	
 			
@@ -114,14 +114,14 @@
 		//console.log(id);
 		
 		if (process == 'select') {
-			$.post("modules/mod_car/color/getcolor.php", { 
+			$.post("modules/mod_car/gas/getgas.php", { 
 					process: process,
 					id: id
 				}, 
 				function(data){
-					$("#color_name_edit").val(data);
+					$("#gas_name_edit").val(data);
 					$("#temp").val(data);
-					$("#colorid").val(id);
+					$("#gasid").val(id);
 				}
 			);
 			
@@ -134,19 +134,19 @@
 		
 		if (process == 'update') {
 			
-			var id = $("#colorid").val();
+			var id = $("#gasid").val();
 			
 			
-			if ($('#color_name_edit').val() == ''){
-				$('#color_name_edit').closest('div').addClass("f_error");
+			if ($('#gas_name_edit').val() == ''){
+				$('#gas_name_edit').closest('div').addClass("f_error");
 				$('#errtxt_edit').fadeIn(500);
 			
 			} else {
 				
 				jQuery.ajax({
-					url :'modules/mod_car/color/editcolor.php',
+					url :'modules/mod_car/gas/editgas.php',
 					type: 'GET',
-					data: 'act=update&color_name='+$('#color_name_edit').val()+'&color_name_temp='+$('#temp').val()+'&id='+id+'',
+					data: 'act=update&gas_name='+$('#gas_name_edit').val()+'&gas_name_temp='+$('#temp').val()+'&id='+id+'',
 					dataType: 'jsonp',
 					dataCharset: 'jsonp',
 					success: function (data){
@@ -190,15 +190,15 @@
 <!-- POP UP -->
 <div class="modal hide fade" id="myModalAdd">
     <div class="modal-header">
-        <h3>เพิ่มสีรถยนต์</h3>
+        <h3>เพิ่มประเภทแก๊สรถยนต์</h3>
     </div>
-    <form action="" name="fm_addcolor" id="fm_addcolor">
+    <form action="" name="fm_addgas" id="fm_addgas">
     <div class="modal-body">
         <div class="formSep">
-            <label>ชื่อสีรถยนต์</label>
-            <input type="text" name="color_name" id="color_name" value="" />
-            <span class="help-inline">ตัวอย่าง : สีแดง</span>
-            <span class="help-block" id="errtxt" style="color:#900; display:none;">กรุณาป้อนสีรถ</span>
+            <label>ชื่อประเภทแก๊สรถยนต์</label>
+            <input type="text" name="gas_name" id="gas_name" value="" />
+            <span class="help-inline">ตัวอย่าง : LPG</span>
+            <span class="help-block" id="errtxt" style="color:#900; display:none;">กรุณาป้อนประเภทแก๊สรถ</span>
         </div> 
     </div>
     <div class="modal-footer">        
@@ -213,15 +213,15 @@
 <!-- POP UP -->
 <div class="modal hide fade" id="myModalEdit">
     <div class="modal-header">
-        <h3>แก้ไขสีรถยนต์</h3>
+        <h3>แก้ไขประเภทแก๊สรถยนต์</h3>
     </div>
-    <form action="" name="fm_editcolor" id="fm_editcolor">
+    <form action="" name="fm_editgas" id="fm_editgas">
     <div class="modal-body">
         <div class="formSep">
-            <label>ชื่อสีรถยนต์</label>
-            <input type="text" name="color_name_edit" id="color_name_edit" value="<?=$color_name_edit?>" />
-            <span class="help-inline">ตัวอย่าง : สีแดง</span>
-            <span class="help-block" id="errtxt_edit" style="color:#900; display:none;">กรุณาป้อนสีรถ</span>
+            <label>ชื่อประเภทแก๊สรถยนต์</label>
+            <input type="text" name="gas_name_edit" id="gas_name_edit" value="<?=$gas_name_edit?>" />
+            <span class="help-inline">ตัวอย่าง : ประเภทแก๊สแดง</span>
+            <span class="help-block" id="errtxt_edit" style="color:#900; display:none;">กรุณาป้อนประเภทแก๊สรถ</span>
         </div> 
     </div>
     <div class="modal-footer">        
@@ -230,7 +230,7 @@
         <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i>ยกเลิก</a>
     </div>
     <input type="hidden" name="temp" id="temp" value="" />
-    <input type="hidden" name="colorid" id="colorid" value="" />
+    <input type="hidden" name="gasid" id="gasid" value="" />
     </form>
 </div>
 
@@ -241,10 +241,10 @@
 	<div class="span12">
         <div class="well clearfix">
             <div class="row-fluid">
-                <div class="pull-left">รายการสีรถทั้งหมด <strong><?=$total?></strong></div>
+                <div class="pull-left">รายการประเภทแก๊สรถยนต์ทั้งหมด <strong><?=$total?></strong></div>
                 <div class="pull-right">
                   <a data-toggle="modal" data-backdrop="static" href="#myModalAdd">
-                  	<button class="btn btn-success" onClick="">เพิ่มสีรถ</button></a>  
+                  	<button class="btn btn-success" onClick="">เพิ่มประเภทแก๊สรถ</button></a>  
                 </div>
             </div>
         </div>
@@ -257,7 +257,7 @@
                 <thead>
                     <tr>
                         <th style="width:10px">ลำดับ</th>
-                        <th style="width:250px">ชื่อสี</th>
+                        <th style="width:250px">ชื่อประเภทแก๊ส</th>
                         <th style="width:120px">วันที่เพิ่ม</th>
                         <th style="width:100px">เครื่องมือ</th>
                         <th></th>
@@ -273,25 +273,25 @@
                         ?>
                         <tr>                   
                             <td style="text-align:center;"><?=$i+1?></td>
-                            <td><?=$car_color[$i]['carColorName']?></td>
-                            <td><?=Thai_date($car_color[$i]['dateAdd'])?></td>
+                            <td><?=$car_gas[$i]['carGasName']?></td>
+                            <td><?=Thai_date($car_gas[$i]['dateAdd'])?></td>
                             <td>
                             	<!--<a data-toggle="modal" data-backdrop="static" href="#myModalAdd"> -->
-                                <!--<a href="index.php?p=car.type&menu=main_car&act=edit&id=<?=$car_color[$i]['carColorId']?>" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> -->
-                               	<a href="#" data-toggle="modal" data-backdrop="static" title="Edit" onclick="fn_formEdit(<?=$car_color[$i]['carColorId']?>, 'select');"><i class="icon-pencil"></i></a>
+                                <!--<a href="index.php?p=car.type&menu=main_car&act=edit&id=<?=$car_gas[$i]['carGasId']?>" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> -->
+                               	<a href="#" data-toggle="modal" data-backdrop="static" title="Edit" onclick="fn_formEdit(<?=$car_gas[$i]['carGasId']?>, 'select');"><i class="icon-pencil"></i></a>
                                 
-                                <a href="#myModalDel<?=$car_color[$i]['carColorId']?>" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a>
+                                <a href="#myModalDel<?=$car_gas[$i]['carGasId']?>" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a>
                             </td>
                             <td></td>
                         </tr>
                         
                         <!-- POP UP -->
-                        <div class="modal hide fade" id="myModalDel<?=$car_color[$i]['carColorId']?>" style="text-align:center; width:500px;">
+                        <div class="modal hide fade" id="myModalDel<?=$car_gas[$i]['carGasId']?>" style="text-align:center; width:500px;">
                             <div class="alert alert-block alert-error fade in">
-                                <h4 class="alert-heading">คุณต้องการลบข้อมูลสีรถ "<?=$car_color[$i]['carColorName']?>"</h4>
+                                <h4 class="alert-heading">คุณต้องการลบข้อมูลประเภทแก๊สรถ "<?=$car_gas[$i]['carGasName']?>"</h4>
                                 <div style="height:50px;"></div>
                                 <p>
-                                <a href="#" class="btn btn-inverse" onclick="fn_formDel(<?=$car_color[$i]['carColorId']?>);"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> 
+                                <a href="#" class="btn btn-inverse" onclick="fn_formDel(<?=$car_gas[$i]['carGasId']?>);"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> 
                                 หรือ <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a>
                                	</p>
                             </div>
