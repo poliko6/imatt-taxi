@@ -14,5 +14,6 @@ $lang_menu = array(
 	//การจัดการรถแท๊กซี่	
 	"menu_car_type"			=>  "จัดการประเภทรถ",
 	"menu_car_banner"		=>  "จัดการยี่ห้อรถ",
+	"menu_car_color"		=>  "จัดการสีรถ",
 );
 ?>
