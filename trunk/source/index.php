@@ -160,7 +160,8 @@ if (empty($_SESSION['pass_actived'])){
         
         
     </head>
-    <body class="sidebar_hidden ptrn_d menu_hover">
+    <!--<body class="sidebar_hidden ptrn_d menu_hover"> -->
+    <body class="sidebar_hidden ptrn_d">
 		<div id="loading_layer" style="display:none"><img src="img/ajax_loader.gif" alt="" /></div>
 
 		<div id="maincontainer" class="clearfix">
