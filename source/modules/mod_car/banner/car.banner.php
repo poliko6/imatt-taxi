@@ -4,22 +4,22 @@
     <td width="29%"><a href="index.php?<?=$_SERVER['QUERY_STRING']?>" style="text-decoration:none;"><?=$lang_menu["menu_car_banner"]?></a><br />
 		<span class="normal">เมนูเพิ่ม แก้ไข และลบ ยี่ห้อรถยนต์</span></td>
     <td width="66%" style="border:none;">
-        <div class="alert" id="alert1" style="display:none;">
+    	<div class="alert" id="alert1" style="display:none; margin-top:5px; margin-bottom:5px;">
             <a class="close" data-dismiss="alert">×</a>
             <div id="msg1"><strong>Lorem ipsum!</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae tristique erat.</div>
         </div>
-        <div class="alert alert-error" id="alert2" style="display:none;">
+        <div class="alert alert-error" id="alert2" style="display:none; margin-top:5px; margin-bottom:5px;">
             <a class="close" data-dismiss="alert">×</a>
             <div id="msg2"><strong>Lorem ipsum!</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae tristique erat.</div>
         </div>
-        <div class="alert alert-success" id="alert3" style="display:none;">
+        <div class="alert alert-success" id="alert3" style="display:none; margin-top:5px; margin-bottom:5px;">
             <a class="close" data-dismiss="alert">×</a>
             <div id="msg3"><strong>Lorem ipsum!</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae tristique erat.</div>
         </div>
-        <div class="alert alert-info" id="alert4" style="display:none;">
+        <div class="alert alert-info" id="alert4" style="display:none; margin-top:5px; margin-bottom:5px;">
             <a class="close" data-dismiss="alert">×</a>
             <div id="msg4"><strong>Lorem ipsum!</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae tristique erat.</div>
-        </div>        
+        </div>      
     </td>
   </tr>
   <tr>

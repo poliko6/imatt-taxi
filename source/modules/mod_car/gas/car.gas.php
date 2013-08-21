@@ -2,7 +2,7 @@
   <tr>
     <td width="5%" align="center"><img src="modules/mod_car/images/gas-icon.png" alt="" width="50" height="50" /></td>
     <td width="29%"><a href="index.php?p=car.gas&menu=main_car" style="text-decoration:none;"><?=$lang_menu["menu_car_gas"]?></a><br />
-		<span class="normal">เมนูเพิ่ม แก้ไข และลบ ประเภทเชื้อเพลิงรถยนต์</span></td>
+		<span class="normal">เมนูเพิ่ม แก้ไข และลบ ประเภทแก๊สรถยนต์</span></td>
     <td width="66%" style="border:none;">
         <div class="alert" id="alert1" style="display:none; margin-top:5px; margin-bottom:5px;">
             <a class="close" data-dismiss="alert">×</a>

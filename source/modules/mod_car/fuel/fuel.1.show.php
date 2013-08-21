@@ -198,7 +198,7 @@
             <label>ชื่อประเภทเชื้อเพลิงรถยนต์</label>
             <input type="text" name="fuel_name" id="fuel_name" value="" />
             <span class="help-inline">ตัวอย่าง : เบนซิน</span>
-            <span class="help-block" id="errtxt" style="color:#900; display:none;">กรุณาป้อนประเภทเชื้อเพลิงรถ</span>
+            <span class="help-block" id="errtxt" style="color:#900; display:none;">กรุณาป้อนประเภทเชื้อเพลิงรถยนต์</span>
         </div> 
     </div>
     <div class="modal-footer">        
@@ -220,8 +220,8 @@
         <div class="formSep">
             <label>ชื่อประเภทเชื้อเพลิงรถยนต์</label>
             <input type="text" name="fuel_name_edit" id="fuel_name_edit" value="<?=$fuel_name_edit?>" />
-            <span class="help-inline">ตัวอย่าง : ประเภทเชื้อเพลิงแดง</span>
-            <span class="help-block" id="errtxt_edit" style="color:#900; display:none;">กรุณาป้อนประเภทเชื้อเพลิงรถ</span>
+            <span class="help-inline">ตัวอย่าง : เบนซิน</span>
+            <span class="help-block" id="errtxt_edit" style="color:#900; display:none;">กรุณาป้อนประเภทเชื้อเพลิงรถยนต์</span>
         </div> 
     </div>
     <div class="modal-footer">        
@@ -244,7 +244,7 @@
                 <div class="pull-left">รายการประเภทเชื้อเพลิงรถยนต์ทั้งหมด <strong><?=$total?></strong></div>
                 <div class="pull-right">
                   <a data-toggle="modal" data-backdrop="static" href="#myModalAdd">
-                  	<button class="btn btn-success" onClick="">เพิ่มประเภทเชื้อเพลิงรถ</button></a>  
+                  	<button class="btn btn-success" onClick="">เพิ่มประเภทเชื้อเพลิง</button></a>  
                 </div>
             </div>
         </div>
