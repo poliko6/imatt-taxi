@@ -3,7 +3,8 @@ $lang_menu = array(
 	//main menu
 	"menu_home"  		=>  "หน้าหลัก", //home	
 	"menu_user"			=>  "การจัดการผู้ใช้งาน",
-	"menu_car" 			=>  "การจัดการรถแท๊กซี่",
+	"menu_car" 			=>  "การจัดการข้อมูลรถ",
+	"menu_taxi" 		=>  "การจัดการรถแท๊กซี่",
 	
 	
 	//การจัดการผู้ใช้งาน	
@@ -18,5 +19,8 @@ $lang_menu = array(
 	"menu_car_color"		=>  "จัดการสีรถ",
 	"menu_car_fuel"			=>  "ประเภทเชื้อเพลิง",
 	"menu_car_gas"			=>  "ประเภทแก๊ส",
+	
+	
+	"menu_taxi_manage" 		=>  "รถแท๊กซี่",
 );
 ?>
