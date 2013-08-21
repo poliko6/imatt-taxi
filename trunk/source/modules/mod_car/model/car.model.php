@@ -1,8 +1,8 @@
 <table class="table table-striped table-bordered table-condensed">
   <tr>
-    <td width="5%" align="center"><img src="modules/mod_car/images/color-icon.png" alt="" width="50" height="50" /></td>
-    <td width="29%"><a href="index.php?p=car.color&menu=main_car" style="text-decoration:none;"><?=$lang_menu["menu_car_color"]?></a><br />
-		<span class="normal">เมนูเพิ่ม แก้ไข และลบ สีรถยนต์</span></td>
+    <td width="5%" align="center"><img src="modules/mod_car/images/model-icon.png" alt="" width="50" height="50" /></td>
+    <td width="29%"><a href="index.php?p=car.model&menu=main_car" style="text-decoration:none;"><?=$lang_menu["menu_car_model"]?></a><br />
+		<span class="normal">เมนูเพิ่ม แก้ไข และลบ รุ่นรถยนต์</span></td>
     <td width="66%" style="border:none;">
         <div class="alert" id="alert1" style="display:none; margin-top:5px; margin-bottom:5px;">
             <a class="close" data-dismiss="alert">×</a>
@@ -25,30 +25,30 @@
   <tr>
   	<td colspan="3">
 	<?
-	if ($handle_color = opendir('modules/mod_car/color')) {
- 		while (false !== ($file_color = readdir($handle_color)))
+	if ($handle_model = opendir('modules/mod_car/model')) {
+ 		while (false !== ($file_model = readdir($handle_model)))
       	{
-        	if ($file_color != "." && $file_color != "..")
+        	if ($file_model != "." && $file_model != "..")
 			{   				
-				if(strstr("$file_color", "color" ))
+				if(strstr("$file_model", "model" ))
 				{	
-					$data_color = explode('.', $file_color);
-					$file_menu_color[$data_color[1]]=$file_color;
+					$data_model = explode('.', $file_model);
+					$file_menu_model[$data_model[1]]=$file_model;
 				}
 			}
 		}	
 		
-		closedir($handle_color);
+		closedir($handle_model);
 	}
 	
-	$ii_color=0;
+	$ii_model=0;
 	
-	foreach($file_menu_color as $values)
+	foreach($file_menu_model as $values)
 	{		
-		$ii_color++;							
+		$ii_model++;							
 		
-		if($file_menu_color[$ii_color]){
-			include("modules/mod_car/color/$file_menu_color[$ii_color]");									
+		if($file_menu_model[$ii_model]){
+			include("modules/mod_car/model/$file_menu_model[$ii_model]");									
 		}
 	}	
 	?>

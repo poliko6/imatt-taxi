@@ -198,7 +198,7 @@
             <label>ชื่อประเภทแก๊สรถยนต์</label>
             <input type="text" name="gas_name" id="gas_name" value="" />
             <span class="help-inline">ตัวอย่าง : LPG</span>
-            <span class="help-block" id="errtxt" style="color:#900; display:none;">กรุณาป้อนประเภทแก๊สรถ</span>
+            <span class="help-block" id="errtxt" style="color:#900; display:none;">กรุณาป้อนประเภทแก๊สรถยนต์</span>
         </div> 
     </div>
     <div class="modal-footer">        
@@ -220,8 +220,8 @@
         <div class="formSep">
             <label>ชื่อประเภทแก๊สรถยนต์</label>
             <input type="text" name="gas_name_edit" id="gas_name_edit" value="<?=$gas_name_edit?>" />
-            <span class="help-inline">ตัวอย่าง : ประเภทแก๊สแดง</span>
-            <span class="help-block" id="errtxt_edit" style="color:#900; display:none;">กรุณาป้อนประเภทแก๊สรถ</span>
+            <span class="help-inline">ตัวอย่าง : LPG</span>
+            <span class="help-block" id="errtxt_edit" style="color:#900; display:none;">กรุณาป้อนประเภทแก๊สรถยนต์</span>
         </div> 
     </div>
     <div class="modal-footer">        
@@ -244,7 +244,7 @@
                 <div class="pull-left">รายการประเภทแก๊สรถยนต์ทั้งหมด <strong><?=$total?></strong></div>
                 <div class="pull-right">
                   <a data-toggle="modal" data-backdrop="static" href="#myModalAdd">
-                  	<button class="btn btn-success" onClick="">เพิ่มประเภทแก๊สรถ</button></a>  
+                  	<button class="btn btn-success" onClick="">เพิ่มประเภทแก๊ส</button></a>  
                 </div>
             </div>
         </div>

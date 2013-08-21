@@ -14,6 +14,7 @@ $lang_menu = array(
 	//การจัดการรถแท๊กซี่	
 	"menu_car_type"			=>  "จัดการประเภทรถ",
 	"menu_car_banner"		=>  "จัดการยี่ห้อรถ",
+	"menu_car_model"		=>  "จัดการรุ่นรถ",
 	"menu_car_color"		=>  "จัดการสีรถ",
 	"menu_car_fuel"			=>  "ประเภทเชื้อเพลิง",
 	"menu_car_gas"			=>  "ประเภทแก๊ส",

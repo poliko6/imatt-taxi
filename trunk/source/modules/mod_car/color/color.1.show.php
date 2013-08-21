@@ -198,7 +198,7 @@
             <label>ชื่อสีรถยนต์</label>
             <input type="text" name="color_name" id="color_name" value="" />
             <span class="help-inline">ตัวอย่าง : สีแดง</span>
-            <span class="help-block" id="errtxt" style="color:#900; display:none;">กรุณาป้อนสีรถ</span>
+            <span class="help-block" id="errtxt" style="color:#900; display:none;">กรุณาป้อนสีรถยนต์</span>
         </div> 
     </div>
     <div class="modal-footer">        
@@ -221,7 +221,7 @@
             <label>ชื่อสีรถยนต์</label>
             <input type="text" name="color_name_edit" id="color_name_edit" value="<?=$color_name_edit?>" />
             <span class="help-inline">ตัวอย่าง : สีแดง</span>
-            <span class="help-block" id="errtxt_edit" style="color:#900; display:none;">กรุณาป้อนสีรถ</span>
+            <span class="help-block" id="errtxt_edit" style="color:#900; display:none;">กรุณาป้อนสีรถยนต์</span>
         </div> 
     </div>
     <div class="modal-footer">        

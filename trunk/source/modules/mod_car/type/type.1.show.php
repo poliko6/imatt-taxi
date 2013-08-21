@@ -198,7 +198,7 @@
             <label>ชื่อประเภทรถยนต์</label>
             <input type="text" name="type_name" id="type_name" value="" />
             <span class="help-inline">ตัวอย่าง : รถเก๋ง</span>
-            <span class="help-block" id="errtxt" style="color:#900; display:none;">กรุณาป้อนประเภทรถ</span>
+            <span class="help-block" id="errtxt" style="color:#900; display:none;">กรุณาป้อนประเภทรถยนต์</span>
         </div> 
     </div>
     <div class="modal-footer">        
@@ -221,7 +221,7 @@
             <label>ชื่อประเภทรถยนต์</label>
             <input type="text" name="type_name_edit" id="type_name_edit" value="<?=$type_name_edit?>" />
             <span class="help-inline">ตัวอย่าง : รถเก๋ง</span>
-            <span class="help-block" id="errtxt_edit" style="color:#900; display:none;">กรุณาป้อนประเภทรถ</span>
+            <span class="help-block" id="errtxt_edit" style="color:#900; display:none;">กรุณาป้อนประเภทรถยนต์</span>
         </div> 
     </div>
     <div class="modal-footer">        
