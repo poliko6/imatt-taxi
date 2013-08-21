@@ -25,32 +25,15 @@
   <tr>
   	<td colspan="3">
 	<?
-	if ($handle_major = opendir('modules/mod_user/major')) {
- 		while (false !== ($file_major = readdir($handle_major)))
-      	{
-        	if ($file_major != "." && $file_major != "..")
-			{   				
-				if(strstr("$file_major", "major" ))
-				{	
-					$data_major = explode('.', $file_major);
-					$file_menu_major[$data_major[1]]=$file_major;
-				}
-			}
-		}	
-		
-		closedir($handle_major);
-	}
-	
-	$ii_major=0;
-	
-	foreach($file_menu_major as $values)
-	{		
-		$ii_major++;							
-		
-		if($file_menu_major[$ii_major]){
-			include("modules/mod_user/major/$file_menu_major[$ii_major]");									
+		switch($act) {
+			case 'edit':
+				break;
+			case 'add':
+				include("modules/mod_user/major/major.add.php");
+				break;
+			default:
+				include("modules/mod_user/major/major.show.php");
 		}
-	}	
 	?>
     </td>
   </tr>
