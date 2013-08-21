@@ -1,38 +1,5 @@
 <?  
- 	include("menu/lang.menu.php"); 
-	
-	$btn0="2";
-	$btn1="2";
-	$btn2="2";
-	$btn3="2";
-	$btn4="2";
-	$btn5="2";
-	$btn6="2";
-	$btn7="2";
-	$btn8="2";
-	$btn9="2";
-	$btn10="2";
-	$btn11="2";
-
-
-	$menuG = $_REQUEST["menu"]; 
-	
-	
-	switch($menuG) {
-	
-	case '' : 
-		$btn1="1";
-		break;
-		
-	case 'main_user' : 
-		$btn2="1";
-		break;
-	
-	case 'main_car' : 
-		$btn3="1";
-		break;
-	}
-	
+ 	include("menu/lang.menu.php"); 	
 ?>
 
 
