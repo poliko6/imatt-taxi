@@ -4,7 +4,11 @@
 	#echo $key ."=". $value."<br>";
  }
  ?>
- 
+<!-- datatable -->
+<script src="lib/datatables/jquery.dataTables.min.js"></script>
+<script src="lib/datatables/extras/Scroller/media/js/Scroller.min.js"></script>
+<!-- datatable functions -->
+<script src="js/gebo_datatables.js"></script>  
 
 
  <div class="row-fluid search_page">

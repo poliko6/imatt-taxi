@@ -8,7 +8,12 @@
  $car_fuel = select_db('carfuel','order by carFuelId');
  $total = count($car_fuel);
  ?>
- 
+
+<!-- datatable -->
+<script src="lib/datatables/jquery.dataTables.min.js"></script>
+<script src="lib/datatables/extras/Scroller/media/js/Scroller.min.js"></script>
+<!-- datatable functions -->
+<script src="js/gebo_datatables.js"></script> 
  
 <script type="text/javascript">
 	var delayAlert=null; 
