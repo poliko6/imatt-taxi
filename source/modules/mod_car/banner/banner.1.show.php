@@ -10,6 +10,21 @@
  //pre($car_banner);
  ?>
  
+<!-- datatable -->
+<script src="lib/datatables/jquery.dataTables.min.js"></script>
+<script src="lib/datatables/extras/Scroller/media/js/Scroller.min.js"></script>
+<!-- datatable functions -->
+<script src="js/gebo_datatables.js"></script> 
+
+<!-- fix for ios orientation change -->
+<script src="js/ios-orientationchange-fix.js"></script>
+<!-- scrollbar -->
+<script src="lib/antiscroll/antiscroll.js"></script>
+<script src="lib/antiscroll/jquery-mousewheel.js"></script>
+<!-- lightbox -->
+<script src="lib/colorbox/jquery.colorbox.min.js"></script>
+<!-- common functions -->
+<script src="js/gebo_common.js"></script>
  
 <script type="text/javascript">
 	var delayAlert=null; 

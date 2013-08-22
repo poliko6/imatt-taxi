@@ -1,14 +1,20 @@
-
+ <!-- datatable -->
+<script src="lib/datatables/jquery.dataTables.min.js"></script>
+<script src="lib/datatables/extras/Scroller/media/js/Scroller.min.js"></script>
+<!-- datatable functions -->
+<script src="js/gebo_datatables.js"></script>
 
  <div class="row-fluid search_page">
 	<div class="span12">
     	<?
 		if ($u_garage == 1) {
-			$car_data = select_db('car',"order by dateAdd desc");
-			
 			if ($garageid == ''){
-				$garageid  = $u_garage;
+				$garageid  = '';
+				$car_data = select_db('car',"order by dateAdd desc");
+			} else {
+				$car_data = select_db('car',"where garageId = '".$garageid."' order by dateAdd desc");
 			}
+			
 			
 		} else {
 			$car_data = select_db('car',"where garageId = '".$u_garage."' order by dateAdd desc");
@@ -18,9 +24,13 @@
 		
 		
 		///=====Data Major
-		$major_data = select_db('majoradmin',"where garageId = '".$garageid."'");
-		$major_name = $major_data[0]['thaiCompanyName'];
-		$garageid = $major_data[0]['garageId'];
+		if ($garageid == ''){ 
+			$major_name = 'ทั้งหมด';
+		} else {
+			$major_data = select_db('majoradmin',"where garageId = '".$garageid."'");
+			$major_name = $major_data[0]['thaiCompanyName'];
+			$garageid = $major_data[0]['garageId'];
+		}
 		
 		$major_data_list = select_db('majoradmin',"order by dateAdded desc");
 		
@@ -39,7 +49,8 @@
                     
 						<? if ($u_garage == 1) { ?> 
                         <select name="garageid" id="garageid" onchange="fm_selectmajor.submit();" style="width:250px;">
-                            <? foreach($major_data_list as $valMajor){?>
+                            <option value="">ทั้งหมด</option>
+							<? foreach($major_data_list as $valMajor){?>
                                 <option value="<?=$valMajor['garageId']?>" <? if ($garageid == $valMajor['garageId']) { echo "selected=\"selected\""; } ?> ><?=$valMajor['thaiCompanyName']?></option>
                             <? } ?>
                         </select>	        
@@ -61,13 +72,15 @@
             <table class="table table-striped table-bordered dTableR" id="dt_a">
                 <thead>
                     <tr>
-                        <th style="width:10px">ลำดับ</th>
-                        <th style="width:60px">รูปรถ</th>
-                        <th>ทะเบียนรถ</th>
-                        <th>รายละเอียดรถ</th>
-                        <th>สถานะ</th>
-                        <th>วันที่เพิ่ม</th>
-                        <th>เครื่องมือ</th>
+                        <th style="width:10px;">ลำดับ</th>
+                        <th style="width:80px;">รูปรถ</th>
+                        <th style="width:200px;">ชื่ออู่รถ</th>
+                        <th style="width:150px;">ทะเบียนรถ</th>
+                        <th style="width:200px;">รายละเอียดรถ</th>
+                        <th style="width:60px;">สถานะ</th>
+                        <th style="width:150px;">วันที่เพิ่ม</th>
+                        <th style="width:80px;">เครื่องมือ</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,30 +94,79 @@
                         <tr>                   
                             <td style="text-align:center;"><?=$i+1?></td>
                             <td>
-                            	<a href="gallery/Image10.jpg" title="Image 10" class="cbox_single thumbnail">
-                                    <img alt="" src="gallery/Image10_tn.jpg" style="height:50px;width:50px">
+                            	<a href="stored/taxi/<?=$car_data[$i]['carImage']?>" title="<?=$car_data[$i]['carRegistration']?>" class="cbox_single thumbnail">
+                                    <img alt="" src="stored/taxi/<?=$car_data[$i]['carImage']?>" style="height:50px;width:80px">
                                 </a>
 							</td>
-                            <td><?=$car_data[$i]['carRegistration']?></td>
-                            <td>
-                            
-                            	<?=$car_data[$i]['carTypeId']?>
-								<?=$car_data[$i]['carBannerId']?>
-                                <?=$car_data[$i]['carModelId']?>
-                                <?=$car_data[$i]['carGasId']?>
-                                <?=$car_data[$i]['carFuelId']?>
-                                <?=$car_data[$i]['carColorId']?>
-                                <?=$car_data[$i]['carYear']?>
+                             <td>
+								<?
+                                $this_major = select_db('majoradmin',"where garageId = '".$car_data[$i]['garageId']."'");
+								$this_major_name1 = $this_major[0]['thaiCompanyName'];
+								$this_major_name2 = $this_major[0]['englishCompanyName'];
+								?>
+                                <div><?=$this_major_name1?></div>
+                                <div style="font-style:italic; color:#999; font-size:11px;"><?=$this_major_name2?></div>
+                                
                             </td>
-                            <td><?=$car_data[$i]['carStatusId']?></td>
+                            <td>
+								<?
+                                $province_data = select_db('province',"where provinceId = '".$car_data[$i]['provinceId']."'");
+								$province_name = $province_data[0]['provinceName'];
+								?>
+								<div><?=$car_data[$i]['carRegistration']?></div>
+                                <div><?=$province_name?></div>
+                                
+                            </td>
+                            <td>
+                            	<?
+                                $type_data = select_db('cartype',"where carTypeId = '".$car_data[$i]['carTypeId']."'");
+								$type_name = $type_data[0]['carTypeName'];
+								
+								$banner_data = select_db('carbanner',"where carBannerId = '".$car_data[$i]['carBannerId']."'");
+								$banner_name = $banner_data[0]['carBannerNameEng'];
+								
+								$model_data = select_db('carmodel',"where carModelId = '".$car_data[$i]['carModelId']."'");
+								$model_name = $model_data[0]['carModelName'];
+								
+								$gas_data = select_db('cargas',"where carGasId = '".$car_data[$i]['carGasId']."'");
+								$gas_name = $gas_data[0]['carGasName'];
+								
+								$fuel_data = select_db('carfuel',"where carFuelId = '".$car_data[$i]['carFuelId']."'");
+								$fuel_name = $fuel_data[0]['carFuelName'];
+								
+								$color_data = select_db('carcolor',"where carColorId = '".$car_data[$i]['carColorId']."'");
+								$color_name = $color_data[0]['carColorName'];
+						
+								?>
+                                <div>ยี่ห้อ :<?=$banner_name?></div>
+             					<div>รุ่น :<?=$model_name?></div>
+                            </td>
+                            <td style="text-align:center;">								
+                                <?
+                                $status_data = select_db('carstatus',"where carStatusId = '".$car_data[$i]['carStatusId']."'");
+								$status_name = $status_data[0]['carStatusName'];
+								?>
+                                <div><?=$status_name?></div>
+                                
+                                <? if ($car_data[$i]['carStatusId'] == 1) { ?>
+                                <i class="splashy-marker_rounded_green"></i>                       
+                                <? } ?>
+                                <? if ($car_data[$i]['carStatusId'] == 2) { ?>
+                                <i class="splashy-marker_rounded_red"></i>
+                                <? } ?>
+                                <? if ($car_data[$i]['carStatusId'] == 3) { ?>
+                                <i class="splashy-marker_rounded_light_blue"></i>  
+                                <? } ?>
+                            </td>
                             <td><?=Thai_date($car_data[$i]['dateAdd'])?></td>
                             <td>
                             	<!--<a data-toggle="modal" data-backdrop="static" href="#myModalAdd"> -->
                                 <!--<a href="index.php?p=car.type&menu=main_car&act=edit&id=<?=$car_data[$i]['carId']?>" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> -->
-                               	<a href="#" data-toggle="modal" data-backdrop="static" title="Edit" onclick="fn_formEdit(<?=$car_data[$i]['carId']?>, 'select');"><i class="icon-pencil"></i></a>
+                               	<!--<a href="#" data-toggle="modal" data-backdrop="static" title="Edit" onclick="fn_formEdit(<?=$car_data[$i]['carId']?>, 'select');"><i class="icon-pencil"></i></a>
                                 
-                                <a href="#myModalDel<?=$car_data[$i]['carId']?>" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a>
+                                <a href="#myModalDel<?=$car_data[$i]['carId']?>" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a> -->
                             </td>
+                            <td></td>
                         </tr>
                         
                         <!-- POP UP -->
@@ -141,7 +203,7 @@
  
  
 <script type="text/javascript">
-	
+
 	function fn_formDel(id){
 		jQuery.ajax({
 			url :'modules/mod_car/model/delmodel.php',
@@ -178,56 +240,7 @@
 		});	
 	}
 	
-	
-	
-	function fn_formAdd(){		
-		if ($('#model_name').val() == ''){
-			$('#model_name').closest('div').addClass("f_error");
-			$('#errtxt').fadeIn(500);
-		} else {
-			
-			var bannerid = $('#hide_bannerid').val();
-					
-			jQuery.ajax({
-   				url :'modules/mod_car/model/addmodel.php',
-   				type: 'GET',
-  				data: 'act=addmodel&model_name='+$('#model_name').val()+'&bannerid='+bannerid+'',
-   				dataType: 'jsonp',
-   				dataCharset: 'jsonp',
-   				success: function (data){
-					console.log(data.success);
-      				if (data.success){
-						$('#msg3').text(data.message);
-						$('#alert3').fadeIn(500, function() {
-							clearTimeout(delayAlert);  
-							delayAlert=setTimeout(function(){  
-								alertFadeOut('alert3');
-								reloadPage(); 
-								delayAlert=null;  
-							},2000);  
-						});
-     				} else {
-						$('#msg2').text(data.message);
-						$('#alert2').fadeIn(500, function() {
-							clearTimeout(delayAlert);  
-							delayAlert=setTimeout(function(){  
-								alertFadeOut('alert2'); 
-								delayAlert=null;  
-							},2000);  
-						});
-					}
-					
-					
-					$('#myModalAdd').modal('toggle');
-					$('#model_name').val('');
-   				}
-			});	
-			
-		}
-	}
-	
-	
-	
+
 	
 	function fn_formEdit(id,process){
 		//console.log(id);
@@ -330,5 +343,46 @@
     <input type="hidden" name="modelid" id="modelid" value="" />
     </form>
 </div>
+
+<script src="js/jquery.min.js"></script>
+<!-- smart resize event -->
+<script src="js/jquery.debouncedresize.min.js"></script>
+<!-- hidden elements width/height -->
+<script src="js/jquery.actual.min.js"></script>
+<!-- js cookie plugin -->
+<script src="js/jquery.cookie.min.js"></script>
+<!-- main bootstrap js -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<!-- bootstrap plugins -->
+<script src="js/bootstrap.plugins.min.js"></script>
+<!-- tooltips -->
+<script src="lib/qtip2/jquery.qtip.min.js"></script>
+<!-- jBreadcrumbs -->
+<script src="lib/jBreadcrumbs/js/jquery.jBreadCrumb.1.1.min.js"></script>
+<!-- sticky messages -->
+<script src="lib/sticky/sticky.min.js"></script>
+<!-- fix for ios orientation change -->
+<script src="js/ios-orientationchange-fix.js"></script>
+<!-- scrollbar -->
+<script src="lib/antiscroll/antiscroll.js"></script>
+<script src="lib/antiscroll/jquery-mousewheel.js"></script>
+<!-- common functions -->
+<script src="js/gebo_common.js"></script>
+
+<!-- colorbox -->
+<script src="lib/colorbox/jquery.colorbox.min.js"></script>
+<!-- datatable -->
+<script src="lib/datatables/jquery.dataTables.min.js"></script>
+<!-- additional sorting for datatables -->
+<script src="lib/datatables/jquery.dataTables.sorting.js"></script>
+<!-- tables functions -->
+<script src="js/gebo_tables.js"></script>
+
+<script>
+    $(document).ready(function() {
+        //* show all elements & remove preloader
+        setTimeout('$("html").removeClass("js")',1000);
+    });
+</script>
 
  

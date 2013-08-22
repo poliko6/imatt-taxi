@@ -8,7 +8,11 @@
  $car_type = select_db('cartype','order by carTypeId');
  $total = count($car_type);
  ?>
- 
+<!-- datatable -->
+<script src="lib/datatables/jquery.dataTables.min.js"></script>
+<script src="lib/datatables/extras/Scroller/media/js/Scroller.min.js"></script>
+<!-- datatable functions -->
+<script src="js/gebo_datatables.js"></script>  
  
 <script type="text/javascript">
 	var delayAlert=null; 

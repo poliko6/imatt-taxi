@@ -24,6 +24,8 @@
 					first_name: { required: true, minlength: 3 },
 					last_name: { required: true, minlength: 3 },
 					your_message: { required: true, minlength: 20 },
+					carRegistration: { required: true, minlength: 3 },
+					carModelId: { required: true },
 					
 					days: { required: true, minlength: 2 },
 					gender: { required: true },
@@ -32,7 +34,7 @@
 					state: { required: true, minlength: 3 }
 				},
 				invalidHandler: function(form, validator) {
-					$.sticky("There are some errors. Please corect them and submit again.", {autoclose : 5000, position: "top-right", type: "st-error" });
+					$.sticky("กรุณาป้อนข้อมูลให้ครบค่ะ", {autoclose : 5000, position: "top-right", type: "st-error" });
 				},
 				errorPlacement: function(error, element) {
 					// Set positioning based on the elements position in the form

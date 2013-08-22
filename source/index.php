@@ -98,7 +98,7 @@ if (empty($_SESSION['pass_actived'])){
         <script src="lib/jBreadcrumbs/js/jquery.jBreadCrumb.1.1.min.js"></script>
         <!-- lightbox -->
         <script src="lib/colorbox/jquery.colorbox.min.js"></script>
-        
+
     </head>
     <!--<body class="sidebar_hidden ptrn_d menu_hover"> -->
     <body class="sidebar_hidden ptrn_d">
@@ -112,23 +112,7 @@ if (empty($_SESSION['pass_actived'])){
                     <div class="navbar-inner">
                         <div class="container-fluid">
                             <a class="brand" href="index.php"><i class="icon-home icon-white"></i> Taxi System</a>
-                            <ul class="nav user_menu pull-right">
-                                <!--<li class="hidden-phone hidden-tablet">
-                                    <div class="nb_boxes clearfix">
-                                        <a data-toggle="modal" data-backdrop="static" href="#myMail" class="label ttip_b" title="New messages">25 <i class="splashy-mail_light"></i></a>
-                                        <a data-toggle="modal" data-backdrop="static" href="#myTasks" class="label ttip_b" title="New tasks">10 <i class="splashy-calendar_week"></i></a>
-                                    </div>
-                                </li>
-								<li class="divider-vertical hidden-phone hidden-tablet"></li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle nav_condensed" data-toggle="dropdown"><i class="flag-gb"></i> <b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-										<li><a href="javascript:void(0)"><i class="flag-de"></i> Deutsch</a></li>
-										<li><a href="javascript:void(0)"><i class="flag-fr"></i> Français</a></li>
-										<li><a href="javascript:void(0)"><i class="flag-es"></i> Español</a></li>
-										<li><a href="javascript:void(0)"><i class="flag-ru"></i> Pусский</a></li>
-                                    </ul>
-                                </li> -->
+                            <ul class="nav user_menu pull-right">                     
                                 <li class="divider-vertical hidden-phone hidden-tablet"></li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="img/user_avatar.png" alt="" class="user_avatar" /> <?=$u_username?> <b class="caret"></b></a>
