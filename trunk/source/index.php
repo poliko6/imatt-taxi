@@ -98,66 +98,6 @@ if (empty($_SESSION['pass_actived'])){
         <script src="lib/jBreadcrumbs/js/jquery.jBreadCrumb.1.1.min.js"></script>
         <!-- lightbox -->
         <script src="lib/colorbox/jquery.colorbox.min.js"></script>
-        <!-- fix for ios orientation change -->
-        <script src="js/ios-orientationchange-fix.js"></script>
-        <!-- scrollbar -->
-        <script src="lib/antiscroll/antiscroll.js"></script>
-        <script src="lib/antiscroll/jquery-mousewheel.js"></script>
-        <!-- to top -->
-        <script src="lib/UItoTop/jquery.ui.totop.min.js"></script>
-        <!-- common functions -->
-        <script src="js/gebo_common.js"></script>
-        
-        <script src="lib/jquery-ui/jquery-ui-1.8.23.custom.min.js"></script>
-        <!-- touch events for jquery ui-->
-        <script src="js/forms/jquery.ui.touch-punch.min.js"></script>
-        <!-- multi-column layout -->
-        <script src="js/jquery.imagesloaded.min.js"></script>
-        <script src="js/jquery.wookmark.js"></script>
-        <!-- responsive table -->
-        <script src="js/jquery.mediaTable.min.js"></script>
-        <!-- small charts -->
-        <script src="js/jquery.peity.min.js"></script>
-        <!-- charts -->
-        <!--<script src="lib/flot/jquery.flot.min.js"></script>
-        <script src="lib/flot/jquery.flot.resize.min.js"></script>
-        <script src="lib/flot/jquery.flot.pie.min.js"></script> -->
-        <!-- calendar -->
-        <script src="lib/fullcalendar/fullcalendar.min.js"></script>
-        <!-- sortable/filterable list -->
-        <script src="lib/list_js/list.min.js"></script>
-        <script src="lib/list_js/plugins/paging/list.paging.js"></script>
-        <!-- dashboard functions -->
-        <!--<script src="js/gebo_dashboard.js"></script> -->
-        <!-- sticky messages -->
-        <script src="lib/sticky/sticky.min.js"></script>       
-        <!-- tables functions -->
-        <script src="js/gebo_tables.js"></script>
-        
-        <!-- datatable -->
-		<script src="lib/datatables/jquery.dataTables.min.js"></script>
-        <script src="lib/datatables/extras/Scroller/media/js/Scroller.min.js"></script>
-        <!-- datatable functions -->
-        <script src="js/gebo_datatables.js"></script>
-        
-        <!-- additional sorting for datatables -->
-        <script src="lib/datatables/jquery.dataTables.sorting.js"></script>
-        <!-- plupload and all it's runtimes and the jQuery queue widget (attachments) -->
-        <script type="text/javascript" src="lib/plupload/js/plupload.full.js"></script>
-        <script type="text/javascript" src="lib/plupload/js/jquery.plupload.queue/jquery.plupload.queue.full.js"></script>
-        <!-- autosize textareas (new message) -->
-        <script src="js/forms/jquery.autosize.min.js"></script>
-        <!-- tag handler (recipients) -->
-        <script src="lib/tag_handler/jquery.taghandler.min.js"></script>
-        <!-- mailbox functions -->
-        <script src="js/gebo_mailbox.js"></script>
-        
-        <!-- smoke_js -->
-		<script src="lib/smoke/smoke.js"></script>
-        <!-- notifications functions -->
-        <script src="js/gebo_notifications.js"></script>
-    
-        
         
     </head>
     <!--<body class="sidebar_hidden ptrn_d menu_hover"> -->

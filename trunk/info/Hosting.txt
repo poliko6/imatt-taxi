@@ -3,12 +3,22 @@ hostname : imattioapp.com
 username : taxi
 password : taxi2013
 
-
 FTP
 hostname : imattioapp.com
 username : taxi
 password : taxi2013
 port : 2121
+
+Driect Admin
+www.imattioapp.com:2222
+username : taxi
+password : taxi2013
+
+Domain
+taxi.imattioapp.com
+
+IP
+233.206.209.72
 
 
 
