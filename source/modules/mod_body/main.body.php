@@ -13,13 +13,21 @@
 
 
 <div id="left">
-  <? 
-  	//pre($_REQUEST);
+  <?                 
   	if($_REQUEST['p']<>"")
 	{ 
-		$part_p = explode('.',$_REQUEST['p']);
-		//pre($part_p);
-		include("modules/mod_".$part_p[0]."/".$part_p[1]."/".$_REQUEST['p'].".php"); 
+		if (in_array(trim($_REQUEST['p']),$menuname_subarr)){	
+			
+			
+			$part_p = explode('.',$_REQUEST['p']);
+			//pre($part_p);
+			include("modules/mod_".$part_p[0]."/".$part_p[1]."/".$_REQUEST['p'].".php"); 
+		
+		} else {
+			
+			?> <META HTTP-EQUIV="Refresh" CONTENT="0;URL=index.php"> <?
+		}
+		
 	} else {
   ?>
       <div id="cpanel">
