@@ -56,7 +56,7 @@
                         </select>	        
                         <? } ?>			
     
-                        <input type="button" class="btn btn-success" name="btnSubmit" id="btnSubmit" onClick="fn_goToPage('add');" value="เพิ่มรถแท๊กซี่">
+                        <input type="button" class="btn btn-success" name="btnSubmit" id="btnSubmit" onClick="fn_goToPage('add','');" value="เพิ่มรถแท๊กซี่">
 
               	 	</div>
               
@@ -94,8 +94,22 @@
                         <tr>                   
                             <td style="text-align:center;"><?=$i+1?></td>
                             <td>
-                            	<a href="stored/taxi/<?=$car_data[$i]['carImage']?>" title="<?=$car_data[$i]['carRegistration']?>" class="cbox_single thumbnail">
-                                    <img alt="" src="stored/taxi/<?=$car_data[$i]['carImage']?>" style="height:50px;width:80px">
+                            	<?
+								
+								//gallery/Image10_tn.jpg
+                                if (trim($car_data[$i]['carImage']) == ''){
+									$pathimage  = 'gallery/Image10_tn.jpg'; 	
+								} else {
+									$pathimage  = 'stored/taxi/'.$car_data[$i]['carImage'];
+									if (file_exists($pathimage)) {  //check file			
+										$pathimage  = 'stored/taxi/'.$car_data[$i]['carImage'];
+									} else { 						
+										$pathimage  = 'gallery/Image10_tn.jpg'; 	
+									}
+								}
+								?>
+                            	<a href="<?=$pathimage?>" title="<?=$car_data[$i]['carRegistration']?>" class="cbox_single thumbnail">
+                                    <img alt="" src="<?=$pathimage?>" style="height:50px;width:80px">
                                 </a>
 							</td>
                              <td>
@@ -162,9 +176,9 @@
                             <td>
                             	<!--<a data-toggle="modal" data-backdrop="static" href="#myModalAdd"> -->
                                 <!--<a href="index.php?p=car.type&menu=main_car&act=edit&id=<?=$car_data[$i]['carId']?>" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> -->
-                               	<!--<a href="#" data-toggle="modal" data-backdrop="static" title="Edit" onclick="fn_formEdit(<?=$car_data[$i]['carId']?>, 'select');"><i class="icon-pencil"></i></a>
+                               	<a href="#" class="ttip_t" title="Edit" onClick="fn_goToPage('edit','<?=$car_data[$i]['carId']?>');" ><i class="icon-pencil"></i></a>
                                 
-                                <a href="#myModalDel<?=$car_data[$i]['carId']?>" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a> -->
+                                <a href="#myModalDel<?=$car_data[$i]['carId']?>" class="ttip_t" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a>
                             </td>
                             <td></td>
                         </tr>
@@ -206,14 +220,14 @@
 
 	function fn_formDel(id){
 		jQuery.ajax({
-			url :'modules/mod_car/model/delmodel.php',
+			url :'modules/mod_taxi/taximanage/deltaxi.php',
 			type: 'GET',
-			data: 'act=delmodel&id='+id+'',
+			data: 'act=deltaxi&id='+id+'',
 			dataType: 'jsonp',
 			dataCharset: 'jsonp',
 			success: function (data){
 				console.log(data.success);
-				if (data.success){
+				if (data.success){ 
 					$('#msg3').text(data.message);
 					$('#alert3').fadeIn(500, function() {
 						clearTimeout(delayAlert);  
@@ -320,45 +334,7 @@
  
 
 
-<!-- POP UP -->
-<div class="modal hide fade" id="myModalEdit">
-    <div class="modal-header">
-        <h3>แก้ไขรุ่นรถยนต์ (ยี่ห้อ <?=$banner_name?>)</h3>
-    </div>
-    <form action="" name="fm_editmodel" id="fm_editmodel">
-    <div class="modal-body">
-        <div class="formSep">
-            <label>ชื่อรุ่นรถยนต์</label>
-            <input type="text" name="model_name_edit" id="model_name_edit" value="<?=$model_name_edit?>" />
-            <span class="help-inline">ตัวอย่าง : Corolla</span>
-            <span class="help-block" id="errtxt_edit" style="color:#900; display:none;">กรุณาป้อนรุ่นรถยนต์</span>
-        </div> 
-    </div>
-    <div class="modal-footer">        
-    	<!--<input type="submit" name="submit_add" id="submit_add"  class="btn btn-primary" value="บันทึก" /> -->
-        <a class="btn btn-primary" onclick="fn_formEdit('','update');"><i class="splashy-check"></i>บันทึก</a>
-        <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i>ยกเลิก</a>
-    </div>
-    <input type="hidden" name="temp" id="temp" value="" />
-    <input type="hidden" name="modelid" id="modelid" value="" />
-    </form>
-</div>
 
-<script src="js/jquery.min.js"></script>
-<!-- smart resize event -->
-<script src="js/jquery.debouncedresize.min.js"></script>
-<!-- hidden elements width/height -->
-<script src="js/jquery.actual.min.js"></script>
-<!-- js cookie plugin -->
-<script src="js/jquery.cookie.min.js"></script>
-<!-- main bootstrap js -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<!-- bootstrap plugins -->
-<script src="js/bootstrap.plugins.min.js"></script>
-<!-- tooltips -->
-<script src="lib/qtip2/jquery.qtip.min.js"></script>
-<!-- jBreadcrumbs -->
-<script src="lib/jBreadcrumbs/js/jquery.jBreadCrumb.1.1.min.js"></script>
 <!-- sticky messages -->
 <script src="lib/sticky/sticky.min.js"></script>
 <!-- fix for ios orientation change -->
