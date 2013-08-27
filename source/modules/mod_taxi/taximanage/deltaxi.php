@@ -11,16 +11,24 @@
 		#echo $key ."=". $value."<br>";
 	}
 	
-	
+	//Check On Table transportsection
 	$car_chk = select_db('transportsection',"where carId = '".$id."'");
  	$find_used = count($car_chk);
 	
 	
 	$car_data = select_db('car',"where carId = '".$id."'");
  	$carRegistration = $car_data[0]['carRegistration'];
-	
+	$carImage= $car_data[0]['carImage'];
 
-	if ($find_used == 0){		
+
+	if ($find_used == 0){	
+	
+		//path ตาม Server
+		//$pathdel1 = $_SERVER['DOCUMENT_ROOT']."/stored/img/".$img;
+		//$flgDelete1 = @unlink($pathdel1);	
+	
+		
+		@unlink('../../../stored/taxi/'.$carImage);
 		
 		$TableName = 'car';
 		$sql = delete_db($TableName, array('carId='=>$id));

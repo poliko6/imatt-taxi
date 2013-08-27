@@ -100,7 +100,7 @@
 		$rs = mysql_query($sql);
 		$data = @mysql_fetch_object($rs) ;	
 		$totaldata = $data->totaldata;		
-		#echo $sql;
+		//echo $sql;
 		return $totaldata;
 	}
 	
