@@ -1,8 +1,8 @@
 <table class="table table-striped table-bordered table-condensed">
   <tr>
-    <td width="5%" align="center"><img src="modules/mod_user/images/profile-icon.png" alt="" width="50" height="50" /></td>
-    <td width="29%"><a href="index.php?<?=$_SERVER['QUERY_STRING']?>" style="text-decoration:none;"><?=$lang_menu["menu_user_profile"]?></a><br />
-		<span class="normal">แก้ไขข้อมูลส่วนตัว</span></td>
+    <td width="5%" align="center"><img src="modules/mod_user/images/type-icon.png" alt="" width="50" height="50" /></td>
+    <td width="29%"><a href="index.php?<?=$_SERVER['QUERY_STRING']?>" style="text-decoration:none;"><?=$lang_menu["menu_user_type"]?></a><br />
+		<span class="normal">ประเภทพนักงาน</span></td>
     <td width="66%" style="border:none;">
         <div class="alert" id="alert1" style="display:none;">
             <a class="close" data-dismiss="alert">×</a>
