@@ -1,0 +1,1 @@
+<a href="index.php?p=user.profile&menu=main_user"><?=$lang_menu["menu_user_profile"]?></a>
