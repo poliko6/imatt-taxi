@@ -1,8 +1,8 @@
 <?
-$major_data = select_db('majoradmin',"where garageId = '".$garageid."'");
+$major_data = select_db('majoradmin',"where garageId = '".$garageId."'");
 $major_name = $major_data[0]['thaiCompanyName'];
 
-$car_data = select_db('car',"where carId = '".$carid."'");
+$car_data = select_db('car',"where carId = '".$carId."'");
 $carRegistration = $car_data[0]['carRegistration'];
 $provinceId = $car_data[0]['provinceId'];
 
@@ -60,8 +60,10 @@ function fn_callModel(id){
                                 <div class="span12">
                                     <label for="fileinput" class="control-label">ทะเบียนรถ <span class="f_req">*</span></label>
                                     <div class="controls text_line">
+                                    	<div class="help-block" id="errRegistration" style="display:none; color:#C00;">หมายเลขทะเบียนซ้ำ</div>
                                         <input type="text" name="carRegistration" id="carRegistration" class="span5"  value="<?=$carRegistration?>"  />
                                         <span class="help-block">ตัวอย่าง : กก 0001</span>
+                                        <input type="hidden" name="carRegistrationTmp" id="carRegistrationTmp" value="<?=$carRegistration?>"  />
                                     </div>
                             	</div>
                             </div>
@@ -70,7 +72,8 @@ function fn_callModel(id){
                          <div class="control-group formSep">
                             <label for="provinceId" class="control-label">จังหวัด</label>
                             <div class="controls">
-                            	<? $province_data = select_db('province',"order by provinceId"); ?>
+                            	<? $province_data = select_db('province',"order by provinceId"); ?>                                
+                                <input type="hidden" name="provinceIdTmp" id="provinceIdTmp" value="<?=$provinceId?>"  />
                                 <select class="span3" name="provinceId" id="provinceId">
                                 	<? foreach($province_data as $valProvince){?>
                                     <option value="<?=$valProvince['provinceId']?>" <? if ($provinceId == $valProvince['provinceId']) { echo "selected=\"selected\""; } ?> ><?=$valProvince['provinceName']?></option>
@@ -85,7 +88,14 @@ function fn_callModel(id){
                             <div class="controls">
                                 <div data-provides="fileupload" class="fileupload fileupload-new">
                                     <input type="hidden" />
-                                    <img alt="" src="<?=$pathimage?>" style="height:50px;width:80px">
+                                    <input type="hidden" name="tmpimage" id="tmpimage" value="<?=$carImage?>" />
+                                  	
+                                    <? if ($carImage != '') { ?>
+                                        <a href="<?=$pathimage?>" title="<?=$car_data[$i]['carRegistration']?>" class="cbox_single thumbnail">
+                                            <img alt="" src="<?=$pathimage?>" style="height:80px;">
+                                        </a>
+                                    <? } ?>
+                                    
                                     <div style="width: 80px; height: 80px;" class="fileupload-new thumbnail"><img src="http://www.placehold.it/80x80/EFEFEF/AAAAAA" alt="" /></div>
                                     <div style="width: 80px; height: 80px; line-height: 80px;" class="fileupload-preview fileupload-exists thumbnail"></div>
                                     <span class="btn btn-file"><span class="fileupload-new">เลือกไฟล์รูป</span><span class="fileupload-exists">Change</span><input type="file" id="fileinput" name="fileinput" /></span>
@@ -187,14 +197,12 @@ function fn_callModel(id){
                             	<input type="button" class="btn" onClick="reloadPage()" value="Cancel">
                             </div>
                         </div>
-                    </fieldset
-                    >
-                    <input type="hidden" name="temimg" value="<?=$carImage?>" />
-					<input type="hidden" name="carId" value="<?=$carid?>" />
+                    </fieldset>
+					<input type="hidden" name="carId" value="<?=$carId?>" />
                     <input type="hidden" name="p" value="<?=$p?>" />
                     <input type="hidden" name="menu" value="<?=$menu?>" />
-                    <input type="hidden" name="garageid" value="<?=$garageid?>" />            
-                    <input type="hidden" name="saveedit" value="1" />
+                    <input type="hidden" name="garageId" value="<?=$garageId?>" />        
+                    <input type="hidden" name="act" value="saveedit" />
                 </form>
             </div>
         </div>

@@ -24,8 +24,16 @@
 					first_name: { required: true, minlength: 3 },
 					last_name: { required: true, minlength: 3 },
 					your_message: { required: true, minlength: 20 },
+					
 					carRegistration: { required: true, minlength: 3 },
 					carModelId: { required: true },
+					provinceId: { required: true },
+					carTypeId: { required: true },
+					carBannerId: { required: true },
+					carModelId: { required: true },
+					carYear: { required: true },
+					carColorId: { required: true },
+					carFuelId: { required: true },
 					
 					days: { required: true, minlength: 2 },
 					gender: { required: true },

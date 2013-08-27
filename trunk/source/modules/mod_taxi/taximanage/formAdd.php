@@ -1,5 +1,6 @@
 <?
-$major_data = select_db('majoradmin',"where garageId = '".$garageid."'");
+if ($garageId == '') { $garageId = $_SESSION['u_garage']; }
+$major_data = select_db('majoradmin',"where garageId = '".$garageId."'");
 $major_name = $major_data[0]['thaiCompanyName'];
 
 ?>
@@ -9,7 +10,8 @@ $major_name = $major_data[0]['thaiCompanyName'];
 $(document).ready( function () {
 	
 	if ($('#carBannerId').val() != ''){
-		fn_callModel($('#carBannerId').val());
+		var bannerId = $('#carBannerId').val();
+		fn_callModel(bannerId);
 	}
 	
 	$('#carBannerId').change(function () {
@@ -24,7 +26,11 @@ $(document).ready( function () {
 function fn_callModel(id){
 	//alert(id);
 	$.post('modules/mod_taxi/taximanage/get_model.php', {id:id} , function(data) {
-  		$('#carModelId').html(data);	
+  		if (data != '') {
+			$('#carModelId').html(data);
+		} else {
+			$('#carModelId').html('<option value="">กรุณาเลือกรุ่นรถ</option>');
+		}
 	});	
 }
 </script>
@@ -44,8 +50,9 @@ function fn_callModel(id){
                                 <div class="span12">
                                     <label for="fileinput" class="control-label">ทะเบียนรถ <span class="f_req">*</span></label>
                                     <div class="controls text_line">
+                                    	<div class="help-block" id="errRegistration" style="display:none; color:#C00;">หมายเลขทะเบียนซ้ำ</div>
                                         <input type="text" name="carRegistration" id="carRegistration" class="span5"  value="<?=$carRegistration?>"  />
-                                        <span class="help-block">ตัวอย่าง : กก 0001</span>
+                                        <span class="help-block">ตัวอย่าง : กก 0001</span>                                        
                                     </div>
                             	</div>
                             </div>
@@ -56,6 +63,7 @@ function fn_callModel(id){
                             <div class="controls">
                             	<? $province_data = select_db('province',"order by provinceId"); ?>
                                 <select class="span3" name="provinceId" id="provinceId">
+                                	<option value="">กรุณาเลือกจังหวัด</option>
                                 	<? foreach($province_data as $valProvince){?>
                                     <option value="<?=$valProvince['provinceId']?>" <? if ($provinceId == $valProvince['provinceId']) { echo "selected=\"selected\""; } ?> ><?=$valProvince['provinceName']?></option>
                                     <? } ?>                                    
@@ -82,6 +90,7 @@ function fn_callModel(id){
                             <div class="controls">
                             	<? $type_data = select_db('cartype',"order by carTypeId"); ?>
                                 <select class="span3" name="carTypeId" id="carTypeId">
+                                	<option value="">กรุณาเลือกประเภทรถยนต์</option>
                                 	<? foreach($type_data as $valType){?>
                                     <option value="<?=$valType['carTypeId']?>" <? if ($carTypeId == $valType['carTypeId']) { echo "selected=\"selected\""; } ?> ><?=$valType['carTypeName']?></option>
                                     <? } ?>                                    
@@ -94,6 +103,7 @@ function fn_callModel(id){
                             <div class="controls">
                             	<? $banner_data = select_db('carbanner',"order by carBannerId"); ?>
                                 <select class="span3" name="carBannerId" id="carBannerId">
+                                	<option value="">กรุณาเลือกยี่ห้อรถ</option>
                                 	<? foreach($banner_data as $valBanner){?>
                                     <option value="<?=$valBanner['carBannerId']?>" <? if ($carBannerId == $valBanner['carBannerId']) { echo "selected=\"selected\""; } ?> ><?=$valBanner['carBannerNameEng']?></option>
                                     <? } ?>                                    
@@ -105,7 +115,7 @@ function fn_callModel(id){
                             <label for="carModelId" class="control-label">รุ่นรถรถ</label>
                             <div class="controls">                            	
                                 <select class="span3" name="carModelId" id="carModelId">
-                                	<option></option>                                
+                                	<option value="">กรุณาเลือกรุ่นรถ</option>                              
                                 </select>
                             </div>                           	
                         </div>
@@ -115,6 +125,7 @@ function fn_callModel(id){
                             <label for="carYear" class="control-label">ปีรถ</label>
                             <div class="controls">                            	
                                 <select class="span3" name="carYear" id="carYear">
+                                	<option value="">กรุณาเลือกปีรถ</option>
                                 	<? 
 									$thisyear = date('Y');
 									$toyear = date('Y')-30;
@@ -131,6 +142,7 @@ function fn_callModel(id){
                             <div class="controls">
                             	<? $color_data = select_db('carcolor',"order by carColorId"); ?>
                                 <select class="span3" name="carColorId" id="carColorId">
+                                	<option value="">กรุณาเลือกสีรถ</option>
                                 	<? foreach($color_data as $valColor){?>
                                     <option value="<?=$valColor['carColorId']?>" <? if ($carColorId == $valColor['carColorId']) { echo "selected=\"selected\""; } ?> ><?=$valColor['carColorName']?></option>
                                     <? } ?>                                    
@@ -143,6 +155,7 @@ function fn_callModel(id){
                             <div class="controls">
                             	<? $fuel_data = select_db('carfuel',"order by carFuelId"); ?>
                                 <select class="span3" name="carFuelId" id="carFuelId">
+                                	<option value="">กรุณาเลือกประเภทเชื้อเพลิง</option>
                                 	<? foreach($fuel_data as $valFuel){?>
                                     <option value="<?=$valFuel['carFuelId']?>" <? if ($carFuelId == $valFuel['carFuelId']) { echo "selected=\"selected\""; } ?> ><?=$valFuel['carFuelName']?></option>
                                     <? } ?>                                    
@@ -173,8 +186,8 @@ function fn_callModel(id){
 
                     <input type="hidden" name="p" value="<?=$p?>" />
                     <input type="hidden" name="menu" value="<?=$menu?>" />
-                    <input type="hidden" name="garageid" value="<?=$garageid?>" />            
-                    <input type="hidden" name="saveadd" value="1" />
+                    <input type="hidden" name="garageId" value="<?=$garageId?>" /> 
+                    <input type="hidden" name="act" value="saveadd" />          
                 </form>
             </div>
         </div>

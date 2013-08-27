@@ -7,33 +7,30 @@
  <div class="row-fluid search_page">
 	<div class="span12">
     	<?
+		//Case Supervisor
 		if ($u_garage == 1) {
-			if ($garageid == ''){
-				$garageid  = '';
+			
+			if ($garageId == ''){
 				$car_data = select_db('car',"order by dateAdd desc");
 			} else {
-				$car_data = select_db('car',"where garageId = '".$garageid."' order by dateAdd desc");
-			}
+				$car_data = select_db('car',"where garageId = '".$garageId."' order by dateAdd desc");
+			}			
 			
-			
-		} else {
+		} else { //Case Garage
 			$car_data = select_db('car',"where garageId = '".$u_garage."' order by dateAdd desc");
-			$garageid  = $u_garage;
+			$garageId  = $u_garage;
 		}
 		$total = count($car_data);
 		
 		
 		///=====Data Major
-		if ($garageid == ''){ 
+		if ($garageId == ''){ 
 			$major_name = 'ทั้งหมด';
 		} else {
-			$major_data = select_db('majoradmin',"where garageId = '".$garageid."'");
+			$major_data = select_db('majoradmin',"where garageId = '".$garageId."'");
 			$major_name = $major_data[0]['thaiCompanyName'];
-			$garageid = $major_data[0]['garageId'];
+			$garageId = $major_data[0]['garageId'];
 		}
-		
-		$major_data_list = select_db('majoradmin',"order by dateAdded desc");
-		
 		?>
         
         <input type="hidden" name="hide_garageid" id="hide_garageid" value="<?=$garageid?>" />
@@ -44,19 +41,24 @@
                	
                 
                               	
-                <form action="" name="fm_selectmajor" id="fm_selectmajor" method="post">                	
+                <form action="index.php?p=taxi.taximanage&menu=main_taxi" name="fm_selectmajor" id="fm_selectmajor" method="post">                	
                 	<div class="pull-right"> 
                     
-						<? if ($u_garage == 1) { ?> 
-                        <select name="garageid" id="garageid" onchange="fm_selectmajor.submit();" style="width:250px;">
-                            <option value="">ทั้งหมด</option>
-							<? foreach($major_data_list as $valMajor){?>
-                                <option value="<?=$valMajor['garageId']?>" <? if ($garageid == $valMajor['garageId']) { echo "selected=\"selected\""; } ?> ><?=$valMajor['thaiCompanyName']?></option>
-                            <? } ?>
-                        </select>	        
-                        <? } ?>			
+						<? 
+						if ($u_garage == 1) { 
+							$major_data_list = select_db('majoradmin',"order by dateAdded desc");
+							?> 
+							<select name="garageId" id="garageId" onchange="fm_selectmajor.submit();" style="width:250px;">
+								<option value="">ทั้งหมด</option>
+								<? foreach($major_data_list as $valMajor){?>
+									<option value="<?=$valMajor['garageId']?>" <? if ($garageId == $valMajor['garageId']) { echo "selected=\"selected\""; } ?> ><?=$valMajor['thaiCompanyName']?></option>
+								<? } ?>
+							</select>	        
+                        <? } else { ?>	
+                        	<input type="hidden" name="garageId" value="<?=$garageId?>" /> 
+                        <? } ?>		
     
-                        <input type="button" class="btn btn-success" name="btnSubmit" id="btnSubmit" onClick="fn_goToPage('add','');" value="เพิ่มรถแท๊กซี่">
+                        <input type="button" class="btn btn-success" name="btnSubmit" id="btnSubmit" onClick="fn_goToPage('add');" value="เพิ่มรถแท๊กซี่">
 
               	 	</div>
               
@@ -106,7 +108,7 @@
 									} else { 						
 										$pathimage  = 'gallery/Image10_tn.jpg'; 	
 									}
-								}
+								}								
 								?>
                             	<a href="<?=$pathimage?>" title="<?=$car_data[$i]['carRegistration']?>" class="cbox_single thumbnail">
                                     <img alt="" src="<?=$pathimage?>" style="height:50px;width:80px">
@@ -152,8 +154,8 @@
 								$color_name = $color_data[0]['carColorName'];
 						
 								?>
-                                <div>ยี่ห้อ :<?=$banner_name?></div>
-             					<div>รุ่น :<?=$model_name?></div>
+                                <div><strong>ยี่ห้อ</strong> :<?=$banner_name?>, <strong>รุ่น</strong> :<?=$model_name?></div>
+                                <div><strong>ปี</strong> :<?=$car_data[$i]['carYear']?></div>
                             </td>
                             <td style="text-align:center;">								
                                 <?
@@ -176,9 +178,17 @@
                             <td>
                             	<!--<a data-toggle="modal" data-backdrop="static" href="#myModalAdd"> -->
                                 <!--<a href="index.php?p=car.type&menu=main_car&act=edit&id=<?=$car_data[$i]['carId']?>" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> -->
-                               	<a href="#" class="ttip_t" title="Edit" onClick="fn_goToPage('edit','<?=$car_data[$i]['carId']?>');" ><i class="icon-pencil"></i></a>
-                                
-                                <a href="#myModalDel<?=$car_data[$i]['carId']?>" class="ttip_t" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a>
+                                <div style="float:left; margin-right:5px;">
+                                <form action="" method="post" name="fmEdit<?=$i?>" id="fmEdit<?=$i?>">
+                                	<input type="hidden" name="carId" value="<?=$car_data[$i]['carId']?>" />
+                                    <input type="hidden" name="garageId" value="<?=$car_data[$i]['garageId']?>" />
+                                    <input type="hidden" name="act" value="edittaxi" />
+                               		<a href="#" class="ttip_t" title="Edit" onClick="fmEdit<?=$i?>.submit();" ><i class="icon-pencil"></i></a>
+                                </form>
+                                </div>
+                                <div style="float:left;">
+                                	<a href="#myModalDel<?=$car_data[$i]['carId']?>" class="ttip_t" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a>
+                                </div>
                             </td>
                             <td></td>
                         </tr>
@@ -228,105 +238,14 @@
 			success: function (data){
 				console.log(data.success);
 				if (data.success){ 
-					$('#msg3').text(data.message);
-					$('#alert3').fadeIn(500, function() {
-						clearTimeout(delayAlert);  
-						delayAlert=setTimeout(function(){  
-							alertFadeOut('alert3');
-							reloadPage(); 
-							delayAlert=null;  
-						},2000);  
-					});
+					alertPopup('msg3','alert3',''+data.message+'',1);
 				} else {
-					$('#msg2').text(data.message);
-					$('#alert2').fadeIn(500, function() {
-						clearTimeout(delayAlert);  
-						delayAlert=setTimeout(function(){  
-							alertFadeOut('alert2'); 
-							delayAlert=null;  
-						},2000);  
-					});
-				}
-				
+					alertPopup('msg2','alert2',''+data.message+'',0);
+				}				
 				
 				$('#myModalDel'+id+'').modal('toggle');
 			}
 		});	
-	}
-	
-
-	
-	function fn_formEdit(id,process){
-		//console.log(id);
-		
-		if (process == 'select') {
-			$.post("modules/mod_car/model/getmodel.php", { 
-					process: process,
-					id: id
-				}, 
-				function(data){
-					$("#model_name_edit").val(data);
-					$("#temp").val(data);
-					$("#modelid").val(id);
-				}
-			);
-			
-			$('#myModalEdit').modal('toggle');
-		}
-		
-		
-		
-		
-		
-		if (process == 'update') {
-			
-			var id = $("#modelid").val();
-			
-			
-			if ($('#model_name_edit').val() == ''){
-				$('#model_name_edit').closest('div').addClass("f_error");
-				$('#errtxt_edit').fadeIn(500);
-			
-			} else {
-				
-				jQuery.ajax({
-					url :'modules/mod_car/model/editmodel.php',
-					type: 'GET',
-					data: 'act=update&model_name='+$('#model_name_edit').val()+'&model_name_temp='+$('#temp').val()+'&id='+id+'',
-					dataType: 'jsonp',
-					dataCharset: 'jsonp',
-					success: function (data){
-						console.log(data.success);
-						if (data.success){
-							$('#msg3').text(data.message);
-							$('#alert3').fadeIn(500, function() {
-								clearTimeout(delayAlert);  
-								delayAlert=setTimeout(function(){  
-									alertFadeOut('alert3');
-									reloadPage(); 
-									delayAlert=null;  
-								},2000);  
-							});
-						} else {
-							$('#msg1').text(data.message);
-							$('#alert1').fadeIn(500, function() {
-								clearTimeout(delayAlert);  
-								delayAlert=setTimeout(function(){  
-									alertFadeOut('alert1'); 
-									delayAlert=null;  
-								},2000);  
-							});
-						}
-						
-						
-						$('#myModalEdit').modal('toggle');
-					}
-				});	
-			}
-			
-		}
-		
-
 	}
 	
 </script>
