@@ -21,10 +21,12 @@
 		}	
 		closedir($handle_taxi);
 	}	
-
+	//pre($menuname_subarr);
+	//echo count($file_menu_taxi);
 	//if ((count($file_menu_taxi) > 1)){
-	sort($file_menu_taxi);
+		sort($file_menu_taxi);
 	//}
+	
 				
 	foreach($file_menu_taxi as $values){		
 		if($values){

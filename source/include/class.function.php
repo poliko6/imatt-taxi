@@ -159,7 +159,7 @@ mysql_query($sql);
 	{
 		$sql = "select * from $table $condition";
 		$dbquery = mysql_query($sql);
-		//echo $sql;
+		//echo $sql."<br>";
 		$rows = array();
 		while (($result= mysql_fetch_array($dbquery)) !== FALSE)
 		$rows[] = $result;
