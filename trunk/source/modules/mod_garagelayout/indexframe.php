@@ -8,14 +8,12 @@
 	$this_garage = $p_get_path[count($p_get_path)-2];
 	//$this_garage = '1234';
 	
-	pre($get_path);
-	
 	$sql_ui = "SELECT garageinterface.*, garagelist.garageShortName FROM garageinterface ";
 	$sql_ui .= "INNER JOIN garagelist ON garageinterface.garageId = garagelist.garageId ";
 	$sql_ui .= "WHERE garagelist.garageShortName ='".trim($this_garage)."' ";
 	$rs_ui = mysql_query($sql_ui);
 	$data_ui = mysql_fetch_object($rs_ui);	
-	echo $sql_ui;
+	//echo $sql_ui;
 	
 	$sql_ui_default = "SELECT * FROM garageinterface WHERE garageId = 0 ";
 	$rs_ui_default = mysql_query($sql_ui_default);
