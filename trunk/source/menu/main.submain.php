@@ -57,7 +57,7 @@ for ($iim=0; $iim<count($menuname_subarr); $iim++){
 		$iiim++;
 	}	
 }
-//echo "<pre>"; echo print_r($menuname_arr); echo "</pre>";
+#echo "<pre>"; echo print_r($menuname_arr); echo "</pre>";
 
 
 if ($handle_index_submain = opendir('menu')) {
@@ -86,7 +86,7 @@ if ($handle_index_submain = opendir('menu')) {
 if ((count($file_menu_submain) > 1)){
 	sort($file_menu_submain);
 }
-//echo "<pre>"; echo print_r($file_menu_submain); echo "</pre>";
+#echo "<pre>"; echo print_r($file_menu_submain); echo "</pre>";
 
 $iii_index_submain = 0;
 
@@ -105,14 +105,14 @@ foreach($file_menu_submain as $values){
 			while (false !== ($file_index_submain_sub = readdir($handle_index_submain_sub))) {
 	   		 	if ($file_index_submain_sub != "." && $file_index_submain_sub != "..") {   
 					$menu_submainx = "submain."."$iii_index_submain".".";
-					//echo $menu_submainx."<br>";
+					#echo $menu_submainx."<br>";
 					
 					if(strstr("$file_index_submain_sub", "$menu_submainx" )) {	
 						$data_index_submain_sub = explode('.', $file_index_submain_sub);
 						
 						#echo "<pre>"; echo print_r($data_index_submain_sub); echo "</pre>";
 						$filecheck = $data_index_submain_sub[4].".".$data_index_submain_sub[5];	
-						//echo $filecheck."<br>";
+						#echo $filecheck."<br>";
 						#---------------Check permisstion--------------------------------------					
 						if (in_array($filecheck,$menuname_subarr)) { 
 							$file_menu_index_submain_sub[$data_index_submain_sub[3]]=$file_index_submain_sub;
