@@ -2,10 +2,11 @@
 	class mysqldb {
 			var $link;
 			var $result;
-		function connect($config) {
-			$this->link = mysql_connect($config['hostname'], $config['username'], $config['password']);
+		 function connect($config) {
+			$this->link = mysql_connect($config['hostname'], $config['username'], $config['password'])or die ("ไม่สามารถเชื่อมต่อฐานข้อมูลได้");
 			if($this->link) {
 				mysql_query("SET NAMES 'utf-8'");
+				
 				return true;
 			}
 			$this->show_error(mysql_error($this->link), "Please wait... Not Connect Database");
@@ -13,7 +14,7 @@
 		}
 		function selectdb($database) {
 			if($this->link) {
-				mysql_select_db($database, $this->link);
+				mysql_select_db($database, $this->link) or die ("sas");
 				return true;
 			}
 			$this->show_error("Not connect the database before", "selectdb($database)");
@@ -34,5 +35,6 @@
 			exit(1);
 		} 
 	}
+	
 
 ?>
