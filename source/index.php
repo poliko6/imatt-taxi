@@ -79,7 +79,7 @@ if (empty($_SESSION['pass_actived'])){
 		
 		<script>
 			//* hide all elements & show preloader
-			document.documentElement.className += 'js';
+			//document.documentElement.className += 'js';
 		</script>
         
         
