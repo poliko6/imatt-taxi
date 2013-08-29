@@ -17,7 +17,19 @@ $carFuelId = $car_data[0]['carFuelId'];
 $carColorId = $car_data[0]['carColorId'];
 $carStatusId = $car_data[0]['carStatusId'];
 
-$pathimage  = 'stored/taxi/'.$carImage;
+$pathimage  = 'stored/taxi/thumbnail/'.$carImage;
+
+if (file_exists($pathimage)) {  //check file			
+	$pathimage  = 'stored/taxi/thumbnail/'.$carImage;
+} else { 						
+	$pathimage  = ''; 	
+}
+
+if (file_exists($pathimage)) {  //check file			
+	$pathimage  = 'stored/taxi/thumbnail/'.$carImage;
+} else { 						
+	$pathimage  = ''; 	
+}
 ?>
 
 
@@ -90,7 +102,7 @@ function fn_callModel(id){
                                     <input type="hidden" />
                                     <input type="hidden" name="tmpimage" id="tmpimage" value="<?=$carImage?>" />
                                   	
-                                    <? if ($carImage != '') { ?>
+                                    <? if ($pathimage != '') { ?>
                                         <a href="<?=$pathimage?>" title="<?=$car_data[$i]['carRegistration']?>" class="cbox_single thumbnail">
                                             <img alt="" src="<?=$pathimage?>" style="height:80px;">
                                         </a>

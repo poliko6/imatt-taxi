@@ -1,6 +1,6 @@
 <?php 
 
-	  class Database {
+	 class Database {
 		  
      private $s_server = "imattioapp.com";
 	 private $db_username = "taxi";
@@ -15,7 +15,7 @@
 		 {
 			mysql_connect($this->s_server,$this->db_username,$this->db_password) or die ("ไม่สามารถเชื่อมต่อฐานข้อมูลได้");
 			mysql_select_db($this->db_name) or die ("ไม่สามารถเชื่อมต่อฐานข้อมูลได้sssss");
-			mysql_query("SET NAMES utf8;");
+			//mysql_query("SET NAMES utf8;");
 		   if(mysql_errno() > 0)  die (mysql_error());
 		 }
 	
@@ -118,5 +118,3 @@
 	 
 	 }
 ?>
-
-<img src="../../../../include/class.mysqldb.php"

@@ -46,8 +46,8 @@
             g_Map.gmap3({
                 action: 'init',
                 options:{
-                    center  : [48.71, 49.87],
-                    zoom    : 3
+                    center  : [13.730845, 100.540675],
+                    zoom    : 10
                 },
                 callback: function(){
                     $('#gmap_search').on('submit', function(){
@@ -133,7 +133,7 @@
                         },
                         {   action: 'addMarker',
                             latLng: latLng_array,
-                            map: { center:true, zoom: 18 }
+                            map: { center:true, zoom: 10 }
                         }
                     );
                 });

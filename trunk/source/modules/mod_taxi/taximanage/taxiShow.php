@@ -11,13 +11,13 @@
 		if ($u_garage == 1) {
 			
 			if ($garageId == ''){
-				$car_data = select_db('car',"order by dateAdd desc");
+				$car_data = select_db('car',"where checkDelete = 's' order by dateAdd desc");
 			} else {
-				$car_data = select_db('car',"where garageId = '".$garageId."' order by dateAdd desc");
+				$car_data = select_db('car',"where garageId = '".$garageId."' and checkDelete = 's' order by dateAdd desc");
 			}			
 			
 		} else { //Case Garage
-			$car_data = select_db('car',"where garageId = '".$u_garage."' order by dateAdd desc");
+			$car_data = select_db('car',"where garageId = '".$u_garage."' and checkDelete = 's' order by dateAdd desc");
 			$garageId  = $u_garage;
 		}
 		$total = count($car_data);
@@ -108,10 +108,20 @@
 									} else { 						
 										$pathimage  = 'gallery/Image10_tn.jpg'; 	
 									}
+									
+									
+									$pathimage2  = 'stored/taxi/thumbnail/'.$car_data[$i]['carImage'];
+									if (file_exists($pathimage2)) {  //check file			
+										$pathimage2  = 'stored/taxi/thumbnail/'.$car_data[$i]['carImage'];
+									} else { 						
+										$pathimage2  = 'gallery/Image10_tn.jpg'; 	
+									}
+									
+									
 								}								
 								?>
                             	<a href="<?=$pathimage?>" title="<?=$car_data[$i]['carRegistration']?>" class="cbox_single thumbnail">
-                                    <img alt="" src="<?=$pathimage?>" style="height:50px;width:80px">
+                                    <img alt="" src="<?=$pathimage2?>" style="height:50px;width:80px">
                                 </a>
 							</td>
                              <td>

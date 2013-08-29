@@ -30,6 +30,12 @@ if ($total != 0) {
 	} else {
 		$sql = "INSERT INTO mobilemap (mobileId,latitude,longitude) VALUES ('$mobileId','$latitude','$longitude')";
 		mysql_query($sql, $conn);
+		
+		
+		$sql_update = "UPDATE mobile SET latitude = $latitude, longitude = $longitude WHERE mobileId = $mobileId";
+		mysql_query($sql_update);
+		#echo $sql_update;
+
 
 		$iresult["code"] = "200";
 		$iresult["msg"] = "Success";
