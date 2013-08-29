@@ -1,37 +1,8 @@
 <div class="row-fluid">
   <div class="span12">
     <h3 class="heading" style="text-align:center;">ตำแหน่งรถแท๊กซี่ของ ""</h3>
-    <div class="row-fluid">
-      <div class="span4">
-        <div class="row-fluid" id="g-map-top">
-          <div class="span12">
-            <div class="well">
-              <form class="input-append" id="gmap_search">
-                <input autocomplete="off" class="span8" type="text" placeholder="Find location on map..." />
-                <button type="submit" class="btn"><i class="splashy-marker_rounded_add"></i></button>
-              </form>
-            </div>
-            <div class="location_add_form well" style="display: none">
-              <p class="formSep"><strong>Add/Edit location:</strong></p>
-              <div class="formSep">
-                <label>Name</label>
-                <input type="text" class="span10" id="comp_name" />
-                <label>Contact</label>
-                <input type="text" class="span10" id="comp_contact" />
-                <label>Phone</label>
-                <input type="text" class="span10" id="comp_phone" />
-                <label>Address</label>
-                <input type="text" class="span10" id="comp_address" readonly="readonly" />
-                <label>Lat, Lng</label>
-                <input type="text" class="span10" id="comp_lat_lng" readonly="readonly" />
-                <input type="hidden" id="comp_id" />
-              </div>
-              <button class="btn btn-invert">Save</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="span8">
+    <div class="row-fluid">      
+      <div class="span12">
         <div class="well">
           <div id="g_map" style="width:100%;height:400px"></div>
         </div>
@@ -42,20 +13,42 @@
 
 
 
+ <div class="location_add_form well" style="display: none">
+  <p class="formSep"><strong>Add/Edit location:</strong></p>
+  <div class="formSep">
+    <label>Name</label>
+    <input type="text" class="span10" id="comp_name" />
+    <label>Contact</label>
+    <input type="text" class="span10" id="comp_contact" />
+    <label>Phone</label>
+    <input type="text" class="span10" id="comp_phone" />
+    <label>Address</label>
+    <input type="text" class="span10" id="comp_address" readonly="readonly" />
+    <label>Lat, Lng</label>
+    <input type="text" class="span10" id="comp_lat_lng" readonly="readonly" />
+    <input type="hidden" id="comp_id" />
+  </div>
+  <button class="btn btn-invert">Save</button>
+</div>
+
 
 <!-- Taxi on Garage  -->
 <?
 $get_garage = 2;
-$sql_mobile = "SELECT mobilemap.*, mobile.garageId ";
+/*$sql_mobile = "SELECT mobilemap.*, mobile.garageId ";
 $sql_mobile .= "FROM mobilemap inner join mobile on mobilemap.mobileId = mobile.mobileId ";
 $sql_mobile .= "WHERE mobile.garageId = '".$get_garage."'";
 $rs_mobile = mysql_query($sql_mobile);
-$data_mobile = mysql_fetch_object($rs_mobile);
+$data_mobile = mysql_fetch_object($rs_mobile);*/
 
 #pre($data_mobile);
 
-$sql_taxi = "SELECT * FROM car WHERE garageId =  '".$get_garage."'";
-$rs_taxi = mysql_query($sql_taxi);
+/*$sql_taxi = "SELECT * FROM car WHERE garageId =  '".$get_garage."'";
+$rs_taxi = mysql_query($sql_taxi);*/
+
+
+$sql_mobile = "SELECT * FROM mobile WHERE garageId = '".$get_garage."'";
+$rs_mobile = mysql_query($sql_mobile);
 ?>
 
 <div class="row-fluid">
@@ -73,14 +66,18 @@ $rs_taxi = mysql_query($sql_taxi);
         </tr>
       </thead>
       <tbody>
-      	<? while($data_taxi = @mysql_fetch_object($rs_taxi)){ ?>
+      	<? 
+		while($rs_mobile = @mysql_fetch_object($rs_mobile)){ 
+			
+			//$data_car = 
+			?>
             <tr>
               <td>1</td>
               <td><?=$data_taxi->carRegistration?></td>
               <td>//คนขับ</td>
               <td class="address">4 New York Plaza, New York, NY 10004, United States</td>
-              <td>40.702677, -74.011277</td>
-              <td>(212) 210-2100</td>
+              <td><?=$rs_mobile->latitude;?>, <?=$rs_mobile->longitude;?></td>
+              <td><?=$rs_mobile->mobileNumber;?></td>
               <td>
                   <a href="javascript:void(0)" class="show_on_map btn btn-gebo btn-mini">Show</a> 
                   <!--<a href="javascript:void(0)" class="comp_edit btn btn-mini">Edit</a> -->

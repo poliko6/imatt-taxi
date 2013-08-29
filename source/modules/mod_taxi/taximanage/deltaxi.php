@@ -28,10 +28,16 @@
 		//$flgDelete1 = @unlink($pathdel1);	
 	
 		
-		@unlink('../../../stored/taxi/'.$carImage);
+		//@unlink('../../../stored/taxi/'.$carImage);
+		
+		/*$TableName = 'car';
+		$sql = delete_db($TableName, array('carId='=>$id));*/
 		
 		$TableName = 'car';
-		$sql = delete_db($TableName, array('carId='=>$id));
+		$data = array(				
+			'checkDelete'=>'d'
+		);
+		$sql = update_db($TableName, array('carId='=>$id), $data);
 		//echo $sql;
 		mysql_query($sql);
 		
