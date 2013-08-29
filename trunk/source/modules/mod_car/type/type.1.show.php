@@ -1,4 +1,4 @@
- <?
+﻿ <?
  foreach($_REQUEST as $key => $value)  {
 	$$key = $value;
 	#echo $key ."=". $value."<br>";
