@@ -1,24 +1,19 @@
 <?php 
-
-	 class Database {
-		  
-     private $s_server = "imattioapp.com";
-	 private $db_username = "taxi";
-	 private $db_password = "taxi2013";
-	 private $db_name ="taxi_db2";
-	 private $sql;
-	 private $field;
-	 private $table;
-	 private $pointsql;
-		  
-		  public function __construct()
-		 {
-			mysql_connect($this->s_server,$this->db_username,$this->db_password) or die ("ไม่สามารถเชื่อมต่อฐานข้อมูลได้");
-			mysql_select_db($this->db_name) or die ("ไม่สามารถเชื่อมต่อฐานข้อมูลได้sssss");
-			//mysql_query("SET NAMES utf8;");
-		   if(mysql_errno() > 0)  die (mysql_error());
-		 }
 	
+	include("../../../include/class.mysqldb.php");
+	
+	include("../../../include/config.inc.php");
+	  class Database {
+	  
+	  
+	 
+	 
+		 public function __construct()
+		 {
+			
+		 }
+	 
+		 
 		 public function selectdatasql($field,$table,$pointsql)
 		 	{
 				$this->field = $field;
@@ -37,8 +32,7 @@
 					
 				}
 		
-				
-					//echo $this->sql;
+				echo $this->sql;
 				 return mysql_query($this->sql);
 			 }
 		 
@@ -117,7 +111,6 @@
 	 
 	 
 	 }
-
 ?>
 
-
+<img src="../../../../include/class.mysqldb.php"
