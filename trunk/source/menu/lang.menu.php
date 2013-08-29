@@ -18,6 +18,7 @@ $lang_menu = array(
 	//การจัดการรถแท๊กซี่
 	"menu_taxi_manage" 		=>  "จัดการรถแท๊กซี่",
 	"menu_taxi_position" 		=>  "ตำแหน่งรถแท๊กซี่",
+	"menu_taxi_managemobile" 		=>  "จัดการมือถือ",
 	
 	//การจัดการรถแท๊กซี่	
 	"menu_car_type"			=>  "จัดการประเภทรถ",
@@ -32,8 +33,7 @@ $lang_menu = array(
 	"menu_driver_period" 		=>  "ตารางงาน",
 	"menu_driver_schedule" 		=>  "เวลาทำงาน",
 	
-	//การจัดการมือถือ
-	"menu_mobile_manage" 		=>  "จัดการมือถือ",
+
 
 );
 ?>

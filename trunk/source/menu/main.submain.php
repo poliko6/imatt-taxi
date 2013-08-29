@@ -57,7 +57,7 @@ for ($iim=0; $iim<count($menuname_subarr); $iim++){
 		$iiim++;
 	}	
 }
-#echo "<pre>"; echo print_r($menuname_arr); echo "</pre>";
+//echo "<pre>"; echo print_r($menuname_arr); echo "</pre>";
 
 
 if ($handle_index_submain = opendir('menu')) {
@@ -129,7 +129,7 @@ foreach($file_menu_submain as $values){
 		#echo $values;
 		#echo count($file_menu_index_submain_sub);
 		
-		#echo "<pre>"; echo print_r($file_menu_index_submain_sub); echo "</pre>";
+		//echo "<pre>"; echo print_r($file_menu_index_submain_sub); echo "</pre>";
 		
 		if ((count($file_menu_index_submain_sub) >= 1)){
 			sort($file_menu_index_submain_sub);
