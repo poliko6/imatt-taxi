@@ -3,6 +3,8 @@
 	include("include/class.function.php");
 	include("include/class.mysqldb.php");
 	include("include/config.inc.php");	
+	include('include/main_class.php');
+	
 	//include("include/class.chklogin.php");
 	//pre($_SESSION);
 
