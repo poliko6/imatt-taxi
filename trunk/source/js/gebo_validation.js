@@ -35,6 +35,25 @@
 					carColorId: { required: true },
 					carFuelId: { required: true },
 					
+					//From major.add.php
+					shortName: { required: true},
+					thName: { required: true},
+					engName: { required: true},
+					managerName: { required: true},
+					typeBus: { required: true},
+					userName: { required: true},
+					u_password: { required: true},
+					u_password2: { required: true},
+					g_password: { required: true},
+					g_password2: { required: true},					
+					txtAddress_add: { required: true},					
+					province_add: { required: true},					
+					amphur_add: { required: true},					
+					district_add: { required: true},					
+					txtZipcode_add: { required: true},						
+					radMjtype: { required: true},					
+					/////////////////////////////////
+					
 					days: { required: true, minlength: 2 },
 					gender: { required: true },
 					address2: { required: true, minlength: 5 },

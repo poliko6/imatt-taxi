@@ -4,43 +4,44 @@
     <h3 class="heading">เพิ่มข้อมูล</h3>
     <div class="row-fluid">
       <div class="span8">
-        <form class="form-horizontal" action="addmajor.php" method="post">
+        <form class="form-horizontal form_validation_ttip">
           <fieldset>
+         
             <div class="control-group formSep">
               <label for="u_fname" class="control-label">ชื่อย่อบริษัท* :</label>
-              <div class="controls">
-                <input type="text" class="input-xlarge" id="shortName" onchange="fn_chkShortName(this.value)" value="" maxlength="15" />
+              <div class="controls text_line">
+                <input type="text" class="input-xlarge" name="shortName" id="shortName" onchange="fn_chkShortName(this.value)" value="" maxlength="15" />
                 <font color="#FF0000"><i>
                 <div id="chkExist"></div>
                 </i></font> <span class="help-block">ภาษาอังกฤษหรือตัวเลขเท่านั้น ความยาวไม่เกิน 15 ตัวอักษร</span> <span class="help-block">*สำคัญ สำหรับใช้ระบุใน URL ของหน้าเว็บบริษัทของท่าน โปรดตรวจสอบให้แน่ใจก่อนทำการบันทึก</span> </div>
             </div>
             <div class="control-group formSep">
               <label for="u_fname" class="control-label">ชื่อบริษัทภาษาไทย :</label>
-              <div class="controls">
-                <input type="text" id="thName" class="input-xlarge" value="" onchange="chkThai(this.id,this.value,0)" />
+              <div class="controls text_line">
+                <input type="text" id="thName" name="thName" class="input-xlarge" value="" onchange="chkThai(this.id,this.value,0)" />
                 <font color="#FF0000"><i><div id="thNamechk"></div></i></font> 
               </div>
               <br />
               <label for="u_fname" class="control-label">ชื่อบริษัทภาษาอังกฤษ :</label>
               <div class="controls">
-                <input type="text" id="engName" class="input-xlarge" value="" onchange="chkValid(this.id,this.value,0)" />
+                <input type="text" name="engName" id="engName" class="input-xlarge" value="" onchange="chkValid(this.id,this.value,0)" />
                 <font color="#FF0000"><i><div id="engNamechk"></div></i></font>                
               </div>
               <br />
               <label for="u_fname" class="control-label">ชื่อผู้บริหาร :</label>
               <div class="controls">
-                <input type="text" id="managerName" class="input-xlarge" value="" onchange="trimString(this.id,this.value)" />
+                <input type="text" name="managerName" id="managerName" class="input-xlarge" value="" onchange="trimString(this.id,this.value)" />
               </div>
               <br />
               <label for="u_fname" class="control-label">ประเภทของธุรกิจ :</label>
               <div class="controls">
-                <input type="text" id="typeBus" class="input-xlarge" value="" onchange="trimString(this.id,this.value)" />
+                <input type="text" name="typeBus" id="typeBus" class="input-xlarge" value="" onchange="trimString(this.id,this.value)" />
               </div>
             </div>
             <div class="control-group formSep">
               <label for="u_fname" class="control-label">Username</label>
               <div class="controls">
-                <input type="text" class="input-xlarge" id="userName" value="" maxlength="20" onchange="chkUNandGPW(this.id)" />
+                <input type="text" class="input-xlarge" name="userName" id="userName" value="" maxlength="20" onchange="chkUNandGPW(this.id)" />
                 <font color="#006600"><div id="usernameOK"></div></font>
                 <font color="#FF0000"><i><div id="userNamechk"></div>
                 </i></font> <span class="help-block">ตัวอักษรภาษาอังกฤษเท่านั้น ความยาวไม่เกิน 20 ตัวอักษร</span> </div>
@@ -48,10 +49,10 @@
               <label for="u_password" class="control-label">Password</label>
               <div class="controls">
                 <div class="sepH_b">
-                  <input type="password" class="input-xlarge" id="u_password" placeholder="ความยาวอย่างน้อย 8 ตัวอักษร" maxlength="20" onchange="chk1stPW(this.id,this.value,8)" />
+                  <input type="password" class="input-xlarge" name="u_password" id="u_password" placeholder="ความยาวอย่างน้อย 8 ตัวอักษร" maxlength="20" onchange="chk1stPW(this.id,this.value,8)" />
                 <font color="#FF0000"><i><div id="u_passwordchk"></div></i></font>                  
                   <span class="help-block">ตัวอักษรภาษาอังกฤษหรือตัวเลขเท่านั้น ความยาว 8-20 ตัวอักษร</span> </div>
-                <input type="password" class="input-xlarge" id="u_password2" placeholder="พิมพ์พาสเวิร์ดเดิมอีกครั้ง" maxlength="20" onchange="chk2ndPW(this.value)" />
+                <input type="password" class="input-xlarge" name="u_password2" id="u_password2" placeholder="พิมพ์พาสเวิร์ดเดิมอีกครั้ง" maxlength="20" onchange="chk2ndPW(this.value)" />
                 <font color="#FF0000"><i><div id="u_password2chk"></div></i></font>                  
               </div>
               <br />
@@ -59,25 +60,25 @@
               <label for="u_password" class="control-label">Garage Password</label>
               <div class="controls">
                 <div class="sepH_b">
-                  <input type="password" class="input-xlarge" id="g_password" placeholder="ความยาวอย่างน้อย 8 ตัวอักษร" maxlength="20" onchange="chkUNandGPW(this.id)" />
+                  <input type="password" class="input-xlarge" name="g_password" id="g_password" placeholder="ความยาวอย่างน้อย 8 ตัวอักษร" maxlength="20" onchange="chkUNandGPW(this.id)" />
                   <font color="#FF0000"><i><div id="g_passwordchk"></div></i></font>
                 <font color="#006600"><div id="g_passwordOK"></div></font>                  
                   <span class="help-block">ตัวอักษรภาษาอังกฤษหรือตัวเลขเท่านั้น ความยาว 8-20 ตัวอักษร</span> <span class="help-block">พาสเวิร์ดสำหรับใช้ระบุตัวตนของ Username ว่าอยู่บริษัทไหน</span></div>
 
-                <input type="password" class="input-xlarge" id="g_password2" placeholder="พิมพ์พาสเวิร์ดเดิมอีกครั้ง" maxlength="20" onchange="chk2ndGPW(this.value)" />
+                <input type="password" class="input-xlarge" name="g_password2" id="g_password2" placeholder="พิมพ์พาสเวิร์ดเดิมอีกครั้ง" maxlength="20" onchange="chk2ndGPW(this.value)" />
                  <font color="#FF0000"><i><div id="g_password2chk"></div></i></font>
               </div>
             </div>
             <div class="control-group formSep">
               <label class="control-label">ที่อยู่</label>
               <div class="controls">
-                <textarea class="input-xlarge" id="txtMobile" placeholder="(บ้านเลขที่ ซอย ถนน)"></textarea>
+                <textarea class="input-xlarge" name="txtAddress_add" id="txtAddress" placeholder="(บ้านเลขที่ ซอย ถนน)"></textarea>
               </div>
               <br />
               <label class="control-label">จังหวัด</label>
               <div class="controls">
                 <div class="span6">
-                  <select name="province_ss" id="province">
+                  <select name="province_add" id="province">
                     <option value="" <? if($province_ss==""){echo "selected=\"selected\""; } ?> >กรุณาเลือกจังหวัด</option>
                     <?PHP				  	
 									
@@ -98,7 +99,7 @@
               <div class="controls">
                 <div class="span6">
                   <div id="genamphur">
-                    <select name="amphur_ss" id="amphur">
+                    <select name="amphur_add" id="amphur">
                       <option>กรุณาเลือกอำเภอ</option>
                     </select>
                   </div>
@@ -110,7 +111,7 @@
               <div class="controls">
                 <div class="span6">
                   <div id="gendistrict">
-                    <select name="district_ss" id="district">
+                    <select name="district_add" id="district">
                       <option>กรุณาเลือกตำบล</option>
                     </select>
                   </div>
@@ -120,7 +121,7 @@
               <br />              
               <label class="control-label">รหัสไปรษณีย์</label>
               <div class="controls">
-                <input type="text" id="txtZipcode" class="input-xlarge" value="" onchange="numberOrNot(this.id,this.value,'รหัสไปรษณีย์ไม่ถูกต้อง')" />
+                <input type="text" name="txtZipcode_add" id="txtZipcode" class="input-xlarge" value="" onchange="numberOrNot(this.id,this.value,'รหัสไปรษณีย์ไม่ถูกต้อง')" />
                 <font color="#FF0000"><i><div id="txtZipcodechk" ></div></i></font>
               </div>
             </div>
@@ -160,11 +161,11 @@
               <label class="control-label">ประเภทของ Username</label>
               <div class="controls">
                 <label class="radio inline">
-                  <input type="radio" value="supervisor" id="radMjtype" name="radMjtype" checked="checked" />
-                  Supervisor Admin</label>
+                  <input type="radio" value="company" id="radMjtype" name="radMjtype" checked="checked"  />
+                  Company Admin</label>              
                 <label class="radio inline">
-                  <input type="radio" value="company" id="radMjtype" name="radMjtype" />
-                  Company Admin</label>
+                  <input type="radio" value="supervisor" id="radMjtype" name="radMjtype" />
+                  Supervisor Admin</label>
               </div>
             </div>
             
@@ -183,7 +184,7 @@
             <div class="control-group">
               <div class="controls">
                 <button class="btn btn-gebo" type="submit">บันทึกการเพิ่มข้อมูล</button>
-                <a href="index.php?p=user.major&menu=main_user">
+                <a href="#">
                 <button class="btn">ยกเลิก</button>
                 </a> </div>
               <input type="hidden" name="saveadd" value="1" />
@@ -445,3 +446,40 @@ function numberOrNot(id,number,errortxt){
 }
 
 </script> 
+
+<script src="js/jquery.min.js"></script>
+<!-- smart resize event -->
+<script src="js/jquery.debouncedresize.min.js"></script>
+<!-- hidden elements width/height -->
+<script src="js/jquery.actual.min.js"></script>
+<!-- js cookie plugin -->
+<script src="js/jquery.cookie.min.js"></script>
+<!-- main bootstrap js -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<!-- tooltips -->
+<script src="lib/qtip2/jquery.qtip.min.js"></script>
+<!-- jBreadcrumbs -->
+<script src="lib/jBreadcrumbs/js/jquery.jBreadCrumb.1.1.min.js"></script>
+<!-- sticky messages -->
+<script src="lib/sticky/sticky.min.js"></script>
+<!-- fix for ios orientation change -->
+<script src="js/ios-orientationchange-fix.js"></script>
+<!-- scrollbar -->
+<script src="lib/antiscroll/antiscroll.js"></script>
+<script src="lib/antiscroll/jquery-mousewheel.js"></script>
+<!-- lightbox -->
+<script src="lib/colorbox/jquery.colorbox.min.js"></script>
+<!-- common functions -->
+<script src="js/gebo_common.js"></script>
+
+<!-- validation -->
+<script src="lib/validation/jquery.validate.min.js"></script>
+<!-- validation functions -->
+<script src="js/gebo_validation.js"></script>
+
+<script>
+	$(document).ready(function() {
+		//* show all elements & remove preloader
+		setTimeout('$("html").removeClass("js")',1000);
+	});
+</script>
