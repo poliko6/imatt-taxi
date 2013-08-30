@@ -25,13 +25,19 @@
   <tr>
   	<td colspan="3">
 	<?
+		echo "Act Here ".$act;
 		switch($act) {
-			case 'edit':
-				break;
+			//case 'edit':
+			//	break;
 			case 'add':
 				include("modules/mod_user/major/major.add.php");
 				break;
-			default:
+			case 'saveadd':
+				$stat = "saveadd";
+				include("modules/mod_user/major/addmajor.php");	
+				break;				
+			default:			
+				echo "Status = ".$stat;
 				include("modules/mod_user/major/major.show.php");
 		}
 	?>
