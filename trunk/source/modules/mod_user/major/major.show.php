@@ -106,20 +106,22 @@
           <td><?=$objResult['username']?></td>
           <td><?=$objResult['majorType']?></td>
           <td><?=$objResult['garageId']?></td>
-          <td><a href="" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> 
-          <a href="#myModalDel<?=$objResult['majorId']?>" class="ttip_t" data-toggle="modal" title="Delete"><i class="icon-trash"></i><? echo $objResult['majorId']; ?></a>
-		  </td></tr>          
-                        <!-- POP UP -->
-                        <div class="modal hide fade" id="myModalDel<?=$objResult['majorId']?>" style="text-align:center; width:500px;">
-                            <div class="alert alert-block alert-error fade in">
-                                <h4 class="alert-heading">คุณต้องการลบข้อมูลรถแท๊กซี่ทะเบียน "<?=$car_data[$i]['carRegistration']?>"</h4>
-                                <div style="height:50px;"></div>
-                                <p>
-                                <a href="#" class="btn btn-inverse" onclick="fn_formDel(<?=$car_data[$i]['carId']?>);"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> 
-                                หรือ <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a>
-                               	</p>
-                            </div>
-                        </div>
+          <td>
+          	<a href="" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> 
+          	<a href="#myModalDel<?=$objResult['majorId']?>" class="ttip_t" data-toggle="modal" title="Delete"><i class="icon-trash"></i><? echo $objResult['majorId']; ?></a>
+		  </td>          
+        </tr>          
+        <!-- POP UP -->
+        <div class="modal hide fade" id="myModalDel<?=$objResult['majorId']?>" style="text-align:center; width:500px;">
+            <div class="alert alert-block alert-error fade in">
+                <h4 class="alert-heading">คุณต้องการลบข้อมูลรถแท๊กซี่ทะเบียน "<?=$objResult['username']?>"</h4>
+                <div style="height:50px;"></div>
+                <p>
+                <a href="#" class="btn btn-inverse" onclick="delMJ('<?=$objResult['username']?>');"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> 
+                หรือ <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a>
+                </p>
+            </div>
+        </div>
                                   
         <? $i++; ?>
         <?	} ?>

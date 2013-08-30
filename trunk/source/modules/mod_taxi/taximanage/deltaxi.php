@@ -34,7 +34,8 @@
 		$sql = delete_db($TableName, array('carId='=>$id));*/
 		
 		$TableName = 'car';
-		$data = array(				
+		$data = array(		
+			'dateUpdate'=>date('Y-m-d H:i:s'),		
 			'checkDelete'=>'d'
 		);
 		$sql = update_db($TableName, array('carId='=>$id), $data);

@@ -199,6 +199,7 @@
 				'carFuelId'=>$carFuelId,
 				'carYear'=>$carYear,
 				'carGasId'=>$carGasId,
+				'dateUpdate'=>date('Y-m-d H:i:s'),
 				'carImage'=>$filename
 			);
 			$sql = update_db($TableName, array('carId='=>$carId), $data);

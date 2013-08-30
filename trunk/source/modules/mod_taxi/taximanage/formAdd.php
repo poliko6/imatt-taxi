@@ -33,6 +33,25 @@ function fn_callModel(id){
 		}
 	});	
 }
+
+function fn_chkRegisDuplicate(){
+	var provinceId = $('#provinceId').val();
+	jQuery.ajax({
+		url :'modules/mod_taxi/taximanage/chkRegisDuplicate.php',
+		type: 'GET',
+		data: 'act=chkRegisDuplicate&carRegistration='+carRegistration+'&provinceId='+provinceId+'',
+		dataType: 'jsonp',
+		dataCharset: 'jsonp',
+		success: function (data){
+			console.log(data.success);
+			if (data.success){ 
+				$('#errRegistration').hide();
+			} else {
+				$('#errRegistration').fadeIn(200);
+			}				
+		}
+	});	
+}
 </script>
 
 
@@ -51,7 +70,7 @@ function fn_callModel(id){
                                     <label for="fileinput" class="control-label">ทะเบียนรถ <span class="f_req">*</span></label>
                                     <div class="controls text_line">
                                     	<div class="help-block" id="errRegistration" style="display:none; color:#C00;">หมายเลขทะเบียนซ้ำ</div>
-                                        <input type="text" name="carRegistration" id="carRegistration" class="span5"  value="<?=$carRegistration?>"  />
+                                        <input type="text" name="carRegistration" id="carRegistration" class="span5"  value="<?=$carRegistration?>" onkeyup="fn_chkRegisDuplicate();"  />
                                         <span class="help-block">ตัวอย่าง : กก 0001</span>                                        
                                     </div>
                             	</div>
@@ -194,19 +213,7 @@ function fn_callModel(id){
     </div>
 </div>
 
-<script src="js/jquery.min.js"></script>
-<!-- smart resize event -->
-<script src="js/jquery.debouncedresize.min.js"></script>
-<!-- hidden elements width/height -->
-<script src="js/jquery.actual.min.js"></script>
-<!-- js cookie plugin -->
-<script src="js/jquery.cookie.min.js"></script>
-<!-- main bootstrap js -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<!-- tooltips -->
-<script src="lib/qtip2/jquery.qtip.min.js"></script>
-<!-- jBreadcrumbs -->
-<script src="lib/jBreadcrumbs/js/jquery.jBreadCrumb.1.1.min.js"></script>
+
 <!-- sticky messages -->
 <script src="lib/sticky/sticky.min.js"></script>
 <!-- fix for ios orientation change -->
