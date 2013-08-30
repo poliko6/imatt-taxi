@@ -75,14 +75,13 @@
                 <thead>
                     <tr>
                         <th style="width:10px;">ลำดับ</th>
-                        <th style="width:80px;">รูปรถ</th>
-                        <th style="width:200px;">ชื่ออู่รถ</th>
-                        <th style="width:150px;">ทะเบียนรถ</th>
-                        <th style="width:200px;">รายละเอียดรถ</th>
-                        <th style="width:60px;">สถานะ</th>
-                        <th style="width:150px;">วันที่เพิ่ม</th>
-                        <th style="width:80px;">เครื่องมือ</th>
-                        <th></th>
+                        <th>รูปรถ</th>
+                        <th>ชื่ออู่รถ</th>
+                        <th>ทะเบียนรถ</th>
+                        <th>รายละเอียดรถ</th>
+                        <th>สถานะ</th>
+                        <th>วันที่เพิ่ม</th>
+                        <th>เครื่องมือ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -200,7 +199,7 @@
                                 	<a href="#myModalDel<?=$car_data[$i]['carId']?>" class="ttip_t" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a>
                                 </div>
                             </td>
-                            <td></td>
+                          
                         </tr>
                         
                         <!-- POP UP -->

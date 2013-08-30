@@ -147,6 +147,7 @@ mysql_query($sql);
 $sql = delete_db($Table_Member, array($Table_Member.'_id='=>$_GET['id']));
 mysql_query($sql);
 */   
+
     function delete_db($nameTable, $where){
         while($element = each($where)){
             $where[$element["key"]]=$element["key"]."'".$element["value"]."'";
@@ -159,7 +160,7 @@ mysql_query($sql);
 	{
 		$sql = "select * from $table $condition";
 		$dbquery = mysql_query($sql);
-		//echo $sql."<br>";
+		#echo $sql."<br>";
 		$rows = array();
 		while (($result= mysql_fetch_array($dbquery)) !== FALSE)
 		$rows[] = $result;
