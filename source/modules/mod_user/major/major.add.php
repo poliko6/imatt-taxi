@@ -4,7 +4,7 @@
     <h3 class="heading">เพิ่มข้อมูล</h3>
     <div class="row-fluid">
       <div class="span8">
-        <form class="form-horizontal form_validation_ttip">
+        <form class="form-horizontal form_validation_ttip" action="" method="post">
           <fieldset>
          
             <div class="control-group formSep">
@@ -24,7 +24,7 @@
               <br />
               <label for="u_fname" class="control-label">ชื่อบริษัทภาษาอังกฤษ :</label>
               <div class="controls">
-                <input type="text" name="engName" id="engName" class="input-xlarge" value="" onchange="chkValid(this.id,this.value,0)" />
+                <input type="text" name="engName" id="engName" class="input-xlarge" value="" onchange="chkEngNum(this.id,this.value,0)" />
                 <font color="#FF0000"><i><div id="engNamechk"></div></i></font>                
               </div>
               <br />
@@ -129,31 +129,31 @@
             <div class="control-group formSep">
               <label for="u_email" class="control-label">เบอร์โทรศัพท์มือถือ</label>
               <div class="controls">
-                <input type="text" class="input-xlarge" id="txtMobilePhone" value="" maxlength="10" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
+                <input type="text" class="input-xlarge" name="txtMobilePhone" id="txtMobilePhone" value="" maxlength="10" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
                 <font color="#FF0000"><i><div id="txtMobilePhonechk" ></div></i></font>
               </div>
               <br />
               <label for="u_email" class="control-label">เบอร์สำนักงาน</label>
               <div class="controls">
-                <input type="text" id="txtTel" class="input-xlarge" value="" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
+                <input type="text" name="txtTel" id="txtTel" class="input-xlarge" value="" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
                 <font color="#FF0000"><i><div id="txtTelchk" ></div></i></font>                
               </div>
               <br />
               <label for="u_email" class="control-label">แฟกซ์</label>
               <div class="controls">
-                <input type="text" id="txtFax" class="input-xlarge" value="" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
+                <input type="text" name="txtFax" id="txtFax" class="input-xlarge" value="" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
                 <font color="#FF0000"><i><div id="txtFaxchk" ></div></i></font> 
               </div>
               <br />
               <label for="u_email" class="control-label">Call Center</label>
               <div class="controls">
-                <input type="text" id="txtCallcenter" class="input-xlarge" value="" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')"/>
+                <input type="text" name="txtCallcenter" id="txtCallcenter" class="input-xlarge" value="" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')"/>
                 <font color="#FF0000"><i><div id="txtCallcenter" ></div></i></font> 
               </div>
               <br />
               <label for="u_email" class="control-label">E-mail</label>
               <div class="controls">
-                <input type="text" id="txtEmail" class="input-xlarge" value="" onchange="chkEmail(this.value)" />
+                <input type="text" name="txtEmail" id="txtEmail" class="input-xlarge" value="" onchange="chkEmail(this.value)" />
                 <font color="#FF0000"><i><div id="chkEmail"></div></i></font>                
               </div>
             </div>
@@ -187,9 +187,11 @@
                 <a href="#">
                 <button class="btn">ยกเลิก</button>
                 </a> </div>
-              <input type="hidden" name="saveadd" value="1" />
             </div>
           </fieldset>
+                    <input type="hidden" name="p" value="<?=$p?>" />
+                    <input type="hidden" name="menu" value="<?=$menu?>" />
+                    <input type="hidden" name="act" value="saveadd" />           
         </form>
       </div>
     </div>
@@ -354,11 +356,28 @@ function chkThai(id,str) {
 	$('#'+id).val(jQuery.trim(str));
 
 	var newstr = jQuery.trim(str);
-	if (/[^ก-๙]/.test(newstr))
+	if (/[^ก-๙ ]/.test(newstr))
 	{	$('#'+id+"chk").text("กรุณากรอกแต่ภาษาไทยเท่านั้น");
 		$('#'+id).val("");		}
 	else
 		$('#'+id+"chk").text("");			
+}
+
+function chkEngNum(id,str,long) {
+	console.log(id,str,long);
+	$('#'+id).val(jQuery.trim(str));
+
+	var newstr = jQuery.trim(str);	
+	if ( /[^A-Za-z0-9 ]/.test(newstr))
+	{	$('#'+id+"chk").text("กรุณากรอกแต่ภาษาอังกฤษหรือตัวเลขเท่านั้น");
+		$('#'+id).val("");
+		return false;		}
+	else if(long != 0 && newstr.length<long)
+	{	$('#'+id+"chk").text("กรุณากรอกมากกว่า "+long+" ตัวอักษร");	
+		$('#'+id).val("");		
+		return false; }	
+	else
+		$('#'+id+"chk").text("");
 }
 
 function chkValid(id,str,long) {

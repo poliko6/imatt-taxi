@@ -12,7 +12,7 @@
 	function fn_showInfo(id){
 		//console.log(id);
 				$('#showInfo').modal('toggle');	
-							
+
 				jQuery.ajax({
 					url :'modules/mod_user/major/gettoshow.php',
 					type: 'GET',
@@ -38,6 +38,27 @@
 					}
 				});	
 			}	
+			
+	function delMJ(username) {
+			console.log("In Show Info");		
+			jQuery.ajax({
+			url :'modules/mod_user/major/delMajor.php',
+			type: 'GET',
+			data: 'username='+username+'',
+			dataType: 'jsonp',
+			dataCharset: 'jsonp',
+			success: function (data){
+				console.log(data.success);
+				if (data.success){ 
+					alertPopup('msg3','alert3',''+data.message+'',1);
+				} else {
+					alertPopup('msg2','alert2',''+data.message+'',0);
+				}				
+				
+				//$('#Del'+username+'').modal('toggle');
+			}
+			});		
+	}
 </script>
 
 <div class="row-fluid">
@@ -46,9 +67,15 @@
     <div class="pull-left">รายการข้อมูลทั้งหมด <strong>
       <?=$total?>
       </strong> รายการ</div>
-    <div class="pull-right"> <a href="index.php?p=user.major&menu=main_user&act=add">
-      <button class="btn btn-success" onClick="">เพิ่มข้อมูล</button>
-      </a></div>
+<!--    <div class="pull-right"> <a href="index.php?p=user.major&menu=main_user">
+      <button class="btn btn-success" onClick="">เพิ่มข้อมูล</button>      
+      </a></div>-->
+	<form action="" method="post">
+                    <input type="hidden" name="act" value="add" />   
+                    <div class="pull-right">
+                    <input class="btn btn-success" type="submit" value="เพิ่มข้อมูล" />        
+                    </div>
+    </form>          
     <br />
     <br />
     <table class="table table-bordered table-striped table_vam" >
@@ -79,9 +106,22 @@
           <td><?=$objResult['username']?></td>
           <td><?=$objResult['majorType']?></td>
           <td><?=$objResult['garageId']?></td>
-          <td><a href="" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> <a href="#" title="Delete"><i class="icon-trash"></i></a></td>
-          <? $i++; ?>
-        </tr>
+          <td><a href="" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> 
+          <a href="#myModalDel<?=$objResult['majorId']?>" class="ttip_t" data-toggle="modal" title="Delete"><i class="icon-trash"></i><? echo $objResult['majorId']; ?></a>
+		  </td></tr>          
+                        <!-- POP UP -->
+                        <div class="modal hide fade" id="myModalDel<?=$objResult['majorId']?>" style="text-align:center; width:500px;">
+                            <div class="alert alert-block alert-error fade in">
+                                <h4 class="alert-heading">คุณต้องการลบข้อมูลรถแท๊กซี่ทะเบียน "<?=$car_data[$i]['carRegistration']?>"</h4>
+                                <div style="height:50px;"></div>
+                                <p>
+                                <a href="#" class="btn btn-inverse" onclick="fn_formDel(<?=$car_data[$i]['carId']?>);"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> 
+                                หรือ <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a>
+                               	</p>
+                            </div>
+                        </div>
+                                  
+        <? $i++; ?>
         <?	} ?>
       </tbody>
     </table>
@@ -166,3 +206,34 @@
     </center>
   </form>
 </div>
+
+
+<!-- sticky messages -->
+<script src="lib/sticky/sticky.min.js"></script>
+<!-- fix for ios orientation change -->
+<script src="js/ios-orientationchange-fix.js"></script>
+<!-- scrollbar -->
+<script src="lib/antiscroll/antiscroll.js"></script>
+<script src="lib/antiscroll/jquery-mousewheel.js"></script>
+<!-- common functions -->
+<script src="js/gebo_common.js"></script>
+
+<!-- colorbox -->
+<script src="lib/colorbox/jquery.colorbox.min.js"></script>
+<!-- datatable -->
+<script src="lib/datatables/jquery.dataTables.min.js"></script>
+<script src="lib/datatables/extras/Scroller/media/js/Scroller.min.js"></script>
+<!-- additional sorting for datatables -->
+<script src="lib/datatables/jquery.dataTables.sorting.js"></script>
+<!-- tables functions -->
+<script src="js/gebo_tables.js"></script>
+
+<!-- datatable functions -->
+<script src="js/gebo_datatables.js"></script>
+
+<script>
+    $(document).ready(function() {
+        //* show all elements & remove preloader
+        setTimeout('$("html").removeClass("js")',1000);
+    });
+</script>
