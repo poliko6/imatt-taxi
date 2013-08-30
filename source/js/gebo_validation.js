@@ -25,6 +25,7 @@
 					last_name: { required: true, minlength: 3 },
 					your_message: { required: true, minlength: 20 },
 					
+					//Car
 					carRegistration: { required: true, minlength: 3 },
 					carModelId: { required: true },
 					provinceId: { required: true },
@@ -34,6 +35,13 @@
 					carYear: { required: true },
 					carColorId: { required: true },
 					carFuelId: { required: true },
+					
+					//mobile
+					mobileNumber: { required: true, minlength: 10 },
+					EmiMsi: { required: true },
+					mobileBanner: { required: true },
+					mobileModel: { required: true },
+					mobileNetworkId: { required: true },
 					
 					//From major.add.php
 					shortName: { required: true},

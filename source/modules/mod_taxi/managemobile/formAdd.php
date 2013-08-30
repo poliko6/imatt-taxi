@@ -20,7 +20,7 @@ $major_name = $major_data[0]['thaiCompanyName'];
                                     <label for="fileinput" class="control-label">หมายเลขโทรศัพท์ <span class="f_req">*</span></label>
                                     <div class="controls text_line">
                                     	<div class="help-block" id="errNumber" style="display:none; color:#C00;">หมายเลขโทรศัพท์ซ้ำ</div>
-                                        <input type="text" name="mobileNumber" id="mobileNumber" class="span5"  value="<?=$mobileNumber?>"  />
+                                        <input type="text" name="mobileNumber" id="mobileNumber" class="span5"  value="<?=$mobileNumber?>"  onkeyup="fn_chkNumberDuplicate('add');"  />
                                         <span class="help-block">ตัวอย่าง : 0845123xxx</span>                                        
                                     </div>
                             	</div>
@@ -33,7 +33,7 @@ $major_name = $major_data[0]['thaiCompanyName'];
                                     <label for="fileinput" class="control-label">Emi/Msi <span class="f_req">*</span></label>
                                     <div class="controls text_line">
                                     	<div class="help-block" id="errEmiMsi" style="display:none; color:#C00;">Emi/Msi ซ้ำ</div>
-                                        <input type="text" name="EmiMsi" id="EmiMsi" class="span5"  value="<?=$EmiMsi?>"  />
+                                        <input type="text" name="EmiMsi" id="EmiMsi" class="span5"  value="<?=$EmiMsi?>"   onkeyup="fn_chkNumberDuplicate('add');"   />
                                         <span class="help-block">ตัวอย่าง : xxxxxxxxxx</span>                                        
                                     </div>
                             	</div>
@@ -46,7 +46,7 @@ $major_name = $major_data[0]['thaiCompanyName'];
                            
                            	<div class="row-fluid">
                                 <div class="span12">
-                                    <label for="carTypeId" class="control-label">เครือข่าย <span class="f_req">*</span></label>
+                                    <label for="mobileNetworkId" class="control-label">เครือข่าย <span class="f_req">*</span></label>
                                     <div class="controls">
                                         <? $network_data = select_db('mobilenetwork',"order by mobileNetworkId"); ?>
                                         <select class="span3" name="mobileNetworkId" id="mobileNetworkId">
@@ -55,7 +55,10 @@ $major_name = $major_data[0]['thaiCompanyName'];
                                             <option value="<?=$valNetwork['mobileNetworkId']?>" <? if ($mobileNetworkId == $valNetwork['mobileNetworkId']) { echo "selected=\"selected\""; } ?> ><?=$valNetwork['mobileNetworkName']?></option>
                                             <? } ?>                                    
                                         </select>
+                                        <!--<input type="button" class="btn btn-success" name="btnSubmit" id="btnSubmit"  value="+"> -->
                                     </div>  
+                                    
+                                    
                                	</div>
                     		</div>    
                             

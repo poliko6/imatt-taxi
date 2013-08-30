@@ -463,6 +463,7 @@
 	}
 	
 	
+	
 	function alertPopup(msgid,alertid,message,newload){
 		$('#'+msgid+'').text(''+message+'');
 		$('#'+alertid+'').fadeIn(500, function() {
@@ -475,5 +476,50 @@
 				delayAlert=null;  
 			},2000);  
 		});
+	}
+	
+	
+	
+	function fn_callModel(id){
+		//alert(id);
+		$.post('modules/mod_taxi/taximanage/get_model.php', {id:id} , function(data) {
+			if (data != '') {
+				$('#carModelId').html(data);
+			} else {
+				$('#carModelId').html('<option value="">กรุณาเลือกรุ่นรถ</option>');
+			}
+		});	
+	}
+	
+	
+	
+	function fn_chkRegisDuplicate(act){
+		var provinceId = $('#provinceId').val();
+		var carRegistration = $('#carRegistration').val();
+		
+		if (act == 'add'){
+			datatag = 'act=add&carRegistration='+carRegistration+'&provinceId='+provinceId+'';
+		}
+		if (act == 'edit'){
+			var provinceIdTmp = $('#provinceIdTmp').val();
+			var carRegistrationTmp = $('#carRegistrationTmp').val();
+			datatag = 'act=edit&carRegistration='+carRegistration+'&provinceId='+provinceId+'&carRegistrationTmp='+carRegistrationTmp+'&provinceIdTmp='+provinceIdTmp+'';
+		}
+		
+		jQuery.ajax({
+			url :'modules/mod_taxi/taximanage/chkRegisDuplicate.php',
+			type: 'GET',
+			data: datatag,
+			dataType: 'jsonp',
+			dataCharset: 'jsonp',
+			success: function (data){
+				console.log(data.success);
+				if (data.success){ 
+					$('#errRegistration').hide();
+				} else {
+					$('#errRegistration').fadeIn(200);
+				}				
+			}
+		});	
 	}
 </script>

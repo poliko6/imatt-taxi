@@ -13,8 +13,20 @@
 	
 	$carRegistration = trim($carRegistration);
 	
-	$car_chk = select_db('car',"where carRegistration = '".$carRegistration."' and provinceId = '".$provinceId."'");
- 	$find_used = count($car_chk);
+	if ($act == 'add') { 	
+		$car_chk = select_db('car',"where carRegistration = '".$carRegistration."' and provinceId = '".$provinceId."'");
+ 		$find_used = count($car_chk);
+	} 
+	
+	
+	if ($act == 'edit'){
+		if ((trim($carRegistration) == trim($carRegistrationTmp)) && (trim($provinceId) == trim($provinceIdTmp))){
+			$find_used = 0;
+		} else {
+			//Check ป้ายทะเบียนซ้ำ	
+			$find_used = count_data_mysql('carId','car',"carRegistration = '".trim($carRegistration)."' and provinceId = '".$provinceId."'");
+		}	
+	}
 	
 	if ($find_used == 0){			
 		$data['success'] = true;

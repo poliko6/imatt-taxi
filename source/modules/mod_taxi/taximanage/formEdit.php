@@ -73,7 +73,7 @@ function fn_callModel(id){
                                     <label for="fileinput" class="control-label">ทะเบียนรถ <span class="f_req">*</span></label>
                                     <div class="controls text_line">
                                     	<div class="help-block" id="errRegistration" style="display:none; color:#C00;">หมายเลขทะเบียนซ้ำ</div>
-                                        <input type="text" name="carRegistration" id="carRegistration" class="span5"  value="<?=$carRegistration?>"  />
+                                        <input type="text" name="carRegistration" id="carRegistration" class="span5"  value="<?=$carRegistration?>"  onkeyup="fn_chkRegisDuplicate('edit');" />
                                         <span class="help-block">ตัวอย่าง : กก 0001</span>
                                         <input type="hidden" name="carRegistrationTmp" id="carRegistrationTmp" value="<?=$carRegistration?>"  />
                                     </div>
@@ -85,8 +85,8 @@ function fn_callModel(id){
                             <label for="provinceId" class="control-label">จังหวัด</label>
                             <div class="controls">
                             	<? $province_data = select_db('province',"order by provinceId"); ?>                                
-                                <input type="hidden" name="provinceIdTmp" id="provinceIdTmp" value="<?=$provinceId?>"  />
-                                <select class="span3" name="provinceId" id="provinceId">
+                                <input type="hidden" name="provinceIdTmp" id="provinceIdTmp" value="<?=$provinceId?>" />
+                                <select class="span3" name="provinceId" id="provinceId" onchange="fn_chkRegisDuplicate('edit');" >
                                 	<? foreach($province_data as $valProvince){?>
                                     <option value="<?=$valProvince['provinceId']?>" <? if ($provinceId == $valProvince['provinceId']) { echo "selected=\"selected\""; } ?> ><?=$valProvince['provinceName']?></option>
                                     <? } ?>                                    

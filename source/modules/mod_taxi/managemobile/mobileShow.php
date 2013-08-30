@@ -75,9 +75,10 @@
                 <thead>
                     <tr>
                         <th style="width:10px;">ลำดับ</th>
-                        <th>เบอร์โทรศัพท์</th>
+                        <th>เบอร์โทรศัพท์</th>                        
                         <th>Emi/Msi</th>
                         <th>เครือข่าย</th>
+                        <th>ชื่ออู่รถ</th>
                         <th>รายละเีอียดโทรศัพท์</th>                       
                         <th>วันที่เพิ่ม</th>
                         <th>เครื่องมือ</th>
@@ -93,7 +94,7 @@
                         ?>
                         <tr>                   
                             <td style="text-align:center;"><?=$i+1?></td>    
-                            <td><?=$mobile_data[$i]['mobileNumber']?></td>      
+                            <td><?=$mobile_data[$i]['mobileNumber']?></td>                                
                             <td><?=$mobile_data[$i]['EmiMsi']?></td>                 
                             <td>
 								<?
@@ -103,6 +104,17 @@
                                 <div><?=$this_network_name?></div>                                     
                             </td>
                           
+                            <td>
+								<?
+                                $this_major = select_db('majoradmin',"where garageId = '".$mobile_data[$i]['garageId']."'");
+								$this_major_name1 = $this_major[0]['thaiCompanyName'];
+								$this_major_name2 = $this_major[0]['englishCompanyName'];
+								?>
+                                <div><?=$this_major_name1?></div>
+                                <div style="font-style:italic; color:#999; font-size:11px;"><?=$this_major_name2?></div>
+                                
+                            </td>  
+                            
                             <td>                            
                                 <div><strong>ยี่ห้อ</strong> :<?=$mobile_data[$i]['mobileBanner']?></div>
                                 <div><strong>รุ่น</strong> :<?=$mobile_data[$i]['mobileModel']?></div>

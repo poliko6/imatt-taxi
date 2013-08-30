@@ -25,8 +25,9 @@ $mobileModel = $mobile_data[0]['mobileModel'];
                                     <label for="fileinput" class="control-label">หมายเลขโทรศัพท์ <span class="f_req">*</span></label>
                                     <div class="controls text_line">
                                     	<div class="help-block" id="errNumber" style="display:none; color:#C00;">หมายเลขโทรศัพท์ซ้ำ</div>
-                                        <input type="text" name="mobileNumber" id="mobileNumber" class="span5"  value="<?=$mobileNumber?>"  />
-                                        <span class="help-block">ตัวอย่าง : 0845123xxx</span>                                        
+                                        <input type="text" name="mobileNumber" id="mobileNumber" class="span5" value="<?=$mobileNumber?>" onkeyup="fn_chkEmiDuplicate('edit');"   />
+                                        <span class="help-block">ตัวอย่าง : 0845123xxx</span>  
+                                        <input type="hidden" name="mobileNumberTmp" id="mobileNumberTmp" value="<?=$mobileNumber?>"  />                                       
                                     </div>
                             	</div>
                             </div>
@@ -38,8 +39,9 @@ $mobileModel = $mobile_data[0]['mobileModel'];
                                     <label for="fileinput" class="control-label">Emi/Msi <span class="f_req">*</span></label>
                                     <div class="controls text_line">
                                     	<div class="help-block" id="errEmiMsi" style="display:none; color:#C00;">Emi/Msi ซ้ำ</div>
-                                        <input type="text" name="EmiMsi" id="EmiMsi" class="span5"  value="<?=$EmiMsi?>"  />
-                                        <span class="help-block">ตัวอย่าง : xxxxxxxxxx</span>                                        
+                                        <input type="text" name="EmiMsi" id="EmiMsi" class="span5"  value="<?=$EmiMsi?>" onkeyup="fn_chkNumberDuplicate('edit');"  />
+                                        <span class="help-block">ตัวอย่าง : xxxxxxxxxx</span>     
+                                        <input type="hidden" name="EmiMsiTmp" id="EmiMsiTmp" value="<?=$EmiMsi?>"  />                                   
                                     </div>
                             	</div>
                             </div>
@@ -51,10 +53,10 @@ $mobileModel = $mobile_data[0]['mobileModel'];
                            
                            	<div class="row-fluid">
                                 <div class="span12">
-                                    <label for="carTypeId" class="control-label">เครือข่าย <span class="f_req">*</span></label>
+                                    <label for="mobileNetworkId" class="control-label">เครือข่าย <span class="f_req">*</span></label>
                                     <div class="controls">
                                         <? $network_data = select_db('mobilenetwork',"order by mobileNetworkId"); ?>
-                                        <select class="span3" name="mobileNetworkId" id="mobileNetworkId">
+                                        <select class="span4" name="mobileNetworkId" id="mobileNetworkId">
                                             <option value="">กรุณาเลือกเครือข่าย</option>
                                             <? foreach($network_data as $valNetwork){?>
                                             <option value="<?=$valNetwork['mobileNetworkId']?>" <? if ($mobileNetworkId == $valNetwork['mobileNetworkId']) { echo "selected=\"selected\""; } ?> ><?=$valNetwork['mobileNetworkName']?></option>
@@ -95,7 +97,7 @@ $mobileModel = $mobile_data[0]['mobileModel'];
                             </div>
                         </div>
                     </fieldset>
-					<input type="hidden" name="carId" value="<?=$carId?>" />
+					<input type="hidden" name="mobileId" value="<?=$mobileId?>" />
                     <input type="hidden" name="p" value="<?=$p?>" />
                     <input type="hidden" name="menu" value="<?=$menu?>" />
                     <input type="hidden" name="garageId" value="<?=$garageId?>" />        
