@@ -20,38 +20,6 @@ $(document).ready( function () {
 
 });
 
-
-
-
-function fn_callModel(id){
-	//alert(id);
-	$.post('modules/mod_taxi/taximanage/get_model.php', {id:id} , function(data) {
-  		if (data != '') {
-			$('#carModelId').html(data);
-		} else {
-			$('#carModelId').html('<option value="">กรุณาเลือกรุ่นรถ</option>');
-		}
-	});	
-}
-
-function fn_chkRegisDuplicate(){
-	var provinceId = $('#provinceId').val();
-	jQuery.ajax({
-		url :'modules/mod_taxi/taximanage/chkRegisDuplicate.php',
-		type: 'GET',
-		data: 'act=chkRegisDuplicate&carRegistration='+carRegistration+'&provinceId='+provinceId+'',
-		dataType: 'jsonp',
-		dataCharset: 'jsonp',
-		success: function (data){
-			console.log(data.success);
-			if (data.success){ 
-				$('#errRegistration').hide();
-			} else {
-				$('#errRegistration').fadeIn(200);
-			}				
-		}
-	});	
-}
 </script>
 
 
@@ -70,7 +38,7 @@ function fn_chkRegisDuplicate(){
                                     <label for="fileinput" class="control-label">ทะเบียนรถ <span class="f_req">*</span></label>
                                     <div class="controls text_line">
                                     	<div class="help-block" id="errRegistration" style="display:none; color:#C00;">หมายเลขทะเบียนซ้ำ</div>
-                                        <input type="text" name="carRegistration" id="carRegistration" class="span5"  value="<?=$carRegistration?>" onkeyup="fn_chkRegisDuplicate();"  />
+                                        <input type="text" name="carRegistration" id="carRegistration" class="span5"  value="<?=$carRegistration?>" onkeyup="fn_chkRegisDuplicate('add');"  />
                                         <span class="help-block">ตัวอย่าง : กก 0001</span>                                        
                                     </div>
                             	</div>
@@ -81,7 +49,7 @@ function fn_chkRegisDuplicate(){
                             <label for="provinceId" class="control-label">จังหวัด</label>
                             <div class="controls">
                             	<? $province_data = select_db('province',"order by provinceId"); ?>
-                                <select class="span3" name="provinceId" id="provinceId">
+                                <select class="span3" name="provinceId" id="provinceId" onchange="fn_chkRegisDuplicate('add');">
                                 	<option value="">กรุณาเลือกจังหวัด</option>
                                 	<? foreach($province_data as $valProvince){?>
                                     <option value="<?=$valProvince['provinceId']?>" <? if ($provinceId == $valProvince['provinceId']) { echo "selected=\"selected\""; } ?> ><?=$valProvince['provinceName']?></option>

@@ -1,11 +1,11 @@
  <?
  foreach($_REQUEST as $key => $value)  {
 	$$key = $value;
-	echo $key ."=". $value."<br>";
+	#echo $key ."=". $value."<br>";
  }
  //pre($_FILES);
  //pre($_SESSION);
- pre(error_get_last());
+ //pre(error_get_last());
  
  
  $find_chk1 = $find_chk2 = 0;
@@ -21,17 +21,22 @@
 		
 	case 'saveedit':
 
-		if ((trim($carRegistration) == trim($carRegistrationTmp)) && (trim($provinceId) == trim($provinceIdTmp))){
-			$find_chk = 0;
+		if ((trim($mobileNumber) == trim($mobileNumberTmp)) && (trim($EmiMsi) == trim($EmiMsiTmp))){
+			//ไม่เปลี่ยน
 		} else {
 			//Check หมายเลขโทรศํพท์ซ้ำ	
-			$find_chk = count_data_mysql('carId','car',"carRegistration = '".trim($carRegistration)."' and provinceId = '".$provinceId."'");
+			if (trim($mobileNumber) != trim($mobileNumberTmp)){				
+				$find_chk1 = count_data_mysql('mobileId','mobile',"mobileNumber = '".trim($mobileNumber)."'");
+			}
+			if (trim($EmiMsi) != trim($EmiMsiTmp)) {
+				$find_chk2 = count_data_mysql('mobileId','mobile',"EmiMsi = '".trim($EmiMsi)."'");
+			}
 		}		
 
 		
-		if ($find_chk) {
+		if (($find_chk1 > 0)  || ($find_chk2 > 0)){
 			
-			$message = "ไม่สามารถแก้ไขได้ เนื่องจากข้อมูลรถแท๊กซี่คันนี้มีแล้วในระบบ";
+			$message = "ไม่สามารถแก้ไขได้ เนื่องจากข้อมูลโทรศัพท์เครื่องนี้มีแล้วในระบบ";
 			?>
 			<script type="text/javascript">			
 			$(document).ready(function() {
@@ -43,26 +48,21 @@
 		
 		} else {						
 		
-			$TableName = 'car';
+			$TableName = 'mobile';
 			$data = array(
-				'carRegistration'=>$carRegistration,
-				'provinceId'=>$provinceId,			
-				'carTypeId'=>$carTypeId,
-				'carBannerId'=>$carBannerId,
-				'carModelId'=>$carModelId,
-				'carColorId'=>$carColorId,
-				'carFuelId'=>$carFuelId,
-				'carYear'=>$carYear,
-				'carGasId'=>$carGasId,
-				'dateUpdate'=>date('Y-m-d H:i:s'),
-				'carImage'=>$filename
+				'mobileNumber'=>$mobileNumber,
+				'mobileBanner'=>$mobileBanner,			
+				'mobileModel'=>$mobileModel,
+				'mobileNetworkId'=>$mobileNetworkId,
+				'EmiMsi'=>$EmiMsi,
+				'dateUpdate'=>date('Y-m-d H:i:s')			
 			);
-			$sql = update_db($TableName, array('carId='=>$carId), $data);
-			//mysql_query($sql);	
-			echo $sql;
+			$sql = update_db($TableName, array('mobileId='=>$mobileId), $data);
+			mysql_query($sql);	
+			//echo $sql;
 			//exit;
 			
-			$message = "แก้ไขข้อมูลรถแท๊กซี่เรียบร้อยแล้วค่ะ";
+			$message = "แก้ไขข้อมูลโทรศัพท์เรียบร้อยแล้วค่ะ";
 			
 			?>
 			<script type="text/javascript">			
@@ -99,30 +99,24 @@
 			<?
 			include('modules/mod_taxi/managemobile/formAdd.php');
 			
-		} else {
-		
-		
+		} else {	
+
 			$act = '';
-			$TableName = 'car';
+			$TableName = 'mobile';
 			$data = array(
 				'garageId'=>$garageId,
-				'carRegistration'=>$carRegistration,
-				'provinceId'=>$provinceId,			
-				'carTypeId'=>$carTypeId,
-				'carBannerId'=>$carBannerId,
-				'carModelId'=>$carModelId,
-				'carColorId'=>$carColorId,
-				'carFuelId'=>$carFuelId,
-				'carYear'=>$carYear,
-				'carGasId'=>$carGasId,
-				'carStatusId'=>3,
-				'carImage'=>$filename
+				'mobileNumber'=>$mobileNumber,
+				'mobileBanner'=>$mobileBanner,			
+				'mobileModel'=>$mobileModel,
+				'mobileNetworkId'=>$mobileNetworkId,
+				'EmiMsi'=>$EmiMsi
+				
 			);
 			$sql = insert_db($TableName, $data);
-			//mysql_query($sql);	
-			echo $sql;
+			mysql_query($sql);	
+			//echo $sql;
 			
-			$message = "เพิ่มข้อมูลรถแท๊กซี่ทะเบียน '".$carRegistration."' เรียบร้อยแล้วค่ะ";
+			$message = "เพิ่มข้อมูลโทรศัพท์หมายเลข '".$mobileNumber."' เรียบร้อยแล้วค่ะ";
 			
 			?>
 			<script type="text/javascript">			
@@ -155,15 +149,22 @@
 
 <script type="text/javascript">
 	var delayAlert=null; 
-	var find_chk = <?=$find_chk1?>;
+	var find_chk1 = <?=$find_chk1?>;
+	var find_chk2 = <?=$find_chk2?>;
 	
 	$(document).ready(function(){	
-		console.log(find_chk);	
+		console.log(find_chk1);	
 		
-		if (find_chk == 1){
+		if (find_chk1 == 1){
 			$('#errNumber').show();
 		} else {
 			$('#errNumber').hide();
+		}	
+		
+		if (find_chk2 == 1){
+			$('#errEmiMsi').show();
+		} else {
+			$('#errEmiMsi').hide();
 		}		
 	});
 	
@@ -197,5 +198,43 @@
 				delayAlert=null;  
 			},2000);  
 		});
+	}
+	
+	
+	
+	function fn_chkNumberDuplicate(act){
+		var mobileNumber = $('#mobileNumber').val();
+		var EmiMsi = $('#EmiMsi').val();
+		
+		if (act == 'add'){
+			datatag = 'act=add&mobileNumber='+mobileNumber+'&EmiMsi='+EmiMsi+'';
+		}
+		if (act == 'edit'){
+			var mobileNumberTmp = $('#mobileNumberTmp').val();
+			var EmiMsiTmp = $('#EmiMsiTmp').val();
+			datatag = 'act=edit&mobileNumber='+mobileNumber+'&EmiMsi='+EmiMsi+'&mobileNumberTmp='+mobileNumberTmp+'&EmiMsiTmp='+EmiMsiTmp+'';
+		}
+		
+		jQuery.ajax({
+			url :'modules/mod_taxi/managemobile/chkNumDuplicate.php',
+			type: 'GET',
+			data: datatag,
+			dataType: 'jsonp',
+			dataCharset: 'jsonp',
+			success: function (data){
+				console.log(data.success);
+				if (data.number){ 
+					$('#errNumber').hide();
+				} else {
+					$('#errNumber').fadeIn(200);
+				}	
+				
+				if (data.emi){ 
+					$('#errEmiMsi').hide();
+				} else {
+					$('#errEmiMsi').fadeIn(200);
+				}				
+			}
+		});	
 	}
 </script>
