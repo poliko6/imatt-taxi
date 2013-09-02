@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 <div class="span4">
-                    <div><a href="index.php?p=car.color&menu=main_car" style="text-decoration:none;"><?=$lang_menu["menu_car_color"]?></a></div>
+                    <div><a href="index.php?p=car.color&menu=main_car" style="text-decoration:none;"><?=$lang_menu["car.color"]?></a></div>
                     <div class="normal">เมนูเพิ่ม แก้ไข และลบ สีรถยนต์</div>
                 </div>
                 <div class="span7">

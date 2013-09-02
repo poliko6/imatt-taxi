@@ -1,37 +1,36 @@
 <?
 $lang_menu = array(
 	//main menu
-	"menu_home"  		=>  "หน้าหลัก", //home	
-	"menu_user"			=>  "การจัดการผู้ใช้งาน",
-	"menu_taxi" 		=>  "การจัดการรถแท๊กซี่",
-	"menu_car" 			=>  "การจัดการข้อมูลรถ",
-	"menu_driver" 			=>  "การจัดการข้อมูลคนขับรถ",
-	"menu_mobile" 			=>  "การจัดการข้อมูลโทรศัพท์",
+	"menu_home"  	=>  "หน้าหลัก", //home	
+	"user"			=>  "การจัดการผู้ใช้งาน",
+	"taxi" 			=>  "การจัดการรถแท๊กซี่",
+	"car" 			=>  "การจัดการข้อมูลรถ",
+	"driver" 		=>  "การจัดการข้อมูลคนขับรถ",	
 	
 	
 	//การจัดการผู้ใช้งาน	
-	"menu_user_major"		=>  "จัดการอู่รถสมาชิก",
-	"menu_user_minor"		=>  "จัดการพนักงาน",
-	"menu_user_profile"		=> "ข้อมูลส่วนตัว",
-	"menu_user_type"		=> "ประเภทพนักงาน",
+	"user.major"		=>  "จัดการอู่รถสมาชิก",
+	"user.minor"		=>  "จัดการพนักงาน",
+	"user.profile"		=> "ข้อมูลส่วนตัว",
+	"user.type"			=> "ประเภทพนักงาน",
 	
 	//การจัดการรถแท๊กซี่
-	"menu_taxi_manage" 		=>  "จัดการรถแท๊กซี่",
-	"menu_taxi_position" 		=>  "ตำแหน่งรถแท๊กซี่",
-	"menu_taxi_managemobile" 		=>  "จัดการมือถือ",
+	"taxi.taximanage" 		=>  "จัดการรถแท๊กซี่",
+	"taxi.mapposition" 		=>  "ตำแหน่งรถแท๊กซี่",
+	"taxi.managemobile" 	=>  "จัดการมือถือ",
 	
 	//การจัดการรถแท๊กซี่	
-	"menu_car_type"			=>  "จัดการประเภทรถ",
-	"menu_car_banner"		=>  "จัดการยี่ห้อรถ",
-	"menu_car_model"		=>  "จัดการรุ่นรถ",
-	"menu_car_color"		=>  "จัดการสีรถ",
-	"menu_car_fuel"			=>  "ประเภทเชื้อเพลิง",
-	"menu_car_gas"			=>  "ประเภทแก๊ส",
+	"car.type"			=>  "จัดการประเภทรถ",
+	"car.banner"		=>  "จัดการยี่ห้อรถ",
+	"car.model"			=>  "จัดการรุ่นรถ",
+	"car.color"			=>  "จัดการสีรถ",
+	"car.fuel"			=>  "ประเภทเชื้อเพลิง",
+	"car.gas"			=>  "ประเภทแก๊ส",
 	
 	//การจัดการคนขับรถ
-	"menu_driver_manage" 		=>  "จัดการคนขับรถ",
-	"menu_driver_period" 		=>  "ตารางงาน",
-	"menu_driver_schedule" 		=>  "เวลาทำงาน",
+	"driver.managedriver" 	=>  "จัดการคนขับรถ",
+	"driver.period" 		=>  "ตารางงาน",
+	"driver.schedule" 		=>  "เวลาทำงาน",
 	
 
 

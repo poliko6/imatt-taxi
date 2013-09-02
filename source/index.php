@@ -39,28 +39,47 @@ if (empty($_SESSION['pass_actived'])){
         <!--<meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
         <title>Taxi Admin Panel</title>
     
-        <!-- Bootstrap framework -->
+    
+    	 <!-- Bootstrap framework -->
             <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
             <link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.min.css" />
+        <!-- jQuery UI theme-->
+            <link rel="stylesheet" href="lib/jquery-ui/css/Aristo/Aristo.css" />
         <!-- gebo blue theme-->
             <link rel="stylesheet" href="css/blue.css" id="link_theme" />
         <!-- breadcrumbs-->
             <link rel="stylesheet" href="lib/jBreadcrumbs/css/BreadCrumb.css" />
         <!-- tooltips-->
             <link rel="stylesheet" href="lib/qtip2/jquery.qtip.min.css" />
-        <!-- colorbox -->
-            <link rel="stylesheet" href="lib/colorbox/colorbox.css" />    
+        <!-- notifications -->
+            <link rel="stylesheet" href="lib/sticky/sticky.css" />
         <!-- code prettify -->
-            <link rel="stylesheet" href="lib/google-code-prettify/prettify.css" />    
+            <link rel="stylesheet" href="lib/google-code-prettify/prettify.css" />   
+        <!-- flags -->
+            <link rel="stylesheet" href="img/flags/flags.css" />	
+		<!-- calendar -->
+            <link rel="stylesheet" href="lib/fullcalendar/fullcalendar_gebo.css" />                 
         <!-- notifications -->
             <link rel="stylesheet" href="lib/sticky/sticky.css" />    
         <!-- splashy icons -->
             <link rel="stylesheet" href="img/splashy/splashy.css" />
-		<!-- flags -->
-            <link rel="stylesheet" href="img/flags/flags.css" />	
-		<!-- calendar -->
-            <link rel="stylesheet" href="lib/fullcalendar/fullcalendar_gebo.css" />
-            
+		<!-- datepicker -->
+            <link rel="stylesheet" href="lib/datepicker/datepicker.css" />
+        <!-- tag handler -->
+            <link rel="stylesheet" href="lib/tag_handler/css/jquery.taghandler.css" />
+        <!-- nice form elements -->
+            <link rel="stylesheet" href="lib/uniform/Aristo/uniform.aristo.css" />
+		<!-- 2col multiselect -->
+            <link rel="stylesheet" href="lib/multiselect/css/multi-select.css" />
+		<!-- enhanced select -->
+            <link rel="stylesheet" href="lib/chosen/chosen.css" />
+        <!-- upload -->
+            <link rel="stylesheet" href="lib/plupload/js/jquery.plupload.queue/css/plupload-gebo.css" />
+		<!-- colorbox -->
+            <link rel="stylesheet" href="lib/colorbox/colorbox.css" />
+		<!-- colorpicker -->
+            <link rel="stylesheet" href="lib/colorpicker/css/colorpicker.css" />	
+		    
         <!-- main styles -->
             <link rel="stylesheet" href="css/style.css" />
 			
@@ -68,6 +87,10 @@ if (empty($_SESSION['pass_actived'])){
 	
         <!-- Favicon -->
             <link rel="shortcut icon" href="favicon.ico" />
+            
+          
+		
+     
             
 		
         <!--[if lte IE 8]>

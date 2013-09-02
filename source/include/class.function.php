@@ -7,6 +7,11 @@
 		echo "<pre>"; print_r($values); echo "</pre>";
 	}
 	
+	function checkArray($mid,$arr){
+		$has_id = in_array($mid, $arr);	
+		return $has_id;
+	}
+	
 
 	function DateTimeDiff($strDateTime1,$strDateTime2){
 

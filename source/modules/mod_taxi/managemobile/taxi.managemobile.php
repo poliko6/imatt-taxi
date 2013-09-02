@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 <div class="span4">
-                    <div><a href="index.php?p=taxi.managemobile&menu=main_taxi" style="text-decoration:none;"><?=$lang_menu["menu_taxi_managemobile"]?></a></div>
+                    <div><a href="index.php?p=taxi.managemobile&menu=main_taxi" style="text-decoration:none;"><?=$lang_menu["taxi.managemobile"]?></a></div>
                     <div class="normal">เมนูเพิ่ม แก้ไข และลบ รายละเีอียดโทรศัพท์ในระบบ</div>
                 </div>
                 <div class="span7">

@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 <div class="span4">
-                    <div><a href="index.php?p=user.major&menu=main_user" style="text-decoration:none;"><?=$lang_menu["menu_user_major"]?></a></div>
+                    <div><a href="index.php?p=user.major&menu=main_user" style="text-decoration:none;"><?=$lang_menu["user.major"]?></a></div>
                     <div class="normal">เมนูเพิ่ม แก้ไข และลบ อู่รถสมาชิก</div>
                 </div>
                 <div class="span7">

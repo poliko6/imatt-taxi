@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 <div class="span4">
-                    <div><a href="index.php?p=user.profile&menu=main_user" style="text-decoration:none;"><?=$lang_menu["menu_user_profile"]?></a></div>
+                    <div><a href="index.php?p=user.profile&menu=main_user" style="text-decoration:none;"><?=$lang_menu["user.profile"]?></a></div>
                     <div class="normal">แก้ไขข้อมูลส่วนตัว</div>
                 </div>
                 <div class="span7">

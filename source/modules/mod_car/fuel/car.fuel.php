@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 <div class="span4">
-                    <div><a href="index.php?p=car.fuel&menu=main_car" style="text-decoration:none;"><?=$lang_menu["menu_car_fuel"]?></a></div>
+                    <div><a href="index.php?p=car.fuel&menu=main_car" style="text-decoration:none;"><?=$lang_menu["car.fuel"]?></a></div>
                     <div class="normal">เมนูเพิ่ม แก้ไข และลบ ประเภทเชื้อเพลิงรถยนต์</div>
                 </div>
                 <div class="span7">

@@ -1,1 +1,1 @@
-<a href="index.php?p=car.gas&menu=main_car"><?=$lang_menu["menu_car_gas"]?></a>
+<a href="index.php?p=car.gas&menu=main_car"><?=$lang_menu["car.gas"]?></a>

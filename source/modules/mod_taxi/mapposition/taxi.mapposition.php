@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 <div class="span4">
-                    <div><a href="index.php?p=taxi.mapposition&menu=main_taxi" style="text-decoration:none;"><?=$lang_menu["menu_taxi_position"]?></a></div>
+                    <div><a href="index.php?p=taxi.mapposition&menu=main_taxi" style="text-decoration:none;"><?=$lang_menu["taxi.position"]?></a></div>
                     <div class="normal">เมนูข้อมูลรายละเอียดตำแหน่งแท๊กซี่ในระบบ</div>
                 </div>
                 <div class="span7">

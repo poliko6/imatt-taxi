@@ -1,1 +1,1 @@
-<a href="index.php?p=driver.managedriver&menu=main_driver"><?=$lang_menu["menu_driver_manage"]?></a>
+<a href="index.php?p=driver.managedriver&menu=main_driver"><?=$lang_menu["driver.managedriver"]?></a>

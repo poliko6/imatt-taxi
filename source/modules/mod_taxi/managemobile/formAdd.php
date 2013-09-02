@@ -30,6 +30,16 @@ $major_name = $major_data[0]['thaiCompanyName'];
                          <div class="formSep">
                         	<div class="row-fluid">
                                 <div class="span12">
+                                    <label for="fileinput" class="control-label">SIM ID <span class="f_req">*</span></label>
+                                    <div class="controls text_line">                                    	
+                                        <input type="text" name="simId" id="simId" class="span5"  value="<?=$simId?>"  />
+                                        <span class="help-block">ตัวอย่าง : xxxxxxxxxx</span>                                        
+                                    </div>
+                            	</div>
+                            </div>
+                       
+                        	<div class="row-fluid">
+                                <div class="span12">
                                     <label for="fileinput" class="control-label">Emi/Msi <span class="f_req">*</span></label>
                                     <div class="controls text_line">
                                     	<div class="help-block" id="errEmiMsi" style="display:none; color:#C00;">Emi/Msi ซ้ำ</div>

@@ -3,7 +3,7 @@
 -- Server version:               5.1.41 - MySQL Community Server (GPL)
 -- Server OS:                    unknown-linux-gnu
 -- HeidiSQL version:             7.0.0.4053
--- Date/time:                    2013-08-30 14:16:42
+-- Date/time:                    2013-08-30 17:58:02
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -1042,7 +1042,7 @@ CREATE TABLE IF NOT EXISTS `car` (
   `carGasId` int(11) NOT NULL,
   `carFuelId` int(11) NOT NULL,
   `carColorId` int(11) NOT NULL,
-  `carStatusId` int(10) NOT NULL,
+  `carStatusId` int(10) NOT NULL COMMENT '1=ว่าง, 2=ไม่ว่าง, 3=จอด',
   `checkDelete` varchar(50) NOT NULL DEFAULT 's' COMMENT 'สถานะการลบ ''s = show'', ''d = hide''',
   PRIMARY KEY (`carId`),
   KEY `fk_car_carType1_idx` (`carTypeId`),
@@ -1056,7 +1056,7 @@ CREATE TABLE IF NOT EXISTS `car` (
   KEY `provinceId` (`provinceId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='<double-click to overwrite multiple objects>';
 
--- Dumping data for table taxi_db2.car: 12 rows
+-- Dumping data for table taxi_db2.car: 11 rows
 DELETE FROM `car`;
 /*!40000 ALTER TABLE `car` DISABLE KEYS */;
 INSERT INTO `car` (`carId`, `carRegistration`, `provinceId`, `carYear`, `carImage`, `dateAdd`, `dateUpdate`, `garageId`, `carTypeId`, `carBannerId`, `carModelId`, `carGasId`, `carFuelId`, `carColorId`, `carStatusId`, `checkDelete`) VALUES
@@ -1065,13 +1065,12 @@ INSERT INTO `car` (`carId`, `carRegistration`, `provinceId`, `carYear`, `carImag
 	(3, 'กง 5211', 5, 2013, '1_20130829180855_taxi2.jpg', '2013-08-23 14:43:30', '2013-08-30 10:09:20', 2, 1, 1, 1, 0, 1, 16, 3, 's'),
 	(5, 'กง 5211', 1, 2013, '1_20130829180703_images.jpg', '2013-08-23 16:07:14', '2013-08-30 10:09:20', 1, 1, 1, 1, 0, 1, 16, 3, 's'),
 	(7, 'กง 5211', 5, 2010, '1_20130829180910_Taxi-meter_in_Bangkok_06.jpg', '2013-08-26 13:09:17', '2013-08-30 10:09:20', 2, 1, 2, 5, 0, 1, 17, 3, 's'),
-	(11, 'ขข 5213', 3, 2009, '1_20130829180830_Taxi-meter_in_Bangkok_06.jpg', '2013-08-26 14:44:01', '2013-08-30 10:09:20', 3, 1, 1, 1, 1, 1, 16, 3, 's'),
+	(11, 'ขข 5213', 3, 2009, '1_20130829180830_Taxi-meter_in_Bangkok_06.jpg', '2013-08-26 14:44:01', '2013-08-30 16:51:51', 3, 1, 1, 1, 1, 1, 16, 3, 'd'),
 	(9, 'กข 2156', 12, 2012, '1_20130829180917_images.jpg', '2013-08-26 14:06:03', '2013-08-30 10:09:20', 2, 1, 1, 1, 0, 1, 17, 3, 's'),
 	(10, 'กง 4521', 5, 2012, '1_20130829180937_taxi1.jpg', '2013-08-26 14:22:17', '2013-08-30 10:09:20', 2, 1, 1, 1, 0, 1, 17, 3, 's'),
-	(12, 'คล 421', 8, 2012, '1_20130829180816_taxibkk-pink-02.jpg', '2013-08-26 14:48:57', '2013-08-30 10:09:20', 3, 1, 1, 1, 0, 1, 17, 3, 's'),
+	(12, 'คล 421', 8, 2012, '1_20130829180816_taxibkk-pink-02.jpg', '2013-08-26 14:48:57', '2013-08-30 16:51:26', 3, 1, 1, 1, 0, 1, 17, 3, 'd'),
 	(13, 'ดถ 4321', 38, 2011, '1_20130829180744_1783.jpg', '2013-08-26 15:05:41', '2013-08-30 10:09:20', 4, 7, 2, 5, 1, 1, 21, 3, 's'),
-	(14, '1307', 7, 1984, '1_20130829180651_dd284318a956abacf430426ac6860525_0.jpg', '2013-08-28 13:12:12', '2013-08-30 11:10:25', 1, 2, 3, 8, 2, 2, 17, 3, 's'),
-	(15, '', 0, 0, '', '2013-08-30 11:00:45', '0000-00-00 00:00:00', 1, 0, 0, 0, 0, 0, 0, 3, 's');
+	(14, '1307', 7, 1984, '1_20130829180651_dd284318a956abacf430426ac6860525_0.jpg', '2013-08-28 13:12:12', '2013-08-30 11:10:25', 1, 2, 3, 8, 2, 2, 17, 3, 's');
 /*!40000 ALTER TABLE `car` ENABLE KEYS */;
 
 
@@ -10247,18 +10246,19 @@ CREATE TABLE IF NOT EXISTS `garagelist` (
   `dateAdded` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dateUpdated` datetime NOT NULL,
   PRIMARY KEY (`garageId`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='<double-click to overwrite multiple objects>';
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='<double-click to overwrite multiple objects>';
 
--- Dumping data for table taxi_db2.garagelist: 6 rows
+-- Dumping data for table taxi_db2.garagelist: 7 rows
 DELETE FROM `garagelist`;
 /*!40000 ALTER TABLE `garagelist` DISABLE KEYS */;
 INSERT INTO `garagelist` (`garageId`, `garagePassword`, `garageShortName`, `dateAdded`, `dateUpdated`) VALUES
 	(1, 'Supervisor', 'superv', '2013-08-19 10:50:52', '0000-00-00 00:00:00'),
 	(2, 'greengreen', 'greentx', '2013-08-20 11:45:48', '0000-00-00 00:00:00'),
-	(3, 'pinkpink', 'pinktx', '2013-08-20 17:41:45', '0000-00-00 00:00:00'),
+	(8, 'blueblue', 'bluetx', '2013-08-30 16:56:34', '0000-00-00 00:00:00'),
 	(4, 'YGpassword', 'YGtaxi', '2013-08-20 17:43:21', '0000-00-00 00:00:00'),
 	(5, 'blackblack', 'blacktx', '2013-08-29 15:12:25', '0000-00-00 00:00:00'),
-	(6, 'redredred', 'redtx', '2013-08-29 17:44:22', '0000-00-00 00:00:00');
+	(7, 'deletepw', 'fordel', '2013-08-30 14:32:57', '0000-00-00 00:00:00'),
+	(9, 'greygrey', 'graytx', '2013-08-30 16:59:25', '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `garagelist` ENABLE KEYS */;
 
 
@@ -10292,18 +10292,19 @@ CREATE TABLE IF NOT EXISTS `majoradmin` (
   KEY `fk_majorAdmin_amphur1_idx` (`amphurId`),
   KEY `fk_majorAdmin_district1_idx` (`districtId`),
   KEY `fk_majorAdmin_majorType1_idx` (`majorTypeId`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='<double-click to overwrite multiple objects>';
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='<double-click to overwrite multiple objects>';
 
--- Dumping data for table taxi_db2.majoradmin: 6 rows
+-- Dumping data for table taxi_db2.majoradmin: 7 rows
 DELETE FROM `majoradmin`;
 /*!40000 ALTER TABLE `majoradmin` DISABLE KEYS */;
 INSERT INTO `majoradmin` (`majorId`, `thaiCompanyName`, `englishCompanyName`, `managerName`, `username`, `password`, `businessType`, `address`, `zipcode`, `mobilePhone`, `telephone`, `fax`, `callCenter`, `email`, `dateAdded`, `dateUpdated`, `majorTypeId`, `garageId`, `provinceId`, `amphurId`, `districtId`) VALUES
 	(1, 'บริษัทแท๊กซี่สีเขียว', 'Taxi Green Company', 'Green Color', 'greentaxi', '7c222fb2927d828af22f592134e8932480637c0d', 'Taxi', '740', '52000', '0881224455', '055236236', '053123654', '1122', 'taxigreen@taxi.com', '2013-08-19 10:48:13', '0000-00-00 00:00:00', 2, 2, 1, 1, 1),
-	(2, 'บริษัทแท๊กซี่สีชมพู', 'Taxi Pink Company', 'Pink Color', 'pinktaxi', '7c222fb2927d828af22f592134e8932480637c0d', 'Van Taxi', '115', '50100', '0851216262', '054115478', '054226998', '1150', 'taxipink@taxi.com', '2013-08-20 10:25:10', '0000-00-00 00:00:00', 2, 3, 1, 1, 1),
+	(8, 'บริษัทแท๊กซี่สีฟ้า', 'Taxi Blue Company', 'Blue Color', 'bluetaxi', '7c222fb2927d828af22f592134e8932480637c0d', 'รถแท๊กซี่ไม่ติดมิเตอร์', '', '', '', '', '', '', 'blue@taxi.com', '2013-08-30 16:56:34', NULL, 2, 8, 8, 111, 0),
 	(3, 'บริษัทแท๊กซี่สีเหลืองเขียว', 'Taxi Yellow Green Company', 'Yellow Color', 'yellowgreentaxi', '7c222fb2927d828af22f592134e8932480637c0d', 'Taxi Center', '740', '52000', '0834587898', '056321445', '-', '1254', 'taxiyellowgreen@taxi.com', '2013-08-20 11:15:00', '2013-08-20 11:15:01', 2, 4, 1, 1, 1),
 	(4, 'บริษัทแท๊กซี่สีฟ้าครามน้ำเงินเขียวเหลืองแสดแดง', 'Taxi Blue Ocean Deepblue Green Yellow Orange Red Company', 'ManyColorful Color', 'supervisor', '7c222fb2927d828af22f592134e8932480637c0d', 'Supervisor', '521', '10100', '0874451245', '021547895', '-', '1711', 'taxiwithsomanycolor@taxi.com', '2013-08-20 11:17:07', '2013-08-20 11:17:08', 1, 1, 1, 1, 1),
 	(5, 'บริษัท แท๊กซี่สีดำ', 'Taxi Black Company', 'Serious Black', 'blacktaxi', '7c222fb2927d828af22f592134e8932480637c0d', 'Underground Taxi', '', '', '0855441245', '025781598', '', '', 'black@taxi.com', '2013-08-29 15:12:25', NULL, 2, 5, 1, 26, 171),
-	(6, 'บริษัทแท๊กซี่สีแดงฉาน', 'Taxi Red Company', 'Red Color', 'redcolortx', '7c222fb2927d828af22f592134e8932480637c0d', 'Red Alert Taxi', '', '', '0894546585', '0278798745', '-', '-', 'red@taxi.com', '2013-08-29 17:44:22', NULL, 1, 6, 1, 24, 163);
+	(7, 'บริษัทแท๊กซี่เพื่อลบ', 'For Delete Only', 'Delete Taxi', 'deleteit', '7c222fb2927d828af22f592134e8932480637c0d', 'Eluminate', '', '', '', '', '', '', '', '2013-08-30 14:32:57', NULL, 2, 7, 15, 183, 1487),
+	(9, 'บริษัทแท๊กซี่สีเทา', 'Taxi Grey Company', 'Grey Color', 'greytaxi', '7c222fb2927d828af22f592134e8932480637c0d', 'Taxi Meter', '', '', '0914568877', '027881456', '', '', 'grey@taxi.com', '2013-08-30 16:59:25', NULL, 2, 9, 1, 6, 0);
 /*!40000 ALTER TABLE `majoradmin` ENABLE KEYS */;
 
 
@@ -10429,14 +10430,15 @@ CREATE TABLE IF NOT EXISTS `mobile` (
   PRIMARY KEY (`mobileId`),
   KEY `fk_mobile_mobileNetwork1_idx` (`mobileNetworkId`),
   KEY `fk_mobile_garageList1_idx` (`garageId`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='<double-click to overwrite multiple objects>';
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='<double-click to overwrite multiple objects>';
 
--- Dumping data for table taxi_db2.mobile: 2 rows
+-- Dumping data for table taxi_db2.mobile: 3 rows
 DELETE FROM `mobile`;
 /*!40000 ALTER TABLE `mobile` DISABLE KEYS */;
 INSERT INTO `mobile` (`mobileId`, `mobileNumber`, `mobileBanner`, `mobileModel`, `EmiMsi`, `dateAdd`, `dateUpdate`, `mobileNetworkId`, `garageId`, `latitude`, `longitude`, `checkDelete`) VALUES
 	(1, '0824445511', 'Apple', 'Iphone 5s', '01xxxx01', '2013-08-27 12:44:29', '0000-00-00 00:00:00', 1, 2, '13.8801245', '98.124545', 's'),
-	(2, '0915551234', 'Samsung', 'Galaxy S4', '01xxxx02', '2013-08-27 12:46:40', '0000-00-00 00:00:00', 3, 4, '', '', 's');
+	(2, '0915551234', 'Samsung', 'Galaxy S4', '01xxxx02', '2013-08-27 12:46:40', '0000-00-00 00:00:00', 3, 4, '', '', 's'),
+	(3, '0833254610', 'Samsung', 'Note 2', '052135125', '2013-08-30 17:07:22', '2013-08-30 18:17:05', 3, 1, '', '', 's');
 /*!40000 ALTER TABLE `mobile` ENABLE KEYS */;
 
 
@@ -10470,15 +10472,18 @@ CREATE TABLE IF NOT EXISTS `mobilenetwork` (
   `mobileNetworkName` varchar(50) NOT NULL DEFAULT '',
   `dateAdd` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`mobileNetworkId`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='<double-click to overwrite multiple objects>';
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='<double-click to overwrite multiple objects>';
 
--- Dumping data for table taxi_db2.mobilenetwork: 3 rows
+-- Dumping data for table taxi_db2.mobilenetwork: 6 rows
 DELETE FROM `mobilenetwork`;
 /*!40000 ALTER TABLE `mobilenetwork` DISABLE KEYS */;
 INSERT INTO `mobilenetwork` (`mobileNetworkId`, `mobileNetworkName`, `dateAdd`) VALUES
-	(1, 'Dtac', '2013-08-27 12:46:53'),
+	(1, 'DTAC', '2013-08-30 16:36:57'),
 	(2, 'AIS', '2013-08-27 12:46:59'),
-	(3, 'Truemove H', '2013-08-27 12:47:08');
+	(3, 'Truemove H', '2013-08-27 12:47:08'),
+	(4, 'GSM 1800', '2013-08-30 16:31:48'),
+	(5, 'CAT CDMA', '2013-08-30 16:32:30'),
+	(6, 'HUTCH', '2013-08-30 16:36:45');
 /*!40000 ALTER TABLE `mobilenetwork` ENABLE KEYS */;
 
 
