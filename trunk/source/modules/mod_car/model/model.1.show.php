@@ -272,7 +272,7 @@
 				jQuery.ajax({
 					url :'modules/mod_car/model/editmodel.php',
 					type: 'GET',
-					data: 'act=update&model_name='+$('#model_name_edit').val()+'&model_name_temp='+$('#temp').val()+'&id='+id+'',
+					data: 'act=update&model_name='+$('#model_name_edit').val()+'&model_name_temp='+$('#temp').val()+'&id='+id+'&bannerid='+$('#hide_bannerid').val()+'',
 					dataType: 'jsonp',
 					dataCharset: 'jsonp',
 					success: function (data){

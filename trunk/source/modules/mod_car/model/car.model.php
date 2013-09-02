@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 <div class="span4">
-                    <div><a href="index.php?p=car.model&menu=main_car" style="text-decoration:none;"><?=$lang_menu["menu_car_model"]?></a></div>
+                    <div><a href="index.php?p=car.model&menu=main_car" style="text-decoration:none;"><?=$lang_menu["car.model"]?></a></div>
                     <div class="normal">เมนูเพิ่ม แก้ไข และลบ รุ่นรถยนต์</div>
                 </div>
                 <div class="span7">

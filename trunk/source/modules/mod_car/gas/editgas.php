@@ -17,18 +17,29 @@
 	
 	if($gas_name != $gas_name_temp){
 		
+		$car_gas_chk = select_db('cargas',"where carGasName = '".$gas_name."'");
+		#print_r($car_gas_chk);
+		$find_chk = count($car_gas_chk);
+		
+		if ($find_chk) {
+			$data['success'] = false;
+			$data['message'] = 'ประเภทแก๊สรถยนต์ "'.$gas_name.'" มีแล้วในระบบ';
+			
+		} else {
 		
 		
-		$TableName = 'cargas';
-		$data = array(
-       	 	'carGasName'=>$gas_name
-		);
-		$sql = update_db($TableName, array('carGasId='=>$id), $data);
-		//echo $sql;
-		mysql_query($sql);
+			$TableName = 'cargas';
+			$data = array(
+				'carGasName'=>$gas_name
+			);
+			$sql = update_db($TableName, array('carGasId='=>$id), $data);
+			//echo $sql;
+			mysql_query($sql);
+			
+			$data['success'] = true;
+			$data['message'] = 'ปรับปรุงประเภทแก๊สรถยนต์ "'.$gas_name_temp.'" เป็น "'.$gas_name.'" เรียบร้อยแล้ว';
+		}
 		
-		$data['success'] = true;
-		$data['message'] = 'ปรับปรุงประเภทแก๊สรถยนต์ "'.$gas_name_temp.'" เป็น "'.$gas_name.'" เรียบร้อยแล้ว';
 		
 	} else {
 		

@@ -20,21 +20,32 @@
 		
 	if(($bannereng != $bannereng_temp) || ($bannerthai != $bannerthai_temp)){
 		
-		$TableName = 'carbanner';
-		$data = array(
-			'carBannerNameEng'=>$bannereng,
-			'carBannerNameThai'=>$bannerthai
-		);
-		$sql = update_db($TableName, array('carBannerId='=>$id), $data);
-		//echo $sql;
-		mysql_query($sql);	
+		$car_banner_chk = select_db('carbanner',"where carBannerNameEng = '".$bannereng."'");
+		$find_chk = count($car_banner_chk);
 		
-		$data['success'] = true;	
-		if(($bannereng != $bannereng_temp)){	
-			$data['message'] = 'ปรับปรุงยี่ห้อรถยนต์ "'.$bannereng_temp.'" เป็น "'.$bannereng.'" เรียบร้อยแล้ว';
-		}
-		if(($bannerthai != $bannerthai_temp)){	
-			$data['message'] = 'ปรับปรุงยี่ห้อรถยนต์ "'.$bannerthai_temp.'" เป็น "'.$bannerthai.'" เรียบร้อยแล้ว';
+		if ($find_chk) {
+			$data['success'] = false;
+			$data['message'] = 'ยี่ห้อรถยนต์ "'.$banner_name_eng.'" มีแล้วในระบบ';
+			
+		} else {
+		
+			$TableName = 'carbanner';
+			$data = array(
+				'carBannerNameEng'=>$bannereng,
+				'carBannerNameThai'=>$bannerthai
+			);
+			$sql = update_db($TableName, array('carBannerId='=>$id), $data);
+			//echo $sql;
+			mysql_query($sql);	
+			
+			$data['success'] = true;	
+			if(($bannereng != $bannereng_temp)){	
+				$data['message'] = 'ปรับปรุงยี่ห้อรถยนต์ "'.$bannereng_temp.'" เป็น "'.$bannereng.'" เรียบร้อยแล้ว';
+			}
+			if(($bannerthai != $bannerthai_temp)){	
+				$data['message'] = 'ปรับปรุงยี่ห้อรถยนต์ "'.$bannerthai_temp.'" เป็น "'.$bannerthai.'" เรียบร้อยแล้ว';
+			}
+			
 		}
 		
 	} else {

@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 <div class="span4">
-                    <div><a href="index.php?p=user.minor&menu=main_user" style="text-decoration:none;"><?=$lang_menu["menu_user_minor"]?></a></div>
+                    <div><a href="index.php?p=user.minor&menu=main_user" style="text-decoration:none;"><?=$lang_menu["user.minor"]?></a></div>
                     <div class="normal">เมนูเพิ่ม แก้ไข และลบ พนักงาน</div>
                 </div>
                 <div class="span7">

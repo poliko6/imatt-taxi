@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 <div class="span4">
-                    <div><a href="index.php?p=user.type&menu=main_user" style="text-decoration:none;"><?=$lang_menu["menu_user_type"]?></a></div>
+                    <div><a href="index.php?p=user.type&menu=main_user" style="text-decoration:none;"><?=$lang_menu["user.type"]?></a></div>
                     <div class="normal">เมนูเพิ่ม แก้ไข และลบ ประเภทพนักงาน</div>
                 </div>
                 <div class="span7">
@@ -37,8 +37,32 @@
   <tr>
   	<td>
 	<?
-				include("modules/mod_user/profile/major.profile.php");
-
+	if ($handle_type = opendir('modules/mod_user/type')) {
+ 		while (false !== ($file_type = readdir($handle_type)))
+      	{
+        	if ($file_type != "." && $file_type != "..")
+			{   				
+				if(strstr("$file_type", "type" ))
+				{	
+					$data_type = explode('.', $file_type);
+					$file_menu_type[$data_type[1]]=$file_type;
+				}
+			}
+		}	
+		
+		closedir($handle_type);
+	}
+	
+	$ii_type=0;
+	
+	foreach($file_menu_type as $values)
+	{		
+		$ii_type++;							
+		
+		if($file_menu_type[$ii_type]){
+			include("modules/mod_user/type/$file_menu_type[$ii_type]");									
+		}
+	}	
 	?>
     </td>
   </tr>

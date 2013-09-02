@@ -123,6 +123,36 @@
 				disableFocus: true,
 				template: 'dropdown'
 			});
+			//Taxi Time
+			$('#time1').timepicker({
+				defaultTime: 'current',
+				minuteStep: 1,
+				disableFocus: true,
+				template: 'dropdown',
+				showMeridian: false
+			});
+			$('#time2').timepicker({
+				defaultTime: 'current',
+				minuteStep: 1,
+				disableFocus: true,
+				template: 'dropdown',
+				showMeridian: false
+			});
+			$('#time1_edit').timepicker({
+				defaultTime: 'current',
+				minuteStep: 1,
+				disableFocus: true,
+				template: 'dropdown',
+				showMeridian: false
+			});
+			$('#time2_edit').timepicker({
+				defaultTime: 'current',
+				minuteStep: 1,
+				disableFocus: true,
+				template: 'dropdown',
+				showMeridian: false
+			});
+			
 		}
 	};
 	
@@ -266,7 +296,7 @@
 			
 			//* slider with select
 			var select = $( "#ui_slider3_sel" );
-			var slider = $( "<div id='ui_slider3'></div>" ).insertAfter( select ).slider({
+			/*var slider = $( "<div id='ui_slider3'></div>" ).insertAfter( select ).slider({
 				min: 1,
 				max: 6,
 				range: "min",
@@ -274,7 +304,7 @@
 				slide: function( event, ui ) {
 					select[ 0 ].selectedIndex = ui.value - 1;
 				}
-			});
+			});*/
 			$( "#ui_slider3_sel" ).change(function() {
 				slider.slider( "value", this.selectedIndex + 1 );
 			});

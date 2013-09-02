@@ -6,6 +6,7 @@ $mobile_data = select_db('mobile',"where mobileId = '".$mobileId."'");
 $mobileNumber = $mobile_data[0]['mobileNumber'];
 $mobileNetworkId = $mobile_data[0]['mobileNetworkId'];
 
+$simId = $mobile_data[0]['simId'];
 $EmiMsi = $mobile_data[0]['EmiMsi'];
 $mobileBanner = $mobile_data[0]['mobileBanner'];
 $mobileModel = $mobile_data[0]['mobileModel'];
@@ -33,7 +34,19 @@ $mobileModel = $mobile_data[0]['mobileModel'];
                             </div>
                         </div>
                         
+                         
                          <div class="formSep">
+                         	
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <label for="fileinput" class="control-label">SIM ID <span class="f_req">*</span></label>
+                                    <div class="controls text_line">                                    	
+                                        <input type="text" name="simId" id="simId" class="span5"  value="<?=$simId?>"  />
+                                        <span class="help-block">ตัวอย่าง : xxxxxxxxxx</span>                                        
+                                    </div>
+                            	</div>
+                            </div>
+                            
                         	<div class="row-fluid">
                                 <div class="span12">
                                     <label for="fileinput" class="control-label">Emi/Msi <span class="f_req">*</span></label>

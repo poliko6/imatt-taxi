@@ -41,6 +41,7 @@
 					EmiMsi: { required: true },
 					mobileBanner: { required: true },
 					mobileModel: { required: true },
+					simId: { required: true },
 					mobileNetworkId: { required: true },
 					
 					//From major.add.php

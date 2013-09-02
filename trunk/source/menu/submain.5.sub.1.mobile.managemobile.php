@@ -1,1 +1,0 @@
-<a href="index.php?p=mobile.managemobile&menu=main_mobile"><?=$lang_menu["menu_mobile_manage"]?></a>

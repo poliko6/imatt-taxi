@@ -17,18 +17,26 @@
 	
 	if($color_name != $color_name_temp){
 		
+		$car_color_chk = select_db('carcolor',"where carColorName = '".$color_name."'");
+		$find_chk = count($car_color_chk);
 		
+		if ($find_chk) {
+			$data['success'] = false;
+			$data['message'] = 'สีรถ "'.$color_name.'" มีแล้วในระบบ';
+			
+		} else {
 		
-		$TableName = 'carcolor';
-		$data = array(
-       	 	'carColorName'=>$color_name
-		);
-		$sql = update_db($TableName, array('carColorId='=>$id), $data);
-		//echo $sql;
-		mysql_query($sql);
-		
-		$data['success'] = true;
-		$data['message'] = 'ปรับปรุงสีรถ "'.$color_name_temp.'" เป็น "'.$color_name.'" เรียบร้อยแล้ว';
+			$TableName = 'carcolor';
+			$data = array(
+				'carColorName'=>$color_name
+			);
+			$sql = update_db($TableName, array('carColorId='=>$id), $data);
+			//echo $sql;
+			mysql_query($sql);
+			
+			$data['success'] = true;
+			$data['message'] = 'ปรับปรุงสีรถ "'.$color_name_temp.'" เป็น "'.$color_name.'" เรียบร้อยแล้ว';
+		}
 		
 	} else {
 		

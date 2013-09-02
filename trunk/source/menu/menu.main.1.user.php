@@ -2,7 +2,7 @@
 <div class="row-fluid">
     <div class="span6">
         <h3 class="heading" style="font-size:12px; border-bottom:1px #000 dotted; margin-bottom:7px; padding-bottom:2px;">
-            <a href="index.php?menu=main_user" style="text-decoration:none;"><strong><?=$lang_menu["menu_user"]?></strong></a>
+            <a href="index.php?menu=main_user" style="text-decoration:none;"><strong><?=$lang_menu["user"]?></strong></a>
         </h3>
     </div>    
              

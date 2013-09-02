@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 <div class="span4">
-                    <div><a href="index.php?p=driver.managedriver&menu=main_taxi" style="text-decoration:none;"><?=$lang_menu["menu_driver_manage"]?></a></div>
+                    <div><a href="index.php?p=driver.managedriver&menu=main_taxi" style="text-decoration:none;"><?=$lang_menu["driver.managedriver"]?></a></div>
                     <div class="normal">เมนูเพิ่ม แก้ไข และลบ รายละเีอียดคนขับแท๊กซี่ในระบบ</div>
                 </div>
                 <div class="span7">

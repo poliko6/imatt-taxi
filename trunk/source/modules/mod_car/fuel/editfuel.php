@@ -17,18 +17,27 @@
 	
 	if($fuel_name != $fuel_name_temp){
 		
+		$car_fuel_chk = select_db('carfuel',"where carFuelName = '".$fuel_name."'");
+		#print_r($car_fuel_chk);
+		$find_chk = count($car_fuel_chk);
 		
+		if ($find_chk) {
+			$data['success'] = false;
+			$data['message'] = 'ประเภทเชื้อเพลิง "'.$fuel_name.'" มีแล้วในระบบ';
+			
+		} else {
 		
-		$TableName = 'carfuel';
-		$data = array(
-       	 	'carFuelName'=>$fuel_name
-		);
-		$sql = update_db($TableName, array('carFuelId='=>$id), $data);
-		//echo $sql;
-		mysql_query($sql);
-		
-		$data['success'] = true;
-		$data['message'] = 'ปรับปรุงประเภทเชื้อเพลิง "'.$fuel_name_temp.'" เป็น "'.$fuel_name.'" เรียบร้อยแล้ว';
+			$TableName = 'carfuel';
+			$data = array(
+				'carFuelName'=>$fuel_name
+			);
+			$sql = update_db($TableName, array('carFuelId='=>$id), $data);
+			//echo $sql;
+			mysql_query($sql);
+			
+			$data['success'] = true;
+			$data['message'] = 'ปรับปรุงประเภทเชื้อเพลิง "'.$fuel_name_temp.'" เป็น "'.$fuel_name.'" เรียบร้อยแล้ว';
+		}
 		
 	} else {
 		

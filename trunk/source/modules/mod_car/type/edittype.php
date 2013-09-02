@@ -17,18 +17,25 @@
 	
 	if($type_name != $type_name_temp){
 		
+		$car_type_chk = select_db('cartype',"where carTypeName = '".$type_name."'");
+ 		$find_chk = count($car_type_chk);
+
+		if ($find_chk) {
+			$data['success'] = false;
+			$data['message'] = 'ประเภทรถ "'.$type_name.'" มีแล้วในระบบ';
 		
-		
-		$TableName = 'cartype';
-		$data = array(
-       	 	'carTypeName'=>$type_name
-		);
-		$sql = update_db($TableName, array('carTypeId='=>$id), $data);
-		//echo $sql;
-		mysql_query($sql);
-		
-		$data['success'] = true;
-		$data['message'] = 'ปรับปรุงประเภทรถ "'.$type_name_temp.'" เป็น "'.$type_name.'" เรียบร้อยแล้ว';
+		} else {
+			$TableName = 'cartype';
+			$data = array(
+				'carTypeName'=>$type_name
+			);
+			$sql = update_db($TableName, array('carTypeId='=>$id), $data);
+			//echo $sql;
+			mysql_query($sql);
+			
+			$data['success'] = true;
+			$data['message'] = 'ปรับปรุงประเภทรถ "'.$type_name_temp.'" เป็น "'.$type_name.'" เรียบร้อยแล้ว';
+		}
 		
 	} else {
 		

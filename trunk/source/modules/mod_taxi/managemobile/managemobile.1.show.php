@@ -51,7 +51,8 @@
 			$TableName = 'mobile';
 			$data = array(
 				'mobileNumber'=>$mobileNumber,
-				'mobileBanner'=>$mobileBanner,			
+				'mobileBanner'=>$mobileBanner,	
+				'simId'=>$simId,		
 				'mobileModel'=>$mobileModel,
 				'mobileNetworkId'=>$mobileNetworkId,
 				'EmiMsi'=>$EmiMsi,
@@ -89,7 +90,7 @@
 		if (($find_chk1 > 0)  || ($find_chk2 > 0)){
 			
 			$message = "ข้อมูลโทรศัพท์นี้มีแล้วในระบบ";
-			$act = 'addmobile';
+			//$act = 'addmobile';
 			?>
 			<script type="text/javascript">			
 			$(document).ready(function() {
@@ -106,6 +107,7 @@
 			$data = array(
 				'garageId'=>$garageId,
 				'mobileNumber'=>$mobileNumber,
+				'simId'=>$simId,
 				'mobileBanner'=>$mobileBanner,			
 				'mobileModel'=>$mobileModel,
 				'mobileNetworkId'=>$mobileNetworkId,
@@ -116,7 +118,7 @@
 			mysql_query($sql);	
 			//echo $sql;
 			
-			$message = "เพิ่มข้อมูลโทรศัพท์หมายเลข '".$mobileNumber."' เรียบร้อยแล้วค่ะ";
+			$message = "เพิ่มข้อมูลโทรศัพท์หมายเลข ".$mobileNumber." เรียบร้อยแล้วค่ะ";
 			
 			?>
 			<script type="text/javascript">			
@@ -153,7 +155,7 @@
 	var find_chk2 = <?=$find_chk2?>;
 	
 	$(document).ready(function(){	
-		console.log(find_chk1);	
+		console.log('find_chk1 = '+find_chk1);	
 		
 		if (find_chk1 == 1){
 			$('#errNumber').show();
@@ -191,7 +193,7 @@
 		$('#'+alertid+'').fadeIn(500, function() {
 			clearTimeout(delayAlert);  
 			delayAlert=setTimeout(function(){  
-				alertFadeOut(''+alertid+'');
+				$('#'+alertid+'').fadeOut(1000);
 				if (newload == 1){
 					reloadPage();  
 				}
