@@ -21,12 +21,15 @@
 	
 	if ($find_used == 0){	
 
-		$TableName = 'mobile';
+		/*$TableName = 'mobile';
 		$data = array(		
 			'dateUpdate'=>date('Y-m-d H:i:s'),		
 			'checkDelete'=>'d'
 		);
-		$sql = update_db($TableName, array('mobileId='=>$id), $data);
+		$sql = update_db($TableName, array('mobileId='=>$id), $data);*/
+		
+		$TableName = 'mobile';
+		$sql = delete_db($TableName, array('mobileId='=>$id));
 		//echo $sql;
 		mysql_query($sql);
 		
