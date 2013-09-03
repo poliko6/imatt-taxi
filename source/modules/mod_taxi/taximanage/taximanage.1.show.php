@@ -396,7 +396,7 @@
 			$sql = insert_db($TableName, $data);
 			mysql_query($sql);	
 			
-			$message = "เพิ่มข้อมูลรถแท๊กซี่ทะเบียน '".$carRegistration."' เรียบร้อยแล้วค่ะ";
+			$message = "เพิ่มข้อมูลรถแท๊กซี่ทะเบียน ".$carRegistration." เรียบร้อยแล้วค่ะ";
 			
 			?>
 			<script type="text/javascript">			
