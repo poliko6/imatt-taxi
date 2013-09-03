@@ -11,13 +11,13 @@
 		if ($u_garage == 1) {
 			
 			if ($garageId == ''){
-				$mobile_data = select_db('mobile',"where checkDelete = 's' order by dateAdd desc");
+				$mobile_data = select_db('mobile',"order by dateAdd desc");
 			} else {
-				$mobile_data = select_db('mobile',"where garageId = '".$garageId."' and checkDelete = 's' order by dateAdd desc");
+				$mobile_data = select_db('mobile',"where garageId = '".$garageId."' order by dateAdd desc");
 			}			
 			
 		} else { //Case Garage
-			$mobile_data = select_db('mobile',"where garageId = '".$u_garage."' and checkDelete = 's' order by dateAdd desc");
+			$mobile_data = select_db('mobile',"where garageId = '".$u_garage."' order by dateAdd desc");
 			$garageId  = $u_garage;
 		}
 		$total = count($mobile_data);
