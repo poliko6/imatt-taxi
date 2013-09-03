@@ -1,1 +1,1 @@
-<a href="index.php?p=taxi.mapposition&menu=main_taxi"><?=$lang_menu["taxi.position"]?></a>
+<a href="index.php?p=taxi.mapposition&menu=main_taxi"><?=$lang_menu["taxi.mapposition"]?></a>
