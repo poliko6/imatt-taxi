@@ -1,7 +1,7 @@
  <?
  foreach($_REQUEST as $key => $value)  {
 	$$key = $value;
-	echo $key ."=". $value."<br>";
+	#echo $key ."=". $value."<br>";
  }
  //pre($_SESSION);
  //pre(error_get_last());
@@ -19,12 +19,12 @@
 		
 	case 'saveadd':	
 		
-		//Check ป้ายทะเบียนซ้ำ			
-		$find_chk = count_data_mysql('minorId','minoradmin',"username = '".trim($userName)."' and garageId = '".$u_garage."'");
+		//Check Usernaem ซ้ำ			
+		$find_chk = count_data_mysql('minorId','minoradmin',"username = '".trim($txtuserName)."' and garageId = '".$u_garage."'");
 			
 		if ($find_chk) {
 			
-			$message = "ข้อมูลพนักงาน Username : ".trim($userName)." มีแล้วในระบบ";
+			$message = "ข้อมูลพนักงาน Username : ".trim($txtuserName)." มีแล้วในระบบ";
 			$act = 'addminor';
 			?>
 			<script type="text/javascript">			
@@ -38,22 +38,23 @@
 		} else {
 		
 			$act = '';
+			$txtpassword = trim($txtpassword);
 			$TableName = 'minoradmin';
 			$data = array(
 				'garageId'=>$u_garage,
-				'firstName'=>$firstName,
-				'lastName'=>$lastName,			
-				'username'=>$userName,
+				'firstName'=>trim($firstName),
+				'lastName'=>trim($lastName),			
+				'username'=>trim($txtuserName),
 				'minorTypeId'=>$minorTypeId,
-				'password'=>$u_password,
-				'address'=>$txtAddress_add,
-				'provinceId'=>$province_add,
-				'amphurId'=>$amphur_add,
-				'districtId'=>$district_add,
-				'telephone'=>$txtPhone,
-				'mobilePhone'=>$txtMobilePhone,				
-				'email'=>$txtEmail,
-				'zipcode'=>$txtZipcode_add
+				'password'=>sha1($txtpassword),
+				'address'=>trim($address),
+				'provinceId'=>$provinceId,
+				'amphurId'=>$amphurId,
+				'districtId'=>$districtId,
+				'telephone'=>trim($telephone),
+				'mobilePhone'=>trim($mobilePhone),				
+				'email'=>trim($txtemail),
+				'zipcode'=>trim($zipcode)
 			);
 			$sql = insert_db($TableName, $data);
 			mysql_query($sql);	
@@ -75,59 +76,64 @@
 		
 	case 'saveedit':
 
-		if ((trim($carRegistration) == trim($carRegistrationTmp)) && (trim($provinceId) == trim($provinceIdTmp))){
-			$find_chk = 0;
-		} else {
-			//Check ป้ายทะเบียนซ้ำ	
-			$find_chk = count_data_mysql('carId','car',"carRegistration = '".trim($carRegistration)."' and provinceId = '".$provinceId."'");
-		}		
-
+		$TableName = 'minoradmin';
 		
-		if ($find_chk) {
+		if (trim($txtpassword) != ''){
+			$txtpassword = trim($txtpassword);
 			
-			$message = "ไม่สามารถแก้ไขได้ เนื่องจากข้อมูลพนักงานคันนี้มีแล้วในระบบ";
-			//$act = 'edittaxi';
-			?>
-			<script type="text/javascript">			
-			$(document).ready(function() {
-				alertPopup('msg2','alert2','<?=$message?>',0);
-			});		
-			</script>
-			<?
-			include('modules/mod_user/minor/formEdit.php');
-		
-		} else {	
-					
-			$TableName = 'car';
 			$data = array(
-				'carRegistration'=>$carRegistration,
-				'provinceId'=>$provinceId,			
-				'carTypeId'=>$carTypeId,
-				'carBannerId'=>$carBannerId,
-				'carModelId'=>$carModelId,
-				'carColorId'=>$carColorId,
-				'carFuelId'=>$carFuelId,
-				'carYear'=>$carYear,
-				'carGasId'=>$carGasId,
-				'dateUpdate'=>date('Y-m-d H:i:s'),
-				'carImage'=>$filename
-			);
-			$sql = update_db($TableName, array('carId='=>$carId), $data);
-			mysql_query($sql);	
-			//echo $sql;
-			//exit;
-			
-			$message = "แก้ไขข้อมูลพนักงานเรียบร้อยแล้วค่ะ";
-			
-			?>
-			<script type="text/javascript">			
-			$(document).ready(function() {
-				alertPopup('msg3','alert3','<?=$message?>',0);			
-			});		
-			</script>
-			<?
-			include('modules/mod_user/minor/minorShow.php');
+				//'garageId'=>$u_garage,
+				'firstName'=>trim($firstName),
+				'lastName'=>trim($lastName),			
+				//'username'=>trim($txtuserName),
+				'minorTypeId'=>$minorTypeId,			 
+				'password'=>sha1($txtpassword),
+				'address'=>trim($address),
+				'provinceId'=>$provinceId,
+				'amphurId'=>$amphurId,
+				'districtId'=>$districtId,
+				'telephone'=>trim($telephone),
+				'mobilePhone'=>trim($mobilePhone),				
+				'email'=>trim($txtemail),
+				'zipcode'=>trim($zipcode),
+				'dateUpdated'=>date('Y-m-d H:i:s'),
+			);	
+		} else {		
+			$data = array(
+				//'garageId'=>$u_garage,
+				'firstName'=>trim($firstName),
+				'lastName'=>trim($lastName),			
+				//'username'=>trim($txtuserName),
+				'minorTypeId'=>$minorTypeId,			 
+				//'password'=>sha1($txtpassword),
+				'address'=>trim($address),
+				'provinceId'=>$provinceId,
+				'amphurId'=>$amphurId,
+				'districtId'=>$districtId,
+				'telephone'=>trim($telephone),
+				'mobilePhone'=>trim($mobilePhone),				
+				'email'=>trim($txtemail),
+				'zipcode'=>trim($zipcode),
+				'dateUpdated'=>date('Y-m-d H:i:s'),
+			);	
 		}
+		
+		$sql = update_db($TableName, array('minorId='=>$minorId), $data);
+		mysql_query($sql);	
+		#echo $sql;
+		//exit;
+		
+		$message = "แก้ไขข้อมูลพนักงาน ".trim($firstName).' '.trim($lastName)." เรียบร้อยแล้วค่ะ";
+		
+		?>
+		<script type="text/javascript">			
+		$(document).ready(function() {
+			alertPopup('msg3','alert3','<?=$message?>',0);			
+		});		
+		</script>
+		<?
+		include('modules/mod_user/minor/minorShow.php');
+		
 		break;
 		
 		
@@ -144,16 +150,9 @@
 
 <script type="text/javascript">
 	var delayAlert=null; 
-	var find_chk = <?=$find_chk?>;
-	
-	$(document).ready(function(){	
-		console.log(find_chk);	
 		
-		if (find_chk == 1){
-			$('#errUsername').show();
-		} else {
-			$('#errUsername').hide();
-		}		
+	$(document).ready(function(){	
+		//console.log(find_chk);	
 	});
 	
 	function alertFadeOut(id){
@@ -179,6 +178,70 @@
 				delayAlert=null;  
 			},2000);  
 		});
+	}
+	
+	
+	
+	function fn_callamphur(province, amphur){
+		//alert(id);
+		$.post('modules/mod_user/minor/get.amphur.php', {provinceId:province, amphurId:amphur} , function(data) {
+			$('#genamphur').html(data);	
+		});	
+	}
+	
+	
+	function fn_calldistrict(amphur, district){
+		//alert(id);
+		$.post('modules/mod_user/minor/get.district.php', {amphurId:amphur, districtId:district} , function(data) {
+			$('#gendistrict').html(data);	
+		});	
+	}
+	
+	
+	function checkEmail(email) {
+		var emailFilter=/^.+@.+\..{2,3}$/;
+		if (!(emailFilter.test(email))) {
+			//console.log('กรุณากรอก email ให้ถูกต้อง');
+			return 0; 
+		} else {
+			return 1; 
+		}
+	}
+	
+	function checkEngNum(str) {
+		var engnumFilter = /[^A-Za-z0-9]/;
+		var newstr = jQuery.trim(str);	
+		if (engnumFilter.test(newstr)){	
+			//console.log("กรุณากรอกแต่ภาษาอังกฤษหรือตัวเลขเท่านั้น");
+			return 0; 	
+		} else {	
+			return 1;
+		}				
+	}
+	
+	
+	function trim(s)
+	{
+	   var l=0; var r=s.length -1;
+	   while(l < s.length && s[l] == ' ')
+	   {   l++; }
+	   while(r > l && s[r] == ' ')
+	   {   r-=1;   }
+	   return s.substring(l, r+1);
+	}
+	
+	
+	
+	function checkData(id){
+		if ($('#'+id+'').val() == ''){ 
+			$('#'+id+'').closest('div').addClass("f_error");
+			$('#'+id+'_err').fadeIn(1000);
+			return 0;
+		} else {
+			$('#'+id+'').closest('div').removeClass("f_error");
+			$('#'+id+'_err').fadeOut(100);
+			return 1;
+		}
 	}
 	
 </script>

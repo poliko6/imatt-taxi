@@ -50,12 +50,12 @@
 		
 			$TableName = 'mobile';
 			$data = array(
-				'mobileNumber'=>$mobileNumber,
-				'mobileBanner'=>$mobileBanner,	
-				'simId'=>$simId,		
-				'mobileModel'=>$mobileModel,
+				'mobileNumber'=>trim($mobileNumber),
+				'mobileBanner'=>trim($mobileBanner),	
+				'simId'=>trim($simId),		
+				'mobileModel'=>trim($mobileModel),
 				'mobileNetworkId'=>$mobileNetworkId,
-				'EmiMsi'=>$EmiMsi,
+				'EmiMsi'=>trim($EmiMsi),
 				'dateUpdate'=>date('Y-m-d H:i:s')			
 			);
 			$sql = update_db($TableName, array('mobileId='=>$mobileId), $data);
@@ -106,12 +106,12 @@
 			$TableName = 'mobile';
 			$data = array(
 				'garageId'=>$garageId,
-				'mobileNumber'=>$mobileNumber,
-				'simId'=>$simId,
-				'mobileBanner'=>$mobileBanner,			
-				'mobileModel'=>$mobileModel,
+				'mobileNumber'=>trim($mobileNumber),
+				'simId'=>trim($simId),
+				'mobileBanner'=>trim($mobileBanner),			
+				'mobileModel'=>trim($mobileModel),
 				'mobileNetworkId'=>$mobileNetworkId,
-				'EmiMsi'=>$EmiMsi
+				'EmiMsi'=>trim($EmiMsi)
 				
 			);
 			$sql = insert_db($TableName, $data);

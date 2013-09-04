@@ -67,10 +67,9 @@
 								$amphur_name = $amphur_data[0]['amphurName'];	
 								
 								$district_data = select_db('district',"where districtId = '".$minor_data[$i]['districtId']."'");
-								$district_name = $district_data[0]['districtName'];		
-											
+								$district_name = $district_data[0]['districtName'];			
 								?>  
-                            
+                                                            
 								<?=$minor_data[$i]['address']?> <?=$district_name?> <?=$amphur_name?> <?=$province_name?>, <?=$minor_data[$i]['zipcode']?>
                             </td>
                             <td><?=$minor_data[$i]['telephone']?></td>
@@ -86,25 +85,25 @@
                             <td>                            	
                                 <div style="float:left; margin-right:5px;">
                                 <form action="" method="post" name="fmEdit<?=$i?>" id="fmEdit<?=$i?>">
-                                	<input type="hidden" name="carId" value="<?=$minor_data[$i]['minorTypeId']?>" />
+                                	<input type="hidden" name="minorId" value="<?=$minor_data[$i]['minorId']?>" />
                                     <input type="hidden" name="act" value="editminor" />
                                		<a href="#" class="ttip_t" title="Edit" onClick="fmEdit<?=$i?>.submit();" ><i class="icon-pencil"></i></a>
                                 </form>
                                 </div>
                                 <div style="float:left;">
-                                	<a href="#myModalDel<?=$minor_data[$i]['minorTypeId']?>" class="ttip_t" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a>
+                                	<a href="#myModalDel<?=$minor_data[$i]['minorId']?>" class="ttip_t" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a>
                                 </div>
                             </td>
                           
                         </tr>
                         
                         <!-- POP UP -->
-                        <div class="modal hide fade" id="myModalDel<?=$minor_data[$i]['minorTypeId']?>" style="text-align:center; width:500px;">
+                        <div class="modal hide fade" id="myModalDel<?=$minor_data[$i]['minorId']?>" style="text-align:center; width:500px;">
                             <div class="alert alert-block alert-error fade in">
                                 <h4 class="alert-heading">คุณต้องการลบข้อมูลพนักงาน "<?=$minor_data[$i]['firstName']?>  <?=$minor_data[$i]['lastName']?>"</h4>
                                 <div style="height:50px;"></div>
                                 <p>
-                                <a href="#" class="btn btn-inverse" onclick="fn_formDel(<?=$minor_data[$i]['minorTypeId']?>);"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> 
+                                <a href="#" class="btn btn-inverse" onclick="fn_formDel(<?=$minor_data[$i]['minorId']?>);"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> 
                                 หรือ <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a>
                                	</p>
                             </div>
@@ -137,7 +136,7 @@
 		jQuery.ajax({
 			url :'modules/mod_user/minor/delminor.php',
 			type: 'GET',
-			data: 'act=deltaxi&id='+id+'',
+			data: 'act=delminor&id='+id+'',
 			dataType: 'jsonp',
 			dataCharset: 'jsonp',
 			success: function (data){

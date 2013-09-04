@@ -170,8 +170,8 @@ if (empty($_SESSION['pass_actived'])){
             
             <!-- main content -->
             <div id="contentwrapper">
-                <div class="main_content">
-
+                <div class="main_content">                
+                	 <? #pre($_SESSION); ?>
   					 <? include('modules/mod_body/main.body.php'); ?>
                 </div>
             </div>

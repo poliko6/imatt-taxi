@@ -15,11 +15,14 @@
 	$mobile_chk = select_db('transportsection',"where mobileId = '".$id."'");
  	$find_used = count($mobile_chk);
 	
+	//taxiPosition
+	$position_chk = select_db('taxiposition',"where mobileId = '".$id."'");
+ 	$find_used2 = count($position_chk);
 	
 	$mobile_data = select_db('mobile',"where mobileId = '".$id."'");
  	$mobileNumber = $mobile_data[0]['mobileNumber'];
 	
-	if ($find_used == 0){	
+	if (($find_used == 0) && ($find_used2 == 0)){	
 
 		/*$TableName = 'mobile';
 		$data = array(		

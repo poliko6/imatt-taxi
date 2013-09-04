@@ -34,13 +34,8 @@
 					carModelId: { required: true },
 					carYear: { required: true },
 					carColorId: { required: true },
-					carFuelId: { required: true },
-					
-					//minor
-					/*minorTypeId : { required: true },
-					firstName : { required: true, minlength: 3 },
-					lastName : { required: true, minlength: 3 },*/
-					
+					carFuelId: { required: true },	
+	
 					//mobile
 					mobileNumber: { required: true, minlength: 10 },
 					EmiMsi: { required: true },

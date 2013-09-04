@@ -1,225 +1,405 @@
 <?
-$major_data = select_db('majoradmin',"where garageId = '".$garageId."'");
+$major_data = select_db('majoradmin',"where garageId = '".$u_garage."'");
 $major_name = $major_data[0]['thaiCompanyName'];
 
-$car_data = select_db('car',"where carId = '".$carId."'");
-$carRegistration = $car_data[0]['carRegistration'];
-$provinceId = $car_data[0]['provinceId'];
+$minor_data = select_db('minoradmin',"where minorId = '".$minorId."'");
+$username = $minor_data[0]['username'];
+$provinceId = $minor_data[0]['provinceId'];
+$amphurId = $minor_data[0]['amphurId'];
+$districtId = $minor_data[0]['districtId'];
+$firstName = $minor_data[0]['firstName'];
+$lastName = $minor_data[0]['lastName'];
+$address = $minor_data[0]['address'];
+$zipcode = $minor_data[0]['zipcode'];
+$mobilePhone = $minor_data[0]['mobilePhone'];
+$telephone = $minor_data[0]['telephone'];
+$email = $minor_data[0]['email'];
+$minorTypeId = $minor_data[0]['minorTypeId'];
 
-$carYear = $car_data[0]['carYear'];
-$carImage = $car_data[0]['carImage'];
-$garageId = $car_data[0]['garageId'];
-$carTypeId = $car_data[0]['carTypeId'];
-$carBannerId = $car_data[0]['carBannerId'];
-$carModelId = $car_data[0]['carModelId'];
-$carGasId = $car_data[0]['carGasId'];
-$carFuelId = $car_data[0]['carFuelId'];
-$carColorId = $car_data[0]['carColorId'];
-$carStatusId = $car_data[0]['carStatusId'];
 
-$pathimage  = 'stored/taxi/thumbnail/'.$carImage;
-
-if (file_exists($pathimage)) {  //check file			
-	$pathimage  = 'stored/taxi/thumbnail/'.$carImage;
-} else { 						
-	$pathimage  = ''; 	
-}
-
-if (file_exists($pathimage)) {  //check file			
-	$pathimage  = 'stored/taxi/thumbnail/'.$carImage;
-} else { 						
-	$pathimage  = ''; 	
-}
 ?>
 
+<div class="row-fluid">
+  <div class="span12">
+    <h3 class="heading" style="font-size:12px; text-align:center;">แก้ไขพนักงานในระบบ ของอู่ "<span style="color:#06C;"><?=$major_name?></span>"</h3>
+    <div class="row-fluid">
+      <div class="span8">
+        <form class="form-horizontal" action="" method="post" name="fm_edit" id="fm_edit">
+          <fieldset>
+         
+            <div class="control-group formSep">
+              <label for="u_fname" class="control-label">ประเภทพนักงาน <span class="f_req">*</span> :</label>
+              <div class="controls text_line">
+              	<? $type_data = select_db('minortype',"where garageId = '".$u_garage."' order by dateAdded"); ?>
+                 <select class="input-large" name="minorTypeId" id="minorTypeId" >	
+                    <option value="">กรุณาเลือกประเภทพนักงาน</option>
+					<? foreach($type_data as $valType){?>
+                	<option value="<?=$valType['minorTypeId']?>" <? if ($minorTypeId == $valType['minorTypeId']) { echo "selected=\"selected\""; } ?> ><?=$valType['minorType']?></option>
+                	<? } ?> 
+                 </select>
+                 <div class="help-block" id="minorTypeId_err" style="display:none; color:#C00;">กรุณาเลือกประเภทพนักงาน</div>                       
+              </div>
+            </div>
+            
+            <div class="control-group formSep">
+              <label for="firstName" class="control-label">ชื่อจริง <span class="f_req">*</span> :</label>
+              <div class="controls text_line">
+                <input type="text" id="firstName" name="firstName" class="input-xlarge" value="<?=$firstName?>"  /> 
+                <div class="help-block" id="firstName_err" style="display:none; color:#C00;">กรุณาป้อนชื่อพนักงาน</div>  
+              </div>
+              <br />
+              <label for="lastName" class="control-label">นามสกุล <span class="f_req">*</span> :</label>
+              <div class="controls">
+                <input type="text" name="lastName" id="lastName" class="input-xlarge" value="<?=$lastName?>" />  
+                <div class="help-block" id="lastName_err" style="display:none; color:#C00;">กรุณาป้อนนามสกุลพนักงาน</div>            
+              </div>
+              <br />             
+            </div>
+            
+            
+            <div class="control-group formSep">
+              <label for="username" class="control-label">Username <span class="f_req">*</span> :</label>
+              <div class="controls">
+                <input type="text" class="input-xlarge" name="txtuserName" id="txtuserName" value="<?=$username?>" maxlength="20" disabled="disabled" />
+                <div class="help-block" id="txtuserName_err" style="display:none; color:#C00;">กรุณาป้อน Username</div>                
+                <div class="help-block" id="errUsername" style="display:none; color:#C00;">Username ซ้ำในระบบ</div>                
+                <font color="#006600"><div id="usernameOK"></div></font>
+                </i></font> <span class="help-block">ตัวอักษรภาษาอังกฤษเท่านั้น ความยาวไม่เกิน 20 ตัวอักษร</span> </div>
+              <br />
+              
+              
+              <label for="password" class="control-label">Password <span class="f_req">*</span> :</label>
+              <div class="controls">
+                <div class="sepH_b">
+                  <div><font color="#FF0000"><i>หากไม่ต้องการแก้ไขรหัสผ่าน ให้ช่องรหัสผ่านว่างไว้ค่ะ</i></font></div>
+                    
+                  <input type="password" class="input-xlarge" name="txtpassword" id="txtpassword" placeholder="ความยาวอย่างน้อย 8 ตัวอักษร" maxlength="20" />
+                  <div class="help-block" id="txtpassword_err" style="display:none; color:#C00;">กรุณาป้อน Password</div>
+                  <div class="help-block" id="errPassword" style="display:none; color:#C00;">Password Error</div>                   
+                  <span class="help-block">ตัวอักษรภาษาอังกฤษหรือตัวเลขเท่านั้น ความยาว 8-20 ตัวอักษร</span> </div>
+                  
+                  <input type="password" class="input-xlarge" name="txtpassword2" id="txtpassword2" placeholder="พิมพ์พาสเวิร์ดเดิมอีกครั้ง" maxlength="20" />
+                  <div class="help-block" id="txtpassword2_err" style="display:none; color:#C00;">กรุณายืนยัน Password</div>
+                  <div class="help-block" id="errtxtpassword2" style="display:none; color:#C00;">กรุณายืนยัน Password</div>
+                  <font color="#FF0000"><i><div id="u_password2chk"></div></i></font>                  
+              </div>              
+            </div>
+            
+            
+            <div class="control-group formSep">
+              <label class="control-label">ที่อยู่ <span class="f_req">*</span> :</label>
+              <div class="controls">
+                <textarea class="input-xlarge" name="address" id="address" placeholder="(บ้านเลขที่ ซอย ถนน)"><?=$address?></textarea>
+                <div class="help-block" id="address_err" style="display:none; color:#C00;">กรุณาป้อนที่อยู่</div>  
+              </div>
+              <br />
+              <label class="control-label">จังหวัด <span class="f_req">*</span> :</label>
+              <div class="controls">
+                <div class="span6">
+                  <select name="provinceId" id="provinceId">
+                    <option value="" <? if($provinceId==""){echo "selected=\"selected\""; } ?> >กรุณาเลือกจังหวัด</option>
+                    <?PHP				  	
+									
+					$sql = "SELECT * FROM province ORDER BY provinceName";		
+                    $exe = mysql_query($sql);
+                    while($result = mysql_fetch_array($exe)){	?>
+                    <option value="<?=$result['provinceId']?>" <? if($provinceId==$result['provinceId']){echo "selected=\"selected\""; } ?> >
+                    	<?=$result['provinceName']?>
+                    </option>                
+                    <?  }  ?>
+                  </select>
+                </div>
+              </div>
+              
+              <br />
+              <br />   
+                         
+              <label class="control-label">อำเภอ <span class="f_req">*</span> :</label>
+              <div class="controls">
+                <div class="span6">
+                  <div id="genamphur">
+                    <select name="amphurId" id="amphurId">
+                      <option value="">กรุณาเลือกอำเภอ</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
+              <br /> 
+              <br />
+              
+              <label class="control-label">ตำบล <span class="f_req">*</span> :</label>
+              <div class="controls">
+                <div class="span6">
+                  <div id="gendistrict">
+                    <select name="districtId" id="districtId">
+                      <option value="">กรุณาเลือกตำบล</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
+              <br />
+              <br />  
+                          
+              <label class="control-label">รหัสไปรษณีย์ <span class="f_req">*</span> :</label>
+              <div class="controls">
+                <input type="text" name="zipcode" id="zipcode" class="input-xlarge" value="<?=$zipcode?>" />
+                <div class="help-block" id="zipcode_err" style="display:none; color:#C00;">กรุณาป้อนรหัสไปรษณีย์</div>
+                <font color="#FF0000"><i><div id="txtZipcodechk" ></div></i></font>
+              </div>
+            </div>
+            
+            <div class="control-group formSep">
+              <label for="telephone" class="control-label">เบอร์โทรศัพท์</label>
+              <div class="controls">
+                <input type="text" class="input-xlarge" name="telephone" id="telephone" value="<?=$telephone?>" maxlength="10" />
+                <font color="#FF0000"><i><div id="telephone_err" ></div></i></font>
+              </div>
+              <br />  
+              
+              <label for="mobilePhone" class="control-label">เบอร์โทรศัพท์มือถือ</label>
+              <div class="controls">
+                <input type="text" class="input-xlarge" name="mobilePhone" id="mobilePhone" value="<?=$mobilePhone?>" maxlength="10" />
+                <font color="#FF0000"><i><div id="mobilePhone_err" ></div></i></font>
+              </div>
+              <br />            
+             
+              <label for="email" class="control-label">E-mail</label>
+              <div class="controls">
+                <input type="text" name="txtemail" id="txtemail" class="input-xlarge" value="<?=$email?>" />
+                <div class="help-block" id="txtemail_err" style="display:none; color:#C00;">กรุณาป้อน EMail</div>
+                <font color="#FF0000"><i><div id="txtemailerr"></div></i></font>                
+              </div>
+            </div>
+            
+            <div class="control-group">
+              <div class="controls">
+                <input class="btn btn-gebo" type="button" value="บันทึกการแก้ไขข้อมูล" onclick="fn_editData();">
+                <input type="button" class="btn" onClick="reloadPage()" value="ยกเลิก">
+              </div>
+            </div>
+          </fieldset>
+            <input type="hidden" name="p" value="<?=$p?>" />
+            <input type="hidden" name="menu" value="<?=$menu?>" />
+            <input type="hidden" name="minorId" value="<?=$minorId?>" />
+            <input type="hidden" name="act" value="saveedit" />           
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
-<script type="text/javascript">
+
+<script type="text/javascript">	
+//function ใส่ จังหวัด อำเภอ ตำบล	
 $(document).ready( function () {
 	
-	if ($('#carBannerId').val() != ''){
-		fn_callModel($('#carBannerId').val());
+	var province = '<?=$provinceId?>';	
+	var amphur = '<?=$amphurId?>';
+	var district = '<?=$districtId?>';
+	
+	//alert(car_ss_gensub);
+
+	if ($('#province').val() != ''){
+		fn_callamphur(province, amphur);
+		fn_calldistrict(amphur, district);
 	}
 	
-	$('#carBannerId').change(function () {
-		fn_callModel($('#carBannerId').val());
+	$('#province').change(function () {
+		fn_callamphur($('#provinceId').val(), 0);
+		fn_calldistrict(0, 0);
 	});
+	
+	//console.log($.isNumeric('8'));
 
 });
 
 
 
-
-function fn_callModel(id){
-	//alert(id);
-	$.post('modules/mod_taxi/taximanage/get_model.php', {id:id} , function(data) {
-  		$('#carModelId').html(data);	
-	});	
+function fn_editData(){
+	var pass = 1;
+	
+	if (checkData('minorTypeId') == 0){ pass = 0 }
+	if (checkData('firstName') == 0){ pass = 0 }
+	if (checkData('lastName') == 0){ pass = 0 }
+	/*if (checkData('txtuserName') == 0){ pass = 0 }
+	if (checkData('txtpassword') == 0){ pass = 0 }
+	if (checkData('txtpassword2') == 0){ pass = 0 }*/
+	if (checkData('address') == 0){ pass = 0 }
+	if (checkData('provinceId') == 0){ pass = 0 }
+	if (checkData('amphurId') == 0){ pass = 0 }
+	if (checkData('districtId') == 0){ pass = 0 }
+	if (checkData('zipcode') == 0){ pass = 0 }
+	if (checkData('txtemail') == 0){ pass = 0 }
+	
+	
+	/// Mobile
+	if ($('#mobilePhone').val() != ''){ 
+		var chkmobile = $.isNumeric(''+$('#mobilePhone').val()+'');
+		if (chkmobile == false){
+			$('#mobilePhone').closest('div').addClass("f_error");
+			$('#mobilePhone_err').text('กรุณาป้อนตัวเลขเท่านั้น');
+			$('#mobilePhone_err').fadeIn(1000);
+			pass = 0;
+		} else {
+			$('#mobilePhone').closest('div').removeClass("f_error");
+			$('#mobilePhone_err').fadeOut(100);
+		}
+	} else {
+		$('#mobilePhone').closest('div').removeClass("f_error");
+		$('#mobilePhone_err').hide();
+	}
+	
+	/// Telephone
+	if ($('#telephone').val() != ''){ 
+		var chkphone = $.isNumeric(''+$('#telephone').val()+'');
+		if (chkphone == false){
+			$('#telephone').closest('div').addClass("f_error");
+			$('#telephone_err').text('กรุณาป้อนตัวเลขเท่านั้น');
+			$('#telephone_err').fadeIn(1000);
+			pass = 0;
+		} else {
+			$('#telephone').closest('div').removeClass("f_error");
+			$('#telephone_err').fadeOut(100);
+		}
+	} else {
+		$('#telephone').closest('div').removeClass("f_error");
+		$('#telephone_err').hide();
+	}
+	
+	
+	///Email
+	if ($('#txtemail').val() != ''){	
+		var chkmail = checkEmail($('#txtemail').val());
+		if (chkmail == false){
+			$('#txtemail').closest('div').addClass("f_error");
+			$('#txtemailerr').text('กรุณากรอก email ให้ถูกต้อง');
+			$('#txtemailerr').fadeIn(1000);
+			pass = 0;
+		} else {
+			$('#txtemail').closest('div').removeClass("f_error");
+			$('#txtemailerr').fadeOut(100);
+		}
+	} else {		
+		$('#txtemailerr').hide();
+	}
+	
+	
+	
+	//Username
+	/*if ($('#txtuserName').val() != ''){
+		var username = $('#txtuserName').val();
+		var chkuser = checkEngNum(username);
+		if (chkuser == false){
+			$('#txtuserName').closest('div').addClass("f_error");
+			$('#errUsername').text('กรุณากรอกตัวอักษรภาษาอังกฤษ และตัวเลขเท่านั้น');
+			$('#errUsername').fadeIn(1000);
+			pass = 0;
+		} else {
+			
+			///Count 
+			if (username.length < 8){
+				$('#txtuserName').closest('div').addClass("f_error");
+				$('#errUsername').text('กรุณากรอก Username ให้มากกว่า 8 ตัวอักษร');
+				$('#errUsername').fadeIn(1000);
+				pass = 0;
+			} else {
+				
+				jQuery.ajax({
+					url :'modules/mod_user/minor/chkRegisDuplicate.php',
+					type : 'GET',
+					data : 'username='+username+'&u_garage=<?=$u_garage?>',
+					dataType: 'jsonp',
+					dataCharset: 'jsonp',
+					success: function (data){			
+						//console.log(data.success);
+						if (data.success){
+							$('#txtuserName').closest('div').removeClass("f_error");
+							$('#errUsername').fadeOut(100);	
+							$('#usernameOK').text('Username นี้ใช้งานได้');
+							$('#usernameOK').fadeIn(1000);
+						} else {
+							$('#txtuserName').closest('div').addClass("f_error");
+							$('#errUsername').text('Username นี้มีผู้ใช้งานแล้ว');
+							$('#errUsername').fadeIn(1000);
+							$('#usernameOK').hide();
+							pass = 0;
+						}			
+					}		
+				});				
+				
+			}
+		}		
+	} else {		
+		$('#errUsername').hide();
+	}*/
+	
+	
+	
+	//Password1
+	if ($('#txtpassword').val() != ''){
+		var pwd = $('#txtpassword').val();
+		var chkpwd = checkEngNum(pwd);
+		if (chkpwd == false){
+			$('#txtpassword').closest('div').addClass("f_error");
+			$('#errPassword').text('กรุณากรอกตัวอักษรภาษาอังกฤษ และตัวเลขเท่านั้น');
+			$('#errPassword').fadeIn(1000);
+			pass = 0;
+		} else {
+			if (pwd.length < 8){
+				$('#txtpassword').closest('div').addClass("f_error");
+				$('#errPassword').text('กรุณากรอก Password ให้มากกว่า 8 ตัวอักษร');
+				$('#errPassword').fadeIn(1000);
+				pass = 0;
+			} else {
+				$('#txtpassword').closest('div').removeClass("f_error");
+				$('#errPassword').fadeOut(100);
+			}
+		}
+	} else {		
+		$('#errPassword').hide();
+	}
+	
+	
+	//Password2
+	if ($('#txtpassword2').val() != ''){
+		//errtxtpassword2
+		var pwd1 = $('#txtpassword').val();
+		var pwd2 = $('#txtpassword2').val();
+		if (pwd1 != pwd2){
+			$('#txtpassword2').closest('div').addClass("f_error");
+			$('#errtxtpassword2').text('รหัสผ่านไม่ตรงกัน');
+			$('#errtxtpassword2').fadeIn(1000);
+			pass = 0;
+		} else {
+			$('#txtpassword2').closest('div').removeClass("f_error");
+			$('#errtxtpassword2').fadeOut(100);
+		}
+		
+	} else {
+		
+		if ($('#txtpassword').val() != ''){
+			$('#txtpassword2').closest('div').addClass("f_error");
+			$('#txtpassword2_err').fadeIn(1000);
+			pass = 0;
+		} else {				
+			$('#errtxtpassword2').hide();
+		}
+	}
+	
+	
+	//newstr.length<long
+	console.log('pass = '+pass);
+	if (pass){
+		console.log('Edit Data');
+		$('#fm_edit').submit();
+	}
 }
-</script>
 
 
+</script> 
 
-
-<div class="row-fluid">
-    <div class="span12">
-        <h3 class="heading" style="font-size:12px; text-align:center;">แก้ไขรถแท๊กซี่ในระบบ ของอู่ "<span style="color:#06C;"><?=$major_name?></span>"</h3>
-        <div class="row-fluid">
-            <div class="span8">
-                <form class="form-horizontal form_validation_ttip" enctype="multipart/form-data" method="post">
-                    <fieldset>
-   						<div class="formSep">
-                        	<div class="row-fluid">
-                                <div class="span12">
-                                    <label for="fileinput" class="control-label">ทะเบียนรถ <span class="f_req">*</span></label>
-                                    <div class="controls text_line">
-                                    	<div class="help-block" id="errRegistration" style="display:none; color:#C00;">หมายเลขทะเบียนซ้ำ</div>
-                                        <input type="text" name="carRegistration" id="carRegistration" class="span5"  value="<?=$carRegistration?>"  onkeyup="fn_chkRegisDuplicate('edit');" />
-                                        <span class="help-block">ตัวอย่าง : กก 0001</span>
-                                        <input type="hidden" name="carRegistrationTmp" id="carRegistrationTmp" value="<?=$carRegistration?>"  />
-                                    </div>
-                            	</div>
-                            </div>
-                        </div>
-                        
-                         <div class="control-group formSep">
-                            <label for="provinceId" class="control-label">จังหวัด</label>
-                            <div class="controls">
-                            	<? $province_data = select_db('province',"order by provinceId"); ?>                                
-                                <input type="hidden" name="provinceIdTmp" id="provinceIdTmp" value="<?=$provinceId?>" />
-                                <select class="span3" name="provinceId" id="provinceId" onchange="fn_chkRegisDuplicate('edit');" >
-                                	<? foreach($province_data as $valProvince){?>
-                                    <option value="<?=$valProvince['provinceId']?>" <? if ($provinceId == $valProvince['provinceId']) { echo "selected=\"selected\""; } ?> ><?=$valProvince['provinceName']?></option>
-                                    <? } ?>                                    
-                                </select>
-                            </div>                           	
-                         </div>
-                        
-                        
-                        <div class="control-group formSep">
-                            <label for="fileinput" class="control-label">รูปรถแท๊กซี่</label>
-                            <div class="controls">
-                                <div data-provides="fileupload" class="fileupload fileupload-new">
-                                    <input type="hidden" />
-                                    <input type="hidden" name="tmpimage" id="tmpimage" value="<?=$carImage?>" />
-                                  	
-                                    <? if ($pathimage != '') { ?>
-                                        <a href="<?=$pathimage?>" title="<?=$car_data[$i]['carRegistration']?>" class="cbox_single thumbnail">
-                                            <img alt="" src="<?=$pathimage?>" style="height:80px;">
-                                        </a>
-                                    <? } ?>
-                                    
-                                    <div style="width: 80px; height: 80px;" class="fileupload-new thumbnail"><img src="http://www.placehold.it/80x80/EFEFEF/AAAAAA" alt="" /></div>
-                                    <div style="width: 80px; height: 80px; line-height: 80px;" class="fileupload-preview fileupload-exists thumbnail"></div>
-                                    <span class="btn btn-file"><span class="fileupload-new">เลือกไฟล์รูป</span><span class="fileupload-exists">Change</span><input type="file" id="fileinput" name="fileinput" /></span>
-                                    <a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
-                                </div>	
-                            </div>
-                        </div>
-                        
-                        
-                         <div class="control-group formSep">
-                            <label for="carTypeId" class="control-label">ประเภทรถยนต์</label>
-                            <div class="controls">
-                            	<? $type_data = select_db('cartype',"order by carTypeId"); ?>
-                                <select class="span3" name="carTypeId" id="carTypeId">
-                                	<? foreach($type_data as $valType){?>
-                                    <option value="<?=$valType['carTypeId']?>" <? if ($carTypeId == $valType['carTypeId']) { echo "selected=\"selected\""; } ?> ><?=$valType['carTypeName']?></option>
-                                    <? } ?>                                    
-                                </select>
-                            </div>                           	
-                        </div>
-         
-                        <div class="control-group formSep">
-                            <label for="carBannerId" class="control-label">ยี่ห้อรถ</label>
-                            <div class="controls">
-                            	<? $banner_data = select_db('carbanner',"order by carBannerId"); ?>
-                                <select class="span3" name="carBannerId" id="carBannerId">
-                                	<? foreach($banner_data as $valBanner){?>
-                                    <option value="<?=$valBanner['carBannerId']?>" <? if ($carBannerId == $valBanner['carBannerId']) { echo "selected=\"selected\""; } ?> ><?=$valBanner['carBannerNameEng']?></option>
-                                    <? } ?>                                    
-                                </select>
-                            </div>                           	
-                        </div>
-                        
-                        <div class="control-group formSep">
-                            <label for="carModelId" class="control-label">รุ่นรถรถ</label>
-                            <div class="controls">                            	
-                                <select class="span3" name="carModelId" id="carModelId">
-                                	<option></option>                                
-                                </select>
-                            </div>                           	
-                        </div>
-                        
-                        
-                        <div class="control-group formSep">
-                            <label for="carYear" class="control-label">ปีรถ</label>
-                            <div class="controls">                            	
-                                <select class="span3" name="carYear" id="carYear">
-                                	<? 
-									$thisyear = date('Y');
-									$toyear = date('Y')-30;
-									for ($year = $thisyear; $year > $toyear; $year--){ ?>
-                                		<option value="<?=$year?>" <? if ($carYear == $year) { echo "selected=\"selected\""; } ?> ><?=$year?></option>  
-                                    <? } ?>                         
-                                </select>
-                            </div>                           	
-                        </div>
-                        
-                        
-                         <div class="control-group formSep">
-                            <label for="carColorId" class="control-label">สีรถ</label>
-                            <div class="controls">
-                            	<? $color_data = select_db('carcolor',"order by carColorId"); ?>
-                                <select class="span3" name="carColorId" id="carColorId">
-                                	<? foreach($color_data as $valColor){?>
-                                    <option value="<?=$valColor['carColorId']?>" <? if ($carColorId == $valColor['carColorId']) { echo "selected=\"selected\""; } ?> ><?=$valColor['carColorName']?></option>
-                                    <? } ?>                                    
-                                </select>
-                            </div>                           	
-                        </div>
-                        
-                        <div class="control-group formSep">
-                            <label for="carFuelId" class="control-label">ประเภทเชื้อเพลิง</label>
-                            <div class="controls">
-                            	<? $fuel_data = select_db('carfuel',"order by carFuelId"); ?>
-                                <select class="span3" name="carFuelId" id="carFuelId">
-                                	<? foreach($fuel_data as $valFuel){?>
-                                    <option value="<?=$valFuel['carFuelId']?>" <? if ($carFuelId == $valFuel['carFuelId']) { echo "selected=\"selected\""; } ?> ><?=$valFuel['carFuelName']?></option>
-                                    <? } ?>                                    
-                                </select>
-                            </div>                           	
-                        </div>
-                        
-                         <div class="control-group formSep">
-                            <label for="carGasId" class="control-label">ประเภทแก๊สรถยนต์</label>
-                            <div class="controls">
-                            	<? $gas_data = select_db('cargas',"order by carGasId"); ?>
-                                <select class="span3" name="carGasId" id="carGasId">
-                                	<option value="0">ไม่ได้ติดแก๊ส</option>
-                                	<? foreach($gas_data as $valGas){?>
-                                    	<option value="<?=$valGas['carGasId']?>" <? if ($carGasId == $valGas['carGasId']) { echo "selected=\"selected\""; } ?> ><?=$valGas['carGasName']?></option>
-                                    <? } ?>                                    
-                                </select>
-                            </div>                           	
-                        </div>                       
-                       
-                        <div class="control-group">
-                            <div class="controls">
-                                <button class="btn btn-gebo" type="submit">Save changes</button>
-                            	<input type="button" class="btn" onClick="reloadPage()" value="Cancel">
-                            </div>
-                        </div>
-                    </fieldset>
-					<input type="hidden" name="carId" value="<?=$carId?>" />
-                    <input type="hidden" name="p" value="<?=$p?>" />
-                    <input type="hidden" name="menu" value="<?=$menu?>" />
-                    <input type="hidden" name="garageId" value="<?=$garageId?>" />        
-                    <input type="hidden" name="act" value="saveedit" />
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <!-- sticky messages -->
@@ -245,4 +425,3 @@ function fn_callModel(id){
 		setTimeout('$("html").removeClass("js")',1000);
 	});
 </script>
- 

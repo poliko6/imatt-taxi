@@ -18,14 +18,10 @@
  	$find_used = count($minor_chk);
 	
 	
-	if ($find_used == 0){			
+	if ($find_used){
 		$data['success'] = false;
-		$data['message'] = $username;
-		
 	} else {
-		
-		$data['success'] = true;
-		$data['message'] = $username;
+		$data['success'] = true;		
 	}
 
 	
