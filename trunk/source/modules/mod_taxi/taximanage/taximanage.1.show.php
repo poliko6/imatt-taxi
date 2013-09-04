@@ -190,7 +190,7 @@
 	
 			$TableName = 'car';
 			$data = array(
-				'carRegistration'=>$carRegistration,
+				'carRegistration'=>trim($carRegistration),
 				'provinceId'=>$provinceId,			
 				'carTypeId'=>$carTypeId,
 				'carBannerId'=>$carBannerId,
@@ -200,7 +200,7 @@
 				'carYear'=>$carYear,
 				'carGasId'=>$carGasId,
 				'dateUpdate'=>date('Y-m-d H:i:s'),
-				'carImage'=>$filename
+				'carImage'=>trim($filename)
 			);
 			$sql = update_db($TableName, array('carId='=>$carId), $data);
 			mysql_query($sql);	
@@ -381,7 +381,7 @@
 			$TableName = 'car';
 			$data = array(
 				'garageId'=>$garageId,
-				'carRegistration'=>$carRegistration,
+				'carRegistration'=>trim($carRegistration),
 				'provinceId'=>$provinceId,			
 				'carTypeId'=>$carTypeId,
 				'carBannerId'=>$carBannerId,
@@ -391,7 +391,7 @@
 				'carYear'=>$carYear,
 				'carGasId'=>$carGasId,
 				'carStatusId'=>3,
-				'carImage'=>$filename
+				'carImage'=>trim($filename)
 			);
 			$sql = insert_db($TableName, $data);
 			mysql_query($sql);	

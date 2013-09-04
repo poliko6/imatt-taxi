@@ -31,13 +31,13 @@ if ($u_type == 2){
 
 //Entry Menu
 if ($u_type == 3){
-	$sql_mName = "SELECT * FROM minoradmin INNER JOIN minorType ON minorAdmin.minorTypeId = minorType.minorTypeId and username='".$u_username."'";
+	$sql_mName = "SELECT * FROM minoradmin INNER JOIN minortype ON minoradmin.minorTypeId = minortype.minorTypeId and username='".$u_username."'";
 	$rs_mName = mysql_query($sql_mName);
 	$data_mName = @mysql_fetch_object($rs_mName);
 	$menuid = $data_mName->menuListId;
 	$p_menuid = explode(',',$menuid);
 	foreach($p_menuid as $valmenu){
-		$data_mEntry = select_db('menuList',"where menuId='".$valmenu."'");
+		$data_mEntry = select_db('menulist',"where menuId='".$valmenu."'");
 		$menuname_subarr[$im] = $data_mEntry[0]['menuName'];	
 		$im++;
 	}

@@ -8,7 +8,7 @@ $major_name = $major_data[0]['thaiCompanyName'];
     <h3 class="heading" style="font-size:12px; text-align:center;">เพิ่มพนักงานในระบบ ของอู่ "<span style="color:#06C;"><?=$major_name?></span>"</h3>
     <div class="row-fluid">
       <div class="span8">
-        <form class="form-horizontal form_validation_ttip" action="" method="post" name="fm_add" id="fm_add">
+        <form class="form-horizontal" action="" method="post" name="fm_add" id="fm_add">
           <fieldset>
          
             <div class="control-group formSep">
@@ -20,65 +20,75 @@ $major_name = $major_data[0]['thaiCompanyName'];
 					<? foreach($type_data as $valType){?>
                 	<option value="<?=$valType['minorTypeId']?>" <? if ($minorTypeId == $valType['minorTypeId']) { echo "selected=\"selected\""; } ?> ><?=$valType['minorType']?></option>
                 	<? } ?> 
-                 </select>                       
+                 </select>
+                 <div class="help-block" id="minorTypeId_err" style="display:none; color:#C00;">กรุณาเลือกประเภทพนักงาน</div>                       
               </div>
             </div>
+            
             <div class="control-group formSep">
-              <label for="u_fname" class="control-label">ชื่อจริง <span class="f_req">*</span> :</label>
+              <label for="firstName" class="control-label">ชื่อจริง <span class="f_req">*</span> :</label>
               <div class="controls text_line">
                 <input type="text" id="firstName" name="firstName" class="input-xlarge" value=""  /> 
+                <div class="help-block" id="firstName_err" style="display:none; color:#C00;">กรุณาป้อนชื่อพนักงาน</div>  
               </div>
               <br />
-              <label for="u_fname" class="control-label">นามสกุล <span class="f_req">*</span> :</label>
+              <label for="lastName" class="control-label">นามสกุล <span class="f_req">*</span> :</label>
               <div class="controls">
-                <input type="text" name="lastName" id="lastName" class="input-xlarge" value="" />              
+                <input type="text" name="lastName" id="lastName" class="input-xlarge" value="" />  
+                <div class="help-block" id="lastName_err" style="display:none; color:#C00;">กรุณาป้อนนามสกุลพนักงาน</div>            
               </div>
               <br />             
             </div>
             
             
             <div class="control-group formSep">
-              <label for="u_fname" class="control-label">Username <span class="f_req">*</span> :</label>
+              <label for="username" class="control-label">Username <span class="f_req">*</span> :</label>
               <div class="controls">
-                <input type="text" class="input-xlarge" name="userName" id="userName" value="" maxlength="20" onchange="chkUNandGPW(this.id)" />
-                <div class="help-block" id="errUsername" style="display:none; color:#C00;">Username ซ้ำในระบบ</div>
+                <input type="text" class="input-xlarge" name="txtuserName" id="txtuserName" value="" maxlength="20" />
+                <div class="help-block" id="txtuserName_err" style="display:none; color:#C00;">กรุณาป้อน Username</div>                
+                <div class="help-block" id="errUsername" style="display:none; color:#C00;">Username ซ้ำในระบบ</div>                
                 <font color="#006600"><div id="usernameOK"></div></font>
-                <font color="#FF0000"><i><div id="userNamechk"></div>
                 </i></font> <span class="help-block">ตัวอักษรภาษาอังกฤษเท่านั้น ความยาวไม่เกิน 20 ตัวอักษร</span> </div>
               <br />
-              <label for="u_password" class="control-label">Password <span class="f_req">*</span> :</label>
+              
+              <label for="password" class="control-label">Password <span class="f_req">*</span> :</label>
               <div class="controls">
                 <div class="sepH_b">
-                  <input type="password" class="input-xlarge" name="u_password" id="u_password" placeholder="ความยาวอย่างน้อย 8 ตัวอักษร" maxlength="20" onchange="chk1stPW(this.id,this.value,8)" />
-                <font color="#FF0000"><i><div id="u_passwordchk"></div></i></font>                  
+                  <input type="password" class="input-xlarge" name="txtpassword" id="txtpassword" placeholder="ความยาวอย่างน้อย 8 ตัวอักษร" maxlength="20" />
+                  <div class="help-block" id="txtpassword_err" style="display:none; color:#C00;">กรุณาป้อน Password</div>
+                  <div class="help-block" id="errPassword" style="display:none; color:#C00;">Password Error</div>                   
                   <span class="help-block">ตัวอักษรภาษาอังกฤษหรือตัวเลขเท่านั้น ความยาว 8-20 ตัวอักษร</span> </div>
-                <input type="password" class="input-xlarge" name="u_password2" id="u_password2" placeholder="พิมพ์พาสเวิร์ดเดิมอีกครั้ง" maxlength="20" onchange="chk2ndPW(this.value)" />
-                <font color="#FF0000"><i><div id="u_password2chk"></div></i></font>                  
+                  
+                  <input type="password" class="input-xlarge" name="txtpassword2" id="txtpassword2" placeholder="พิมพ์พาสเวิร์ดเดิมอีกครั้ง" maxlength="20" />
+                  <div class="help-block" id="txtpassword2_err" style="display:none; color:#C00;">กรุณายืนยัน Password</div>
+                  <div class="help-block" id="errtxtpassword2" style="display:none; color:#C00;">กรุณายืนยัน Password</div>
+                  <font color="#FF0000"><i><div id="u_password2chk"></div></i></font>                  
               </div>              
             </div>
+            
             
             <div class="control-group formSep">
               <label class="control-label">ที่อยู่ <span class="f_req">*</span> :</label>
               <div class="controls">
-                <textarea class="input-xlarge" name="txtAddress_add" id="txtAddress" placeholder="(บ้านเลขที่ ซอย ถนน)"></textarea>
+                <textarea class="input-xlarge" name="address" id="address" placeholder="(บ้านเลขที่ ซอย ถนน)"></textarea>
+                <div class="help-block" id="address_err" style="display:none; color:#C00;">กรุณาป้อนที่อยู่</div>  
               </div>
               <br />
               <label class="control-label">จังหวัด <span class="f_req">*</span> :</label>
               <div class="controls">
                 <div class="span6">
-                  <select name="province_add" id="province">
-                    <option value="" <? if($province_ss==""){echo "selected=\"selected\""; } ?> >กรุณาเลือกจังหวัด</option>
+                  <select name="provinceId" id="provinceId">
+                    <option value="" <? if($provinceId==""){echo "selected=\"selected\""; } ?> >กรุณาเลือกจังหวัด</option>
                     <?PHP				  	
 									
 					$sql = "SELECT * FROM province ORDER BY provinceName";		
                     $exe = mysql_query($sql);
                     while($result = mysql_fetch_array($exe)){	?>
-                    <option value="<?=$result['provinceId']?>" <? if($province_ss==$result['provinceId']){echo "selected=\"selected\""; } ?> >
-                    <?=$result['provinceName']?>
+                    <option value="<?=$result['provinceId']?>" <? if($provinceId==$result['provinceId']){echo "selected=\"selected\""; } ?> >
+                    	<?=$result['provinceName']?>
                     </option>                
                     <?  }  ?>
                   </select>
-
                 </div>
               </div>
               
@@ -89,7 +99,7 @@ $major_name = $major_data[0]['thaiCompanyName'];
               <div class="controls">
                 <div class="span6">
                   <div id="genamphur">
-                    <select name="amphur_add" id="amphur">
+                    <select name="amphurId" id="amphurId">
                       <option value="">กรุณาเลือกอำเภอ</option>
                     </select>
                   </div>
@@ -103,7 +113,7 @@ $major_name = $major_data[0]['thaiCompanyName'];
               <div class="controls">
                 <div class="span6">
                   <div id="gendistrict">
-                    <select name="district_add" id="district">
+                    <select name="districtId" id="districtId">
                       <option value="">กรุณาเลือกตำบล</option>
                     </select>
                   </div>
@@ -115,36 +125,38 @@ $major_name = $major_data[0]['thaiCompanyName'];
                           
               <label class="control-label">รหัสไปรษณีย์ <span class="f_req">*</span> :</label>
               <div class="controls">
-                <input type="text" name="txtZipcode_add" id="txtZipcode" class="input-xlarge" value="" onchange="numberOrNot(this.id,this.value,'รหัสไปรษณีย์ไม่ถูกต้อง')" />
+                <input type="text" name="zipcode" id="zipcode" class="input-xlarge" value="" />
+                <div class="help-block" id="zipcode_err" style="display:none; color:#C00;">กรุณาป้อนรหัสไปรษณีย์</div>
                 <font color="#FF0000"><i><div id="txtZipcodechk" ></div></i></font>
               </div>
             </div>
             
             <div class="control-group formSep">
-              <label for="u_email" class="control-label">เบอร์โทรศัพท์</label>
+              <label for="telephone" class="control-label">เบอร์โทรศัพท์</label>
               <div class="controls">
-                <input type="text" class="input-xlarge" name="txtPhone" id="txtPhone" value="" maxlength="10" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
-                <font color="#FF0000"><i><div id="txtPhonechk" ></div></i></font>
+                <input type="text" class="input-xlarge" name="telephone" id="telephone" value="" maxlength="10" />
+                <font color="#FF0000"><i><div id="telephone_err" ></div></i></font>
               </div>
               <br />  
               
-              <label for="u_email" class="control-label">เบอร์โทรศัพท์มือถือ</label>
+              <label for="mobilePhone" class="control-label">เบอร์โทรศัพท์มือถือ</label>
               <div class="controls">
-                <input type="text" class="input-xlarge" name="txtMobilePhone" id="txtMobilePhone" value="" maxlength="10" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
-                <font color="#FF0000"><i><div id="txtMobilePhonechk" ></div></i></font>
+                <input type="text" class="input-xlarge" name="mobilePhone" id="mobilePhone" value="" maxlength="10" />
+                <font color="#FF0000"><i><div id="mobilePhone_err" ></div></i></font>
               </div>
               <br />            
              
-              <label for="u_email" class="control-label">E-mail</label>
+              <label for="email" class="control-label">E-mail</label>
               <div class="controls">
-                <input type="text" name="txtEmail" id="txtEmail" class="input-xlarge" value="" onchange="chkEmail(this.value)" />
-                <font color="#FF0000"><i><div id="chkEmail"></div></i></font>                
+                <input type="text" name="txtemail" id="txtemail" class="input-xlarge" value="" />
+                <div class="help-block" id="txtemail_err" style="display:none; color:#C00;">กรุณาป้อน EMail</div>
+                <font color="#FF0000"><i><div id="txtemailerr"></div></i></font>                
               </div>
             </div>
             
             <div class="control-group">
               <div class="controls">
-                <button class="btn btn-gebo" type="submit">บันทึกการเพิ่มข้อมูล</button>
+                <input class="btn btn-gebo" type="button" value="บันทึกการเพิ่มข้อมูล" onclick="fn_addData();">
                 <input type="button" class="btn" onClick="reloadPage()" value="ยกเลิก">
               </div>
             </div>
@@ -159,272 +171,204 @@ $major_name = $major_data[0]['thaiCompanyName'];
 </div>
 
 
-<style type="text/css">
-label.valid {
-  width: 24px;
-  height: 24px;
-  background: url(bootstrap/img/valid.png) center center no-repeat;
-  display: inline-block;
-  text-indent: -9999px;
-}
-label.error {
-	font-weight: bold;
-	color: red;
-	padding: 2px 8px;
-	margin-top: 2px;
-}
-</style>
-
-<script type="text/javascript">
-
-$(document).ready(function(){
-
-	// Validate
-	// http://bassistance.de/jquery-plugins/jquery-plugin-validation/
-	// http://docs.jquery.com/Plugins/Validation/
-	// http://docs.jquery.com/Plugins/Validation/validate#toptions
-
-		$('#fm_add').validate({
-	    rules: {
-	      txtPhone: {
-	        minlength: 2,
-	        required: true
-	      },
-	      email: {
-	        required: true,
-	        email: true
-	      },
-	      subject: {
-	      	minlength: 2,
-	        required: true
-	      },
-	      message: {
-	        minlength: 2,
-	        required: true
-	      }
-	    },
-			highlight: function(element) {
-				$(element).closest('.control-group').removeClass('success').addClass('error');
-			},
-			success: function(element) {
-				element
-				.text('OK!').addClass('valid')
-				.closest('.control-group').removeClass('error').addClass('success');
-			}
-	  });
-
-}); // end document.ready
-
-	
+<script type="text/javascript">	
 //function ใส่ จังหวัด อำเภอ ตำบล	
 $(document).ready( function () {
 	
-	var province_ss = '<?=$province_ss?>';	
-	var amphur_ss = '<?=$amphur_ss?>';
-	var district_ss = '<?=$district_ss?>';
+	var provinceId = '<?=$provinceId?>';	
+	var amphurId = '<?=$amphurId?>';
+	var districtId = '<?=$districtId?>';
 	
 	//alert(car_ss_gensub);
 
 	if ($('#province').val() != ''){
-		fn_callamphur(province_ss, amphur_ss);
-		fn_calldistrict(amphur_ss, district_ss);
+		fn_callamphur(provinceId, amphurId);
+		fn_calldistrict(amphurId, districtId);
 	}
 	
 	$('#province').change(function () {
-		fn_callamphur($('#province').val(), 0);
+		fn_callamphur($('#provinceId').val(), 0);
 		fn_calldistrict(0, 0);
 	});
+	
+	//console.log($.isNumeric('8'));
 
 });
 
 
 
-function fn_callamphur(province, amphur){
-	//alert(id);
-	$.post('modules/mod_user/major/get.amphur.php', {provinceId:province, amphurId:amphur} , function(data) {
-  		$('#genamphur').html(data);	
-	});	
-}
-
-function fn_calldistrict(amphur, district){
-	//alert(id);
-	$.post('modules/mod_user/major/get.district.php', {amphurId:amphur, districtId:district} , function(data) {
-  		$('#gendistrict').html(data);	
-	});	
-}
-
-function trim(s)
-{
-   var l=0; var r=s.length -1;
-   while(l < s.length && s[l] == ' ')
-   {   l++; }
-   while(r > l && s[r] == ' ')
-   {   r-=1;   }
-   return s.substring(l, r+1);
-}
-
-
-function chkUNandGPW(id) {
-	var username = $('#userName').val();
+function fn_addData(){
+	var pass = 1;
 	
-	$('#usernameOK').text("");
-	$('#g_passwordOK').text("");
+	if (checkData('minorTypeId') == 0){ pass = 0 }
+	if (checkData('firstName') == 0){ pass = 0 }
+	if (checkData('lastName') == 0){ pass = 0 }
+	if (checkData('txtuserName') == 0){ pass = 0 }
+	if (checkData('txtpassword') == 0){ pass = 0 }
+	if (checkData('txtpassword2') == 0){ pass = 0 }
+	if (checkData('address') == 0){ pass = 0 }
+	if (checkData('provinceId') == 0){ pass = 0 }
+	if (checkData('amphurId') == 0){ pass = 0 }
+	if (checkData('districtId') == 0){ pass = 0 }
+	if (checkData('zipcode') == 0){ pass = 0 }
+	if (checkData('txtemail') == 0){ pass = 0 }
 	
-	if(id=="g_password")
-		var chkGaragePW = chk1stGPW("g_password",$('#g_password').val(),8);
-
-	if(id=="userName")
-		var chkUsername = chkValid("userName",$('#userName').val(),8);
-
-
-	if(chkUsername != false && chkGaragePW != false)
-	{	console.log("Go Checking");
-		jQuery.ajax({
-			url :'modules/mod_user/minor/chkRegisDuplicate.php',
-			type : 'GET',
-			data : 'username='+username+'&u_garage=<?=$u_garage?>',
-			dataType: 'jsonp',
-			dataCharset: 'jsonp',
-			success: function (data){
-				console.log(data.message);
-				console.log(data.success);
-
-				if(data.success==true)
-				{
-					$('#userNamechk').text(username+" ถูกใช้งานไปแล้ว กรุณาใช้ชื่อื่น");
-					$('#userName').val("");
-					$('#usernameOK').text("");						
-				}
-				else
-				{
-					$('#usernameOK').text("Username นี้สามารถใช้งานได้");
-					$('#userNamechk').text("");						
-				}						
-			}		
-		});
-	}
-}
-
-function chkEmail(email) {	
-	if(email!='-')
-	{
-		if ( !(/^.+@.+\..{2,3}$/.test(email))) {
-			$('#chkEmail').text("กรุณากรอก E-mail ให้ถูกต้อง ถ้าไม่มีให้ใส่เครื่องหมาย -");	
-			$('#txtEmail').val("")	;
-		}	
-		else 
-			$('#chkEmail').text("");		
-	}
-	else
-			$('#chkEmail').text("");
-}
-
-
-function trimString(id,str) {
-	$('#'+id).val(jQuery.trim(str));
-}
-
-
-function chkEngNum(id,str,long) {
-	console.log(id,str,long);
-	$('#'+id).val(jQuery.trim(str));
-
-	var newstr = jQuery.trim(str);	
-	if ( /[^A-Za-z0-9 ]/.test(newstr))
-	{	$('#'+id+"chk").text("กรุณากรอกแต่ภาษาอังกฤษหรือตัวเลขเท่านั้น");
-		$('#'+id).val("");
-		return false;		}
-	else if(long != 0 && newstr.length<long)
-	{	$('#'+id+"chk").text("กรุณากรอกมากกว่า "+long+" ตัวอักษร");	
-		$('#'+id).val("");		
-		return false; }	
-	else
-		$('#'+id+"chk").text("");
-}
-
-function chkValid(id,str,long) {
-	console.log(id,str,long);
-	$('#'+id).val(jQuery.trim(str));
-
-	var newstr = jQuery.trim(str);	
-	if ( /[^A-Za-z0-9]/.test(newstr))
-	{	$('#'+id+"chk").text("กรุณากรอกแต่ภาษาอังกฤษหรือตัวเลขเท่านั้น");
-		$('#'+id).val("");
-		return false;		}
-	else if(long != 0 && newstr.length<long)
-	{	$('#'+id+"chk").text("กรุณากรอกมากกว่า "+long+" ตัวอักษร");	
-		$('#'+id).val("");		
-		return false; }	
-	else
-		$('#'+id+"chk").text("");
-}
-
-
-
-function chk1stPW(id,str,long) {
-	$('#'+id).val(jQuery.trim(str));
-	$('#u_password2').val("");
-
-	var newstr = jQuery.trim(str);	
-	if ( /[^A-Za-z0-9]/.test(newstr))
-	{	$('#'+id+"chk").text("กรุณากรอกแต่ภาษาอังกฤษหรือตัวเลขเท่านั้น");
-		$('#'+id).val("");		}
-	else if(long != 0 && newstr.length<long)
-	{	$('#'+id+"chk").text("กรุณากรอกมากกว่า "+long+" ตัวอักษร");	
-		$('#'+id).val("");		}	
-	else
-		$('#'+id+"chk").text("");				
-}
-
-function chk1stGPW(id,str,long) {
-	console.log(id,str,long);
-	$('#'+id).val(jQuery.trim(str));
-	$('#g_password2').val("");
-
-	var newstr = jQuery.trim(str);	
-	if ( /[^A-Za-z0-9]/.test(newstr))
-	{	$('#'+id+"chk").text("กรุณากรอกแต่ภาษาอังกฤษหรือตัวเลขเท่านั้น");
-		$('#'+id).val("");
-		return false;		}
-	else if(long != 0 && newstr.length<long)
-	{	$('#'+id+"chk").text("กรุณากรอกมากกว่า "+long+" ตัวอักษร");	
-		$('#'+id).val("");
-		return false;		}	
-	else
-		$('#'+id+"chk").text("");				
-}
-
-function chk2ndPW(pw2) {
-	if(pw2!=$('#u_password').val())
-	{
-		$('#u_password2chk').text("พาสเวิร์ดไม่ตรงกัน กรุณากรอกใหม่");
-		$('#u_password2').val("");
-	}
-	else
-		$('#u_password2chk').text("");
-}
-
-function chk2ndGPW(pw2) {
-	if(pw2!=$('#g_password').val())
-	{
-		$('#g_password2chk').text("พาสเวิร์ดไม่ตรงกัน กรุณากรอกใหม่");
-		$('#g_password2').val("");
-	}
-	else
-		$('#g_password2chk').text("");
-		
-}
-
-function numberOrNot(id,number,errortxt){
 	
-	number = jQuery.trim(number)
-	if ( /[^0-9-]/.test(number))
-	{	$('#'+id+"chk").text(""+errortxt+' ถ้าไม่มีให้ใส่เครื่องหมาย -');
-		$('#'+id).val("");		
+	/// Mobile
+	if ($('#mobilePhone').val() != ''){ 
+		var chkmobile = $.isNumeric(''+$('#mobilePhone').val()+'');
+		if (chkmobile == false){
+			$('#mobilePhone').closest('div').addClass("f_error");
+			$('#mobilePhone_err').text('กรุณาป้อนตัวเลขเท่านั้น');
+			$('#mobilePhone_err').fadeIn(1000);
+			pass = 0;
+		} else {
+			$('#mobilePhone').closest('div').removeClass("f_error");
+			$('#mobilePhone_err').fadeOut(100);
+		}
+	} else {
+		$('#mobilePhone').closest('div').removeClass("f_error");
+		$('#mobilePhone_err').hide();
 	}
-	else
-		$('#'+id+"chk").text("");
+	
+	/// Telephone
+	if ($('#telephone').val() != ''){ 
+		var chkphone = $.isNumeric(''+$('#telephone').val()+'');
+		if (chkphone == false){
+			$('#telephone').closest('div').addClass("f_error");
+			$('#telephone_err').text('กรุณาป้อนตัวเลขเท่านั้น');
+			$('#telephone_err').fadeIn(1000);
+			pass = 0;
+		} else {
+			$('#telephone').closest('div').removeClass("f_error");
+			$('#telephone_err').fadeOut(100);
+		}
+	} else {
+		$('#telephone').closest('div').removeClass("f_error");
+		$('#telephone_err').hide();
+	}
+	
+	
+	///Email
+	if ($('#txtemail').val() != ''){	
+		var chkmail = checkEmail($('#txtemail').val());
+		if (chkmail == false){
+			$('#txtemail').closest('div').addClass("f_error");
+			$('#txtemailerr').text('กรุณากรอก email ให้ถูกต้อง');
+			$('#txtemailerr').fadeIn(1000);
+			pass = 0;
+		} else {
+			$('#txtemail').closest('div').removeClass("f_error");
+			$('#txtemailerr').fadeOut(100);
+		}
+	} else {		
+		$('#txtemailerr').hide();
+	}
+	
+	
+	
+	//Username
+	if ($('#txtuserName').val() != ''){
+		var username = $('#txtuserName').val();
+		var chkuser = checkEngNum(username);
+		if (chkuser == false){
+			$('#txtuserName').closest('div').addClass("f_error");
+			$('#errUsername').text('กรุณากรอกตัวอักษรภาษาอังกฤษ และตัวเลขเท่านั้น');
+			$('#errUsername').fadeIn(1000);
+			pass = 0;
+		} else {
+			
+			///Count 
+			if (username.length < 8){
+				$('#txtuserName').closest('div').addClass("f_error");
+				$('#errUsername').text('กรุณากรอก Username ให้มากกว่า 8 ตัวอักษร');
+				$('#errUsername').fadeIn(1000);
+				pass = 0;
+			} else {
+				
+				jQuery.ajax({
+					url :'modules/mod_user/minor/chkRegisDuplicate.php',
+					type : 'GET',
+					data : 'username='+username+'&u_garage=<?=$u_garage?>',
+					dataType: 'jsonp',
+					dataCharset: 'jsonp',
+					success: function (data){			
+						//console.log(data.success);
+						if (data.success){
+							$('#txtuserName').closest('div').removeClass("f_error");
+							$('#errUsername').fadeOut(100);	
+							$('#usernameOK').text('Username นี้ใช้งานได้');
+							$('#usernameOK').fadeIn(1000);
+						} else {
+							$('#txtuserName').closest('div').addClass("f_error");
+							$('#errUsername').text('Username นี้มีผู้ใช้งานแล้ว');
+							$('#errUsername').fadeIn(1000);
+							$('#usernameOK').hide();
+							pass = 0;
+						}			
+					}		
+				});				
+				
+			}
+		}		
+	} else {		
+		$('#errUsername').hide();
+	}
+	
+	
+	
+	//Password1
+	if ($('#txtpassword').val() != ''){
+		var pwd = $('#txtpassword').val();
+		var chkpwd = checkEngNum(pwd);
+		if (chkpwd == false){
+			$('#txtpassword').closest('div').addClass("f_error");
+			$('#errPassword').text('กรุณากรอกตัวอักษรภาษาอังกฤษ และตัวเลขเท่านั้น');
+			$('#errPassword').fadeIn(1000);
+			pass = 0;
+		} else {
+			if (pwd.length < 8){
+				$('#txtpassword').closest('div').addClass("f_error");
+				$('#errPassword').text('กรุณากรอก Password ให้มากกว่า 8 ตัวอักษร');
+				$('#errPassword').fadeIn(1000);
+				pass = 0;
+			} else {
+				$('#txtpassword').closest('div').removeClass("f_error");
+				$('#errPassword').fadeOut(100);
+			}
+		}
+	} else {		
+		$('#errPassword').hide();
+	}
+	
+	
+	//Password2
+	if ($('#txtpassword2').val() != ''){
+		//errtxtpassword2
+		var pwd1 = $('#txtpassword').val();
+		var pwd2 = $('#txtpassword2').val();
+		if (pwd1 != pwd2){
+			$('#txtpassword2').closest('div').addClass("f_error");
+			$('#errtxtpassword2').text('รหัสผ่านไม่ตรงกัน');
+			$('#errtxtpassword2').fadeIn(1000);
+			pass = 0;
+		} else {
+			$('#txtpassword2').closest('div').removeClass("f_error");
+			$('#errtxtpassword2').fadeOut(100);
+		}
+	} else {		
+		$('#errtxtpassword2').hide();
+	}
+	
+	
+	//newstr.length<long
+	console.log('pass = '+pass);
+	if (pass){
+		//console.log('Add Data');
+		$('#fm_add').submit();
+	}
 }
+
 
 </script> 
 
