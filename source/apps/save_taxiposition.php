@@ -5,6 +5,12 @@ mysql_select_db("taxi_db2", $conn);
 $mobileId = trim($_REQUEST["mobileId"]);
 $latitude = trim($_REQUEST["lat"]);
 $longitude = trim($_REQUEST["lon"]);
+$time = trim($_REQUEST["time"]);
+//$accuracy = trim($_REQUEST["accuracy"]);
+//$speed = trim($_REQUEST["speed"]);
+//$bearing = trim($_REQUEST["bearing"]);
+
+
 
 
 $total = 0;
@@ -17,18 +23,24 @@ while ($row = mysql_fetch_array($result)) {
 $iresult = array();
 
 if ($total != 0) { 
-	if (($latitude == '') || ($longitude == '')) {
-		if ($latitude == ''){
-			$iresult["code"] = "300";
-			$iresult["msg"] = "Don't have latitude";
-		}
-		if ($longitude == ''){
-			$iresult["code"] = "400";
-			$iresult["msg"] = "Don't have longitude";
-		}
+	if (($latitude == '') || ($longitude == '') || ($time == '')) {
 		
+		
+		if ($latitude == ''){
+			$iresult["code"] = "100";
+			$iresult["msg"] = "Don't have latitude";
+		} else if ($longitude == ''){
+			$iresult["code"] = "101";
+			$iresult["msg"] = "Don't have longitude";
+		} else if ($time == ''){
+			$iresult["code"] = "103";
+			$iresult["msg"] = "Don't have time";
+		}	
+
 	} else {
-		$sql = "INSERT INTO mobilemap (mobileId,latitude,longitude) VALUES ('$mobileId','$latitude','$longitude')";
+		
+		$sql = "INSERT INTO taxiposition (mobileId,latitude,longitude,timeGPS) ";
+		$sql .= "VALUES ('$mobileId','$latitude','$longitude','$time')";
 		mysql_query($sql, $conn);
 		
 		

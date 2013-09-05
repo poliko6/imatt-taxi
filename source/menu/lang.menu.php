@@ -30,7 +30,7 @@ $lang_menu = array(
 	//การจัดการคนขับรถ
 	"driver.managedriver" 	=>  "จัดการคนขับรถ",
 	"driver.period" 		=>  "ตารางงาน",
-	"driver.schedule" 		=>  "เวลาทำงาน",
+	"driver.schedule" 		=>  "ลงเวลาทำงาน",
 	
 
 
