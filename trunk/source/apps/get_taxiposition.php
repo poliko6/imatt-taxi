@@ -4,11 +4,11 @@ mysql_select_db("taxi_db2", $conn);
 
 $mobileId = $_REQUEST["mobileId"];
 
-$sql = "SELECT mobile.*, mobilemap.latitude, mobilemap.longitude, ";
-$sql .= "mobilemap.dateMapping FROM mobilemap ";
-$sql .= "INNER JOIN mobile ON mobile.mobileId = mobilemap.mobileId ";
-$sql .= "WHERE mobilemap.mobileId='".$mobileId."' AND dateMapping LIKE '".date('Y-m-d')."%' ";
-$sql .= "ORDER BY dateMapping DESC ";
+$sql = "SELECT mobile.*, taxiposition.latitude, taxiposition.longitude, ";
+$sql .= "taxiposition.timeGPS FROM taxiposition ";
+$sql .= "INNER JOIN mobile ON mobile.mobileId = taxiposition.mobileId ";
+$sql .= "WHERE taxiposition.mobileId='".$mobileId."' AND timeGPS LIKE '".date('Y-m-d')."%' ";
+$sql .= "ORDER BY timeGPS DESC ";
 
 #echo $sql;
 $result = mysql_query($sql);

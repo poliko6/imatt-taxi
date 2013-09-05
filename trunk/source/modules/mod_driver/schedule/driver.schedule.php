@@ -10,7 +10,7 @@
                 </div>
                 <div class="span4">
                     <div><a href="index.php?p=driver.schedule&menu=main_driver" style="text-decoration:none;"><?=$lang_menu["driver.schedule"]?></a></div>
-                    <div class="normal">เมนูจัดการรายละเีอียดเวลาเข้างานของพนักงานแท๊กซี่</div>
+                    <div class="normal">เมนูจัดการรายละเีอียดการลงเวลาเข้างานของพนักงานแท๊กซี่</div>
                 </div>
                 <div class="span7">
                     <div class="alert" id="alert1" style="display:none; margin-top:5px; margin-bottom:5px;">
