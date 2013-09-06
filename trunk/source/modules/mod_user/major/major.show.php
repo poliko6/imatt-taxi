@@ -1,5 +1,5 @@
 <?
-	pre($_SESSION);
+	//pre($_SESSION);
 
 	$strSQL = "SELECT majortype.majorType,garagelist.garageShortName,garagelist.garagePassword,";
 	$strSQL .= "majoradmin.majorId,majoradmin.thaiCompanyName,majoradmin.englishCompanyName,majoradmin.username,majoradmin.garageId ";
@@ -159,7 +159,7 @@
       <td>
         <a href="index.php?p=user.major&menu=main_user&act=edit&mjId=<?=$objResult['majorId']?>" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> 
 
-        <a href="#myModalDel<?=$objResult['majorId']?>" data-toggle="modal" title="ลบ"><i class="icon-trash"></i><? echo $objResult['majorId']; ?></a>
+        <a href="#myModalDel<?=$objResult['majorId']?>" data-toggle="modal" title="ลบ"><i class="icon-trash"></i></a>
       </td>          
     </tr>          
         <!-- POP UP -->
