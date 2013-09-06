@@ -1,0 +1,3 @@
+2013-9-6 ER Visio
+-ตาราง transportsection
+ : เพิ่ม field  statusWork,dateUpdate
