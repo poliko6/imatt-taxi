@@ -211,9 +211,17 @@ $(document).ready( function () {
 		fn_calldistrict(0, 0);
 	});
 	
-	//console.log($.isNumeric('8'));
-
+	$(document).on("keydown.NewActionOnF5", function(e){
+        var charCode = e.which || e.keyCode;
+        switch(charCode){
+            case 116: // F5
+                e.preventDefault();
+                window.location = "index.php?p=user.profile&menu=main_user";
+                break;
+        }
+    });
 });
+
 
 function reloadPage2(){
 	window.location = 'index.php?p=user.profile&menu=main_user&sav=yes'; 
