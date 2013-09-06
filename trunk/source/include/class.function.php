@@ -100,6 +100,8 @@
     	return $day;
 	}
 	
+	
+	
 	function count_data_mysql($id,$tbname,$select){
 		$sql = "select count($id) as totaldata from $tbname where $select";		
 		$rs = mysql_query($sql);
@@ -165,7 +167,7 @@ mysql_query($sql);
 	{
 		$sql = "select * from $table $condition";
 		$dbquery = mysql_query($sql);
-		#echo $sql."<br>";
+		//echo $sql."<br>";
 		$rows = array();
 		while (($result= mysql_fetch_array($dbquery)) !== FALSE)
 		$rows[] = $result;
