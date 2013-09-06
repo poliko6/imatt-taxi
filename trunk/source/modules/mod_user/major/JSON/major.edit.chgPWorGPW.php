@@ -24,7 +24,6 @@
 	{
 		$gpwSQL = "UPDATE garagelist SET garagePassword = '".$newPW."' WHERE garageId ='".$garageId."'";
 		mysql_query($gpwSQL);
-		$data['success'] = true;
 		$data['message'] = "เปลี่ยนรหัสผ่านสำหรับอู่นี้แล้ว";		
 	}
 
