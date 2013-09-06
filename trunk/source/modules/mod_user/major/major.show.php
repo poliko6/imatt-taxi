@@ -127,7 +127,7 @@
     </form>          
     <br />
     <br />
-    <table class="table table-bordered table-striped table_vam" >
+    <table class="table table-bordered table-striped table_vam" id="dt_a">
       <thead>
         <tr>
           <th style="text-align:center">ลำดับที่</th>
