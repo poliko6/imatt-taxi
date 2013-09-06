@@ -38,8 +38,52 @@
   	<td>
 
 	<?
-		include("modules/mod_user/profile/major.profile.php");
+	//Get Session
+	$userType = $u_type;
+	// 1 = Supervisor
+	// 2 = Company Admin
+	// 3 = Minor Admin
+	
+	if($sav=='yes')
+	{	
+		$message = "แก้ไขข้อมูลเรียบร้อยแล้วค่ะ";
+		?>
+			<script type="text/javascript">			
+			$(document).ready(function() {
+				alertPopup('msg3','alert3','<?=$message?>');			
+			});		
+			</script>        
+        <?				
+	}
+		switch ($userType)	
+		{
+			case 1 :
+					include("modules/mod_user/profile/major.profile.php");
+					break;
+			case 2 :
+					include("modules/mod_user/profile/major.profile.php");
+					break;
+			case 3 :	
+					include("modules/mod_user/profile/minor.profile.php");
+					break;
+		}
 	?>
     </td>
   </tr>
 </table>   
+<script type="text/javascript">	
+var delayAlert=null; 
+
+function alertPopup(msgid,alertid,message){
+	$('#'+msgid+'').text(''+message+'');
+	$('#'+alertid+'').fadeIn(500, function() {
+		clearTimeout(delayAlert);  
+		delayAlert=setTimeout(function(){  
+//				alertFadeOut(''+alertid+'');
+			$('#'+alertid+'').fadeOut(500);
+			delayAlert=null;  
+		},2000);  
+	});
+}
+
+</script>
