@@ -30,6 +30,8 @@ if (empty($_SESSION['pass_actived'])){
 	$u_id = $_SESSION['u_id'];	 //id มาจากตาราง major และ minor
 	$u_type = $_SESSION['u_type']; //ถ้าเป็นพนักงานให้เป็น 3
 	$u_garage = $_SESSION['u_garage']; 
+	
+	$garage_path = select_db('garagelist',"where garageId = '".$u_garage."'");
 ?>
 
 <!DOCTYPE html>
@@ -137,12 +139,16 @@ if (empty($_SESSION['pass_actived'])){
                     <div class="navbar-inner">
                         <div class="container-fluid">
                             <a class="brand" href="index.php"><i class="icon-home icon-white"></i> Taxi System</a>
-                            <ul class="nav user_menu pull-right">                     
+                            <ul class="nav user_menu pull-right">  
+                            	<li class="divider-vertical hidden-phone hidden-tablet"></li>
+                            	 <li class="hidden-phone hidden-tablet">
+                                    <a href="company/<?=$garage_path[0]['garageShortName']?>/index.php" target="_blank"><i class="splashy-star_boxed_full"></i> Visit Website</a>
+                                 </li>                   
                                 <li class="divider-vertical hidden-phone hidden-tablet"></li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="img/user_avatar.png" alt="" class="user_avatar" /> <?=$u_username?> <b class="caret"></b></a>
                                     <ul class="dropdown-menu">
-										<li><a href="#">My Profile</a></li>
+										<li><a href="index.php?p=user.profile&menu=main_user">My Profile</a></li>
 										<!--<li><a href="javascrip:void(0)">Another action</a></li> -->
 										<li class="divider"></li>
 										<li><a href="include/class.logout.php">ออกจากระบบ</a></li>
