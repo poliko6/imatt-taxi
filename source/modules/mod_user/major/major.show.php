@@ -1,7 +1,10 @@
 <?
-	$strSQL = "SELECT majortype.majorType,garagelist.garageShortName,";
+	pre($_SESSION);
+
+	$strSQL = "SELECT majortype.majorType,garagelist.garageShortName,garagelist.garagePassword,";
 	$strSQL .= "majoradmin.majorId,majoradmin.thaiCompanyName,majoradmin.englishCompanyName,majoradmin.username,majoradmin.garageId ";
-	$strSQL .= "FROM garagelist,majoradmin,majortype WHERE majoradmin.garageId=garagelist.garageId && majoradmin.majorTypeId=majortype.majorTypeId";
+	$strSQL .= "FROM garagelist,majoradmin,majortype WHERE majoradmin.garageId=garagelist.garageId && majoradmin.majorTypeId=majortype.majorTypeId ";
+	$strSQL .= "&& majoradmin.username != '".$_SESSION['u_username']."'";
 	//$strSQL2 = "SELECT  FROM garagelist,majoradmin WHERE garagelist.garageId=majoradmin.garageId";
 	mysql_query("SET NAMES UTF8");
 	$objQuery = mysql_query($strSQL) or die (mysql_error());
@@ -9,6 +12,28 @@
 	//$objQuery2 = mysql_query($strSQL2) or die (mysql_error());
 ?>
 <script type="text/javascript">
+	var delayAlert=null; 
+	
+	function alertPopup(msgid,alertid,message,newload){
+		$('#'+msgid+'').text(''+message+'');
+		$('#'+alertid+'').fadeIn(500, function() {
+			clearTimeout(delayAlert);  
+			delayAlert=setTimeout(function(){  
+//				alertFadeOut(''+alertid+'');
+				$('#'+alertid+'').fadeOut(500);
+				if (newload == 1){
+					reloadPage();  
+				}
+				delayAlert=null;  
+			},2000);  
+		});
+	}
+	
+	function reloadPage(){
+		window.location = 'index.php?p=user.major&menu=main_user'; 
+		//$('#fmReload').submit();
+	}	
+	
 	function fn_showInfo(id){
 		//console.log(id);
 				$('#showInfo').modal('toggle');	
@@ -39,6 +64,31 @@
 				});	
 			}	
 			
+	function chkConfirmDel(garageId,garagePW) {
+		
+		jQuery.ajax({
+			url  :'modules/mod_user/major/JSON/major.show.chkConfirmDel.php',
+			type :'GET',
+			data: 'garagePassword='+garagePW+'&garageId='+garageId+'',
+			dataType: 'jsonp',
+			dataCharset: 'jsonp',
+			success: function (data) {
+				if(data.correct==true)	
+				{	
+					console.log(data.correct);
+					$("#confirmBtn"+garageId).attr("disabled",false);
+					$('#chk_confirm'+garageId).text("รหัสผ่านถูกต้อง");
+				}
+				else	
+				{
+					console.log(data.correct);					
+					$("#confirmBtn"+garageId).attr("disabled",true);
+					$('#chk_confirm'+garageId).text("รหัสผ่านไม่ถูกต้อง");
+				}
+			}			
+		});
+	}
+			
 	function delMJ(username) {
 			console.log("In Show Info");		
 			jQuery.ajax({
@@ -54,8 +104,7 @@
 				} else {
 					alertPopup('msg2','alert2',''+data.message+'',0);
 				}				
-				
-				//$('#Del'+username+'').modal('toggle');
+				$('#myModalDel'+username+'').modal('toggle');
 			}
 			});		
 	}
@@ -86,39 +135,48 @@
           <th>ชื่อย่อ</th>
           <th>Username</th>
           <th>ประเภทของ Username</th>
-          <th>รหัสอู่</th>
+          <th>รหัสผ่านของอู่</th>
           <th>การจัดการ</th>
         </tr>
       </thead>
       <tbody>
-        <?
-								$i=1;
-								while($objResult = mysql_fetch_array($objQuery))
-								{ ?>
-        <tr>
-          <td style="text-align:center"><?=$i?></td>
-          <td><a href="#" class="ttip_t" title="ดูข้อมูลทั้งหมด" onclick="fn_showInfo(<?=$objResult['majorId']?>);">
-            <?=$objResult['thaiCompanyName']?>
-            <br/>
-            <?=$objResult['englishCompanyName']?>
-            </a></td>
-          <td><?=$objResult['garageShortName']?></td>
-          <td><?=$objResult['username']?></td>
-          <td><?=$objResult['majorType']?></td>
-          <td><?=$objResult['garageId']?></td>
-          <td>
-          	<a href="" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> 
-          	<a href="#myModalDel<?=$objResult['majorId']?>" class="ttip_t" data-toggle="modal" title="Delete"><i class="icon-trash"></i><? echo $objResult['majorId']; ?></a>
-		  </td>          
-        </tr>          
+	<?
+    $i=1;
+		
+    while($objResult = mysql_fetch_array($objQuery))
+    { ?>
+    <tr>
+      <td style="text-align:center"><?=$i?></td>
+      <td><a href="#" class="ttip_t" title="ดูข้อมูลทั้งหมด" onclick="fn_showInfo(<?=$objResult['majorId']?>);">
+        <?=$objResult['thaiCompanyName']?>
+        <br/>
+        <?=$objResult['englishCompanyName']?>
+        </a></td>
+      <td><?=$objResult['garageShortName']?></td>
+      <td><?=$objResult['username']?></td>
+      <td><?=$objResult['majorType']?></td>
+      <td><?=$objResult['garagePassword']?></td>
+      <td>
+        <a href="index.php?p=user.major&menu=main_user&act=edit&mjId=<?=$objResult['majorId']?>" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> 
+
+        <a href="#myModalDel<?=$objResult['majorId']?>" data-toggle="modal" title="ลบ"><i class="icon-trash"></i><? echo $objResult['majorId']; ?></a>
+      </td>          
+    </tr>          
         <!-- POP UP -->
         <div class="modal hide fade" id="myModalDel<?=$objResult['majorId']?>" style="text-align:center; width:500px;">
             <div class="alert alert-block alert-error fade in">
-                <h4 class="alert-heading">คุณต้องการลบข้อมูลรถแท๊กซี่ทะเบียน "<?=$objResult['username']?>"</h4>
+                <h4 class="alert-heading">คุณต้องการลบข้อมูลอู่บัญชี "<?=$objResult['username']?>"</h4>
                 <div style="height:50px;"></div>
-                <p>
-                <a href="#" class="btn btn-inverse" onclick="delMJ('<?=$objResult['username']?>');"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> 
-                หรือ <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a>
+                <p><center>
+	              	<label for="u_fname" class="control-label"><font color="#FF0000"><i>กรุณากรอกรหัสผ่านของอู่ <b><?=$objResult['username']?></b> เพื่อยืนยันการลบ</i></font></label>	
+                  	<div class="controls">
+              		<input type="password" name="confirmGPW" id="confirmGPW" class="input-xlarge" value="" onchange="chkConfirmDel('<?=$objResult['garageId']?>',this.value)" />
+                    <font color="#666666"><i><div id="chk_confirm<?=$objResult['garageId']?>"></div></i></font>                  
+              		</div>
+              <br />                         
+                <!--<a href="#" class="btn btn-inverse" onclick="delMJ('<?=$objResult['username']?>');"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> -->
+                <a href="#" onclick="delMJ('<?=$objResult['username']?>');"><button id="confirmBtn<?=$objResult['garageId']?>" name="confirmBtn" disabled="disabled" class="btn btn-danger"><i class="splashy-error"></i> ยืนยันการลบข้อมูล</button></a>
+                หรือ <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_x"></i> ยกเลิก</a>
                 </p>
             </div>
         </div>
