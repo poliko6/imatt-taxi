@@ -41,8 +41,13 @@
 	<?
 		echo "Act Here ".$act;
 		switch($act) {
-			//case 'edit':
-			//	break;
+			case 'edit':
+				$majorId = $mjId;
+				include("modules/mod_user/major/major.edit.php");
+				break;
+			case 'saveedit':
+				include("modules/mod_user/major/editmajor.php");	
+				break;
 			case 'add':
 				include("modules/mod_user/major/major.add.php");
 				break;

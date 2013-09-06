@@ -13,7 +13,7 @@
                 <input type="text" class="input-xlarge" name="shortName" id="shortName" onchange="fn_chkShortName(this.value)" value="" maxlength="15" />
                 <font color="#FF0000"><i>
                 <div id="chkExist"></div>
-                </i></font> <span class="help-block">ภาษาอังกฤษหรือตัวเลขเท่านั้น ความยาวไม่เกิน 15 ตัวอักษร</span> <span class="help-block">*สำคัญ สำหรับใช้ระบุใน URL ของหน้าเว็บบริษัทของท่าน โปรดตรวจสอบให้แน่ใจก่อนทำการบันทึก</span> </div>
+                </i></font> <span class="help-block">ภาษาอังกฤษหรือตัวเลขเท่านั้น ความยาวไม่เกิน 15 ตัวอักษร</span> <span class="help-block">*สำคัญ สำหรับใช้ระบุใน URL ของหน้าเว็บบริษัท โปรดตรวจสอบให้แน่ใจก่อนทำการบันทึก</span> </div>
             </div>
             <div class="control-group formSep">
               <label for="u_fname" class="control-label">ชื่อบริษัทภาษาไทย :</label>
@@ -184,9 +184,7 @@
             <div class="control-group">
               <div class="controls">
                 <button class="btn btn-gebo" type="submit">บันทึกการเพิ่มข้อมูล</button>
-                <a href="#">
-                <button class="btn">ยกเลิก</button>
-                </a> </div>
+				<input type="button" class="btn" value="ยกเลิก" onclick="reloadPage()" />
             </div>
           </fieldset>
                     <input type="hidden" name="p" value="<?=$p?>" />
@@ -198,7 +196,10 @@
   </div>
 </div>
 <script type="text/javascript">
-
+function reloadPage(){
+	window.location = 'index.php?p=user.major&menu=main_user'; 
+	//$('#fmReload').submit();
+}
 	
 //function ใส่ จังหวัด อำเภอ ตำบล	
 $(document).ready( function () {
@@ -327,8 +328,8 @@ function chkUNandGPW(id) {
 					$('#g_passwordOK').text("รหัสนี้สามารถใช้งานได้");
 					$('#g_passwordchk').text("");					
 				}
-				console.log(data.garagePassword.length());
-				console.log(data.username.length());				
+				console.log(data.garagePassword.length);
+				console.log(data.username.length);				
 			}		
 		});
 	}
