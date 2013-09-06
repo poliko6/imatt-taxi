@@ -14,13 +14,25 @@ $major_name = $major_data[0]['thaiCompanyName'];
           <fieldset>
           
           
-            <div class="formStep">             
+            <div class="formSep">             
              	<div class="control-group">
-                  <label for="driverId" class="control-label">คนขับ <span class="f_req">*</span> :</label>
+                  <label for="driverId" class="control-label">เวลางาน <span class="f_req">*</span> :</label>
                   <div class="controls text_line">
                         <div class="span6">  
                         <? $time_data = select_db('timeschedule',"where garageId = '".$u_garage."' order by timeStart"); ?>  
-                        
+                        <? 
+						$iradio = 0;
+						if (empty($radioGroupTime)){ $radioGroupTime = $time_data[0]['timeScheduleId']; }
+						foreach($time_data as $valTime){
+							$p_tStart = explode(':',$valTime['timeStart']);
+							$p_tEnd = explode(':',$valTime['timeEnd']);
+							$iradio++;
+							?>                       	
+                          <label class="uni-radio">
+                            <input type="radio" name="radioGroupTime" value="<?=$valTime['timeScheduleId']?>" id="radioGroupTime_<?=$iradio?>" <? if ($radioGroupTime == $valTime['timeScheduleId']) { echo "checked=\"checked\""; } ?>  class="uni_style" />
+                            <strong><?=$valTime['scheduleName']?></strong> [<?=$p_tStart[0].':'.$p_tStart[1]?> - <?=$p_tEnd[0].':'.$p_tEnd[1]?> ]
+                          </label>                     	
+                        <? } ?>
                         </div>
                  	</div>
          		</div>
