@@ -15,7 +15,7 @@
 	
 	$today = date("Y-m-d H:i:s");  
 	$this_ip = $_SERVER['REMOTE_ADDR']; 
-
+	date_default_timezone_set('Asia/Bangkok');
 ?>	
 
 

@@ -1,9 +1,9 @@
  <?
  foreach($_REQUEST as $key => $value)  {
 	$$key = $value;
-	echo $key ."=". $value."<br>";
+	//echo $key ."=". $value."<br>";
  }
- pre($_SESSION);
+ //pre($_REQUEST);
  //pre(error_get_last());
  
  $find_chk = 0;
@@ -12,10 +12,6 @@
 	case 'addschedule':	
 		include('modules/mod_driver/schedule/formAdd.php');		
 	 	break;		
-		
-	case 'editschedule':
-		include('modules/mod_driver/schedule/formEdit.php');
-		break;	
 		
 	case 'saveadd':	
 		
@@ -37,31 +33,29 @@
 			include('modules/mod_driver/schedule/formAdd.php');
 			
 		} else {
-		
-			/*$act = '';
-			$txtpassword = trim($txtpassword);
-			$TableName = 'minoradmin';
+			
+			$get_time_data = select_db('timeschedule',"where timeScheduleId = '".$radioGroupTime."'"); 
+			$timeStart = $get_time_data[0]['timeStart'];
+			$timeEnd = $get_time_data[0]['timeEnd'];
+			$act = '';
+			
+			$TableName = 'transportsection';
 			$data = array(
 				'garageId'=>$u_garage,
-				'firstName'=>trim($firstName),
-				'lastName'=>trim($lastName),			
-				'username'=>trim($txtuserName),
-				'minorTypeId'=>$minorTypeId,
-				'password'=>sha1($txtpassword),
-				'address'=>trim($address),
-				'provinceId'=>$provinceId,
-				'amphurId'=>$amphurId,
-				'districtId'=>$districtId,
-				'telephone'=>trim($telephone),
-				'mobilePhone'=>trim($mobilePhone),				
-				'email'=>trim($txtemail),
-				'zipcode'=>trim($zipcode)
+				'detail'=>trim($detail),
+				'timeStart'=>trim($timeStart),			
+				'timeEnd'=>trim($timeEnd),
+				'driverId'=>$thisdriverId,
+				'mobileId'=>$thismobileId,
+				'carId'=>$thiscarId,
+				'statusWork'=>'online'
+				
 			);
 			$sql = insert_db($TableName, $data);
-			mysql_query($sql);	*/
-			#echo $sql;
+			mysql_query($sql);	
+			//echo $sql;
 			
-			$message = "เพิ่มข้อมูลพนักงาน ".$firstName." ".$lastName." เรียบร้อยแล้วค่ะ";
+			$message = "ลงเวลางานพนักงานเรียบร้อยแล้วค่ะ";
 			
 			?>
 			<script type="text/javascript">			
@@ -70,74 +64,10 @@
 			});		
 			</script>
 			<?
-			include('modules/mod_driver/schedule/minorShow.php');
+			include('modules/mod_driver/schedule/scheduleShow.php');
 		}		
 			
 		break;	
-		
-	case 'saveedit':
-
-		/*$TableName = 'minoradmin';
-		
-		if (trim($txtpassword) != ''){
-			$txtpassword = trim($txtpassword);
-			
-			$data = array(
-				//'garageId'=>$u_garage,
-				'firstName'=>trim($firstName),
-				'lastName'=>trim($lastName),			
-				//'username'=>trim($txtuserName),
-				'minorTypeId'=>$minorTypeId,			 
-				'password'=>sha1($txtpassword),
-				'address'=>trim($address),
-				'provinceId'=>$provinceId,
-				'amphurId'=>$amphurId,
-				'districtId'=>$districtId,
-				'telephone'=>trim($telephone),
-				'mobilePhone'=>trim($mobilePhone),				
-				'email'=>trim($txtemail),
-				'zipcode'=>trim($zipcode),
-				'dateUpdated'=>date('Y-m-d H:i:s'),
-			);	
-		} else {		
-			$data = array(
-				//'garageId'=>$u_garage,
-				'firstName'=>trim($firstName),
-				'lastName'=>trim($lastName),			
-				//'username'=>trim($txtuserName),
-				'minorTypeId'=>$minorTypeId,			 
-				//'password'=>sha1($txtpassword),
-				'address'=>trim($address),
-				'provinceId'=>$provinceId,
-				'amphurId'=>$amphurId,
-				'districtId'=>$districtId,
-				'telephone'=>trim($telephone),
-				'mobilePhone'=>trim($mobilePhone),				
-				'email'=>trim($txtemail),
-				'zipcode'=>trim($zipcode),
-				'dateUpdated'=>date('Y-m-d H:i:s'),
-			);	
-		}
-		
-		$sql = update_db($TableName, array('minorId='=>$minorId), $data);
-		mysql_query($sql);	
-		#echo $sql;
-		//exit;*/
-		
-		$message = "แก้ไขข้อมูลพนักงาน ".trim($firstName).' '.trim($lastName)." เรียบร้อยแล้วค่ะ";
-		
-		?>
-		<script type="text/javascript">			
-		$(document).ready(function() {
-			alertPopup('msg3','alert3','<?=$message?>',0);			
-		});		
-		</script>
-		<?
-		include('modules/mod_driver/schedule/scheduleShow.php');
-		
-		break;
-		
-		
 		
 	default:
 		include('modules/mod_driver/schedule/scheduleShow.php');
@@ -154,25 +84,20 @@
 		
 	$(document).ready(function(){	
 		//console.log(find_chk);	
-	});
-	
-	function alertFadeOut(id){
-		$('#'+id+'').fadeOut(1000); 
-	}
+	});	
 	
 	function reloadPage(){
-		window.location = 'index.php?p=user.minor&menu=main_user'; 
+		window.location = 'index.php?p=driver.schedule&menu=main_driver'; 
 		//$('#fmReload').submit();
 	}	
-
-
 	
 	function alertPopup(msgid,alertid,message,newload){
 		$('#'+msgid+'').text(''+message+'');
 		$('#'+alertid+'').fadeIn(500, function() {
 			clearTimeout(delayAlert);  
 			delayAlert=setTimeout(function(){  
-				alertFadeOut(''+alertid+'');
+				//alertFadeOut(''+alertid+'');
+				$('#'+alertid+'').fadeOut(1000);
 				if (newload == 1){
 					reloadPage();  
 				}
@@ -180,57 +105,6 @@
 			},2000);  
 		});
 	}
-	
-	
-	
-	function fn_callamphur(province, amphur){
-		//alert(id);
-		$.post('modules/mod_user/minor/get.amphur.php', {provinceId:province, amphurId:amphur} , function(data) {
-			$('#genamphur').html(data);	
-		});	
-	}
-	
-	
-	function fn_calldistrict(amphur, district){
-		//alert(id);
-		$.post('modules/mod_user/minor/get.district.php', {amphurId:amphur, districtId:district} , function(data) {
-			$('#gendistrict').html(data);	
-		});	
-	}
-	
-	
-	function checkEmail(email) {
-		var emailFilter=/^.+@.+\..{2,3}$/;
-		if (!(emailFilter.test(email))) {
-			//console.log('กรุณากรอก email ให้ถูกต้อง');
-			return 0; 
-		} else {
-			return 1; 
-		}
-	}
-	
-	function checkEngNum(str) {
-		var engnumFilter = /[^A-Za-z0-9]/;
-		var newstr = jQuery.trim(str);	
-		if (engnumFilter.test(newstr)){	
-			//console.log("กรุณากรอกแต่ภาษาอังกฤษหรือตัวเลขเท่านั้น");
-			return 0; 	
-		} else {	
-			return 1;
-		}				
-	}
-	
-	
-	function trim(s)
-	{
-	   var l=0; var r=s.length -1;
-	   while(l < s.length && s[l] == ' ')
-	   {   l++; }
-	   while(r > l && s[r] == ' ')
-	   {   r-=1;   }
-	   return s.substring(l, r+1);
-	}
-	
 	
 	
 	function checkData(id){
