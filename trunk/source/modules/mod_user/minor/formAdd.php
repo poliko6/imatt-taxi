@@ -181,12 +181,12 @@ $(document).ready( function () {
 	
 	//alert(car_ss_gensub);
 
-	if ($('#province').val() != ''){
+	if ($('#provinceId').val() != ''){
 		fn_callamphur(provinceId, amphurId);
 		fn_calldistrict(amphurId, districtId);
 	}
 	
-	$('#province').change(function () {
+	$('#provinceId').change(function () {
 		fn_callamphur($('#provinceId').val(), 0);
 		fn_calldistrict(0, 0);
 	});

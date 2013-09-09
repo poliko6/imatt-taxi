@@ -59,6 +59,7 @@
                         <th>รถแท๊กซี่</th>
                         <th>โทรศพท์</th>                        
                         <th>ตำแหน่งปัจจุบัน</th>
+                        <th>วันที่</th>
                         <th>ช่วงเวลาทำงาน</th>
                         <th>สถานะ</th>
                         <th>เครื่องมือ</th>
@@ -112,7 +113,8 @@
 									<?=$mobileNumber?>
                                 </a>
 							</td>
-                            <td><?=$lat?>, <?=$lon?></td>                                                    
+                            <td><?=$lat?>, <?=$lon?></td>  
+                            <td><?=Thai_date($time_data[$i]['dateAdd'])?></td>                                                  
                             <td style="text-align:center;"><?=$p_time1[0]?>:<?=$p_time1[1]?> น. - <?=$p_time2[0]?>:<?=$p_time2[1]?> น. </td>
                             <td style="text-align:center;">
                             	<?

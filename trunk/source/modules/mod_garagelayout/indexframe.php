@@ -189,7 +189,7 @@
   		<div class="row-fluid" style="">
         	<div class="span2 offset2" style=""><a href="index.php"><?=$imgLogo?></a></div>
             <div class="span2 offset4" style="text-align:right;">
-            	<img src="../../modules/mod_garagelayout/img/logo.png" style="height:70px;" alt="Logo">
+            	<!--<img src="../../modules/mod_garagelayout/img/logo.png" style="height:70px;" alt="Logo"> -->
           	</div>        	
         </div>
      	<!-- logo ends
