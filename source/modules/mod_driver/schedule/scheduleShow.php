@@ -8,7 +8,13 @@
 	<div class="span12">
     	<?
 		//Select Minor Data
-		$time_data = select_db('transportsection',"where garageId = '".$u_garage."' and dateAdd like '".date('Y-m-d')."%' OR statusWork = 'online' order by statusWork");
+		if (empty($d)){
+			$time_data = select_db('transportsection',"where garageId = '".$u_garage."' and dateAdd like '".date('Y-m-d')."%' OR statusWork = 'online' order by statusWork");
+		} else {
+			$p_date = explode('/',$d);
+			$thisdate = $p_date[2].'-'.$p_date[1].'-'.$p_date[0];
+			$time_data = select_db('transportsection',"where garageId = '".$u_garage."' and dateAdd like '".$thisdate."%' OR statusWork = 'online' order by statusWork");
+		}
 		$total = count($time_data);
 		
 		$major_data = select_db('majoradmin',"where garageId = '".$u_garage."'");
@@ -18,14 +24,25 @@
         <div class="well clearfix">
             <div class="row-fluid">
                 <div class="pull-left">จำนวนการลงเวลาเข้างาน ของอู่ "<span style="color:#C30; font-weight:bold;"><?=$major_name?></span>" มีจำนวน <strong><?=$total?></strong></div>
-     	
-                <form action="" name="fm_addminor" id="fm_addminor" method="post">   
-                	<input type="hidden" name="act" value="addschedule" />             	
-                	<div class="pull-right">                  
+       	
+                <div class="span2 pull-right" style="text-align:right;">  
+                    <form action="" name="fm_addminor" id="fm_addminor" method="post">   
+                        <input type="hidden" name="act" value="addschedule" />                  
                         <input type="submit" class="btn btn-success" name="btnSubmit" id="btnSubmit" value="ลงเวลางาน">
-              	 	</div>              
-                </form>
-                
+                    </form>
+                </div>   
+
+                   
+                <div class="span3 pull-right" style="text-align:right;">
+                    
+                    <div style="float:left;">เลือกวันที่ต้องการดู : &nbsp;</div>
+                    <div class="controls input-append date" id="dp2" data-date-format="dd/mm/yyyy">                    	
+                        <input class="span6" type="text" id="dateShow" name="dateShow" readonly="readonly" value="<?=date('d/m/Y')?>" />
+                        <span class="add-on"><i class="splashy-calendar_day"></i></span>
+                    </div>
+                    
+                </div>  
+              
             </div>
         </div>
         
@@ -370,6 +387,13 @@
 
 <script type="text/javascript">
 
+	$(function(){
+		$('#dateShow').change(function () {
+  			//console.log($('#dateShow').val());
+			var date = $('#dateShow').val();
+			window.location = 'index.php?p=driver.schedule&menu=main_driver&d='+date+''; 
+		});
+	});
 	
 	
 	function fn_formEdit(id,process){

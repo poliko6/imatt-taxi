@@ -1,0 +1,1 @@
+<a href="index.php?p=blog.promotion&menu=main_blog"><?=$lang_menu["blog.promotion"]?></a>

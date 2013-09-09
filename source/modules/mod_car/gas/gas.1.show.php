@@ -19,7 +19,15 @@
 <script type="text/javascript">
 	var delayAlert=null; 
 	$(document).ready(function(){
-		
+		$(document).on("keydown.NewActionOnF5", function(e){
+			var charCode = e.which || e.keyCode;
+			switch(charCode){
+				case 116: // F5
+					e.preventDefault();
+					window.location = "index.php?p=<?=$p?>&menu=<?=$menu?>";
+					break;
+			}
+		});	
 	});
 	
 	function alertFadeOut(id){
