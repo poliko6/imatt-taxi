@@ -10,6 +10,20 @@
 		$$key = $value;
 		#echo $key ."=". $value."<br>";
 	}
+	function full_delete($dir) {
+	 if (is_dir($dir)) {
+	   $objects = scandir($dir);
+	   foreach ($objects as $object) {
+		 if ($object != "." && $object != "..") {
+		   if (filetype($dir."/".$object) == "dir") 
+			  full_delete($dir."/".$object); 
+		   else unlink   ($dir."/".$object);
+		 }
+	   }
+	   reset($objects);
+	   rmdir($dir);
+	 }
+	}
 	
 	//get garageId
 	$strSQL = "SELECT garageId FROM majoradmin WHERE username = '".$username."'";
@@ -19,12 +33,13 @@
 	//get carImage to DELETE
 	$carSQL = "SELECT carImage FROM car WHERE garageId = '".$strResult['garageId']."'";
 	$carQuery = mysql_query($carSQL);
-	//$carResult = mysql_fetch_array($carQuery);
 	
 	//get mobileId to DELETE child table
-	$mobSQL = "SELECT mobileId FROM car WHERE garageId = '".$strResult['garageId']."'";
+	$mobSQL = "SELECT mobileId FROM mobile WHERE garageId = '".$strResult['garageId']."'";
 	$mobQuery = mysql_query($mobSQL);
 	$mobResult = mysql_fetch_array($mobQuery);
+	
+	$data['monSQL'] = $mobSQL;
 	
 	//SQL delete data
 	$delGarage = "DELETE FROM garagelist WHERE garageId = '".$strResult['garageId']."'";
@@ -67,19 +82,30 @@
 	}
 	mysql_query($delCar);
 	
+	//DELETE Company folder
+	$desSQL = "SELECT garageShortName FROM garagelist WHERE garageId = '".$strResult['garageId']."'";
+	$data['gID'] = $strResult['garageId'];
+	$desQuery = mysql_query($desSQL);
+	$desResult = mysql_fetch_object($desQuery);
+	$des = "../../../company/".$desResult->garageShortName;
+	$data['des'] = $des;
+	$data['shortName'] = $desResult->garageShortName;
+	if($desResult->garageShortName!=null)
+		full_delete($des);
+		
 	//DELETE garagelist
-	mysql_query($delGarage);
+	mysql_query($delGarage);		
 	///////////////////////////////////////////////////////////////////////
 
 	//check delete was done
 	$chkMJ = "SELECT username FROM majoradmin WHERE username ='".$username."'";
 	$mjQuery = mysql_query($chkMJ);
 	$mjResult = mysql_fetch_array($mjQuery);
-	echo "Value major check ".$mjResult;
+	
 	$chkGarage = "SELECT garageId FROM garagelist WHERE garageId = '".$strResult."'";
 	$grQuery = mysql_query($chkGarage);
 	$grResult = mysql_fetch_array($grQuery);
-	echo "Value garage check ".$grResult;
+	
 
 	if ($mjResult['username']==null && $grResult['garageId']==null){	
 		

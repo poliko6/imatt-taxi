@@ -89,23 +89,27 @@
 		});
 	}
 			
-	function delMJ(username) {
-			console.log("In Show Info");		
+	function delMJ(username,mjid) {
+		$('#confirmBtn'+mjid+'').attr("disabled",true);
+		$('#cancelBtn'+mjid+'').attr("disabled",true);
 			jQuery.ajax({
-			url :'modules/mod_user/major/delMajor.php',
-			type: 'GET',
-			data: 'username='+username+'',
-			dataType: 'jsonp',
-			dataCharset: 'jsonp',
-			success: function (data){
-				console.log(data.success);
-				if (data.success){ 
-					alertPopup('msg3','alert3',''+data.message+'',1);
-				} else {
-					alertPopup('msg2','alert2',''+data.message+'',0);
-				}				
-				$('#myModalDel'+username+'').modal('toggle');
-			}
+				url :'modules/mod_user/major/delMajor.php',
+				type: 'GET',
+				data: 'username='+username+'',
+				dataType: 'jsonp',
+				dataCharset: 'jsonp',
+				success: function (data){
+					console.log(data.success);
+					if (data.success){ 
+	
+						alertPopup('msg3','alert3',''+data.message+'',1);
+					} else {
+						
+						alertPopup('msg2','alert2',''+data.message+'',0);
+					}	
+					$('#myModalDel'+mjid+'').modal('toggle');
+					//$('.modal').modal('toggle');							
+				}
 			});		
 	}
 </script>
@@ -175,9 +179,9 @@
               		</div>
               <br />                         
                 <!--<a href="#" class="btn btn-inverse" onclick="delMJ('<?=$objResult['username']?>');"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> -->
-                <a href="#" onclick="delMJ('<?=$objResult['username']?>');"><button id="confirmBtn<?=$objResult['garageId']?>" name="confirmBtn" disabled="disabled" class="btn btn-danger"><i class="splashy-error"></i> ยืนยันการลบข้อมูล</button></a>
-                หรือ <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_x"></i> ยกเลิก</a>
-                </p>
+                <a href="#" onclick="delMJ('<?=$objResult['username']?>','<?=$objResult['majorId']?>');"><button id="confirmBtn<?=$objResult['majorId']?>" name="confirmBtn" disabled="disabled" class="btn btn-danger"><i class="splashy-error"></i> ยืนยันการลบข้อมูล</button></a>
+                หรือ <a href="#" id="cancelBtn<?=$objResult['majorId']?>" class="btn" data-dismiss="modal"><i class="splashy-error_x"></i> ยกเลิก</a>
+                </center></p>
             </div>
         </div>
                                   
@@ -262,11 +266,10 @@
       <!--<input type="submit" name="submit_add" id="submit_add"  class="btn btn-primary" value="บันทึก" /> --> 
       <!--        <a class="btn btn-primary" onclick="fn_formEdit('','update');"><i class="splashy-check"></i>บันทึก</a>-->
       <center>
-      <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i>ปิดหน้าต่าง</a> </div>
-    </center>
+      <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i>ปิดหน้าต่าง</a> </center></div>
+    
   </form>
 </div>
-
 
 <!-- sticky messages -->
 <script src="lib/sticky/sticky.min.js"></script>
@@ -295,5 +298,15 @@
     $(document).ready(function() {
         //* show all elements & remove preloader
         setTimeout('$("html").removeClass("js")',1000);
+		
+		$(document).on("keydown.NewActionOnF5", function(e){
+        var charCode = e.which || e.keyCode;
+        switch(charCode){
+            case 116: // F5
+                e.preventDefault();
+                window.location = "index.php?p=user.major&menu=main_user";
+                break;
+        }
+    	});
     });
 </script>
