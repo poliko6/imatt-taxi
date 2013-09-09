@@ -27,7 +27,7 @@ $minorTypeId = $minor_data[0]['minorTypeId'];
         <form class="form-horizontal" action="" method="post" name="fm_edit" id="fm_edit">
           <fieldset>
          
-            <div class="control-group formSep">
+<?php /*?>            <div class="control-group formSep">
               <label for="u_fname" class="control-label">ประเภทพนักงาน <span class="f_req">*</span> :</label>
               <div class="controls text_line">
               	<? $type_data = select_db('minortype',"where garageId = '".$u_garage."' order by dateAdded"); ?>
@@ -39,8 +39,8 @@ $minorTypeId = $minor_data[0]['minorTypeId'];
                  </select>
                  <div class="help-block" id="minorTypeId_err" style="display:none; color:#C00;">กรุณาเลือกประเภทพนักงาน</div>                       
               </div>
-            </div>
-            
+            </div><?php */?>
+            <br />
             <div class="control-group formSep">
               <label for="firstName" class="control-label">ชื่อจริง <span class="f_req">*</span> :</label>
               <div class="controls text_line">
@@ -239,7 +239,7 @@ function fn_editData(){
 	$('#saveBtn').attr("disabled",true);
 	$('#cancelBtn').attr("disabled",true);
 	
-	if (checkData('minorTypeId') == 0){ pass = 0 }
+//	if (checkData('minorTypeId') == 0){ pass = 0 }
 	if (checkData('firstName') == 0){ pass = 0 }
 	if (checkData('lastName') == 0){ pass = 0 }
 	/*if (checkData('txtuserName') == 0){ pass = 0 }
