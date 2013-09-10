@@ -7,7 +7,7 @@
  //pre($_FILES);
  ?>
 
-<link rel="stylesheet" href="lib/ckeditor/contents.css" />
+<!--<link rel="stylesheet" href="lib/ckeditor/contents.css" /> -->
 <script src="lib/ckeditor/ckeditor.js"></script>
 <?
 
