@@ -13,7 +13,7 @@
 	$sql_ui .= "WHERE garagelist.garageShortName ='".trim($this_garage)."' ";
 	$rs_ui = mysql_query($sql_ui);
 	$data_ui = mysql_fetch_object($rs_ui);	
-	//echo $sql_ui;
+	$garageId = $data_ui->garageId;
 	
 	$sql_ui_default = "SELECT * FROM garageinterface WHERE garageId = 0 ";
 	$rs_ui_default = mysql_query($sql_ui_default);
@@ -70,7 +70,7 @@
 	
 	$imgLogo = "<img src=\"$path_logo\" style=\"height:70px;\" alt=\"Logo\">";
 	$imgBanner = "<img src=\"$path_banner\"  width=\"753\" height=\"445\">";
-	
+	$garageAbout = $data_ui->garageAbout;
 	/*echo $path_logo;
 	echo "<br>";
 	echo $path_banner;*/
@@ -176,6 +176,8 @@
 	border-left:1px solid #CCC;
 	border-right:1px solid #CCC;
 }
+a { text-decoration: none; }
+a:hover { text-decoration: none; }
 </style>
 
 
@@ -221,16 +223,11 @@
             	<div class="span2"></div>
                 
             	<div class="span4" style="">
-                    <div style="background:url(../../modules/mod_garagelayout/img/content-head-news.png) no-repeat; width:365px; height:118px;" ></div>
-                    <div class="bgBlock" style="border-radius:0px 0px 30px 30px; height:200px; width:360px; margin-left:4px;">
-                    	<div style="padding:5px;">Text</div>
-                    </div>
+                    <? include('../../modules/mod_garagelayout/blog_news.php'); ?>
               	</div>
+                
               	<div class="span4" style="">
-                	<div style="background: url(../../modules/mod_garagelayout/img/content-head-pro.png) no-repeat; width:365px; height:118px;" ></div>
-                	<div class="bgBlock" style="border-radius:0px 0px 30px 30px; height:200px; width:360px; margin-left:4px;">
-                    	<div style="padding:5px;">Text</div>
-                    </div>
+                	<? include('../../modules/mod_garagelayout/blog_promotion.php'); ?>
               	</div>
                 
                 <div class="span2"></div>
@@ -277,19 +274,19 @@
                 <div class="span4" style="color:#999;">
                 	
                 	<div class="span3" style="text-align:center;"> 
-                        <a href="<?=$link_fb?>" target="_blank">เกี่ยวกับเรา</a>               
+                       <a href="#myModalAbout" role="button" data-toggle="modal">เกี่ยวกับเรา</a>                                      
                     </div>
                     
                    	<div class="span1" style="text-align:center;">|</div>
                    
                     <div class="span3" style="text-align:center;"> 
-                        <a href="<?=$link_fb?>" target="_blank">ติดต่อเรา</a>
+                        <a href="#myModalContact" role="button" data-toggle="modal">ติดต่อเรา</a>
                     </div>
                     
                     <div class="span1" style="text-align:center;">|</div>
                     
                     <div class="span3" style="text-align:center;"> 
-                        <a href="<?=$link_fb?>" target="_blank">แอพพลิเคชั่น</a>
+                        <a href="#" target="_blank">แอพพลิเคชั่น</a>
                     </div>
    
                 </div>
@@ -300,7 +297,175 @@
             ================================================== -->
        
        
-       
+       <!-- Modal About Us -->
+        <div id="myModalAbout" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 id="myModalLabel" style="color:#039;"><span class="icon-user"></span> เกี่ยวกับเรา</h4>
+          </div>
+          <div class="modal-body">
+            <p><?=$garageAbout?></p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">ปิด</button>
+          </div>
+        </div> <!-- Modal About Us -->
+        
+        
+        
+        <!-- Modal Contact -->
+        <div id="myModalContact" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 id="myModalLabel" style="color:#039;"><span class="icon-envelope"></span> ติดต่อเรา</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+            	<div class="alert alert-error" id="alert2" style="display:none; margin-top:5px; margin-bottom:5px;">
+                    <a class="close" data-dismiss="alert">×</a>
+                    <div id="msg2"><strong>Lorem ipsum!</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae tristique erat.</div>
+                </div>
+                <div class="alert alert-success" id="alert3" style="display:none; margin-top:5px; margin-bottom:5px;">
+                    <a class="close" data-dismiss="alert">×</a>
+                    <div id="msg3"><strong>Lorem ipsum!</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae tristique erat.</div>
+                </div>
+            	
+            	<div class="control-group">
+                  <label class="control-label" for="inputWarning">ชื่อที่ติดต่อ</label>
+                  <div class="controls">
+                    <input type="text" id="sendName">
+                    <div class="help-inline" id="sendName_err" style="display:none; color:#C00;">กรุณาป้อนชื่อสำหรับติดต่อ</div>  
+                  </div>
+                </div>
+                
+                <div class="control-group">
+                  <label class="control-label" for="inputWarning">อีเมล์</label>
+                  <div class="controls">
+                    <input type="text" id="sendEmail">
+                    <div class="help-inline" id="sendEmail_err" style="display:none; color:#C00;">กรุณาป้อนอีเมล์สำหรับติดต่อ</div> 
+                  	<i><div class="help-inline" id="txtemailerr" style="color:#F00;"></div></i>
+                  </div>
+                </div>
+                
+                
+                <div class="control-group">
+                  <label class="control-label" for="inputWarning">ข้อความ</label>
+                  <div class="controls">
+                    <textarea rows="3" id="sendDetail"></textarea>
+                    <div class="help-inline" id="sendDetail_err" style="display:none; color:#C00;">กรุณาป้อนข้อความ</div> 
+                  </div>
+                </div>
+			</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" type="button" onClick="fn_sendMail();">ส่งข้อความ</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">ยกเลิก</button>
+          </div>
+        </div> <!-- Modal Contact -->
+        
+        
+        <script type="text/javascript">
+			//var send_mail = '<?=$data_title[0]['email']?>';
+			var send_mail = 'hs5xrk@gmail.com';
+			function fn_sendMail(){
+				console.log(send_mail);
+				var pass = 1;
+				if (checkData('sendName') == 0){ pass = 0 }
+				if (checkData('sendEmail') == 0){ pass = 0 }
+				//if (checkData('textarea#sendDetail') == 0){ pass = 0 }	
+				
+				
+				if ($('textarea#sendDetail').val() == ''){ 
+					$('textarea#sendDetail').closest('div').addClass("f_error");
+					$('#sendDetail_err').fadeIn(1000);
+					pass = 0
+				} else {
+					$('#textarea#sendDetail').closest('div').removeClass("f_error");
+					$('#sendDetail_err').fadeOut(100);					
+				}
+				
+				
+				///Email
+				if ($('#sendEmail').val() != ''){	
+					var chkmail = checkEmail($('#sendEmail').val());
+					if (chkmail == false){
+						$('#sendEmail').closest('div').addClass("f_error");
+						$('#txtemailerr').text('กรุณากรอก email ให้ถูกต้อง');
+						$('#txtemailerr').fadeIn(1000);
+						pass = 0;
+					} else {
+						$('#sendEmail').closest('div').removeClass("f_error");
+						$('#txtemailerr').fadeOut(100);
+					}
+				} else {		
+					$('#txtemailerr').hide();
+				}
+			
+				
+				if (pass){
+					var sendName = $('#sendName').val();
+					var sendEmail = $('#sendEmail').val();
+					var sendDetail = $('textarea#sendDetail').val();
+					jQuery.ajax({
+						url :'../../modules/mod_garagelayout/send.email.php',
+						type: 'GET',
+						data: 'act=sendmail&sendName='+sendName+'&sendEmail='+sendEmail+'&sendDetail='+sendDetail+'&send_mail='+send_mail+'',
+						dataType: 'jsonp',
+						dataCharset: 'jsonp',
+						success: function (data){
+							///console.log(data.success);
+							if (data.success){
+								alertPopup('msg3','alert3',''+data.message+'',0);
+								$('myModalContact').modal('toggle');
+							} else {
+								alertPopup('msg2','alert2',''+data.message+'',0);
+								$('myModalContact').modal('toggle');
+							}
+						}
+					});	
+				}
+				
+			}
+			
+			function alertPopup(msgid,alertid,message,newload){
+				$('#'+msgid+'').text(''+message+'');
+				$('#'+alertid+'').fadeIn(500, function() {
+					clearTimeout(delayAlert);  
+					delayAlert=setTimeout(function(){  
+						$(''+alertid+'').fadeOut(1000);
+						if (newload == 1){
+							reloadPage();  
+						}
+						delayAlert=null;  
+					},2000);  
+				});
+			}
+			
+			
+			function checkEmail(email) {
+				var emailFilter=/^.+@.+\..{2,3}$/;
+				if (!(emailFilter.test(email))) {
+					//console.log('กรุณากรอก email ให้ถูกต้อง');
+					return 0; 
+				} else {
+					return 1; 
+				}
+			}
+			
+			
+			function checkData(id){
+				if ($('#'+id+'').val() == ''){ 
+					$('#'+id+'').closest('div').addClass("f_error");
+					$('#'+id+'_err').fadeIn(1000);
+					return 0;
+				} else {
+					$('#'+id+'').closest('div').removeClass("f_error");
+					$('#'+id+'_err').fadeOut(100);
+					return 1;
+				}
+			}
+		</script>
+
             
        	
             
