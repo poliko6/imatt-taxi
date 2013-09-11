@@ -367,6 +367,7 @@ a:hover { text-decoration: none; }
         <script type="text/javascript">
 			//var send_mail = '<?=$data_title[0]['email']?>';
 			var send_mail = 'hs5xrk@gmail.com';
+			var delayAlert = null;
 			function fn_sendMail(){
 				console.log(send_mail);
 				var pass = 1;
@@ -415,7 +416,7 @@ a:hover { text-decoration: none; }
 						success: function (data){
 							///console.log(data.success);
 							if (data.success){
-								alertPopup('msg3','alert3',''+data.message+'',0);
+								alertPopup('msg3','alert3',''+data.message+'',1);
 								$('myModalContact').modal('toggle');
 							} else {
 								alertPopup('msg2','alert2',''+data.message+'',0);
@@ -434,7 +435,7 @@ a:hover { text-decoration: none; }
 					delayAlert=setTimeout(function(){  
 						$(''+alertid+'').fadeOut(1000);
 						if (newload == 1){
-							reloadPage();  
+							window.location = "index.php";
 						}
 						delayAlert=null;  
 					},2000);  

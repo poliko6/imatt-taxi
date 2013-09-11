@@ -1,0 +1,1 @@
+<a href="index.php?p=taxi.calltaxi&menu=main_taxi"><?=$lang_menu["taxi.calltaxi"]?></a>

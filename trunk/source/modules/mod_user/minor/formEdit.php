@@ -201,12 +201,12 @@ $(document).ready( function () {
 	
 	//alert(car_ss_gensub);
 
-	if ($('#province').val() != ''){
+	if ($('#provinceId').val() != ''){
 		fn_callamphur(province, amphur);
 		fn_calldistrict(amphur, district);
 	}
 	
-	$('#province').change(function () {
+	$('#provinceId').change(function () {
 		fn_callamphur($('#provinceId').val(), 0);
 		fn_calldistrict(0, 0);
 	});

@@ -13,11 +13,14 @@ $lang_menu = array(
 	"user.minor"		=>  "จัดการพนักงาน",
 	"user.profile"		=> "ข้อมูลส่วนตัว",
 	"user.type"			=> "ประเภทพนักงาน",
+	"user.customer"		=> "จัดการลูกค้า",
+	"user.customercheck"	=> "การใช้งานลูกค้า",
 	
 	//การจัดการรถแท๊กซี่
 	"taxi.taximanage" 		=>  "จัดการรถแท๊กซี่",
 	"taxi.mapposition" 		=>  "ตำแหน่งรถแท๊กซี่",
 	"taxi.managemobile" 	=>  "จัดการมือถือ",
+	"taxi.calltaxi" 		=>  "เรียกแท๊กซี่",
 	
 	//การจัดการรถแท๊กซี่	
 	"car.type"			=>  "จัดการประเภทรถ",
@@ -31,6 +34,7 @@ $lang_menu = array(
 	"driver.managedriver" 	=>  "จัดการคนขับรถ",
 	"driver.period" 		=>  "ช่วงเวลางาน",
 	"driver.schedule" 		=>  "ลงเวลาทำงาน",
+	"driver.drivercheck" 	=>  "การใช้งานคนขับ",
 	
 
 	//การจัดการหน้าเว็บเพจ

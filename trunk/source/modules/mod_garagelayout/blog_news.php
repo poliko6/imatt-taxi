@@ -1,6 +1,6 @@
-<div><img src="../../modules/mod_garagelayout/img/content-head-news.png"></div>
-<div class="bgBlock" style="border-radius:0px 0px 30px 30px; height:200px; width:360px; margin-left:4px;">
-    <?
+<div class="bgBlock" style="border-radius:30px 30px 30px 30px; height:315px;">
+	<img src="../../modules/mod_garagelayout/img/content-head-news.png">
+	<?
     $sql_news = "SELECT * FROM news WHERE garageId = '".$garageId."' and statusShow = 1 order by dateUpdate DESC Limit 0,2 ";
     $rs_news = mysql_query($sql_news);
     while ($data_news = mysql_fetch_object($rs_news)){
@@ -32,5 +32,4 @@
         </div>
         
     <? } ?>
-    
 </div>
