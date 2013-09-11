@@ -1,0 +1,1 @@
+<a href="index.php?p=driver.drivercheck&menu=main_driver"><?=$lang_menu["driver.drivercheck"]?></a>

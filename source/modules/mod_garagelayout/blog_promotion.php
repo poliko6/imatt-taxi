@@ -1,5 +1,6 @@
-<div><img src="../../modules/mod_garagelayout/img/content-head-pro.png"></div>
-<div class="bgBlock" style="border-radius:0px 0px 30px 30px; height:200px; width:360px; margin-left:4px;">
+<div class="bgBlock" style="border-radius:30px 30px 30px 30px; height:315px;">
+	<img src="../../modules/mod_garagelayout/img/content-head-pro.png" style="margin-left:-3px; margin-top:-3px;">
+
     <?
     $sql_promo = "SELECT * FROM newspromotion WHERE garageId = '".$garageId."' and statusShow = 1 order by dateUpdate DESC Limit 0,2 ";
     $rs_promo = mysql_query($sql_promo);

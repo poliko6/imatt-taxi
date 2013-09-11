@@ -9,11 +9,11 @@
 	
 	$sendTo = trim($send_mail);
 	$sendName = trim($sendName);
-	$sendEmail = trim($sendEmail);
+	$sendEmail = trim($sendEmail).' [ '.$sendName.' ]';
 	$sendDetail = trim($sendDetail);
 
 	$strSubject = "ติดต่อสอบถาม";
-	$strMessage = "จากคุณ".$sendName."<br> ".$sendDetail;
+	$strMessage = $sendDetail;
 
 	$flgSend = @mail($sendTo,$strSubject,$strMessage,$sendEmail);  // @ = No Show Error //
 	
