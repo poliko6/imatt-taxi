@@ -102,8 +102,11 @@ function load() {
 
 
 
-function mapload(lat,lon,zoom) {
-	var latlng = new google.maps.LatLng(lat,lon);    
+function mapload(lat,lng,zoom) {
+	//console.log(lat+' '+lng);
+	var lat = parseFloat(lat);
+	var lng = parseFloat(lng);
+	var latlng = new google.maps.LatLng(lat,lng);    
 	var myOptions = {     
 			visualRefresh:true, 
 			panControl: true,
@@ -122,16 +125,20 @@ function mapload(lat,lon,zoom) {
 	map = new google.maps.Map(document.getElementById("map_canvas"),myOptions); 
 	//infowindow.open(map, marker);
 	
-	//createMarker(name,address, latlng,v_post,v_kind,pic,lat,lon,id) ;
-
-
-
+	//marker = createMarker(name,address, latlng,v_post,v_kind,pic,lat,lon,id) ;
+	
 	//ใช้ GEOCODER
-  	geocoder = new google.maps.Geocoder();        
+  	/*geocoder = new google.maps.Geocoder();        
   		marker = new google.maps.Marker({
-  	});
+  	});*/
+	/*c_green = new google.maps.MarkerImage('modules/mod_taxi/images/c2.png',
+      new google.maps.Size(20, 32),
+      new google.maps.Point(0,0),
+      new google.maps.Point(0, 32));
+	var marker = new google.maps.Marker({position: latlng, map: map, icon:c_green});
+	markers_tik.push(marker);*/
 
-	searchLocation();
+	/*searchLocation();*/
 }//end load
 
 
@@ -140,7 +147,7 @@ function mapload(lat,lon,zoom) {
 
 setInterval(function(){
 /* 1000 = 1 วินาที */
-    downloadUrl("modules/mod_taxi/mapposition/get.taxiposition.php?vpost=<?=$con1_encode?>&vkind=<?=$con2_encode?>&province=<?=$province_encode;?>&amphur=<?=$omp_encode?>&distict=<?=$tom_encode?>&price1=<?=$price1?>&price2=<?=$price2?>", function(data) {
+    downloadUrl("modules/mod_taxi/mapposition/get.taxiposition.php?vpost=<?=$con1_encode?>&vkind=<?=$con2_encode?>&province=<?=$province_encode;?>&amphur=<?=$omp_encode?>&distict=<?=$tom_encode?>&price1=<?=$price1?>&price2=<?=$price2?>&garageId=<?=$u_garage?>", function(data) {
       var markers = data.documentElement.getElementsByTagName("marker");
 
 
@@ -288,8 +295,12 @@ $data_mobile = mysql_fetch_object($rs_mobile);*/
 $rs_taxi = mysql_query($sql_taxi);*/
 
 
-$sql_mobile = "SELECT * FROM mobile WHERE garageId = '".$get_garage."' limit 10";
-$rs_mobile = mysql_query($sql_mobile);
+$sql_transport = "SELECT carRegistration,latitude,longitude,transportSectionId,mobileNumber ";
+$sql_transport .= "FROM transportsection ";
+$sql_transport .= "join mobile on (mobile.mobileId = transportsection.mobileId) ";
+$sql_transport .= "join car on (car.carId = transportsection.carId) ";
+$sql_transport .= "WHERE  transportsection.garageId = '".$get_garage."' limit 10";
+$rs_transport = mysql_query($sql_transport);
 ?>
 
 <div class="row-fluid">
@@ -298,29 +309,27 @@ $rs_mobile = mysql_query($sql_mobile);
       <thead>
         <tr>
           <th>Id</th>
-          <th>Name</th>
-          <th>Contact</th>
-          <th>Adress</th>
-          <th>Lat, Lng</th>
-          <th>Phone</th>
-          <th style="width:90px">Actions</th>
+          <th>หมายเลขทะเบียน</th>
+          <th>ชื่อคนขับ</th>
+          <th>ตำแหน่งที่อยู่</th>
+          <th>เบอร์โทรติดต่อ</th>
+          <th>อู่รถ</th>
+          <th style="width:90px">แสดง</th>
         </tr>
       </thead>
       <tbody>
       	<? 
-		while($data_mobile = @mysql_fetch_object($rs_mobile)){ 
-			
-			//$data_car = 
+		while($data_transport = @mysql_fetch_object($rs_transport)){ 
 			?>
             <tr>
               <td>1</td>
-              <td><?=$data_taxi->carRegistration?></td>
+              <td><?=$data_transport->carRegistration?></td>
               <td>//คนขับ</td>
-              <td class="address">4 New York Plaza, New York, NY 10004, United States</td>
-              <td><?=$data_mobile->latitude;?>, <?=$data_mobile->longitude;?></td>
-              <td><?=$data_mobile->mobileNumber;?></td>
+              <td>//ที่อยู่</td>
+              <td><?=$data_transport->mobileNumber;?></td>
+              <td>//อู่รถ</td>
               <td>
-                  <a href="#" class="show_on_map btn btn-gebo btn-mini" onclick="mapload('<?=$data_mobile->latitude;?>','<?=$data_mobile->mobileNumber;?>',15);">Show</a> 
+                  <a href="#" class="show_on_map btn btn-gebo btn-mini" onclick="mapload('<?=$data_transport->latitude;?>','<?=$data_transport->longitude;?>',15);">Show</a> 
                   <!--<a href="javascript:void(0)" class="comp_edit btn btn-mini">Edit</a> -->
               </td>
             </tr>

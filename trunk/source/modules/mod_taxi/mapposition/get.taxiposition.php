@@ -9,7 +9,8 @@ foreach($_REQUEST as $key => $value)  {
 	#echo $key ."=". $value."<br>";
 }
 
-$var_car_number=10;
+
+
 function parseToXML($htmlStr) 
 { 
 	$xmlStr=str_replace('<','&lt;',$htmlStr); 
@@ -29,7 +30,7 @@ $db_selected = mysql_select_db($MYSQLDB, $connection);
 if (!$db_selected) {
   die ('Can\'t use db : ' . mysql_error());
 }*/
-
+$garageId = $_REQUEST['garageId'];
 $k = $_REQUEST['k'];
 $vpost = $_REQUEST['vpost'];
 $vkind = $_REQUEST['vkind'];
@@ -39,7 +40,32 @@ $distict = $_REQUEST['distict'];
 $price1 = $_REQUEST['price1'];
 $price2 = $_REQUEST['price2'];
 
-$sql = "SELECT * FROM mobile limit 0,$var_car_number";
+
+//กรณีเลือกจำนวนที่ต้องการแสดง
+if ($limitcar == ''){
+	$var_car_number = 10;
+} else {
+	$var_car_number = $limitcar;
+}
+
+//เช็คอู่ทั้งหมด
+if ($garageId == ''){
+	$sql = "SELECT carStatusId,carRegistration,latitude,longitude,transportSectionId,mobileNumber ";
+	$sql .= "FROM transportsection ";
+	$sql .= "join mobile on (mobile.mobileId = transportsection.mobileId) ";
+	$sql .= "join car on (car.carId = transportsection.carId) ";
+	$sql .= "limit $var_car_number";
+	//$sql = "SELECT transportsection.*,latitude,longitude FROM transportsection limit 0,$var_car_number";
+} else {
+	$sql = "SELECT carStatusId,carRegistration,latitude,longitude,transportSectionId,mobileNumber ";
+	$sql .= "FROM transportsection ";
+	$sql .= "join mobile on (mobile.mobileId = transportsection.mobileId) ";
+	$sql .= "join car on (car.carId = transportsection.carId) ";
+	$sql .= "WHERE  transportsection.garageId = '".$garageId."' limit $var_car_number";
+	//$sql = "SELECT transportsection.*,latitude,longitude FROM transportsection where garageId = '".$garageId."' limit 0,$var_car_number";
+}
+
+
 $result = mysql_query($sql);
 if (!$result) {
   die('Invalid query: ' . mysql_error());
@@ -49,13 +75,13 @@ if (!$result) {
 header("Content-type: text/xml");
 echo '<markers>';
 while ($row = @mysql_fetch_assoc($result)){
-	$id=$row['mobileId'];
-	$sql2="select b.carStatusId,b.carRegistration from transportsection a,car b where a.carId=b.carId  and a.mobileId='$id'";
-	$result2=mysql_query($sql2);
-	$row2=mysql_fetch_array($result2);
-	$carStatus=$row2['carStatusId'];
-	$carName=$row2['carRegistration'];
-	$car_Name_=$carName;
+	$id = $row['carId'];
+	/*$sql2 = "select carStatusId,carRegistration from car where carId ='$id'";
+	$result2 = mysql_query($sql2);
+	$row2 = mysql_fetch_array($result2);*/
+	$carStatus = $row['carStatusId'];
+	$carName  = $row['carRegistration'];
+	$car_Name_ = $carName;
 
   echo '<marker ';
   echo 'name="' . parseToXML($title) . '" ';
