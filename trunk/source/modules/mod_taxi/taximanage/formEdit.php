@@ -17,19 +17,22 @@ $carFuelId = $car_data[0]['carFuelId'];
 $carColorId = $car_data[0]['carColorId'];
 $carStatusId = $car_data[0]['carStatusId'];
 
-$pathimage  = 'stored/taxi/thumbnail/'.$carImage;
 
-if (file_exists($pathimage)) {  //check file			
-	$pathimage  = 'stored/taxi/thumbnail/'.$carImage;
-} else { 						
-	$pathimage  = ''; 	
-}
-
-if (file_exists($pathimage)) {  //check file			
-	$pathimage  = 'stored/taxi/thumbnail/'.$carImage;
-} else { 						
-	$pathimage  = ''; 	
-}
+if ($carImage != ''){
+	$pathimage  = 'stored/taxi/'.$carImage;
+	if (file_exists($pathimage)) {  //check file			
+		$pathimage  = 'stored/taxi/'.$carImage;
+	} else { 						
+		$pathimage  = ''; 	
+	}
+	
+	$pathimage2  = 'stored/taxi/thumbnail/'.$carImage;
+	if (file_exists($pathimage2)) {  //check file			
+		$pathimage2  = 'stored/taxi/thumbnail/'.$carImage;
+	} else { 						
+		$pathimage2  = ''; 	
+	}
+} else {$pathimage  = ''; } 
 ?>
 
 
@@ -104,7 +107,7 @@ function fn_callModel(id){
                                   	
                                     <? if ($pathimage != '') { ?>
                                         <a href="<?=$pathimage?>" title="<?=$car_data[$i]['carRegistration']?>" class="cbox_single thumbnail">
-                                            <img alt="" src="<?=$pathimage?>" style="height:80px;">
+                                            <img alt="" src="<?=$pathimage2?>" style="height:80px;">
                                         </a>
                                     <? } ?>
                                     

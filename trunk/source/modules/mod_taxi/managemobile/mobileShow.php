@@ -33,7 +33,7 @@
 		}
 		?>
         
-        <input type="hidden" name="hide_garageid" id="hide_garageid" value="<?=$garageid?>" />
+        <input type="hidden" name="hide_garageid" id="hide_garageid" value="<?=$garageId?>" />
         
         <div class="well clearfix">
             <div class="row-fluid">

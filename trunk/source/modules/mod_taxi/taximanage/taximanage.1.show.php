@@ -432,7 +432,7 @@
 	var find_chk = <?=$find_chk?>;
 	
 	$(document).ready(function(){	
-		console.log(find_chk);	
+		//console.log(find_chk);	
 		
 		if (find_chk == 1){
 			$('#errRegistration').show();
@@ -464,7 +464,7 @@
 	}
 	
 	function fn_goToPage(page){
-		console.log(page);	
+		//console.log(page);	
 		if (page == 'add'){	
 			$("#fm_selectmajor").attr("action", 'index.php?p=taxi.taximanage&menu=main_taxi&act=addtaxi');
 			$('#fm_selectmajor').submit();		
