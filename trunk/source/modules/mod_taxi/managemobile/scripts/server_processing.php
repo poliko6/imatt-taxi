@@ -3,32 +3,29 @@
 	
 	//$aColumns = array( 'carImage', 'englishCompanyName', 'carRegistration', 'carBannerNameEng', 'carStatusId', 'carId' );
 	$aColumns = array(
-		'carId',
-		'carImage',
-		'carRegistration',
-		'carYear',
-		'provinceName',
-		'carModelName',
-		'carBannerNameEng',
-		'carStatusId',
-		'car.dateAdd',
+		'mobileId',
+		'mobileNumber',
+		'mobileBanner',
+		'mobileModel',
+		'EmiMsi',
+		'simId',
+		'mobile.dateAdd',
+		'mobileNetworkName',
 		'thaiCompanyName',
 		'englishCompanyName',
-		'car.garageId'
+		'mobile.garageId'
 	);
 	
 	/* Indexed column (used for fast and accurate table cardinality) */
-	$sIndexColumn = "carId";
+	$sIndexColumn = "mobileId";
 	
 	/* DB table to use */
-   	$sTable = "car";
+   	$sTable = "mobile";
 	$garageId = $_REQUEST['garageId'];
  
    	// Joins
-	$sJoin = 'JOIN carmodel ON((carmodel.carModelId = car.carModelId)) ';
-	$sJoin .= 'JOIN carbanner ON((carbanner.carBannerId = car.carBannerId)) ';
-	$sJoin .= 'JOIN province ON((province.provinceId = car.provinceId)) ';
-	$sJoin .= 'JOIN majoradmin ON((majoradmin.garageId = car.garageId)) ';
+	$sJoin = 'JOIN mobilenetwork ON((mobilenetwork.mobileNetworkId = mobile.mobileNetworkId)) ';
+	$sJoin .= 'JOIN majoradmin ON((majoradmin.garageId = mobile.garageId)) ';
    	//$sJoin = 'LEFT JOIN users u ON u.id = regina_dslams.user_id ';
    	//$sJoin .= 'LEFT JOIN regina_dslam_types ON regina_dslam_types.id = regina_dslams.regie_dslam_type_id ';
    	//$sJoin .= 'LEFT JOIN regina_statuses iptv_status ON iptv_status.id = regina_dslams.regie_status_iptv_id ';
@@ -111,9 +108,12 @@
 	 * on very large tables, and MySQL's regex functionality is very limited
 	 */
 	
-
+	/*if ($garageId != ''){
+		$sWhere = "where mobile.garageId = '".$garageId."'";
+	} else {
+		$sWhere = "";
+	}*/
 	$sWhere = "";
-	
 	//$sSearch = iconv("tis-620","utf-8",$_GET['sSearch']);
 	if ( isset($_GET['sSearch'] ) && $_GET['sSearch']  != "" )
 	{
@@ -122,7 +122,7 @@
 		{
 			if ( isset($_GET['bSearchable_'.$i]) && $_GET['bSearchable_'.$i] == "true" )
 			{
-				$sWhere .= "`".$aColumns[$i]."` LIKE '%".mysql_real_escape_string( $_GET['sSearch'] )."%' OR ";
+				$sWhere .= "".$aColumns[$i]." LIKE '%".mysql_real_escape_string( $_GET['sSearch'] )."%' OR ";
 			}
 		}
 		$sWhere = substr_replace( $sWhere, "", -3 );
@@ -142,22 +142,23 @@
 			{
 				$sWhere .= " AND ";
 			}
-			$sWhere .= "`".$aColumns[$i]."` LIKE '%".mysql_real_escape_string($_GET['sSearch_'.$i])."%' ";
-		}
+			$sWhere .= "".$aColumns[$i]." LIKE '%".mysql_real_escape_string($_GET['sSearch_'.$i])."%' ";
+		}		
 	}
-	
-	
 	
 	if ($garageId != ''){
 		if ( $sWhere == "" )
 		{
-			$sWhere = "WHERE car.garageId = '".$garageId."'";
+			$sWhere = "WHERE mobile.garageId = '".$garageId."'";
 		}
 		else
 		{
-			$sWhere .= " AND car.garageId = '".$garageId."'";
+			$sWhere .= " AND mobile.garageId = '".$garageId."'";
 		}
 	} 
+	
+	
+	
 	
 	/*
 	 * SQL queries
@@ -206,74 +207,50 @@
 		"aaData" => array()
 	);
 	
+	$n = 0;
 	while ( $aRow = mysql_fetch_array( $rResult ) )
 	{
-		$row = array();
+		$row = array();		
+		$n++;
 		for ( $i=0 ; $i<count($aColumns) ; $i++ )
 		{
 			//echo $aColumns[$i]."/n";
 			
 			//print_r($aColumns[$i]);
-			if ( $aColumns[$i] == "carImage" )
-			{
-				if (trim($aRow[ $aColumns[$i] ]) == ''){
-					$pathimage  = 'gallery/Image10_tn.jpg';
-					$pathimage2  = 'gallery/Image10_tn.jpg'; 	
-				} else {
-					$pathimage  = '../../../../stored/taxi/'.$aRow[ $aColumns[$i] ];
-					if (file_exists($pathimage)) {  //check file			
-						$pathimage  = 'stored/taxi/'.$aRow[ $aColumns[$i] ];
-					} else { 						
-						$pathimage  = 'gallery/Image10_tn.jpg'; 	
-					}
-					
-					
-					$pathimage2  = '../../../../stored/taxi/thumbnail/'.$aRow[$aColumns[$i]];
-					if (file_exists($pathimage2)) {  //check file			
-						$pathimage2  = 'stored/taxi/thumbnail/'.$aRow[$aColumns[$i]];
-					} else { 						
-						$pathimage2  = 'gallery/Image10_tn.jpg'; 	
-					}				
-					
-				}	
-				/* Special output formatting for 'version' column */
-				//$row[] = ($aRow[ $aColumns[$i] ]=="0") ? '-' : $aRow[ $aColumns[$i] ];
-				$row[0] = "<a title=\"$aRow]['carRegistration']\" class=\"cbox_single thumbnail\"><img src='".$pathimage2."' style=\"height:50px;width:80px;\"></a>";
+			
+			$row[0] = $n;
+			
+			
+			
+			if ( $aColumns[$i] == "mobileNumber" ){
+				$row[1] = $aRow[ $aColumns[$i] ];			
+			}
+						
+			if ( $aColumns[$i] == "EmiMsi" ){
+				$row[2] = "<div>".$aRow[ $aColumns[$i] ]."</div><div style=\"font-style:italic; color:#999; font-size:11px;\">".$aRow['simId']."</div>";			
+			}
+			
+			if ( $aColumns[$i] == "mobileNetworkName" ){
+				$row[3] = $aRow[ $aColumns[$i] ];			
 			}
 			
 			if ( $aColumns[$i] == "thaiCompanyName" ){
-				$row[1] = "<div>".$aRow[ $aColumns[$i] ]."</div><div style=\"font-style:italic; color:#999; font-size:11px;\">".$aRow['englishCompanyName']."</div>";			
+				$row[4] = "<div>".$aRow[ $aColumns[$i] ]."</div><div style=\"font-style:italic; color:#999; font-size:11px;\">".$aRow['englishCompanyName']."</div>";			
 			}
 			
-			if ( $aColumns[$i] == "carRegistration" ){
-				$row[2] = "<div>".$aRow[ $aColumns[$i] ]."</div><div>".$aRow['provinceName']."</div>";			
-			}
+			if ( $aColumns[$i] == "mobileBanner" ){
+				$row[5] = "<div><strong>ยี่ห้อ</strong> :".$aRow[ $aColumns[$i] ]."</div><div><strong>รุ่น</strong> :".$aRow['mobileModel']."</div>";		
+			}		
 			
-			if ( $aColumns[$i] == "carBannerNameEng" ){
-				$row[3] = "<div><strong>ยี่ห้อ</strong> :".$aRow[ $aColumns[$i] ].", <strong>รุ่น</strong> :".$aRow['carModelName']."</div><div><strong>ปี</strong> :".$aRow['carYear']."</div>";		
-			}
-			
-			if ( $aColumns[$i] == "carStatusId" ){
-				
-				if ($aRow[ $aColumns[$i] ] == 1) { 
-                	$row[4] = "<div style='text-align:center;'><div>ว่าง</div><i class=\"splashy-marker_rounded_green\"></i></div>";                      
-                } 
-                if ($aRow[ $aColumns[$i] ] == 2) { 
-                	$row[4] = "<div style='text-align:center;'><div>ไม่ว่าง</div><i class=\"splashy-marker_rounded_red\"></i></div>";
-                } 
-                if ($aRow[ $aColumns[$i] ] == 3) { 
-                	$row[4] = "<div style='text-align:center;'><div>จอด</div><i class=\"splashy-marker_rounded_light_blue\"></i></div>"; 
-                }
-			}
-			if ($aColumns[$i] == "car.dateAdd"){
-				$row[5] = Thai_date($aRow['dateAdd']);
+			if ($aColumns[$i] == "mobile.dateAdd"){
+				$row[6] = Thai_date($aRow['dateAdd']);
 			}			
 			
-			if ( $aColumns[$i] == 'carId' )
+			if ( $aColumns[$i] == 'mobileId' )
 			{
 				$set_tools = "<a style=\"cursor:pointer;\" class=\"ttip_t\" title=\"แก้ไข\" onClick=\"fn_Edit(".$aRow[ $aColumns[$i] ].",".$aRow['garageId'].")\" ><i class=\"icon-pencil\"></i></a>";
-				$set_tools = $set_tools."<a style=\"cursor:pointer;margin-left:5px;\" class=\"ttip_t\" title=\"ลบ\" onClick=\"fn_callDel(".$aRow[ $aColumns[$i] ].",'".$aRow['carRegistration']."')\" ><i class=\"icon-trash\"></i></a>";
-				$row[6] = $set_tools;
+				$set_tools = $set_tools."<a style=\"cursor:pointer;margin-left:5px;\" class=\"ttip_t\" title=\"ลบ\" onClick=\"fn_callDel(".$aRow[ $aColumns[$i] ].",'".$aRow['mobileNumber']."')\" ><i class=\"icon-trash\"></i></a>";
+				$row[7] = $set_tools;
 			}			
 		}
 		$output['aaData'][] = $row;
