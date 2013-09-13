@@ -9,26 +9,7 @@
       </div>
     </div>
   </div>
-</div>
 
-
-
- <div class="location_add_form well" style="display: none">
-  <p class="formSep"><strong>Add/Edit location:</strong></p>
-  <div class="formSep">
-    <label>Name</label>
-    <input type="text" class="span10" id="comp_name" />
-    <label>Contact</label>
-    <input type="text" class="span10" id="comp_contact" />
-    <label>Phone</label>
-    <input type="text" class="span10" id="comp_phone" />
-    <label>Address</label>
-    <input type="text" class="span10" id="comp_address" readonly="readonly" />
-    <label>Lat, Lng</label>
-    <input type="text" class="span10" id="comp_lat_lng" readonly="readonly" />
-    <input type="hidden" id="comp_id" />
-  </div>
-  <button class="btn btn-invert">Save</button>
 </div>
 
 
@@ -91,24 +72,3 @@ $rs_mobile = mysql_query($sql_mobile);
 </div>
 </div>
 </div>
-
-
-
-
-<!-- fix for ios orientation change --> 
-<script src="js/ios-orientationchange-fix.js"></script> 
-<!-- scrollbar --> 
-<script src="lib/antiscroll/antiscroll.js"></script> 
-<script src="lib/antiscroll/jquery-mousewheel.js"></script> 
-<!-- common functions --> 
-<script src="js/gebo_common.js"></script> 
-<script src="http://maps.google.com/maps/api/js?sensor=false"></script> 
-<script src="js/gmap3.min.js"></script> 
-<!-- maps functions --> 
-<script src="js/gebo_maps.js"></script> 
-<script>
-	$(document).ready(function() {
-		//* show all elements & remove preloader
-		setTimeout('$("html").removeClass("js")',1000);
-	});
-</script>
