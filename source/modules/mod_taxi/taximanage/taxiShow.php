@@ -7,17 +7,17 @@
 //Case Supervisor
 if ($u_garage == 1) {
 						
-	if ($garageId != ''){
-		$car_data = select_db('car',"order by dateAdd desc limit 15");
+	if ($garageId == ''){
+		$car_data = count_data_mysql('carId','car','1');
 	} else {
-		$car_data = select_db('car',"where garageId = '".$garageId."' order by dateAdd desc");
+		$car_data = count_data_mysql('carId','car',"garageId = '".$garageId."'");
 	}			
 	
 } else { //Case Garage
-	$car_data = select_db('car',"where garageId = '".$u_garage."' order by dateAdd desc");
+	$car_data = count_data_mysql('carId','car',"garageId = '".$u_garage."'");
 	$garageId  = $u_garage;
 }
-$total = count($car_data);
+$total = $car_data;
 
 
 ///=====Data Major

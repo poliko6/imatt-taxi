@@ -155,7 +155,7 @@
 	var find_chk2 = <?=$find_chk2?>;
 	
 	$(document).ready(function(){	
-		console.log('find_chk1 = '+find_chk1);	
+		//console.log('find_chk1 = '+find_chk1);	
 		
 		if (find_chk1 == 1){
 			$('#errNumber').show();
@@ -190,7 +190,7 @@
 	}
 	
 	function fn_goToPage(page){
-		console.log(page);	
+		//console.log(page);	
 		if (page == 'add'){	
 			$("#fm_selectmajor").attr("action", 'index.php?p=taxi.managemobile&menu=main_taxi&act=addmobile');
 			$('#fm_selectmajor').submit();		

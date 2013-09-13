@@ -1,63 +1,26 @@
-<!-- datatable -->
-<link rel="stylesheet" type="text/css" href="lib/datatables/css/demo_table_jui.css"/> 
+ <!-- datatable -->
 <script src="lib/datatables/jquery.dataTables.min.js"></script>
+<script src="lib/datatables/extras/Scroller/media/js/Scroller.min.js"></script>
+<!-- datatable functions -->
+<script src="js/gebo_datatables.js"></script>
 
-
-
-<?
-//Select Minor Data
-if (empty($d)){
-	$time_data = count_data_mysql('transportsectionId','transportsection',"garageId = '".$u_garage."' and dateAdd like '".date('Y-m-d')."%' OR statusWork = 'online'");
-	//$time_data = select_db('transportsection',"where garageId = '".$u_garage."' and dateAdd like '".date('Y-m-d')."%' OR statusWork = 'online' order by statusWork");
-	$dchk = date('Y-m-d');
-} else {	
-	$p_date = explode('/',$d);
-	$thisdate = $p_date[2].'-'.$p_date[1].'-'.$p_date[0];
-	$time_data = count_data_mysql('transportsectionId','transportsection',"garageId = '".$u_garage."' and dateAdd like '".$thisdate."%' OR statusWork = 'online'");
-	//$time_data = select_db('transportsection',"where garageId = '".$u_garage."' and dateAdd like '".$thisdate."%' OR statusWork = 'online' order by statusWork");
-	$dchk = $thisdate;
-}
-$total = $time_data;
-
-$major_data = select_db('majoradmin',"where garageId = '".$u_garage."'");
-$major_name = $major_data[0]['thaiCompanyName'];
-?>
-
-<script type="text/javascript" charset="utf-8">
-	$(document).ready(function() {
-		$('#example').dataTable( {			
-			"bProcessing": true,
-			"bServerSide": true,
-			"sAjaxSource": "modules/mod_driver/schedule/scripts/server_processing.php?garageId=<?=$u_garage?>&d=<?=$dchk?>",
-			
-			
-			"sPaginationType" : "full_numbers",// แสดงตัวแบ่งหน้า
-			"bLengthChange": true, // แสดงจำนวน record ที่จะแสดงในตาราง
-			"iDisplayLength": 10, // กำหนดค่า default ของจำนวน record 
-			"bFilter": true, // แสดง search box
-			//"sScrollY": "400px", // กำหนดความสูงของ ตาราง
-
-			"oTableTools": {
-				"sRowSelect": "single" // คลิกที่ record มีแถบสีขึ้น
-			},
+ <div class="row-fluid search_page">
+	<div class="span12">
+    	<?
+		//Select Minor Data
+		if (empty($d)){
+			$time_data = select_db('transportsection',"where garageId = '".$u_garage."' and dateAdd like '".date('Y-m-d')."%' OR statusWork = 'online' order by statusWork");
+		} else {
+			$p_date = explode('/',$d);
+			$thisdate = $p_date[2].'-'.$p_date[1].'-'.$p_date[0];
+			$time_data = select_db('transportsection',"where garageId = '".$u_garage."' and dateAdd like '".$thisdate."%' OR statusWork = 'online' order by statusWork");
+		}
+		$total = count($time_data);
+		
+		$major_data = select_db('majoradmin',"where garageId = '".$u_garage."'");
+		$major_name = $major_data[0]['thaiCompanyName'];
+		?>
  
-			
-			"oLanguage": {
-				"sLengthMenu": "แสดง _MENU_ เร็คคอร์ด ต่อหน้า",
-				"sZeroRecords": "ไม่เจอข้อมูลที่ค้นหา",
-				"sInfo": "แสดง _START_ ถึง _END_ ของ _TOTAL_ เร็คคอร์ด",
-				"sInfoEmpty": "แสดง 0 ถึง 0 ของ 0 เร็คคอร์ด",
-				"sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
-				"sSearch": "ค้นหา :"
-			 }
-		} );
-	} );
-</script>
-
-
-<div class="row-fluid search_page">
-    <div class="span12">
-    	
         <div class="well clearfix">
             <div class="row-fluid">
                 <div class="pull-left">จำนวนการลงเวลาเข้างาน ของอู่ "<span style="color:#C30; font-weight:bold;"><?=$major_name?></span>" มีจำนวน <strong><?=$total?></strong></div>
@@ -83,46 +46,130 @@ $major_name = $major_data[0]['thaiCompanyName'];
             </div>
         </div>
         
+  		
+  		
+  
+		<? if ($total != 0){ ?>
         
-         <!--<table cellpadding="0" cellspacing="0" border="0" class="display" id="example"> -->
-         <table class="table table-striped table-bordered display" id="example">
-            <thead>
-                <tr>
-                    <th width="3%">ลำดับ</th>
-                    <th width="14%">ชื่อ - นามสกุล</th>
-                    <th width="17%">รถแท๊กซี่</th>
-                    <th width="10%">โทรศพท์</th>   
-                    <th width="15%">ตำแหน่งปัจจุบัน</th>
-                    <th width="12%">วันที่</th>
-                    <th width="12%">ช่วงเวลาทำงาน</th>
-                    <th width="10%">สถานะ</th>
-                    <th width="8%">เครื่องมือ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="5" class="dataTables_empty">กำลังโหลดข้อมูล</td>
-                </tr>
-            </tbody>	
-         </table>
-        
-    </div>    
-</div>
+            <table class="table table-striped table-bordered dTableR" id="dt_a">
+                <thead>
+                    <tr>
+                        <th style="width:10px;">ลำดับ</th>
+                        <th>ชื่อ - นามสกุล</th>
+                        <th>รถแท๊กซี่</th>
+                        <th>โทรศพท์</th>                        
+                        <th>ตำแหน่งปัจจุบัน</th>
+                        <th>วันที่</th>
+                        <th>ช่วงเวลาทำงาน</th>
+                        <th>สถานะ</th>
+                        <th>เครื่องมือ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                        
+                    
+                    <? 
+                    $i = 0;
+                    while ($i < $total) {
+						$p_time1 = explode(':',$time_data[$i]['timeStart']);
+						$p_time2 = explode(':',$time_data[$i]['timeEnd']);                 
+                        ?>
+                        <tr>                   
+                            <td style="text-align:center;"><?=$i+1?></td>
+                            <td>
+                            	<i class="splashy-contact_grey"></i>
+								<?
+                            	$driver_data = select_db('drivertaxi',"where driverId = '".$time_data[$i]['driverId']."'");
+								$firstName = $driver_data[0]['firstName'];	
+								$lastName = $driver_data[0]['lastName'];
+								$citizenId = $driver_data[0]['citizenId'];
+								$licenseNumber = $driver_data[0]['licenseNumber'];
+								?>	
+                                <a href="#" class="ttip_t" title="ดูรายละเอียดเพิ่มเติม" onclick="fn_showInfoDriver(<?=$time_data[$i]['driverId']?>);">
+									<?=$firstName?>  <?=$lastName?>
+                                </a>
+                            </td>
+                            <td>
+                            	<?
+                                $car_data = select_db('car',"where carId = '".$time_data[$i]['carId']."'");
+								$carRegistration = $car_data[0]['carRegistration'];
+								
+								$province_data = select_db('province',"where provinceId = '".$car_data[0]['provinceId']."'");
+								$province_name = $province_data[0]['provinceName'];	
+								?>
+                            	<a href="#" class="ttip_t" title="ดูรายละเอียดเพิ่มเติม" onclick="fn_showInfoCar(<?=$time_data[$i]['carId']?>);">
+									<?=$carRegistration?> <?=$province_name?>
+                                </a>
+                            </td>
+                            <td><i class="splashy-cellphone"></i>
+                            	<?
+                                $mobile_data = select_db('mobile',"where mobileId = '".$time_data[$i]['mobileId']."'");
+								$mobileNumber = $mobile_data[0]['mobileNumber'];
+								$lat = $mobile_data[0]['latitude'];
+								$lon = $mobile_data[0]['longitude'];
+								?>
+                            	<a href="#" class="ttip_t" title="ดูรายละเอียดเพิ่มเติม" onclick="fn_showInfoMobile(<?=$time_data[$i]['mobileId']?>);">
+									<?=$mobileNumber?>
+                                </a>
+							</td>
+                            <td><?=$lat?>, <?=$lon?></td>  
+                            <td><?=Thai_date($time_data[$i]['dateAdd'])?></td>                                                  
+                            <td style="text-align:center;"><?=$p_time1[0]?>:<?=$p_time1[1]?> น. - <?=$p_time2[0]?>:<?=$p_time2[1]?> น. </td>
+                            <td style="text-align:center;">
+                            	<?
+								if ($time_data[$i]['statusWork'] == 'online') {
+									?><span style="color:#0C0; font-weight:bold;">กำลังทำงาน</span><?
+								} else {
+									?><span style="color:#666; font-style:italic;">ออกจากงานแล้ว</span><?
+								}
+                                ?>
+                            </td>
+                            <td>
+                            	<? if ($time_data[$i]['statusWork'] == 'online') { ?>                            	
+                                    <div style="float:left; margin-right:5px;">
+                                    <a href="#" class="ttip_t" data-toggle="modal" data-backdrop="static" title="ออกจากงาน" onclick="fn_formEdit(<?=$time_data[$i]['transportSectionId']?>, 'select');"><i class="splashy-warning"></i></a>
+                                    </div>
+                                <? } ?> 
+                                
+                                <div style="float:left;">
+                                    <a href="#myModalDel<?=$time_data[$i]['transportSectionId']?>" class="ttip_t" data-toggle="modal" title="ยกเลิก"><i class="splashy-remove"></i></a>
+                                </div>
+                               
+                            </td>
+                          
+                        </tr>
+                        
+                        <!-- POP UP -->
+                        <div class="modal hide fade" id="myModalDel<?=$time_data[$i]['transportSectionId']?>" style="text-align:center; width:500px;">
+                            <div class="alert alert-block alert-error fade in">
+                                <h4 class="alert-heading">คุณต้องการยกเลิกรายการ "<?=$firstName?>  <?=$lastName?>" ?</h4>
+                                <div style="height:50px;"></div>
+                                <p>
+                                <a href="#" class="btn btn-inverse" onclick="fn_formDel(<?=$time_data[$i]['transportSectionId']?>);"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> 
+                                หรือ <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a>
+                               	</p>
+                            </div>
+                        </div>
+                        
+                        <? 
+                        $i++;
+                    } ?>
+                   
+                </tbody>
+            </table>
 
- 
- 
-<!-- POP UP DEL -->
-<div class="modal hide fade" id="myModalDel" style="text-align:center; width:500px;">
-    <div class="alert alert-block alert-error fade in">
-        <h4 class="alert-heading">คุณต้องการยกเลิกรายการ "<span id="drivername"></span>"</h4>
-        <div style="height:50px;"></div>
-        <p>
-        <input type="hidden" name="transportSectionId" id="transportSectionId_del" value="" />
-        <a href="#" class="btn btn-inverse" onclick="fn_formDel();"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> 
-        หรือ <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a>
-        </p>
+         <? } else {  ?>
+         
+            <div style="text-align:center;">
+                <strong>ยังไม่มีข้อมูลการลงเวลา!</strong>
+            </div>
+            
+         <? } ?>
+
+        
     </div>
-</div> 
+ </div>
  
  
  
@@ -351,37 +398,6 @@ $major_name = $major_data[0]['thaiCompanyName'];
 	});
 	
 	
-	function fn_callDel(id,text){
-		//console.log(id+' '+text);
-		$('#transportSectionId_del').val(id);
-		$('#drivername').text(text);
-		$('#myModalDel').modal('toggle');
-	}
-		
-	function fn_formDel(id){
-		
-		var id = $('#transportSectionId_del').val();
-		
-		jQuery.ajax({			
-			url :'modules/mod_driver/schedule/del.time.php',
-			type: 'GET',
-			data: 'act=del&id='+id+'',
-			dataType: 'jsonp',
-			dataCharset: 'jsonp',
-			success: function (data){
-				console.log(data.success);
-				if (data.success){ 
-					alertPopup('msg3','alert3',''+data.message+'',1);
-				} else {
-					alertPopup('msg2','alert2',''+data.message+'',0);
-				}				
-				
-				$('#myModalDel').modal('toggle');
-			}
-		});	
-	}
-	
-	
 	function fn_formEdit(id,process){
 		//console.log(id);
 		
@@ -436,7 +452,27 @@ $major_name = $major_data[0]['thaiCompanyName'];
 
 	}
 	
-		
+	
+	function fn_formDel(id){
+		jQuery.ajax({
+			url :'modules/mod_driver/schedule/del.time.php',
+			type: 'GET',
+			data: 'act=del&id='+id+'',
+			dataType: 'jsonp',
+			dataCharset: 'jsonp',
+			success: function (data){
+				console.log(data.success);
+				if (data.success){ 
+					alertPopup('msg3','alert3',''+data.message+'',1);
+				} else {
+					alertPopup('msg2','alert2',''+data.message+'',0);
+				}				
+				
+				$('#myModalDel'+id+'').modal('toggle');
+			}
+		});	
+	}
+	
 	function fn_showInfoMobile(id){
 	//console.log(id);
 		$('#showInfoMobile').modal('toggle');	
@@ -448,7 +484,7 @@ $major_name = $major_data[0]['thaiCompanyName'];
 			dataType: 'jsonp',
 			dataCharset: 'jsonp',
 			success: function (data){
-				//console.log(data.name);
+				console.log(data.name);
 				//stored\driver\thumbnail			
 				$('#txtMobileNum').text(data.mobilenumber);
 				$('#txtEmiMsi').text(data.emimsi);
@@ -473,12 +509,10 @@ $major_name = $major_data[0]['thaiCompanyName'];
 			dataType: 'jsonp',
 			dataCharset: 'jsonp',
 			success: function (data){
-				//console.log(data.name);
+				console.log(data.name);
 				//stored\driver\thumbnail
 				if (data.img != ''){
 					$('#driverImage').attr('src','stored/driver/thumbnail/'+data.img+'');
-				} else {
-					$('#driverImage').attr('src','gallery/temp.gif');
 				}
 				$('#txtName').text(data.name);
 				$('#txtcitizenId').text(data.citizenId);
@@ -505,12 +539,10 @@ $major_name = $major_data[0]['thaiCompanyName'];
 			dataType: 'jsonp',
 			dataCharset: 'jsonp',
 			success: function (data){
-				//console.log(data.name);
+				console.log(data.name);
 				//stored\driver\thumbnail
 				if (data.img != ''){
 					$('#carImage').attr('src','stored/taxi/thumbnail/'+data.img+'');
-				} else {
-					$('#driverImage').attr('src','gallery/temp.gif');
 				}
 				$('#txtRegistration').text(data.registration);
 				$('#txtProvince').text(data.province);

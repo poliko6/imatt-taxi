@@ -3,32 +3,36 @@
 	
 	//$aColumns = array( 'carImage', 'englishCompanyName', 'carRegistration', 'carBannerNameEng', 'carStatusId', 'carId' );
 	$aColumns = array(
-		'carId',
-		'carImage',
+		'transportSectionId',
 		'carRegistration',
-		'carYear',
+		'transportsection.driverId',
+		'transportsection.carId',
+		'transportsection.mobileId',
+		'mobileNumber',
 		'provinceName',
-		'carModelName',
-		'carBannerNameEng',
-		'carStatusId',
-		'car.dateAdd',
-		'thaiCompanyName',
-		'englishCompanyName',
-		'car.garageId'
+		'transportsection.dateAdd',
+		'timeStart',
+		'timeEnd',
+		'latitude',
+		'longitude',
+		'firstName',
+		'lastName',
+		'statusWork'
 	);
 	
 	/* Indexed column (used for fast and accurate table cardinality) */
-	$sIndexColumn = "carId";
+	$sIndexColumn = "transportSectionId";
 	
 	/* DB table to use */
-   	$sTable = "car";
+   	$sTable = "transportsection";
 	$garageId = $_REQUEST['garageId'];
- 
+ 	$d = $_REQUEST['d'];
+	
    	// Joins
-	$sJoin = 'JOIN carmodel ON((carmodel.carModelId = car.carModelId)) ';
-	$sJoin .= 'JOIN carbanner ON((carbanner.carBannerId = car.carBannerId)) ';
-	$sJoin .= 'JOIN province ON((province.provinceId = car.provinceId)) ';
-	$sJoin .= 'JOIN majoradmin ON((majoradmin.garageId = car.garageId)) ';
+	$sJoin = 'JOIN car ON((car.carId = transportsection.carId))';
+	$sJoin .= 'JOIN mobile ON((mobile.mobileId = transportsection.mobileId))';
+	$sJoin .= 'JOIN province ON((province.`provinceId` = car.provinceId))';
+	$sJoin .= 'JOIN drivertaxi ON((drivertaxi.driverId = transportsection.driverId))';
    	//$sJoin = 'LEFT JOIN users u ON u.id = regina_dslams.user_id ';
    	//$sJoin .= 'LEFT JOIN regina_dslam_types ON regina_dslam_types.id = regina_dslams.regie_dslam_type_id ';
    	//$sJoin .= 'LEFT JOIN regina_statuses iptv_status ON iptv_status.id = regina_dslams.regie_status_iptv_id ';
@@ -111,9 +115,7 @@
 	 * on very large tables, and MySQL's regex functionality is very limited
 	 */
 	
-
-	$sWhere = "";
-	
+	$sWhere = "where transportsection.garageId = '".$garageId."' and transportsection.dateAdd like '".$d."%' OR statusWork = 'online'";	
 	//$sSearch = iconv("tis-620","utf-8",$_GET['sSearch']);
 	if ( isset($_GET['sSearch'] ) && $_GET['sSearch']  != "" )
 	{
@@ -122,7 +124,7 @@
 		{
 			if ( isset($_GET['bSearchable_'.$i]) && $_GET['bSearchable_'.$i] == "true" )
 			{
-				$sWhere .= "`".$aColumns[$i]."` LIKE '%".mysql_real_escape_string( $_GET['sSearch'] )."%' OR ";
+				$sWhere .= "".$aColumns[$i]." LIKE '%".mysql_real_escape_string( $_GET['sSearch'] )."%' OR ";
 			}
 		}
 		$sWhere = substr_replace( $sWhere, "", -3 );
@@ -142,22 +144,12 @@
 			{
 				$sWhere .= " AND ";
 			}
-			$sWhere .= "`".$aColumns[$i]."` LIKE '%".mysql_real_escape_string($_GET['sSearch_'.$i])."%' ";
+			$sWhere .= "".$aColumns[$i]." LIKE '%".mysql_real_escape_string($_GET['sSearch_'.$i])."%' ";
 		}
 	}
 	
 	
 	
-	if ($garageId != ''){
-		if ( $sWhere == "" )
-		{
-			$sWhere = "WHERE car.garageId = '".$garageId."'";
-		}
-		else
-		{
-			$sWhere .= " AND car.garageId = '".$garageId."'";
-		}
-	} 
 	
 	/*
 	 * SQL queries
@@ -206,74 +198,76 @@
 		"aaData" => array()
 	);
 	
+	$n = 0;
 	while ( $aRow = mysql_fetch_array( $rResult ) )
 	{
-		$row = array();
+		$row = array();		
+		$n++;
 		for ( $i=0 ; $i<count($aColumns) ; $i++ )
 		{
 			//echo $aColumns[$i]."/n";
 			
 			//print_r($aColumns[$i]);
-			if ( $aColumns[$i] == "carImage" )
-			{
-				if (trim($aRow[ $aColumns[$i] ]) == ''){
-					$pathimage  = 'gallery/Image10_tn.jpg';
-					$pathimage2  = 'gallery/Image10_tn.jpg'; 	
-				} else {
-					$pathimage  = '../../../../stored/taxi/'.$aRow[ $aColumns[$i] ];
-					if (file_exists($pathimage)) {  //check file			
-						$pathimage  = 'stored/taxi/'.$aRow[ $aColumns[$i] ];
-					} else { 						
-						$pathimage  = 'gallery/Image10_tn.jpg'; 	
-					}
-					
-					
-					$pathimage2  = '../../../../stored/taxi/thumbnail/'.$aRow[$aColumns[$i]];
-					if (file_exists($pathimage2)) {  //check file			
-						$pathimage2  = 'stored/taxi/thumbnail/'.$aRow[$aColumns[$i]];
-					} else { 						
-						$pathimage2  = 'gallery/Image10_tn.jpg'; 	
-					}				
-					
-				}	
-				/* Special output formatting for 'version' column */
-				//$row[] = ($aRow[ $aColumns[$i] ]=="0") ? '-' : $aRow[ $aColumns[$i] ];
-				$row[0] = "<a title=\"$aRow]['carRegistration']\" class=\"cbox_single thumbnail\"><img src='".$pathimage2."' style=\"height:50px;width:80px;\"></a>";
-			}
 			
-			if ( $aColumns[$i] == "thaiCompanyName" ){
-				$row[1] = "<div>".$aRow[ $aColumns[$i] ]."</div><div style=\"font-style:italic; color:#999; font-size:11px;\">".$aRow['englishCompanyName']."</div>";			
-			}
+			$row[0] = $n;
 			
+			
+			
+			if ($aColumns[$i] == "firstName"){
+				$setrow1 = "<i class=\"splashy-contact_grey\"></i>";
+				$setrow1 .= "<a href=\"#\" style=\"margin-left:5px;\" class=\"ttip_t\" title=\"ดูรายละเอียดเพิ่มเติม\" onclick=\"fn_showInfoDriver(".$aRow['driverId'].")\">";
+				$setrow1 .= $aRow[ $aColumns[$i] ]." ".$aRow['lastName']."</a>";	
+				$row[1] = $setrow1;		
+			}
+						
 			if ( $aColumns[$i] == "carRegistration" ){
-				$row[2] = "<div>".$aRow[ $aColumns[$i] ]."</div><div>".$aRow['provinceName']."</div>";			
+				$setrow2 = "<a href=\"#\" class=\"ttip_t\" title=\"ดูรายละเอียดเพิ่มเติม\" onclick=\"fn_showInfoCar(".$aRow['carId'].");\">";
+				$setrow2 .= $aRow[ $aColumns[$i] ]." ".$aRow['provinceName']."</a>";
+				$row[2] = $setrow2;			
 			}
 			
-			if ( $aColumns[$i] == "carBannerNameEng" ){
-				$row[3] = "<div><strong>ยี่ห้อ</strong> :".$aRow[ $aColumns[$i] ].", <strong>รุ่น</strong> :".$aRow['carModelName']."</div><div><strong>ปี</strong> :".$aRow['carYear']."</div>";		
+			if ( $aColumns[$i] == "mobileNumber" ){
+				$setrow3 = "<i class=\"splashy-cellphone\"></i>";
+				$setrow3 .= "<a href=\"#\" style=\"margin-left:5px;\" class=\"ttip_t\" title=\"ดูรายละเอียดเพิ่มเติม\" onclick=\"fn_showInfoMobile(".$aRow['mobileId'].");\">";
+				$setrow3 .= $aRow[ $aColumns[$i] ]."</a>";	
+				$row[3] = $setrow3;	
 			}
 			
-			if ( $aColumns[$i] == "carStatusId" ){
-				
-				if ($aRow[ $aColumns[$i] ] == 1) { 
-                	$row[4] = "<div style='text-align:center;'><div>ว่าง</div><i class=\"splashy-marker_rounded_green\"></i></div>";                      
-                } 
-                if ($aRow[ $aColumns[$i] ] == 2) { 
-                	$row[4] = "<div style='text-align:center;'><div>ไม่ว่าง</div><i class=\"splashy-marker_rounded_red\"></i></div>";
-                } 
-                if ($aRow[ $aColumns[$i] ] == 3) { 
-                	$row[4] = "<div style='text-align:center;'><div>จอด</div><i class=\"splashy-marker_rounded_light_blue\"></i></div>"; 
-                }
+			if ( $aColumns[$i] == "latitude" ){
+				$row[4] = $aRow[ $aColumns[$i] ].", ".$aRow['longitude'];			
 			}
-			if ($aColumns[$i] == "car.dateAdd"){
+			
+			if ($aColumns[$i] == "transportsection.dateAdd"){
 				$row[5] = Thai_date($aRow['dateAdd']);
-			}			
+			}
 			
-			if ( $aColumns[$i] == 'carId' )
+			if ( $aColumns[$i] == "timeStart" ){
+				$p_time1 = explode(':',$aRow['timeStart']);
+				$p_time2 = explode(':',$aRow['timeEnd']); 
+				 
+				$row[6] = $p_time1[0].":".$p_time1[1]." น. - ".$p_time2[0].":".$p_time2[1]." น. ";		
+			}	
+			
+			if ( $aColumns[$i] == "statusWork" ){
+				if ($aRow[ $aColumns[$i] ] == 'online') {
+					$row[7] = "<span style=\"color:#0C0; font-weight:bold;\">กำลังทำงาน</span>";
+				} else {
+					$row[7] = "<span style=\"color:#666; font-style:italic;\">ออกจากงานแล้ว</span>";
+				}				
+			}				
+						
+			
+			if ( $aColumns[$i] == 'transportSectionId' )
 			{
-				$set_tools = "<a style=\"cursor:pointer;\" class=\"ttip_t\" title=\"แก้ไข\" onClick=\"fn_Edit(".$aRow[ $aColumns[$i] ].",".$aRow['garageId'].")\" ><i class=\"icon-pencil\"></i></a>";
-				$set_tools = $set_tools."<a style=\"cursor:pointer;margin-left:5px;\" class=\"ttip_t\" title=\"ลบ\" onClick=\"fn_callDel(".$aRow[ $aColumns[$i] ].",'".$aRow['carRegistration']."')\" ><i class=\"icon-trash\"></i></a>";
-				$row[6] = $set_tools;
+				$set_tools = '';
+				if ($aRow['statusWork'] == 'online') {                            	
+					$set_tools .= "<div style=\"float:left; margin-right:5px;\">";
+					$set_tools .= "<a href=\"#\" class=\"ttip_t\" data-toggle=\"modal\" data-backdrop=\"static\" title=\"ออกจากงาน\" onclick=\"fn_formEdit(".$aRow['transportSectionId'].", 'select');\"><i class=\"splashy-warning\"></i></a>";
+					$set_tools .= "</div>";
+				} 
+				$set_tools .= "<div style=\"float:left;\">";
+				$set_tools .= "<a style=\"cursor:pointer;margin-left:5px;\" class=\"ttip_t\" title=\"ยกเลิก\" onClick=\"fn_callDel(".$aRow[ $aColumns[$i] ].",'".$aRow['firstName']." ".$aRow['lastName']."')\" ><i class=\"splashy-remove\"></i></a>";
+				$row[8] = $set_tools;
 			}			
 		}
 		$output['aaData'][] = $row;

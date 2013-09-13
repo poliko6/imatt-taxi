@@ -1,41 +1,67 @@
 <!-- datatable -->
+<link rel="stylesheet" type="text/css" href="lib/datatables/css/demo_table_jui.css"/> 
 <script src="lib/datatables/jquery.dataTables.min.js"></script>
-<script src="lib/datatables/extras/Scroller/media/js/Scroller.min.js"></script>
-<!-- datatable functions -->
-<script src="js/gebo_datatables.js"></script>
+<?
+//Case Supervisor
+if ($u_garage == 1) {
+	
+	if ($garageId == ''){
+		$mobile_data = count_data_mysql('mobileId','mobile','1');
+	} else {
+		$mobile_data = count_data_mysql('mobileId','mobile',"garageId = '".$garageId."'");
+	}			
+	
+} else { //Case Garage
+	$mobile_data = count_data_mysql('mobileId','mobile',"garageId = '".$u_garage."'");
+	$garageId  = $u_garage;
+}
+$total = $mobile_data;
 
- <div class="row-fluid search_page">
+
+///=====Data Major
+if ($garageId == ''){ 
+	$major_name = 'ทั้งหมด';
+} else {
+	$major_data = select_db('majoradmin',"where garageId = '".$garageId."'");
+	$major_name = $major_data[0]['thaiCompanyName'];
+	$garageId = $major_data[0]['garageId'];
+}
+?>
+
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+		$('#example').dataTable( {			
+			"bProcessing": true,
+			"bServerSide": true,
+			"sAjaxSource": "modules/mod_taxi/managemobile/scripts/server_processing.php?garageId=<?=$garageId?>",
+			
+			
+			"sPaginationType" : "full_numbers",// แสดงตัวแบ่งหน้า
+			"bLengthChange": true, // แสดงจำนวน record ที่จะแสดงในตาราง
+			"iDisplayLength": 10, // กำหนดค่า default ของจำนวน record 
+			"bFilter": true, // แสดง search box
+			//"sScrollY": "400px", // กำหนดความสูงของ ตาราง
+
+			"oTableTools": {
+				"sRowSelect": "single" // คลิกที่ record มีแถบสีขึ้น
+			},
+ 
+			
+			"oLanguage": {
+				"sLengthMenu": "แสดง _MENU_ เร็คคอร์ด ต่อหน้า",
+				"sZeroRecords": "ไม่เจอข้อมูลที่ค้นหา",
+				"sInfo": "แสดง _START_ ถึง _END_ ของ _TOTAL_ เร็คคอร์ด",
+				"sInfoEmpty": "แสดง 0 ถึง 0 ของ 0 เร็คคอร์ด",
+				"sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
+				"sSearch": "ค้นหา :"
+			 }
+		} );
+	} );
+</script>
+
+<div class="row-fluid search_page">
 	<div class="span12">
-    	<?
-		//Case Supervisor
-		if ($u_garage == 1) {
-			
-			if ($garageId == ''){
-				$mobile_data = select_db('mobile',"order by dateAdd desc");
-			} else {
-				$mobile_data = select_db('mobile',"where garageId = '".$garageId."' order by dateAdd desc");
-			}			
-			
-		} else { //Case Garage
-			$mobile_data = select_db('mobile',"where garageId = '".$u_garage."' order by dateAdd desc");
-			$garageId  = $u_garage;
-		}
-		$total = count($mobile_data);
-		
-		
-		///=====Data Major
-		if ($garageId == ''){ 
-			$major_name = 'ทั้งหมด';
-		} else {
-			$major_data = select_db('majoradmin',"where garageId = '".$garageId."'");
-			$major_name = $major_data[0]['thaiCompanyName'];
-			$garageId = $major_data[0]['garageId'];
-		}
-		?>
-        
-        <input type="hidden" name="hide_garageid" id="hide_garageid" value="<?=$garageId?>" />
-        
-        <div class="well clearfix">
+     	<div class="well clearfix">
             <div class="row-fluid">
                 <div class="pull-left">รายการโทรศัพท์ของ "<span style="color:#C30; font-weight:bold;"><?=$major_name?></span>" มีจำนวน <strong><?=$total?></strong></div>
                	
@@ -66,111 +92,68 @@
             </div>
         </div>
         
-  		
-  		
-  
-		<? if ($total != 0){ ?>
         
-            <table class="table table-striped table-bordered dTableR" id="dt_a">
-                <thead>
-                    <tr>
-                        <th style="width:10px;">ลำดับ</th>
-                        <th>เบอร์โทรศัพท์</th>                        
-                        <th>Emi/Msi</th>
-                        <th>เครือข่าย</th>
-                        <th>ชื่ออู่รถ</th>
-                        <th>รายละเีอียดโทรศัพท์</th>                       
-                        <th>วันที่เพิ่ม</th>
-                        <th>เครื่องมือ</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                        
-                    
-                    <? 
-                    $i = 0;
-                    while ($i < $total) {                 
-                        ?>
-                        <tr>                   
-                            <td style="text-align:center;"><?=$i+1?></td>    
-                            <td><?=$mobile_data[$i]['mobileNumber']?></td>                                
-                            <td><?=$mobile_data[$i]['EmiMsi']?></td>                 
-                            <td>
-								<?
-                                $this_network = select_db('mobilenetwork',"where mobileNetworkId = '".$mobile_data[$i]['mobileNetworkId']."'");
-								$this_network_name = $this_network[0]['mobileNetworkName'];
-								?>
-                                <div><?=$this_network_name?></div>                                     
-                            </td>
-                          
-                            <td>
-								<?
-                                $this_major = select_db('majoradmin',"where garageId = '".$mobile_data[$i]['garageId']."'");
-								$this_major_name1 = $this_major[0]['thaiCompanyName'];
-								$this_major_name2 = $this_major[0]['englishCompanyName'];
-								?>
-                                <div><?=$this_major_name1?></div>
-                                <div style="font-style:italic; color:#999; font-size:11px;"><?=$this_major_name2?></div>
-                                
-                            </td>  
-                            
-                            <td>                            
-                                <div><strong>ยี่ห้อ</strong> :<?=$mobile_data[$i]['mobileBanner']?></div>
-                                <div><strong>รุ่น</strong> :<?=$mobile_data[$i]['mobileModel']?></div>
-                            </td>                           
-                            <td><?=Thai_date($mobile_data[$i]['dateAdd'])?></td>
-                            <td>                            	
-                                <div style="float:left; margin-right:5px;">
-                                <form action="" method="post" name="fmEdit<?=$i?>" id="fmEdit<?=$i?>">
-                                	<input type="hidden" name="mobileId" value="<?=$mobile_data[$i]['mobileId']?>" />
-                                    <input type="hidden" name="garageId" value="<?=$mobile_data[$i]['garageId']?>" />
-                                    <input type="hidden" name="act" value="editmobile" />
-                               		<a href="#" class="ttip_t" title="Edit" onClick="fmEdit<?=$i?>.submit();" ><i class="icon-pencil"></i></a>
-                                </form>
-                                </div>
-                                <div style="float:left;">
-                                	<a href="#myModalDel<?=$mobile_data[$i]['mobileId']?>" class="ttip_t" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        
-                        <!-- POP UP -->
-                        <div class="modal hide fade" id="myModalDel<?=$mobile_data[$i]['mobileId']?>" style="text-align:center; width:500px;">
-                            <div class="alert alert-block alert-error fade in">
-                                <h4 class="alert-heading">คุณต้องการลบข้อมูลรถโทรศัพท์หมายเลข "<?=$mobile_data[$i]['mobileNumber']?>"</h4>
-                                <div style="height:50px;"></div>
-                                <p>
-                                <a href="#" class="btn btn-inverse" onclick="fn_formDel(<?=$mobile_data[$i]['mobileId']?>);"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> 
-                                หรือ <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a>
-                               	</p>
-                            </div>
-                        </div>
-                        
-                        <? 
-                        $i++;
-                    } ?>
-                   
-                </tbody>
-            </table>
-
-         <? } else {  ?>
-         
-            <div style="text-align:center;">
-                <strong>ยังไม่มีข้อมูลโทรศัพท์!</strong>
-            </div>
-            
-         <? } ?>
-
-        
+         <!--<table cellpadding="0" cellspacing="0" border="0" class="display" id="example"> -->
+         <table class="table table-striped table-bordered display" id="example">
+            <thead>
+                <tr>
+                    <th width="3%">ลำดับ</th>
+                    <th width="10%">เบอร์โทรศัพท์</th>
+                    <th width="12%">Emi/Msi | SIMID</th>
+                    <th width="7%">เครือข่าย</th>   
+                    <th width="30%">ชื่ออู่รถ</th>
+                    <th width="15%">รายละเีอียดโทรศัพท์</th>
+                    <th width="13%">วันที่เพิ่ม</th>
+                    <th width="10%">เครื่องมือ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="5" class="dataTables_empty">กำลังโหลดข้อมูล</td>
+                </tr>
+            </tbody>	
+         </table>
+    
     </div>
- </div>
+</div>
+
  
+ 
+ 
+ <!-- POP UP DEL -->
+<div class="modal hide fade" id="myModalDel" style="text-align:center; width:500px;">
+    <div class="alert alert-block alert-error fade in">
+        <h4 class="alert-heading">คุณต้องการลบข้อมูลรถโทรศัพท์หมายเลข "<span id="mobileNum"></span>"</h4>
+        <div style="height:50px;"></div>
+        <p>
+        <input type="hidden" name="mobileId" id="mobileId_del" value="" />
+        <a href="#" class="btn btn-inverse" onclick="fn_formDel();"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> 
+        หรือ <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a>
+        </p>
+    </div>
+</div> 
+ 
+ 
+<form action="" method="post" name="fm_Edit" id="fm_Edit">
+    <input type="hidden" name="mobileId" id="mobileId_edit" value="" />
+    <input type="hidden" name="garageId" id="garageId_edit"  value="" />
+    <input type="hidden" name="act" value="editmobile" />
+</form>
  
  
 <script type="text/javascript">
 
-	function fn_formDel(id){
+	function fn_callDel(id,text){
+		//console.log(id+' '+text);
+		$('#mobileId_del').val(id);
+		$('#mobileNum').text(text);
+		$('#myModalDel').modal('toggle');
+	}
+	
+	function fn_formDel(){
+		
+		var id = $('#mobileId_del').val();
+				
 		jQuery.ajax({
 			url :'modules/mod_taxi/managemobile/delmobile.php',
 			type: 'GET',
@@ -188,6 +171,14 @@
 				$('#myModalDel'+id+'').modal('toggle');
 			}
 		});	
+	}
+	
+	
+	function fn_Edit(id,garageid){
+		//console.log(id+' '+garageid);
+		$('#mobileId_edit').val(id);
+		$('#garageId_edit').val(garageid);
+		$('#fm_Edit').submit();
 	}
 	
 </script>

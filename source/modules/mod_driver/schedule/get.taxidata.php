@@ -47,11 +47,13 @@
 	
 
 	//Image
-	$pathimage  = '../../../stored/taxi/thumbnail/'.$taxi_data[0]['carImage'];
-	if (file_exists($pathimage)) {  //check file			
-		$pathimage  = $taxi_data[0]['carImage'];
-	} else { 						
-		$pathimage  = ''; 	
+	if ($taxi_data[0]['carImage'] == ''){ $pathimage  = '';  } else {
+		$pathimage  = '../../../stored/taxi/thumbnail/'.$taxi_data[0]['carImage'];
+		if (file_exists($pathimage)) {  //check file			
+			$pathimage  = $taxi_data[0]['carImage'];
+		} else { 						
+			$pathimage  = ''; 	
+		}
 	}
 	
 	$data['img'] = $pathimage;	

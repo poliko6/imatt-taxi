@@ -40,11 +40,13 @@
 	
 	
 	//Image
-	$pathimage  = '../../../stored/driver/thumbnail/'.$driver_data[0]['driverImage'];
-	if (file_exists($pathimage)) {  //check file			
-		$pathimage  = $driver_data[0]['driverImage'];
-	} else { 						
-		$pathimage  = ''; 	
+	if ($driver_data[0]['driverImage'] == ''){ $pathimage  = '';  } else {
+		$pathimage  = '../../../stored/driver/thumbnail/'.$driver_data[0]['driverImage'];
+		if (file_exists($pathimage)) {  //check file			
+			$pathimage  = $driver_data[0]['driverImage'];
+		} else { 						
+			$pathimage  = ''; 	
+		}
 	}
 	
 	$data['img'] = $pathimage;	

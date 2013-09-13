@@ -85,7 +85,8 @@ function load() {
 	};   
 	map = new google.maps.Map(document.getElementById("map_canvas"),myOptions); 
 	//infowindow.open(map, marker);
-
+	
+	//createMarker(name,address, latlng,v_post,v_kind,pic,lat,lon,id) ;
 
 
 
@@ -96,6 +97,45 @@ function load() {
 
 	searchLocation();
 }//end load
+
+
+
+
+
+function mapload(lat,lon,zoom) {
+	var latlng = new google.maps.LatLng(lat,lon);    
+	var myOptions = {     
+			visualRefresh:true, 
+			panControl: true,
+			zoomControl: true, 
+			zoomControlOptions: {   
+		},
+		mapTypeControl: true,
+		scrollwheel: false,
+		scaleControl: false, 
+		streetViewControl: true,  
+		overviewMapControl: true,
+		zoom: zoom,     
+		center: latlng,     
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	};   
+	map = new google.maps.Map(document.getElementById("map_canvas"),myOptions); 
+	//infowindow.open(map, marker);
+	
+	//createMarker(name,address, latlng,v_post,v_kind,pic,lat,lon,id) ;
+
+
+
+	//ใช้ GEOCODER
+  	geocoder = new google.maps.Geocoder();        
+  		marker = new google.maps.Marker({
+  	});
+
+	searchLocation();
+}//end load
+
+
+
 
 
 setInterval(function(){
@@ -235,7 +275,7 @@ window.onload = function()
 
 <!-- Taxi on Garage  -->
 <?
-$get_garage = 2;
+$get_garage = $u_garage;
 /*$sql_mobile = "SELECT mobilemap.*, mobile.garageId ";
 $sql_mobile .= "FROM mobilemap inner join mobile on mobilemap.mobileId = mobile.mobileId ";
 $sql_mobile .= "WHERE mobile.garageId = '".$get_garage."'";
@@ -248,7 +288,7 @@ $data_mobile = mysql_fetch_object($rs_mobile);*/
 $rs_taxi = mysql_query($sql_taxi);*/
 
 
-$sql_mobile = "SELECT * FROM mobile WHERE garageId = '".$get_garage."'";
+$sql_mobile = "SELECT * FROM mobile WHERE garageId = '".$get_garage."' limit 10";
 $rs_mobile = mysql_query($sql_mobile);
 ?>
 
@@ -268,7 +308,7 @@ $rs_mobile = mysql_query($sql_mobile);
       </thead>
       <tbody>
       	<? 
-		while($rs_mobile = @mysql_fetch_object($rs_mobile)){ 
+		while($data_mobile = @mysql_fetch_object($rs_mobile)){ 
 			
 			//$data_car = 
 			?>
@@ -277,10 +317,10 @@ $rs_mobile = mysql_query($sql_mobile);
               <td><?=$data_taxi->carRegistration?></td>
               <td>//คนขับ</td>
               <td class="address">4 New York Plaza, New York, NY 10004, United States</td>
-              <td><?=$rs_mobile->latitude;?>, <?=$rs_mobile->longitude;?></td>
-              <td><?=$rs_mobile->mobileNumber;?></td>
+              <td><?=$data_mobile->latitude;?>, <?=$data_mobile->longitude;?></td>
+              <td><?=$data_mobile->mobileNumber;?></td>
               <td>
-                  <a href="javascript:void(0)" class="show_on_map btn btn-gebo btn-mini">Show</a> 
+                  <a href="#" class="show_on_map btn btn-gebo btn-mini" onclick="mapload('<?=$data_mobile->latitude;?>','<?=$data_mobile->mobileNumber;?>',15);">Show</a> 
                   <!--<a href="javascript:void(0)" class="comp_edit btn btn-mini">Edit</a> -->
               </td>
             </tr>
