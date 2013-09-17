@@ -209,7 +209,7 @@
 			
 			//print_r($aColumns[$i]);
 			
-			$row[0] = $n;
+			$row[0] = $n+$iDisplayStart;
 			
 			
 			
