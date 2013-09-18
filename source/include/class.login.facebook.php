@@ -18,9 +18,10 @@
 require 'src/facebook.php';
 
 // Create our Application instance (replace this with your appId and secret).
+//imattioapps facebook
 $facebook = new Facebook(array(
-  'appId'  => '595440030501428',
-  'secret' => '4376db4d073178d3e1860436f1e3b097',
+  'appId'  => '228765240611874',
+  'secret' => '61ce414146f3a1442c4cefb6ca215666',
 ));
 
 
@@ -41,7 +42,7 @@ if ($user) {
 
 if ($user) {
 		
-	$sql = "SELECT id,type_id,status FROM usedcar_member where facebook = '".$user_profile[id]."'";
+	$sql = "SELECT * FROM customer where facebookId = '".$user_profile[id]."'";
 	$objQuery = mysql_query($sql) or die ("Error Query [".$sql."]");
 	$CheckData = @mysql_num_rows($objQuery);
 	
@@ -61,8 +62,12 @@ if ($user) {
 			$data['chk'] = 1;
 			//
 		} else {
-			$_SESSION['user_id'] = $objData->id;
-			$_SESSION['type_user'] = $objData->type_user;
+			
+			$_SESSION['u_garage'] = 0; //ถ้าเป็นลูกค้าให้เป็น 0
+			$_SESSION['u_username'] = $objData->email;
+			$_SESSION['u_id'] = $objData->id;	 	//id มาจากตาราง major และ minor
+			$_SESSION['u_type'] = 4; 	//ถ้าเป็นลูกค้าให้เป็น 4
+			//$_SESSION['pass_actived'] = 'actived';
 	 		$data['success'] = true;
 		}
 	}	
