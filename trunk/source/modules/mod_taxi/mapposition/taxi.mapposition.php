@@ -1,6 +1,46 @@
-<?
-//Code Pee Tik
+<!-- datatable -->
+<link rel="stylesheet" type="text/css" href="lib/datatables/css/demo_table_jui.css"/> 
+<script src="lib/datatables/jquery.dataTables.min.js"></script>
 
+
+<?
+foreach($_REQUEST as $key => $value)  {
+	$$key = $value;
+	#echo $key ."=". $value."<br>";
+}
+//Case Supervisor
+if ($u_garage == 1) {
+	
+	if ($garageId == ''){
+		$taxiwork_data = count_data_mysql('transportSectionId','transportsection','1');
+	} else {		
+		$taxiwork_data = count_data_mysql('transportSectionId','transportsection',"garageId = '".$garageId."'");
+	}			
+	
+} else { //Case Garage
+	$taxiwork_data = count_data_mysql('transportSectionId','transportsection',"garageId = '".$u_garage."'");
+	$garageId  = $u_garage;
+}
+$total = $taxiwork_data;
+
+
+///=====Data Major
+if ($garageId == ''){ 
+	$major_name = 'ทั้งหมด';
+} else {
+	$major_data = select_db('majoradmin',"where garageId = '".$garageId."'");
+	$major_name = $major_data[0]['thaiCompanyName'];
+	$garageId = $major_data[0]['garageId'];
+}
+
+
+
+
+
+
+ 
+ 
+//=============================================== Begin Map ================================================= 
 $var_car_number=200;
 
 $con1=$_REQUEST['con1']; 
@@ -66,8 +106,9 @@ function searchLocation() {
 
 
 //begin load
-function load() {
-	var latlng = new google.maps.LatLng(47.614495,-122.341861);    
+function load(lat,lng,z) {
+	
+	var latlng = new google.maps.LatLng(lat,lng);    
 	var myOptions = {     
 			visualRefresh:true, 
 			panControl: true,
@@ -79,7 +120,7 @@ function load() {
 		scaleControl: false, 
 		streetViewControl: true,  
 		overviewMapControl: true,
-		zoom: 11,     
+		zoom: z,     
 		center: latlng,     
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};   
@@ -103,7 +144,7 @@ function load() {
 
 
 function mapload(lat,lng,zoom) {
-	//console.log(lat+' '+lng);
+	console.log(lat+' '+lng);
 	var lat = parseFloat(lat);
 	var lng = parseFloat(lng);
 	var latlng = new google.maps.LatLng(lat,lng);    
@@ -123,22 +164,6 @@ function mapload(lat,lng,zoom) {
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};   
 	map = new google.maps.Map(document.getElementById("map_canvas"),myOptions); 
-	//infowindow.open(map, marker);
-	
-	//marker = createMarker(name,address, latlng,v_post,v_kind,pic,lat,lon,id) ;
-	
-	//ใช้ GEOCODER
-  	/*geocoder = new google.maps.Geocoder();        
-  		marker = new google.maps.Marker({
-  	});*/
-	/*c_green = new google.maps.MarkerImage('modules/mod_taxi/images/c2.png',
-      new google.maps.Size(20, 32),
-      new google.maps.Point(0,0),
-      new google.maps.Point(0, 32));
-	var marker = new google.maps.Marker({position: latlng, map: map, icon:c_green});
-	markers_tik.push(marker);*/
-
-	/*searchLocation();*/
 }//end load
 
 
@@ -147,7 +172,7 @@ function mapload(lat,lng,zoom) {
 
 setInterval(function(){
 /* 1000 = 1 วินาที */
-    downloadUrl("modules/mod_taxi/mapposition/get.taxiposition.php?vpost=<?=$con1_encode?>&vkind=<?=$con2_encode?>&province=<?=$province_encode;?>&amphur=<?=$omp_encode?>&distict=<?=$tom_encode?>&price1=<?=$price1?>&price2=<?=$price2?>&garageId=<?=$u_garage?>", function(data) {
+    downloadUrl("modules/mod_taxi/mapposition/get.taxiposition.php?vpost=<?=$con1_encode?>&vkind=<?=$con2_encode?>&province=<?=$province_encode;?>&amphur=<?=$omp_encode?>&distict=<?=$tom_encode?>&price1=<?=$price1?>&price2=<?=$price2?>&garageId=<?=$garageId?>", function(data) {
       var markers = data.documentElement.getElementsByTagName("marker");
 
 
@@ -242,14 +267,14 @@ function createMarker(name,address, latlng,v_post,v_kind,pic,lat,lng,id) {
 <script type="text/javascript">
 window.onload = function()
 {
-	load();	
+	load(47.614495,-122.341861,11);	
 };
 </script>
 
 
 
 
-<div id='map_canvas'  style='width:1200px; height:700px; border:#CCCCCC solid 1px; float:left;'></div>
+<div id='map_canvas' style='height:700px; width:100%; border:#CCCCCC solid 1px; float:left;'></div>
 <div style="clear:both">
     คลิก ที่รูปรถ จะเห็น เลขที่ ลำดับรถ แต่ละคัน <br>
     <!--ให้ทดสอบการแสดงตำแหน่ง ที่เปลี่ยนไปของรถ เมื่อ พิกัด lat,long เปลี่ยนไป <a href="taxi1.php" target="_blank">คลิกที่นี่</a> -->
@@ -262,82 +287,93 @@ window.onload = function()
     <img src='modules/mod_taxi/images/c3.png'>  เหลือง  จอด
 </div>
 
+<!-- ======================================== End Map ================================================ -->
 
 
 
-<!--<div class="row-fluid">
-  <div class="span12">
-    <h3 class="heading" style="text-align:center;">ตำแหน่งรถแท๊กซี่ของ ""</h3>
-    <div class="row-fluid">      
-      <div class="span12">
-        <div class="well">
-          <div id="g_map" style="width:100%;height:400px"></div>
+
+
+
+
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+		$('#example').dataTable( {			
+			"bProcessing": true,
+			"bServerSide": true,
+			"sAjaxSource": "modules/mod_taxi/mapposition/scripts/server_processing.php?garageId=<?=$garageId?>",
+			
+			
+			"sPaginationType" : "full_numbers",// แสดงตัวแบ่งหน้า
+			"bLengthChange": true, // แสดงจำนวน record ที่จะแสดงในตาราง
+			"iDisplayLength": 10, // กำหนดค่า default ของจำนวน record 
+			"bFilter": true, // แสดง search box
+			//"sScrollY": "400px", // กำหนดความสูงของ ตาราง
+
+			"oTableTools": {
+				"sRowSelect": "single" // คลิกที่ record มีแถบสีขึ้น
+			},
+ 
+			
+			"oLanguage": {
+				"sLengthMenu": "แสดง _MENU_ เร็คคอร์ด ต่อหน้า",
+				"sZeroRecords": "ไม่เจอข้อมูลที่ค้นหา",
+				"sInfo": "แสดง _START_ ถึง _END_ ของ _TOTAL_ เร็คคอร์ด",
+				"sInfoEmpty": "แสดง 0 ถึง 0 ของ 0 เร็คคอร์ด",
+				"sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
+				"sSearch": "ค้นหา :"
+			 }
+		} );
+	} );
+</script>
+
+<div class="row-fluid search_page">
+	<div class="span12">
+     	<div class="well clearfix">
+            <div class="row-fluid">
+                <div class="pull-left">รถแท๊กซี่ที่กำลังทำงานอยู่ของ "<span style="color:#C30; font-weight:bold;"><?=$major_name?></span>" มีจำนวน <strong><?=$total?></strong></div>
+               	
+                
+                              	
+                <form action="" name="fm_selectmajor" id="fm_selectmajor" method="post">                	
+                	<div class="pull-right"> 
+                    
+						<? 
+						
+						$major_data_list = select_db('majoradmin',"order by dateAdded desc");
+						?> 
+						<select name="garageId" id="garageId" onchange="fm_selectmajor.submit();" style="width:250px;">
+							<option value="">ทั้งหมด</option>
+							<? foreach($major_data_list as $valMajor){?>
+								<option value="<?=$valMajor['garageId']?>" <? if ($garageId == $valMajor['garageId']) { echo "selected=\"selected\""; } ?> ><?=$valMajor['thaiCompanyName']?></option>
+							<? } ?>
+						</select>	       
+				  
+              	 	</div>
+              
+                </form>
+            </div>
         </div>
-      </div>
+        
+        
+         <!--<table cellpadding="0" cellspacing="0" border="0" class="display" id="example"> -->
+         <table class="table table-striped table-bordered display" id="example">
+            <thead>
+                <tr>
+                    <th width="3%">ลำดับ</th>
+                    <th width="10%">หมายเลขทะเบียน</th>
+                    <th width="15%">ชื่อคนขับ</th>
+                    <th width="10%">เบอร์โทรติดต่อ</th>   
+                    <th width="22%">ตำแหน่งที่อยู่</th>
+                    <th width="30%">อู่รถ</th>
+                    <th width="10%">แสดง</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="5" class="dataTables_empty">กำลังโหลดข้อมูล</td>
+                </tr>
+            </tbody>	
+         </table>
+    
     </div>
-  </div>
-
-</div> -->
-
-
-<!-- Taxi on Garage  -->
-<?
-$get_garage = $u_garage;
-/*$sql_mobile = "SELECT mobilemap.*, mobile.garageId ";
-$sql_mobile .= "FROM mobilemap inner join mobile on mobilemap.mobileId = mobile.mobileId ";
-$sql_mobile .= "WHERE mobile.garageId = '".$get_garage."'";
-$rs_mobile = mysql_query($sql_mobile);
-$data_mobile = mysql_fetch_object($rs_mobile);*/
-
-#pre($data_mobile);
-
-/*$sql_taxi = "SELECT * FROM car WHERE garageId =  '".$get_garage."'";
-$rs_taxi = mysql_query($sql_taxi);*/
-
-
-$sql_transport = "SELECT carRegistration,latitude,longitude,transportSectionId,mobileNumber ";
-$sql_transport .= "FROM transportsection ";
-$sql_transport .= "join mobile on (mobile.mobileId = transportsection.mobileId) ";
-$sql_transport .= "join car on (car.carId = transportsection.carId) ";
-$sql_transport .= "WHERE  transportsection.garageId = '".$get_garage."' limit 10";
-$rs_transport = mysql_query($sql_transport);
-?>
-
-<div class="row-fluid">
-  <div class="span12">
-    <table class="table table-striped location_table">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>หมายเลขทะเบียน</th>
-          <th>ชื่อคนขับ</th>
-          <th>ตำแหน่งที่อยู่</th>
-          <th>เบอร์โทรติดต่อ</th>
-          <th>อู่รถ</th>
-          <th style="width:90px">แสดง</th>
-        </tr>
-      </thead>
-      <tbody>
-      	<? 
-		while($data_transport = @mysql_fetch_object($rs_transport)){ 
-			?>
-            <tr>
-              <td>1</td>
-              <td><?=$data_transport->carRegistration?></td>
-              <td>//คนขับ</td>
-              <td>//ที่อยู่</td>
-              <td><?=$data_transport->mobileNumber;?></td>
-              <td>//อู่รถ</td>
-              <td>
-                  <a href="#" class="show_on_map btn btn-gebo btn-mini" onclick="mapload('<?=$data_transport->latitude;?>','<?=$data_transport->longitude;?>',15);">Show</a> 
-                  <!--<a href="javascript:void(0)" class="comp_edit btn btn-mini">Edit</a> -->
-              </td>
-            </tr>
-        <? } ?>        
-       
-      </tbody>
-    </table>
-  </div>
-</div>
-</div>
 </div>
