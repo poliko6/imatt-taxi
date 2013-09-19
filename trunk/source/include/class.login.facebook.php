@@ -63,6 +63,7 @@ if ($user) {
 			//
 		} else {
 			
+			$_SESSION['u_fbid'] = $user_profile[id];
 			$_SESSION['u_garage'] = 0; //ถ้าเป็นลูกค้าให้เป็น 0
 			$_SESSION['u_username'] = $objData->email;
 			$_SESSION['u_id'] = $objData->id;	 	//id มาจากตาราง major และ minor
@@ -72,8 +73,12 @@ if ($user) {
 		}
 	}	
 	$logoutUrl = $facebook->getLogoutUrl();
+	
 } else { 	
+
 	//session_destroy();
+	//$user = NULL;
+	
   	//$loginUrl = $facebook->getLoginUrl();
 		
 	$loginUrl = $facebook->getLoginUrl();

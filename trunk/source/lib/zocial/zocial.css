@@ -239,7 +239,7 @@ a.zocial {
 /* Button icon and color */
 /* Icon characters are stored in unicode private area */
 .zocial.acrobat:before {content: "\00E3"; color: #FB0000;}
-.zocial.amazon:before {content: "a";}
+.zocial.amazon:before {content: "t";}
 .zocial.android:before {content: "&";}
 .zocial.angellist:before {content: "\00D6";}
 .zocial.aol:before {content: "\"";}

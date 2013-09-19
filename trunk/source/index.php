@@ -32,6 +32,22 @@ if (empty($_SESSION['pass_actived'])){
 	$u_garage = $_SESSION['u_garage']; 
 	
 	$garage_path = select_db('garagelist',"where garageId = '".$u_garage."'");
+	
+	if ($u_username == ''){
+		$u_fbid = $_SESSION['u_fbid'];
+		if (($u_username == '') && ($u_type == 4) && ($u_fbid != '')) {
+			$sql_user = "select email from customer where facebookId = '".$u_fbid."'";
+			$rs_user = mysql_query($sql_user);
+			$data_user = mysql_fetch_object($rs_user);			
+			$u_username = $data_user->email;
+		} else {
+			session_destroy();
+			$user = NULL;
+			?>            
+             <META HTTP-EQUIV="Refresh" CONTENT="0;URL=login.php">
+            <?
+		}
+	}
 ?>
 
 <!DOCTYPE html>
@@ -140,10 +156,13 @@ if (empty($_SESSION['pass_actived'])){
                         <div class="container-fluid">
                             <a class="brand" href="index.php"><i class="icon-home icon-white"></i> Taxi System</a>
                             <ul class="nav user_menu pull-right">  
-                            	<li class="divider-vertical hidden-phone hidden-tablet"></li>
+                            	<? if($u_type != 4) { ?>
+                                 <li class="divider-vertical hidden-phone hidden-tablet"></li>
                             	 <li class="hidden-phone hidden-tablet">
                                     <a href="company/<?=$garage_path[0]['garageShortName']?>/index.php" target="_blank"><i class="splashy-star_boxed_full"></i> Visit Website</a>
-                                 </li>                   
+                                 </li>   
+                                <? } ?>  
+                                              
                                 <li class="divider-vertical hidden-phone hidden-tablet"></li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="img/user_avatar.png" alt="" class="user_avatar" /> <?=$u_username?> <b class="caret"></b></a>
