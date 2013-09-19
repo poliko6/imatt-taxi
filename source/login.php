@@ -12,10 +12,19 @@
 	include("include/class.function.php");
 	include("include/class.login.facebook.php");
 	
-	$password = '';
+	//$password = '';
 	//print_r($_COOKIE);
 	//pre($user);
 	//pre($_SESSION);
+	//echo '<br>logout fb = '.$logoutUrl;
+	//echo '<br>login fb = '.$loginUrl;
+	
+	
+	if (!empty($logout)){
+		session_destroy();
+		$user = NULL;
+	}
+	
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +56,8 @@
         
         <link rel="stylesheet" href="lib/zocial/zocial.css" />
 		
-        <script src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
         <script src="js/jquery.actual.min.js"></script>
         <script src="lib/validation/jquery.validate.min.js"></script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>
@@ -55,13 +65,17 @@
         <script type="text/javascript">
 		
 		$(document).ready(function(){	
+			var typeselect = '<?=$typeuser?>';
+			if (typeselect != '') {
+				fn_changeSet(typeselect);
+			}
 			//console.log(find_chk);	
 			$(document).on("keydown.NewActionOnF5", function(e){
 				var charCode = e.which || e.keyCode;
 				switch(charCode){
 					case 116: // F5
 						e.preventDefault();
-						window.location = "login.php";
+						window.location = "login.php?typeuser=1";
 						break;
 				}
 			});	
@@ -173,7 +187,9 @@
 		
 		function fn_changeSet(value){
 			var fbID = '<?=$user;?>'; //Check Facebook ID
-			console.log('<?=$user;?>');
+			//console.log('<?=$user;?>');
+			
+			
 			
 			$("#setcustomer1").hide();
 			$("#setcustomer2").hide();
@@ -195,7 +211,7 @@
 						fbID: fbID
 					}, 
 						function(data){
-							console.log(data);
+							//console.log(data);
 							if (data == '1'){
 								$("#setcustomer1").show();
 							} else {
@@ -212,6 +228,11 @@
 			}
 		}
 		
+		
+		function fn_formSubmit(value){
+			window.location = 'login.php?typeuser='+value+'';
+		}
+		
 		</script>
         
         
@@ -219,7 +240,9 @@
     <body>
 		
         
-       
+       <form action="" method="post" id="logout_fb">
+       		<input type="hidden" name="logout" value="1">
+       </form>
 		
 		<div class="login_box">
        
@@ -245,10 +268,12 @@
                     <div class="formRow">
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-flag"></i></span>
-                            <select class="span2" id="typeuser" onChange="fn_changeSet(this.value);">
+                                                        
+                            <select name="typeuser" id="typeuser" onChange="fn_formSubmit(this.value);">
                                 <option value="1" <? if ($typeuser == 1) { echo "selected"; } ?> >ผู้ดูแลระบบ</option>
                                 <option value="2" <? if ($typeuser == 2) { echo "selected"; } ?> >ลูกค้า</option>                              
                             </select>
+                          
 						</div>
 					</div>
               
@@ -257,32 +282,36 @@
                     
                     
                     <!--set admin -->
-                    <div id="setadmin">                    
-                        <div class="formRow">
+                    <div id="setadmin">  
+                                      
+                        <div class="formRow clearfix">
                             <div class="input-prepend">
-                                <span class="add-on"><i class="icon-user"></i></span><input type="text" id="username" name="username" placeholder="Username" value="" />
+                                <span class="add-on"><i class="icon-user"></i></span>
+                                <input type="text" id="username" name="username" placeholder="Username" value="" />
                             </div>
                         </div>
       
                                             
-                        <div class="formRow">
+                        <div class="formRow clearfix">
                             <div class="input-prepend">
                                 <span class="add-on"><i class="icon-lock"></i></span>                             
                                 <input type="password" id="password" name="password" placeholder="Password" value="" />
                                 <!--<span class="help-block">help block</span> -->
                             </div>
                         </div>
-                        <div class="formRow">
+                        
+                        <div class="formRow clearfix">
                             <div class="input-prepend">
                                 <span class="add-on"><i class="icon-briefcase"></i></span>
                                 <input type="text" id="garageid" name="garageid" placeholder="Garage ID" value="" />
                             </div>
                         </div>
+                        
                         <div class="formRow clearfix">
                             <label class="checkbox"><input type="checkbox"  id="chkMem" name="chkMem"/> Remember me</label>
                         </div>
                     </div>
-                    
+         
                     
                     <!-- set customer -->
                     <div id="setcustomer" style="display:none;">                    
@@ -293,21 +322,21 @@
                                     <a href="index.php" class="zocial amazon">เข้าระบบแท๊กซี่</a>
                                 </div>
                                 <div style="padding:5px;">
-                                    <a href="<?=$logoutUrl?>" class="zocial facebook">Sign out Facebook</a>
+                                    <a onClick="logout_fb.submit();" class="zocial facebook">Sign out Facebook</a>
                                 </div>
                             </div>
                            
             
           		
                         	<div id="setcustomer2">
-                                <div class="formRow">
+                                <div class="formRow clearfix">
                                     <div class="input-prepend">
                                         <span class="add-on"><i class="icon-user"></i></span><input type="text" id="username2" name="username2" placeholder="EMail" value="<?=trim($username2)?>" />
                                     </div>
                                 </div>
               
                                                     
-                                <div class="formRow">
+                                <div class="formRow clearfix">
                                     <div class="input-prepend">
                                         <span class="add-on"><i class="icon-lock"></i></span>                             
                                         <input type="password" id="password2" name="password2" placeholder="Password" value="" />

@@ -68,7 +68,7 @@
 					$sth = "SELECT * FROM customer WHERE email = '".$response['registration']['email']."' ";
 					$rs = mysql_query($sth);
 					$chkuser = mysql_num_rows($rs); 
-					#echo $sth;      
+					//echo $sth;      
 					 
 					if ($chkuser != 0)
 					{              		 
@@ -95,15 +95,15 @@
 								'telephone'=>$response['registration']['phone'],
 								'gender'=>$response['registration']['gender']
 							);
-							$rs_prepare = update_db($Table_Name, array('email='=>$response['registration']['email']), $data);
-							$rs_prepare = mysql_query($sth_prepare);	
+							$sql_prepare = update_db($Table_Name, array('email='=>$response['registration']['email']), $data);
+							$rs_prepare = mysql_query($sql_prepare);	
 						
-							//echo $sth_prepare;	
-								
+							//echo $sql_prepare;	
+							//exit;	
 							if ($rs_prepare)
 							{
 								$status = true;
-								echo "<meta http-equiv=\"refresh\" content=\"0;URL=../login.php\">";
+								echo "<meta http-equiv=\"refresh\" content=\"0;URL=../login.php?typeuser=2\">";
 							}
 						}
 					}
@@ -137,7 +137,7 @@
 						if ($rs_adddata)
 						{
 							$status = true;
-							echo "<meta http-equiv=\"refresh\" content=\"0;URL=../login.php\">";
+							echo "<meta http-equiv=\"refresh\" content=\"0;URL=../login.php?typeuser=2\">";
 						}
 					}
 				

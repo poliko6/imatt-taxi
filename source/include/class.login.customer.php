@@ -35,14 +35,14 @@
 	
 		if ($process == 'login') {
 			$sql_customer = "SELECT * FROM customer ";
-			$sql_customer .= "WHERE username = '".trim($username)."' AND password = '".trim(sha1($password))."' ";
+			$sql_customer .= "WHERE email = '".trim($username)."' AND password = '".trim(sha1($password))."' ";
 		}
 		
 		if ($process == 'loginfb') {
 			$sql_customer = "SELECT * FROM customer ";
 			$sql_customer .= "WHERE facebookId = '".trim($fbID)."' ";
 		}
-		
+		//echo $sql_customer;
 		$rs_customer = mysql_query($sql_customer);
 		$data_customer = mysql_fetch_object($rs_customer);
 		
@@ -51,7 +51,7 @@
 		$u_username = $username;
 		$find = 1;
 		
-		
+		$_SESSION['u_fbid'] = $fbID;
 		$_SESSION['u_garage'] = 0; //ถ้าเป็นลูกค้าให้เป็น 0
 		$_SESSION['u_username'] = $u_username;
 		$_SESSION['u_id'] = $u_id;	 	//id มาจากตาราง major และ minor

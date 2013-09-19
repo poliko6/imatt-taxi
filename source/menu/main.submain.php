@@ -46,6 +46,15 @@ if ($u_type == 3){
 #echo "<pre>"; echo print_r($menuname_subarr); echo "</pre>";
 
 
+if ($u_type == 4){
+	$sql_mName = "select * from menulist where customerAllowed = 1 order by menuName";
+	$rs_mName = mysql_query($sql_mName);
+	while($data_mName = @mysql_fetch_object($rs_mName)) { 
+		$menuname_subarr[$im] = $data_mName->menuName;	
+		$im++;
+	}
+}
+
 
 
 $iiim = 0;

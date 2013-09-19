@@ -51,7 +51,7 @@
     <body>
 
 		
-		<div class="login_box" style="width:700px;">
+		<div class="login_box">
 			<form action="" method="post" id="login_form">
             
 				<div class="top_b"><strong>Register Taxi Customer</strong></div>    
@@ -82,7 +82,7 @@
 								style="border:none; font-size:10px;"
 								allowTransparency="true"
 								width="100%"
-								height="483">
+								height="550">
 							</iframe> 
 					
 				                
