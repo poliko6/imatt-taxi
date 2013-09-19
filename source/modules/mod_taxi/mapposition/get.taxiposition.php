@@ -50,21 +50,27 @@ if ($limitcar == ''){
 
 //เช็คอู่ทั้งหมด
 if ($garageId == ''){
-	$sql = "SELECT carStatusId,carRegistration,latitude,longitude,transportSectionId,mobileNumber ";
+	$sql = "SELECT carStatusId,provinceName,thaiCompanyName,carRegistration,latitude,longitude,transportSectionId,mobileNumber ";
 	$sql .= "FROM transportsection ";
-	$sql .= "join mobile on (mobile.mobileId = transportsection.mobileId) ";
-	$sql .= "join car on (car.carId = transportsection.carId) ";
-	$sql .= "limit $var_car_number";
+	$sql .= "JOIN mobile on (mobile.mobileId = transportsection.mobileId) ";
+	$sql .= "JOIN car on (car.carId = transportsection.carId) ";
+	$sql .= "JOIN province ON(province.provinceId = car.provinceId) ";
+	$sql .= "JOIN majoradmin ON(transportsection.garageId = majoradmin.garageId) ";
+	//$sql .= "limit $var_car_number";
 	//$sql = "SELECT transportsection.*,latitude,longitude FROM transportsection limit 0,$var_car_number";
 } else {
-	$sql = "SELECT carStatusId,carRegistration,latitude,longitude,transportSectionId,mobileNumber ";
+	$sql = "SELECT carStatusId,provinceName,thaiCompanyName,carRegistration,latitude,longitude,transportSectionId,mobileNumber ";
 	$sql .= "FROM transportsection ";
-	$sql .= "join mobile on (mobile.mobileId = transportsection.mobileId) ";
-	$sql .= "join car on (car.carId = transportsection.carId) ";
-	$sql .= "WHERE  transportsection.garageId = '".$garageId."' limit $var_car_number";
+	$sql .= "JOIN mobile on (mobile.mobileId = transportsection.mobileId) ";
+	$sql .= "JOIN car on (car.carId = transportsection.carId) ";
+	$sql .= "JOIN province ON(province.provinceId = car.provinceId) ";
+	$sql .= "JOIN majoradmin ON(transportsection.garageId = majoradmin.garageId) ";
+	$sql .= "WHERE  transportsection.garageId = '".$garageId."' ";
+	//$sql .= "limit $var_car_number";
 	//$sql = "SELECT transportsection.*,latitude,longitude FROM transportsection where garageId = '".$garageId."' limit 0,$var_car_number";
 }
 
+//echo $sql;
 
 $result = mysql_query($sql);
 if (!$result) {
@@ -75,12 +81,12 @@ if (!$result) {
 header("Content-type: text/xml");
 echo '<markers>';
 while ($row = @mysql_fetch_assoc($result)){
-	$id = $row['carId'];
+	$id = $row['thaiCompanyName'];
 	/*$sql2 = "select carStatusId,carRegistration from car where carId ='$id'";
 	$result2 = mysql_query($sql2);
 	$row2 = mysql_fetch_array($result2);*/
 	$carStatus = $row['carStatusId'];
-	$carName  = $row['carRegistration'];
+	$carName  = $row['carRegistration'].' '. $row['provinceName'];
 	$car_Name_ = $carName;
 
   echo '<marker ';
