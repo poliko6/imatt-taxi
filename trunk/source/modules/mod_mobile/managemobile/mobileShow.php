@@ -33,7 +33,7 @@ if ($garageId == ''){
 		$('#example').dataTable( {			
 			"bProcessing": true,
 			"bServerSide": true,
-			"sAjaxSource": "modules/mod_taxi/managemobile/scripts/server_processing.php?garageId=<?=$garageId?>",
+			"sAjaxSource": "modules/mod_mobile/managemobile/scripts/server_processing.php?garageId=<?=$garageId?>",
 			
 			
 			"sPaginationType" : "full_numbers",// แสดงตัวแบ่งหน้า
@@ -67,7 +67,7 @@ if ($garageId == ''){
                	
                 
                               	
-                <form action="index.php?p=taxi.managemobile&menu=main_taxi" name="fm_selectmajor" id="fm_selectmajor" method="post">                	
+                <form action="index.php?p=mobile.managemobile&menu=main_mobile" name="fm_selectmajor" id="fm_selectmajor" method="post">                	
                 	<div class="pull-right"> 
                     
 						<? 
@@ -155,7 +155,7 @@ if ($garageId == ''){
 		var id = $('#mobileId_del').val();
 				
 		jQuery.ajax({
-			url :'modules/mod_taxi/managemobile/delmobile.php',
+			url :'modules/mod_mobile/managemobile/delmobile.php',
 			type: 'GET',
 			data: 'act=delmobile&id='+id+'',
 			dataType: 'jsonp',

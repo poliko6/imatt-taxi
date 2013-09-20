@@ -5,6 +5,7 @@ $lang_menu = array(
 	"user"			=>  "ผู้ใช้งาน",
 	"taxi" 			=>  "รถแท๊กซี่",
 	"car" 			=>  "ข้อมูลรถ",
+	"mobile" 		=>  "ข้อมูลโทรศัพท์",
 	"driver" 		=>  "ข้อมูลคนขับรถ",	
 	"blog" 			=>  "หน้าเว็บเพจ",
 	
@@ -19,7 +20,6 @@ $lang_menu = array(
 	//การจัดการรถแท๊กซี่
 	"taxi.taximanage" 		=>  "จัดการรถแท๊กซี่",
 	"taxi.mapposition" 		=>  "ตำแหน่งรถแท๊กซี่",
-	"taxi.managemobile" 	=>  "จัดการมือถือ",
 	"taxi.calltaxi" 		=>  "เรียกแท๊กซี่",
 	
 	//การจัดการรถแท๊กซี่	
@@ -41,6 +41,11 @@ $lang_menu = array(
 	"blog.banner" 		=>  "ป้ายโฆษณา",
 	"blog.news" 		=>  "ประกาศข่าว",
 	"blog.promotion" 	=>  "ประกาศโปรโมชั่น",
+	
+	//การจัดการข้อมูลโทรศัพท์
+	"mobile.managemobile" 	=>  "จัดการโทรศัพท์",
+	"mobile.banner" 		=>  "ยี่ห้อโทรศัพท์",
+	"mobile.model" 			=>  "รุ่นโทรศัพท์",
 	
 	
 );

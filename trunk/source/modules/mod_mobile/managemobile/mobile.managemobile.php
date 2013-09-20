@@ -5,11 +5,11 @@
             <div class="span12">
                 <div class="span1" style="text-align:center;">
                 	<div style="border:1px solid #CCC;">
-                    	<img src="modules/mod_taxi/images/mobile-icon.png" alt="" width="50" height="50"/>
+                    	<img src="modules/mod_mobile/images/mobile-icon.png" alt="" width="50" height="50"/>
                     </div>
                 </div>
                 <div class="span4">
-                    <div><a href="index.php?p=taxi.managemobile&menu=main_taxi" style="text-decoration:none;"><?=$lang_menu["taxi.managemobile"]?></a></div>
+                    <div><a href="index.php?p=mobile.managemobile&menu=main_mobile" style="text-decoration:none;"><?=$lang_menu["mobile.managemobile"]?></a></div>
                     <div class="normal">เมนูเพิ่ม แก้ไข และลบ รายละเีอียดโทรศัพท์ในระบบ</div>
                 </div>
                 <div class="span7">
@@ -37,7 +37,7 @@
   <tr>
   	<td>
 	<?
-	if ($handle_managemobile = opendir('modules/mod_taxi/managemobile')) {
+	if ($handle_managemobile = opendir('modules/mod_mobile/managemobile')) {
  		while (false !== ($file_managemobile = readdir($handle_managemobile)))
       	{
         	if ($file_managemobile != "." && $file_managemobile != "..")
@@ -60,7 +60,7 @@
 		$ii_managemobile++;							
 		
 		if($file_menu_managemobile[$ii_managemobile]){
-			include("modules/mod_taxi/managemobile/$file_menu_managemobile[$ii_managemobile]");									
+			include("modules/mod_mobile/managemobile/$file_menu_managemobile[$ii_managemobile]");									
 		}
 	}	
 	?>
