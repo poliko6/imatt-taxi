@@ -3,32 +3,27 @@
 	
 	//$aColumns = array( 'carImage', 'englishCompanyName', 'carRegistration', 'carBannerNameEng', 'carStatusId', 'carId' );
 	$aColumns = array(
-		'transportSectionId',
-		'carRegistration',
-		'provinceName',
+		'historyId',
+		'driverhistory.customerId',
 		'firstName',
 		'lastName',
-		'latitude',
-		'longitude',
-		'mobileNumber',
-		'thaiCompanyName',
-		'englishCompanyName',
-		'transportsection.garageId'
+		'telephone',
+		'callTime',
+		'generateCode',
+		'statusWork',
+		'startLatitude',
+		'startLongitude',
+		'startPlace'
 	);
 	
 	/* Indexed column (used for fast and accurate table cardinality) */
-	$sIndexColumn = "transportSectionId";
+	$sIndexColumn = "historyId";
 	
 	/* DB table to use */
-   	$sTable = "transportsection";
-	$garageId = $_REQUEST['garageId'];
+   	$sTable = "driverhistory";
  
    	// Joins
-	$sJoin = 'JOIN car ON((car.carId = transportsection.carId)) ';
-	$sJoin .= 'JOIN mobile ON((mobile.mobileId = transportsection.mobileId)) ';
-	$sJoin .= 'JOIN province ON((province.provinceId = car.provinceId)) ';
-	$sJoin .= 'JOIN drivertaxi ON((drivertaxi.driverId = transportsection.driverId)) ';
-	$sJoin .= 'JOIN majoradmin ON((majoradmin.garageId = transportsection.garageId)) ';
+	$sJoin = 'JOIN customer ON((customer.customerId = driverhistory.customerId)) ';
 
 	/* Database connection information */
 	/*$gaSql['user']       = "taxi";
@@ -148,11 +143,11 @@
 	if ($garageId != ''){
 		if ( $sWhere == "" )
 		{
-			$sWhere = "WHERE mobile.garageId = '".$garageId."' and statusWork = 'online'";
+			$sWhere = "WHERE statusWork = 'wait' OR  statusWork = 'waitselect'";
 		}
 		else
 		{
-			$sWhere .= " AND mobile.garageId = '".$garageId."' and statusWork = 'online'";
+			$sWhere .= " AND statusWork = 'wait' OR  statusWork = 'waitselect'";
 		}
 	} 
 	
@@ -219,32 +214,43 @@
 			
 			$row[0] = $n+$iDisplayStart;
 			
-
-			
-			if ( $aColumns[$i] == "carRegistration" ){
-				$row[1] = $aRow[ $aColumns[$i] ].' <div>'.$aRow['provinceName'].'</div>';			
-			}
-						
+					
 			if ( $aColumns[$i] == "firstName" ){
-				$row[2] = $aRow[ $aColumns[$i] ]." ".$aRow['lastName'];			
+				$row[1] = $aRow[ $aColumns[$i] ]." ".$aRow['lastName'];			
 			}
 			
-			if ( $aColumns[$i] == "mobileNumber" ){
+			if ( $aColumns[$i] == "telephone" ){
+				$row[2] = $aRow[ $aColumns[$i] ];			
+			}
+			
+			if ( $aColumns[$i] == "callTime" ){
 				$row[3] = $aRow[ $aColumns[$i] ];			
 			}
 			
-			if ( $aColumns[$i] == "latitude" ){
-				$row[4] = $aRow[ $aColumns[$i] ].', '.$aRow['longitude'];			
+			if ( $aColumns[$i] == "startPlace" ){
+				$row[4] = $aRow[ $aColumns[$i] ];			
 			}
 			
-			if ( $aColumns[$i] == "thaiCompanyName" ){
-				$row[5] = "<div>".$aRow[ $aColumns[$i] ]."</div><div style=\"font-style:italic; color:#999; font-size:11px;\">".$aRow['englishCompanyName']."</div>";			
+			if ( $aColumns[$i] == "statusWork" ){
+				if ( $aRow['statusWork'] == 'wait' ){
+					$set_text = "<div style=\"color:#090;\">กำลังเลือกแท๊กซี่</div>";			
+				} 
+				
+				if ( $aRow['statusWork'] == 'waitselect' ){
+					$set_text = "<div style=\"color:#C00;\">รอให้เลือกแท๊กซี่ให้</div>";			
+				}
+				$row[5] = $set_text."<div style=\"font-style:italic; color:#999; font-size:12px;\">".$aRow['generateCode']."</div>";
 			}
 			
 			
-			if ( $aColumns[$i] == 'transportSectionId' )
+			if ( $aColumns[$i] == 'historyId' )
 			{
-				$set_tools = " <a href=\"#\" class=\"show_on_map btn btn-gebo btn-mini\" onclick=\"mapload('".$aRow['latitude']."','".$aRow['longitude']."',15);\">Show</a> ";
+				$set_tools = " <a href=\"#\" class=\"show_on_map btn btn-gebo btn-mini\" onclick=\"mapload('".$aRow['latitude']."','".$aRow['longitude']."',15);\">ดูตำแหน่ง</a> ";
+				
+				if ($aRow['statusWork'] == 'waitselect' ){
+					$set_tools .= " <a href=\"#\" class=\"show_on_map btn btn-warning btn-mini\" onclick=\"callTaxi('".$aRow['customerId']."','".$aRow['startLatitude']."','".$aRow['startLongitude']."',15);\">เลือกแท๊กซี่</a> ";	
+				} 
+				
 				$row[6] = $set_tools;
 			}			
 		}

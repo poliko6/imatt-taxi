@@ -12,11 +12,11 @@
  	
  switch ($act){
 	case 'addmobile':	
-		include('modules/mod_taxi/managemobile/formAdd.php');		
+		include('modules/mod_mobile/managemobile/formAdd.php');		
 	 	break;		
 		
 	case 'editmobile':
-		include('modules/mod_taxi/managemobile/formEdit.php');
+		include('modules/mod_mobile/managemobile/formEdit.php');
 		break;	
 		
 	case 'saveedit':
@@ -44,7 +44,7 @@
 			});		
 			</script>
 			<?
-			include('modules/mod_taxi/managemobile/formEdit.php');
+			include('modules/mod_mobile/managemobile/formEdit.php');
 		
 		} else {						
 		
@@ -72,7 +72,7 @@
 			});		
 			</script>
 			<?
-			include('modules/mod_taxi/managemobile/mobileShow.php');
+			include('modules/mod_mobile/managemobile/mobileShow.php');
 		}
 		break;
 		
@@ -98,7 +98,7 @@
 			});		
 			</script>
 			<?
-			include('modules/mod_taxi/managemobile/formAdd.php');
+			include('modules/mod_mobile/managemobile/formAdd.php');
 			
 		} else {	
 
@@ -127,7 +127,7 @@
 			});		
 			</script>
 			<?
-			include('modules/mod_taxi/managemobile/mobileShow.php');
+			include('modules/mod_mobile/managemobile/mobileShow.php');
 		}		
 			
 		break;	
@@ -136,14 +136,14 @@
 		
 		
 	default:
-		include('modules/mod_taxi/managemobile/mobileShow.php');
+		include('modules/mod_mobile/managemobile/mobileShow.php');
  }
  
  
  ?>
 
 
-<form action="index.php?p=taxi.managemobile&menu=main_taxi" name="fmReload" id="fmReload" method="post">
+<form action="index.php?p=mobile.managemobile&menu=main_mobile" name="fmReload" id="fmReload" method="post">
 	<input type="hidden" name="garageId" value="<?=$garageId?>" />
 </form>
  
@@ -185,14 +185,14 @@
 	}
 	
 	function reloadPage(){
-		//window.location = 'index.php?p=taxi.managemobile&menu=main_taxi&garageId=<?=$garageId?>'; 
+		//window.location = 'index.php?p=mobile.managemobile&menu=main_mobile&garageId=<?=$garageId?>'; 
 		$('#fmReload').submit();
 	}
 	
 	function fn_goToPage(page){
 		//console.log(page);	
 		if (page == 'add'){	
-			$("#fm_selectmajor").attr("action", 'index.php?p=taxi.managemobile&menu=main_taxi&act=addmobile');
+			$("#fm_selectmajor").attr("action", 'index.php?p=mobile.managemobile&menu=main_mobile&act=addmobile');
 			$('#fm_selectmajor').submit();		
 		}
 	}
@@ -228,7 +228,7 @@
 		}
 		
 		jQuery.ajax({
-			url :'modules/mod_taxi/managemobile/chkNumDuplicate.php',
+			url :'modules/mod_mobile/managemobile/chkNumDuplicate.php',
 			type: 'GET',
 			data: datatag,
 			dataType: 'jsonp',

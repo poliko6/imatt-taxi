@@ -1,1 +1,0 @@
-<a href="index.php?p=taxi.managemobile&menu=main_taxi"><?=$lang_menu["taxi.managemobile"]?></a>
