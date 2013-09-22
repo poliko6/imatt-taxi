@@ -5,8 +5,8 @@
 	include("include/config.inc.php");	
 	include('include/main_class.php');
 	
-	//include("include/class.chklogin.php");
-	//pre($_SESSION);
+	//error_reporting(E_ALL);
+	//ini_set('display_errors', 1);
 
 	foreach($_REQUEST as $key => $value)  {
 		$$key = $value;
