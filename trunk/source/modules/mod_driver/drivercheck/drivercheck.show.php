@@ -100,9 +100,9 @@ if ($driverImage == ''){
      
         <div class="span4 chat_sidebar">
           <div class="chat_heading clearfix"> รายละเอียดส่วนตัว </div>
-            <table class="table table-striped  table-bordered" style="margin-bottom:0px;">         
+            <table class="table table-striped table-bordered" style="margin-bottom:0px; border:none;">         
               <tr>
-                <th width="40%">รุป : </th>
+                <th width="35%">รุป : </th>
                 <td><img src='<?=$pathimage?>' style="height:50px;width:80px; border:1px #CCCCCC solid; padding:3px;">                    
                 </td>
               </tr>
@@ -118,7 +118,7 @@ if ($driverImage == ''){
                 <th>หมายเลขบัตรประชาชน : </th>
                 <td><?=$citizenId?></td>
               </tr>   
-              <tr class="table10">
+              <tr>
                 <th>หมายเลขใบขับขี่ : </th>
                 <td><?=$licenseNumber?></td>
               </tr>
@@ -175,16 +175,14 @@ if ($driverImage == ''){
 
 
 
-
 <div class="row-fluid">
-  <div class="span12">
+  <div class="span8">
     <div class="chat_box">
     
         <div class="tabbable">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab1" data-toggle="tab">ประวัติการเดินทาง</a></li>
                 <li><a href="#tab2" data-toggle="tab">ประวัติการรับผู้โดยสาร</a></li>
-                <li><a href="#tab3" data-toggle="tab">คะแนนรวมความประพฤติ</a></li>
             </ul>
             
             <div class="tab-content">
@@ -200,18 +198,65 @@ if ($driverImage == ''){
                     <div class="row-fluid">
                         <? include('modules/mod_driver/drivercheck/history.passenger.php'); ?>
                     </div>
-                </div>
-                
-                <div class="tab-pane" id="tab3">
-                    <div class="row-fluid">
-                       <? include('modules/mod_driver/drivercheck/history.rating.php'); ?>
-                    </div>
-                </div>
+                </div>             
             </div>
         </div>
 
     </div>
   </div>
+  
+  
+  
+  
+  	<?
+	//จาก driverhistory รวมคะแนน
+	//driverPunctual คะแนนความตรงต่อเวลาที่ลูกค้าให้ผู้ขับ
+	$sql_Punctual = "SELECT SUM(driverPunctual) as sumPunctual FROM driverhistory WHERE driverId='".$driverId."'";
+	$rs_Punctual = mysql_query($sql_Punctual) or trigger_error(mysql_error(),E_USER_ERROR);
+	$sum_Punctual =  mysql_result ($rs_Punctual,0);
+	
+	//driverCourtesy คะแนนมารยาทของผู้ขับที่ลูกค้าให้
+	$sql_Courtesy = "SELECT SUM(driverCourtesy) as sumCourtesy FROM driverhistory WHERE driverId='".$driverId."'";
+	$rs_Courtesy = mysql_query($sql_Courtesy) or trigger_error(mysql_error(),E_USER_ERROR);
+	$sum_Courtesy =  mysql_result ($rs_Courtesy,0);
+	
+	//driverCarLook คะแนนสภาพรถแท๊กซี่ที่ลูกค้าให้ผู้ขับ
+	$sql_CarLook = "SELECT SUM(driverCarLook) as sumCarLook FROM driverhistory WHERE driverId='".$driverId."'";
+	$rs_CarLook = mysql_query($sql_CarLook) or trigger_error(mysql_error(),E_USER_ERROR);
+	$sum_CarLook =  mysql_result ($rs_CarLook,0);
+	
+	//driverDrivingSkill คะแนนเรื่องการขับขี่ที่ลูกค้าให้ผู้ขับ	
+	$sql_DrivingSkill = "SELECT SUM(driverDrivingSkill) as sumDrivingSkill FROM driverhistory WHERE driverId='".$driverId."'";
+	$rs_DrivingSkill = mysql_query($sql_DrivingSkill) or trigger_error(mysql_error(),E_USER_ERROR);
+	$sum_DrivingSkill =  mysql_result ($rs_DrivingSkill,0);
+	?>
+
+     <div class="span4 chat_box" style="border:#CCC 1px solid; border-radius: 5px;">
+         <div class="chat_heading clearfix"> รายละเอียดคะแนน </div>      
+         <table id="mytable" class="table table-striped table-bordered table-condensed" style="border:none; margin-bottom:0px;">
+        
+            <tr>
+                <th>คะแนนความตรงต่อเวลาที่ลูกค้าให้ผู้ขับ</th>
+                <td><?=$sum_Punctual?></td>
+            </tr>
+            <tr>
+                <th>คะแนนมารยาทของผู้ขับที่ลูกค้าให้</th>
+                <td><?=$sum_Courtesy?></td>
+            </tr>
+            <tr>
+                <th>คะแนนสภาพรถแท๊กซี่ที่ลูกค้าให้ผู้ขับ</th>
+                <td><?=$sum_CarLook?></td>
+            </tr>
+            <tr>
+                <th>คะแนนเรื่องการขับขี่ที่ลูกค้าให้ผู้ขับ</th>
+                <td><?=$sum_DrivingSkill?></td>
+             </tr>           
+        </table>
+    </div>
+    
+
+
+
 </div>
 
 <script src="lib/jquery-ui/jquery-ui-1.8.23.custom.min.js"></script>

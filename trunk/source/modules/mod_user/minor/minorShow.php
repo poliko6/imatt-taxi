@@ -93,6 +93,19 @@
                                 <div style="float:left;">
                                 	<a href="#myModalDel<?=$minor_data[$i]['minorId']?>" class="ttip_t" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a>
                                 </div>
+                                <div id="div_lock<?=$minor_data[$i]['minorId']?>" style="float:left; margin-left:5px;">
+                                <?
+								if ($minor_data[$i]['lock'] == 0) {
+									?>
+									<a href="#" class="ttip_t" title="สถานะล๊อค" onclick="fn_changeLock('<?=$minor_data[$i]['minorId']?>',1);"><i class="splashy-thumb_down"></i></a>
+									<?
+								} else {
+									?>
+									<a href="#" class="ttip_t" title="สถานะไม่ล๊อค" onclick="fn_changeLock('<?=$minor_data[$i]['minorId']?>',0);"><i class="splashy-thumb_up"></i></a>
+									<?
+								}
+								?>
+                                </div>
                             </td>
                           
                         </tr>
@@ -152,6 +165,13 @@
 		});	
 	}
 	
+	
+	function fn_changeLock(id,sval){
+		$.post('modules/mod_user/minor/edit.statuslock.php', {status:sval, id:id} , function(data) {
+			$('#div_lock'+id+'').html(data);	
+		});	
+	}
+		
 </script>
 
  

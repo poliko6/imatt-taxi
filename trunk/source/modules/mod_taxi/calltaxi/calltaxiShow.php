@@ -11,11 +11,24 @@ $total = $cus_calltaxi_data;
 
 ?>
 
+<script type="text/javascript">
+	$(document).ready(function(){	
 
+		$(document).on("keydown.NewActionOnF5", function(e){
+			var charCode = e.which || e.keyCode;
+			switch(charCode){
+				case 116: // F5
+					e.preventDefault();
+					window.location = "index.php?p=<?=$p?>&menu=<?=$menu?>";
+					break;
+			}
+		});	
+	});
+</script>
 
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
-		$('#example').dataTable( {			
+		var dataTable = $('#example').dataTable( {			
 			"bProcessing": true,
 			"bServerSide": true,
 			"sAjaxSource": "modules/mod_taxi/calltaxi/scripts/server_processing.php",
@@ -40,14 +53,23 @@ $total = $cus_calltaxi_data;
 				"sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
 				"sSearch": "ค้นหา :"
 			 }
-		} );
-	} );
+		});
+		
+	
+	 	setInterval(function(){ // เขียนฟังก์ชัน javascript ให้ทำงานทุก ๆ 30 วินาที  
+			// 1 วินาที่ เท่า 1000  
+			// คำสั่งที่ต้องการให้ทำงาน ทุก ๆ 3 วินาที  
+			dataTable.fnDraw(); 
+		},3000);      
+		
+		
+	});
 	
 	
-	function callTaxi(cusID,Lat,Lon){
+	function callTaxi(cusID,Lat,Lon,historyId){
 		//console.log(cusID+','+Lat+','+Lon);		
 		//window.location = 'index.php?p=<?=$p?>&menu=<?=$menu?>&act=calltaxi&customerId='+cusID+'&custLat='+Lat+'&custLong='+Lon+'';
-		
+		$('#historyId').val(historyId);
 		$('#customerId').val(cusID);
 		$('#custLat').val(Lat);
 		$('#custLong').val(Lon);
@@ -58,9 +80,10 @@ $total = $cus_calltaxi_data;
 
 
 <form action="" name="fm_calltaxi" id="fm_calltaxi" method="post">
-	<input type="text" name="customerId" id="customerId" value="" />
-    <input type="text" name="custLat" id="custLat" value="" />
-    <input type="text" name="custLong" id="custLong" value="" />
+	<input type="hidden" name="customerId" id="customerId" value="" />
+    <input type="hidden" name="custLat" id="custLat" value="" />
+    <input type="hidden" name="custLong" id="custLong" value="" />
+    <input type="hidden" name="historyId" id="historyId" value="" />
     <input type="hidden" name="act" id="act" value="calltaxi" />
 </form>
 

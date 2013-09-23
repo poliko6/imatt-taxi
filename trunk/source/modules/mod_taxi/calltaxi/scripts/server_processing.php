@@ -248,7 +248,7 @@
 				$set_tools = " <a href=\"#\" class=\"show_on_map btn btn-gebo btn-mini\" onclick=\"mapload('".$aRow['latitude']."','".$aRow['longitude']."',15);\">ดูตำแหน่ง</a> ";
 				
 				if ($aRow['statusWork'] == 'waitselect' ){
-					$set_tools .= " <a href=\"#\" class=\"show_on_map btn btn-warning btn-mini\" onclick=\"callTaxi('".$aRow['customerId']."','".$aRow['startLatitude']."','".$aRow['startLongitude']."',15);\">เลือกแท๊กซี่</a> ";	
+					$set_tools .= " <a href=\"#\" class=\"show_on_map btn btn-warning btn-mini\" onclick=\"callTaxi('".$aRow['customerId']."','".$aRow['startLatitude']."','".$aRow['startLongitude']."','".$aRow['historyId']."');\">เลือกแท๊กซี่</a> ";	
 				} 
 				
 				$row[6] = $set_tools;
