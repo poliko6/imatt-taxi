@@ -20,6 +20,16 @@
 	$network_name = $network_data[0]['mobileNetworkName'];	
 
 
+	//data banner
+	$banner_data = select_db('mobilebanner',"where mobileBannerId = '".$mobile_data[0]['mobileBannerId']."'");
+	$banner_name = $banner_data[0]['mobileBannerNameEng'];
+	
+	
+	//data model
+	$model_data = select_db('mobilemodel',"where mobileModelId = '".$mobile_data[0]['mobileModelId']."'");
+	$model_name = $model_data[0]['mobileModelName'];
+
+
 	//สังกัดอู่
  	$major_data = select_db('majoradmin',"where garageId = '".$mobile_data[0]['garageId']."'");
 	$major_name = $major_data[0]['thaiCompanyName'];
@@ -28,8 +38,8 @@
 	$data['mobilenumber'] = $mobile_data[0]['mobileNumber'];
 	$data['emimsi'] = $mobile_data[0]['EmiMsi'];
 	$data['simid'] = $mobile_data[0]['simId'];				
-	$data['banner'] = $mobile_data[0]['mobileBanner'];				
-	$data['model'] = $mobile_data[0]['mobileModel'];
+	$data['banner'] = $banner_name;				
+	$data['model'] = $model_name;
 	$data['network'] = $network_name;			
 	$data['garagename'] = $major_name;
 
