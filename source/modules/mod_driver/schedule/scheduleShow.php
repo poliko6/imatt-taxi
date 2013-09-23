@@ -9,11 +9,11 @@
 if (empty($d)){
 	$time_data = count_data_mysql('transportsectionId','transportsection',"garageId = '".$u_garage."' and dateAdd like '".date('Y-m-d')."%' OR statusWork = 'online'");
 	//$time_data = select_db('transportsection',"where garageId = '".$u_garage."' and dateAdd like '".date('Y-m-d')."%' OR statusWork = 'online' order by statusWork");
-	$dchk = date('Y-m-d');
+	//$dchk = date('Y-m-d');
 } else {	
 	$p_date = explode('/',$d);
 	$thisdate = $p_date[2].'-'.$p_date[1].'-'.$p_date[0];
-	$time_data = count_data_mysql('transportsectionId','transportsection',"garageId = '".$u_garage."' and dateAdd like '".$thisdate."%' OR statusWork = 'online'");
+	$time_data = count_data_mysql('transportsectionId','transportsection',"garageId = '".$u_garage."' and dateAdd like '".$thisdate."%'");
 	//$time_data = select_db('transportsection',"where garageId = '".$u_garage."' and dateAdd like '".$thisdate."%' OR statusWork = 'online' order by statusWork");
 	$dchk = $thisdate;
 }
@@ -63,15 +63,14 @@ $major_name = $major_data[0]['thaiCompanyName'];
                 <div class="pull-left">จำนวนการลงเวลาเข้างาน ของอู่ "<span style="color:#C30; font-weight:bold;"><?=$major_name?></span>" มีจำนวน <strong><?=$total?></strong></div>
        	
                 <div class="span2 pull-right" style="text-align:right;">  
-                    <form action="" name="fm_addminor" id="fm_addminor" method="post">   
+                    <form action="" name="fm_addminor" id="fm_addminor" method="post"> 
                         <input type="hidden" name="act" value="addschedule" />                  
                         <input type="submit" class="btn btn-success" name="btnSubmit" id="btnSubmit" value="ลงเวลางาน">
                     </form>
-                </div>   
-
+                </div>                 
+                
                    
-                <div class="span3 pull-right" style="text-align:right;">
-                    
+                <div class="span3 pull-right" style="text-align:right;">                    
                     <div style="float:left;">เลือกวันที่ต้องการดู : &nbsp;</div>
                     <div class="controls input-append date" id="dp2" data-date-format="dd/mm/yyyy">                    	
                         <input class="span6" type="text" id="dateShow" name="dateShow" readonly="readonly" value="<?=date('d/m/Y')?>" />
@@ -79,8 +78,29 @@ $major_name = $major_data[0]['thaiCompanyName'];
                     </div>
                     
                 </div>  
-              
             </div>
+        </div>
+        
+       
+         <div class="span6 pull-right">  
+           
+            <form action="index.php?p=<?=$p?>&menu=<?=$menu?>" name="fm_selectmajor" id="fm_selectmajor" method="post">                	
+                <p>เลือกอู่ต้องการดู : &nbsp;</p>
+                <? 
+                if ($u_garage == 1) { 
+                    $major_data_list = select_db('majoradmin',"order by dateAdded desc");
+                    ?> 
+                    <select name="garageId" id="garageId" onchange="fm_selectmajor.submit();" style="width:250px;">
+                        <option value="">ทั้งหมด</option>
+                        <? foreach($major_data_list as $valMajor){?>
+                            <option value="<?=$valMajor['garageId']?>" <? if ($garageId == $valMajor['garageId']) { echo "selected=\"selected\""; } ?> ><?=$valMajor['thaiCompanyName']?></option>
+                        <? } ?>
+                    </select>	        
+                <? } else { ?>	
+                    <input type="hidden" name="garageId" value="<?=$garageId?>" /> 
+                <? } ?>	
+
+            </form> 
         </div>
         
         

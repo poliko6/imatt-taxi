@@ -5,15 +5,15 @@
 	$aColumns = array(
 		'carId',
 		'carImage',
+		'majoradmin.thaiCompanyName',
+		'majoradmin.englishCompanyName',
 		'carRegistration',
 		'carYear',
 		'provinceName',
 		'carModelName',
 		'carBannerNameEng',
 		'carStatusId',
-		'car.dateAdd',
-		'thaiCompanyName',
-		'englishCompanyName',
+		'car.dateAdd',		
 		'car.garageId'
 	);
 	
@@ -122,7 +122,7 @@
 		{
 			if ( isset($_GET['bSearchable_'.$i]) && $_GET['bSearchable_'.$i] == "true" )
 			{
-				$sWhere .= "`".$aColumns[$i]."` LIKE '%".mysql_real_escape_string( $_GET['sSearch'] )."%' OR ";
+				$sWhere .= "".$aColumns[$i]." LIKE '%".mysql_real_escape_string( $_GET['sSearch'] )."%' OR ";
 			}
 		}
 		$sWhere = substr_replace( $sWhere, "", -3 );
@@ -142,7 +142,7 @@
 			{
 				$sWhere .= " AND ";
 			}
-			$sWhere .= "`".$aColumns[$i]."` LIKE '%".mysql_real_escape_string($_GET['sSearch_'.$i])."%' ";
+			$sWhere .= "".$aColumns[$i]." LIKE '%".mysql_real_escape_string($_GET['sSearch_'.$i])."%' ";
 		}
 	}
 	
@@ -241,8 +241,8 @@
 				$row[0] = "<a title=\"$aRow]['carRegistration']\" class=\"cbox_single thumbnail\"><img src='".$pathimage2."' style=\"height:50px;width:80px;\"></a>";
 			}
 			
-			if ( $aColumns[$i] == "thaiCompanyName" ){
-				$row[1] = "<div>".$aRow[ $aColumns[$i] ]."</div><div style=\"font-style:italic; color:#999; font-size:11px;\">".$aRow['englishCompanyName']."</div>";			
+			if ( $aColumns[$i] == "majoradmin.thaiCompanyName" ){
+				$row[1] = "<div>".$aRow['thaiCompanyName']."</div><div style=\"font-style:italic; color:#999; font-size:11px;\">".$aRow['englishCompanyName']."</div>";			
 			}
 			
 			if ( $aColumns[$i] == "carRegistration" ){

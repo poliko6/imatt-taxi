@@ -4,20 +4,20 @@
 	//$aColumns = array( 'carImage', 'englishCompanyName', 'carRegistration', 'carBannerNameEng', 'carStatusId', 'carId' );
 	$aColumns = array(
 		'transportSectionId',
-		'carRegistration',
+		'car.carRegistration',
 		'transportsection.driverId',
 		'transportsection.carId',
 		'transportsection.mobileId',
-		'mobileNumber',
-		'provinceName',
+		'mobile.mobileNumber',
+		'province.provinceName',
 		'transportsection.dateAdd',
-		'timeStart',
-		'timeEnd',
-		'latitude',
-		'longitude',
-		'firstName',
-		'lastName',
-		'statusWork'
+		'transportsection.timeStart',
+		'transportsection.timeEnd',
+		'mobile.latitude',
+		'mobile.longitude',
+		'drivertaxi.firstName',
+		'drivertaxi.lastName',
+		'transportsection.statusWork'
 	);
 	
 	/* Indexed column (used for fast and accurate table cardinality) */
@@ -31,7 +31,7 @@
    	// Joins
 	$sJoin = 'JOIN car ON((car.carId = transportsection.carId))';
 	$sJoin .= 'JOIN mobile ON((mobile.mobileId = transportsection.mobileId))';
-	$sJoin .= 'JOIN province ON((province.`provinceId` = car.provinceId))';
+	$sJoin .= 'JOIN province ON((province.provinceId = car.provinceId))';
 	$sJoin .= 'JOIN drivertaxi ON((drivertaxi.driverId = transportsection.driverId))';
    	//$sJoin = 'LEFT JOIN users u ON u.id = regina_dslams.user_id ';
    	//$sJoin .= 'LEFT JOIN regina_dslam_types ON regina_dslam_types.id = regina_dslams.regie_dslam_type_id ';
@@ -114,8 +114,10 @@
 	 * word by word on any field. It's possible to do here, but concerned about efficiency
 	 * on very large tables, and MySQL's regex functionality is very limited
 	 */
+
+	//$sWhere = "where transportsection.garageId = '".$garageId."' and transportsection.dateAdd like '".$d."%' OR statusWork = 'online'";	
+	$sWhere = "";
 	
-	$sWhere = "where transportsection.garageId = '".$garageId."' and transportsection.dateAdd like '".$d."%' OR statusWork = 'online'";	
 	//$sSearch = iconv("tis-620","utf-8",$_GET['sSearch']);
 	if ( isset($_GET['sSearch'] ) && $_GET['sSearch']  != "" )
 	{
@@ -147,6 +149,20 @@
 			$sWhere .= "".$aColumns[$i]." LIKE '%".mysql_real_escape_string($_GET['sSearch_'.$i])."%' ";
 		}
 	}
+	
+	
+	//$sWhere = "where transportsection.garageId = '".$garageId."' and transportsection.dateAdd like '".$d."%' OR statusWork = 'online'";	
+	
+	if ($garageId != ''){
+		if ( $sWhere == "" )
+		{
+			$sWhere = "WHERE transportsection.garageId = '".$garageId."'";
+		}
+		else
+		{
+			$sWhere .= " AND transportsection.garageId = '".$garageId."'";
+		}
+	} 
 	
 	
 	
@@ -213,43 +229,43 @@
 			
 			
 			
-			if ($aColumns[$i] == "firstName"){
+			if ($aColumns[$i] == "drivertaxi.firstName"){
 				$setrow1 = "<i class=\"splashy-contact_grey\"></i>";
 				$setrow1 .= "<a href=\"#\" style=\"margin-left:5px;\" class=\"ttip_t\" title=\"ดูรายละเอียดเพิ่มเติม\" onclick=\"fn_showInfoDriver(".$aRow['driverId'].")\">";
-				$setrow1 .= $aRow[ $aColumns[$i] ]." ".$aRow['lastName']."</a>";	
+				$setrow1 .= $aRow['firstName']." ".$aRow['lastName']."</a>";	
 				$row[1] = $setrow1;		
 			}
 						
-			if ( $aColumns[$i] == "carRegistration" ){
+			if ( $aColumns[$i] == "car.carRegistration" ){
 				$setrow2 = "<a href=\"#\" class=\"ttip_t\" title=\"ดูรายละเอียดเพิ่มเติม\" onclick=\"fn_showInfoCar(".$aRow['carId'].");\">";
-				$setrow2 .= $aRow[ $aColumns[$i] ]." ".$aRow['provinceName']."</a>";
+				$setrow2 .= $aRow['carRegistration']." ".$aRow['provinceName']."</a>";
 				$row[2] = $setrow2;			
 			}
 			
-			if ( $aColumns[$i] == "mobileNumber" ){
+			if ( $aColumns[$i] == "mobile.mobileNumber" ){
 				$setrow3 = "<i class=\"splashy-cellphone\"></i>";
 				$setrow3 .= "<a href=\"#\" style=\"margin-left:5px;\" class=\"ttip_t\" title=\"ดูรายละเอียดเพิ่มเติม\" onclick=\"fn_showInfoMobile(".$aRow['mobileId'].");\">";
-				$setrow3 .= $aRow[ $aColumns[$i] ]."</a>";	
+				$setrow3 .= $aRow['mobileNumber']."</a>";	
 				$row[3] = $setrow3;	
 			}
 			
-			if ( $aColumns[$i] == "latitude" ){
-				$row[4] = $aRow[ $aColumns[$i] ].", ".$aRow['longitude'];			
+			if ( $aColumns[$i] == "mobile.latitude" ){
+				$row[4] = $aRow['latitude'].", ".$aRow['longitude'];			
 			}
 			
 			if ($aColumns[$i] == "transportsection.dateAdd"){
 				$row[5] = Thai_date($aRow['dateAdd']);
 			}
 			
-			if ( $aColumns[$i] == "timeStart" ){
+			if ( $aColumns[$i] == "transportsection.timeStart" ){
 				$p_time1 = explode(':',$aRow['timeStart']);
 				$p_time2 = explode(':',$aRow['timeEnd']); 
 				 
 				$row[6] = $p_time1[0].":".$p_time1[1]." น. - ".$p_time2[0].":".$p_time2[1]." น. ";		
 			}	
 			
-			if ( $aColumns[$i] == "statusWork" ){
-				if ($aRow[ $aColumns[$i] ] == 'online') {
+			if ( $aColumns[$i] == "transportsection.statusWork" ){
+				if ($aRow['statusWork'] == 'online') {
 					$row[7] = "<span style=\"color:#0C0; font-weight:bold;\">กำลังทำงาน</span>";
 				} else {
 					$row[7] = "<span style=\"color:#666; font-style:italic;\">ออกจากงานแล้ว</span>";
