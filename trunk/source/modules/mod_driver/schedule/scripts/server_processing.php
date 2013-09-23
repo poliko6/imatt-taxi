@@ -10,13 +10,14 @@
 		'transportsection.mobileId',
 		'mobile.mobileNumber',
 		'province.provinceName',
-		'transportsection.dateAdd',
-		'transportsection.timeStart',
-		'transportsection.timeEnd',
 		'mobile.latitude',
 		'mobile.longitude',
 		'drivertaxi.firstName',
 		'drivertaxi.lastName',
+		'transportsection.dateAdd',
+		'transportsection.timeStart',
+		'transportsection.timeEnd',
+		'transportsection.garageId',
 		'transportsection.statusWork'
 	);
 	
@@ -44,8 +45,7 @@
 	$gaSql['db']         = "taxi_db2";
 	$gaSql['server']     = "imattioapp.com";*/
 	include("../../../../include/class.function.php");
-	include("../../../../include/db_connect.php" );
-	
+	include("../../../../include/db_connect.php" );	
 	
 
 	/* 
@@ -71,7 +71,7 @@
 		fatal_error( 'Could not select database ' );
 	}
 	//iNanCM.com
-	mysql_query("SET NAMES UTF8");
+	//mysql_query("SET NAMES UTF8");
 
 	/* 
 	 * Paging
@@ -115,9 +115,9 @@
 	 * on very large tables, and MySQL's regex functionality is very limited
 	 */
 
-	//$sWhere = "where transportsection.garageId = '".$garageId."' and transportsection.dateAdd like '".$d."%' OR statusWork = 'online'";	
-	$sWhere = "";
 	
+	$sWhere = "";
+	//$sWhere = "where transportsection.garageId = '".$garageId."' and transportsection.dateAdd like '".$d."%' ";	
 	//$sSearch = iconv("tis-620","utf-8",$_GET['sSearch']);
 	if ( isset($_GET['sSearch'] ) && $_GET['sSearch']  != "" )
 	{
@@ -151,16 +151,29 @@
 	}
 	
 	
+	
 	//$sWhere = "where transportsection.garageId = '".$garageId."' and transportsection.dateAdd like '".$d."%' OR statusWork = 'online'";	
 	
 	if ($garageId != ''){
-		if ( $sWhere == "" )
-		{
-			$sWhere = "WHERE transportsection.garageId = '".$garageId."'";
+		if ($sWhere == "" )
+		{			
+			$sWhere = "WHERE transportsection.garageId = '".$garageId."' ";
+			if ($d != ''){
+				$sWhere = $sWhere."AND transportsection.dateAdd like '".$d."%' ";
+			} else {
+				$sWhere = $sWhere."AND transportsection.statusWork in ('online','offline') ";
+			}
 		}
 		else
 		{
-			$sWhere .= " AND transportsection.garageId = '".$garageId."'";
+			$sWhere = $sWhere." AND transportsection.garageId = '".$garageId."' ";
+			
+			if ($d != ''){				
+				$sWhere = $sWhere."AND transportsection.dateAdd like '".$d."%' ";
+			} else {
+				//if ($d == date('Y-m-d')){ } 
+				$sWhere = $sWhere."AND transportsection.statusWork in ('online','offline') ";
+			}
 		}
 	} 
 	
@@ -171,6 +184,8 @@
 	 * SQL queries
 	 * Get data to display
 	 */
+	//iNanCM.com
+	mysql_query("SET NAMES UTF8");
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , ", " ", implode(", ", $aColumns))."
 		FROM   $sTable
@@ -262,8 +277,9 @@
 				$p_time2 = explode(':',$aRow['timeEnd']); 
 				 
 				$row[6] = $p_time1[0].":".$p_time1[1]." น. - ".$p_time2[0].":".$p_time2[1]." น. ";		
-			}	
-			
+			}
+			//$row[5] = $aRow['garageId'];	
+			//$row[6] = 0;
 			if ( $aColumns[$i] == "transportsection.statusWork" ){
 				if ($aRow['statusWork'] == 'online') {
 					$row[7] = "<span style=\"color:#0C0; font-weight:bold;\">กำลังทำงาน</span>";
