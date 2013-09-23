@@ -57,9 +57,10 @@ if ($user) {
 	else
 	{
 		$objData = @mysql_fetch_object($objQuery);
-		if ($objData->status == 0){
+		if ($objData->lock == 0){
 			$data['success'] = false;
-			$data['chk'] = 1;
+			session_destroy();
+			$user = NULL; 
 			//
 		} else {
 			

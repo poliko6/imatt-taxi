@@ -28,12 +28,18 @@ if ($garageId == ''){
 	$major_name = $major_data[0]['thaiCompanyName'];
 	$garageId = $major_data[0]['garageId'];
 }
+
+
+if (empty($start_page)){ $start_page = 0;}
+
 ?>
 
 
 <script type="text/javascript" charset="utf-8">
+	var startpage = <?=$start_page?>;
 	$(document).ready(function() {
-		$('#example').dataTable( {			
+	
+		var dataTable = $('#example').dataTable( {			
 			"bProcessing": true,
 			"bServerSide": true,
 			"sAjaxSource": "modules/mod_taxi/taximanage/scripts/server_processing.php?garageId=<?=$garageId?>",
@@ -48,7 +54,6 @@ if ($garageId == ''){
 			"oTableTools": {
 				"sRowSelect": "single" // คลิกที่ record มีแถบสีขึ้น
 			},
- 
 			
 			"oLanguage": {
 				"sLengthMenu": "แสดง _MENU_ เร็คคอร์ด ต่อหน้า",
@@ -57,9 +62,32 @@ if ($garageId == ''){
 				"sInfoEmpty": "แสดง 0 ถึง 0 ของ 0 เร็คคอร์ด",
 				"sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
 				"sSearch": "ค้นหา :"
-			 }
-		} );
-	} );
+			 },
+			 
+	
+			  "fnDrawCallback": function (oSettings) {
+				//self.selectedPageLength = oSettings._iDisplayStart; //Storing this for use by <a href="/ref#fnPreDrawCallback">fnPreDrawCallback</a>       
+				 //console.log(oSettings._iDisplayStart);
+				 $('#start_page').val(oSettings._iDisplayStart);
+				 
+			  },
+			 
+		});//Datatable
+		
+		
+		//var oSettings = dataTable.fnSettings();
+    		//console.log( oSettings._iDisplayLength);
+		
+	
+		
+		
+	});
+	
+	function fn_changeLock(id,sval){
+		$.post('modules/mod_taxi/taximanage/edit.statuslock.php', {status:sval, id:id} , function(data) {			  
+			window.location = 'index.php?p=taxi.taximanage&menu=main_taxi&garageId=<?=$garageId?>'; 
+		});	
+	}
 </script>
 
  
@@ -106,7 +134,8 @@ if ($garageId == ''){
                         <th width="18%">รายละเอียดรถ</th>   
                         <th width="7%">สถานะ</th>
                         <th width="13%">วันที่เพิ่ม</th>
-                        <th width="10%">เครื่องมือ</th>
+                        <th width="6%">เครื่องมือ</th>
+                        <th width="4%">ล๊อค</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -135,6 +164,7 @@ if ($garageId == ''){
      
      
     <form action="" method="post" name="fm_Edit" id="fm_Edit">
+    	<input type="hidden" name="start_page" id="start_page" value="" />
         <input type="hidden" name="carId" id="carId_edit" value="" />
         <input type="hidden" name="garageId" id="garageId_edit"  value="" />
         <input type="hidden" name="act" value="edittaxi" />
@@ -178,7 +208,8 @@ if ($garageId == ''){
             $('#garageId_edit').val(garageid);
             $('#fm_Edit').submit();
         }
-        
+		
+	
     </script>
 
 

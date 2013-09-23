@@ -46,7 +46,7 @@ $major_name = $major_data[0]['thaiCompanyName'];
                   <div class="controls text_line">
                     <div class="span10">    
                         <? 
-						$driver_data = select_db('drivertaxi',"order by firstName"); 
+						$driver_data = select_db('drivertaxi',"where `lock` = 1 order by firstName"); 
 						/*foreach($driver_data as $valDriver){
 								//$driver_working = select_db('transportsection',"where driverId = '".$valDriver['driverId']."' and dateAdd Like '".date('Y-m-d')."%' and ('".date('H:i:s')."' BETWEEN timeStart and timeEnd) ");
 								$driver_working = select_db('transportsection',"where driverId = '".$valDriver['driverId']."' and dateAdd Like '".date('Y-m-d')."%'  and statusWork = 'online' ");
@@ -79,7 +79,7 @@ $major_name = $major_data[0]['thaiCompanyName'];
                   <div class="controls text_line">
                     <div class="span10">    
                         <? 
-						$car_data = select_db('car',"where garageId = '".$u_garage."' order by carRegistration"); 					
+						$car_data = select_db('car',"where garageId = '".$u_garage."' and `lock` = 1 order by carRegistration"); 					
 						?>          		
                         <select name="thiscarId" id="thiscarId" data-placeholder="เลือกรถแท๊กซี่..." class="chzn_a span6">
                             <option value=""></option> 
@@ -109,7 +109,7 @@ $major_name = $major_data[0]['thaiCompanyName'];
                   <label for="driverId" class="control-label">โทรศัพท์ <span class="f_req">*</span> :</label>
                   <div class="controls text_line">
                     <div class="span10">    
-                        <? $mobile_data = select_db('mobile',"where garageId = '".$u_garage."' order by mobileNumber"); ?>          		
+                        <? $mobile_data = select_db('mobile',"where garageId = '".$u_garage."' and `lock` = 1 order by mobileNumber"); ?>          		
                         <select name="thismobileId" id="thismobileId" data-placeholder="เลือกโทรศัพท์..." class="chzn_a span6">
                             <option value=""></option> 
                             <? 

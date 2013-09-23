@@ -35,6 +35,7 @@
 		$u_garageid = $data_major->garageId;	
 		$u_type = $data_major->majorTypeId;	
 		$u_username = $username;
+		$u_lock = $data_major->lock;
 		$find = 1;
 	
 	} else {
@@ -59,6 +60,7 @@
 			$u_garageid = $data_minor->garageId;	
 			$u_type = 3;	
 			$u_username = $username;
+			$u_lock = $data_major->lock;
 			$find = 1;			
 				
 		}
@@ -67,28 +69,42 @@
 	
 
 	if ($find > 0){	
-		$_SESSION['u_garage'] = $u_garageid; //ถ้าเป็นพนักงานให้เป็น 3
-		$_SESSION['u_username'] = $u_username;
-		$_SESSION['u_id'] = $u_id;	 //id มาจากตาราง major และ minor
-		$_SESSION['u_type'] = $u_type; //ถ้าเป็นพนักงานให้เป็น 3
-		$_SESSION['pass_actived'] = 'actived';
 		
-		echo "<div class='alert alert-login alert-success'>เข้าสู่ระบบโดย : <strong>".$u_username."</strong></div>";
-
-		//มีปัญหาเรื่อง Cookie
-		if($chkMem) { 			
-			//setcookie("ID", $username, time()+3600*24*365);
-			//setcookie("uname",$username,time()+3600*24*365,'/','.taxi.imattioapp.com');
-			//setcookie("taximeter_[username]", $username, $time + 3600); // Sets the cookie username 
-			//setcookie("taximeter_[password]", $password, $time + 3600); // Sets the cookie password 
-			//setcookie("taximeter_[garageid]", $garageid, $time + 3600); // Sets the cookie password 
+		if ($u_lock == 0){ 
+		
+			echo "<div class='alert alert-login alert-error'>User ของคุณถูกล๊อค</div>";
+			session_destroy();
+			$user = NULL; 
+		
+		} else {//if u_lcok (UnLock)
 			
-		}
-		echo "<script>window.location='index.php';</script>";
-		/*echo "<meta http-equiv=\"refresh\" content=\"2;URL=index.php\">";*/
+			$_SESSION['u_garage'] = $u_garageid; //ถ้าเป็นพนักงานให้เป็น 3
+			$_SESSION['u_username'] = $u_username;
+			$_SESSION['u_id'] = $u_id;	 //id มาจากตาราง major และ minor
+			$_SESSION['u_type'] = $u_type; //ถ้าเป็นพนักงานให้เป็น 3
+			$_SESSION['pass_actived'] = 'actived';
+			
+			echo "<div class='alert alert-login alert-success'>เข้าสู่ระบบโดย : <strong>".$u_username."</strong></div>";
+	
+			//มีปัญหาเรื่อง Cookie
+			if($chkMem) { 			
+				//setcookie("ID", $username, time()+3600*24*365);
+				//setcookie("uname",$username,time()+3600*24*365,'/','.taxi.imattioapp.com');
+				//setcookie("taximeter_[username]", $username, $time + 3600); // Sets the cookie username 
+				//setcookie("taximeter_[password]", $password, $time + 3600); // Sets the cookie password 
+				//setcookie("taximeter_[garageid]", $garageid, $time + 3600); // Sets the cookie password 
+				
+			}
+			echo "<script>window.location='index.php';</script>";
+			/*echo "<meta http-equiv=\"refresh\" content=\"2;URL=index.php\">";*/
+		
+		} //if u_lcok
 		
 	} else {
+		
 		echo "<div class='alert alert-login alert-error'>ไม่สามารถเข้าสู่ระบบได้</div>";	
+		session_destroy();
+		$user = NULL; 
 	}
 	//ob_end_flush();
 ?>
