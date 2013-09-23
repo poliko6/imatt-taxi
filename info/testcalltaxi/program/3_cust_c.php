@@ -90,7 +90,6 @@ $car3_long =$row3['longitude'];
 <div id="map_canvas" style="width:100%; height:70%"> </div> 
 
 
-
 <script type="text/javascript"> 
  function initialize() {  
     var latlng = new google.maps.LatLng(<?=$cust_latitude;?>,<?=$cust_longitude;?>);  
@@ -136,7 +135,7 @@ $car3_long =$row3['longitude'];
 			var infowindow = new google.maps.InfoWindow({ 
 			  content: 'Place number ' + j
 			}); 
-			//infowindow.open(map, marker); 
+			infowindow.open(map, marker); 
 			document.getElementById('carid').value = xx;
 		  }); 
 		})(i, marker); 

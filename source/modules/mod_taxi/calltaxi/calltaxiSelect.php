@@ -41,24 +41,33 @@
 	
 	$car1_lat = $arr_distance[0]['latitude'];
 	$car1_long = $arr_distance[0]['longitude'];
+	$car1_mobile = $arr_distance[0]['mobileId'];
+	
 	$car2_lat = $arr_distance[1]['latitude'];
 	$car2_long = $arr_distance[1]['longitude'];
+	$car2_mobile = $arr_distance[1]['mobileId'];
+	
 	$car3_lat = $arr_distance[2]['latitude'];
 	$car3_long = $arr_distance[2]['longitude'];
+	$car3_mobile = $arr_distance[2]['mobileId'];
 	
 ?>
 
+<style type="text/css"> 
+  #map_canvas { height: 100% }  
+</style> 
 
-
-<div id="map_canvas" style="width:100%; height:70%"> </div> 
-
-
-
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"> </script>
+<div class="btn-group pull-right" style="padding:5px;"> 
+	<a href="index.php?p=taxi.calltaxi&menu=main_taxi"  class="btn btn-info btn-small">กลับหน้าเรียกแท๊กซี่</a>
+</div>
+<div id='map_canvas' style='height:500px; width:100%; border:#CCCCCC solid 1px;'> </div>
 
 <script type="text/javascript"> 
  function initialize() {  
     var latlng = new google.maps.LatLng(<?=$cust_latitude;?>,<?=$cust_longitude;?>);  
-    var myOptions = {  
+	
+	var myOptions = {  
       zoom: 15,  
       center: latlng,  
       mapTypeId: google.maps.MapTypeId.ROADMAP  ,
@@ -77,6 +86,7 @@
 
 
 
+
 	var places=[];
 
 	places.push(new google.maps.LatLng(<?=$car1_lat;?>,<?=$car1_long;?>));
@@ -88,20 +98,44 @@
 		var marker = new google.maps.Marker({
 			position: places[i],
 				map:map,
-				title: ''
+				title: 'รถแท๊กซี่'
 		});
+		
+		var mobileId = 0;
 
 		(function(j, marker) { 
 		   
 		  google.maps.event.addListener(marker, 'click', function() { 
 			
 			xx = j+1;
+			
+			if (j == 0){ mobileId = '<?=$car1_mobile?>'; }
+			if (j == 1){ mobileId = '<?=$car2_mobile?>'; }
+			if (j == 2){ mobileId = '<?=$car3_mobile?>'; }
+			
+			//console.log(mobileId);
+			
+			jQuery.ajax({
+				url :'modules/mod_taxi/calltaxi/get.taxidata.php',
+				type: 'GET',
+				data: 'mobileId='+mobileId+'',
+				dataType: 'jsonp',
+				dataCharset: 'jsonp',
+				success: function (data){
+													
+					var infowindow = new google.maps.InfoWindow({ 
+						content: data.carRegistration+' '+data.province+'<div>('+data.major_name+')</div>'
+					}); 
+					
+					infowindow.open(map, marker); 
+					document.getElementById('carRegistration').value = data.carRegistration+' '+data.province;
+					document.getElementById('driverId').value = data.driverId;
+					document.getElementById('carId').value = data.carId;
+					document.getElementById('mobileId').value = data.mobileId;
+					document.getElementById('garageId').value = data.garageId;
+				}
+			});	
 
-			var infowindow = new google.maps.InfoWindow({ 
-			  content: 'Place number ' + j
-			}); 
-			//infowindow.open(map, marker); 
-			document.getElementById('carid').value = xx;
 		  }); 
 		})(i, marker); 
 	}
@@ -122,8 +156,28 @@ window.onload = function()
 }
 </style>
 
-<form method="post" action="3_cust_c_1.php">
-เรียกรถแท๊กซี่ คันที่ <input type="text" name="carid_no" value="" id="carid">
-<input type='hidden' name='custid' value="<?=$custid?>">
-&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Submit">
-</form>
+
+<div class="row-fluid" style="margin-top:10px;">
+	<div class="span3"></div>
+    <div class="span6">
+        <form class="well form-inline" action="" name="fm_selecttaxi" id="fm_selecttaxi" method="post">
+            <p class="f_legend">เรียกรถแท๊กซี่ ทะเบียน </p>
+            <input type="text" name="carRegistration" id="carRegistration" value=""  disabled="disabled" />
+            <input type="hidden" name="customerId" id="customerId" value="<?=$customerId?>" />
+            <input type="hidden" name="custLat" id="custLat" value="<?=$custLat?>" />
+            <input type="hidden" name="custLong" id="custLong" value="<?=$custLong?>" />
+            <input type="hidden" name="historyId" id="historyId" value="<?=$historyId?>" />
+            
+            <input type="hidden" name="mobileId" id="mobileId" placeholder="mobileId" value="" />
+            <input type="hidden" name="carId" id="carId" placeholder="carId" value="" />
+            <input type="hidden" name="driverId" id="driverId" placeholder="driverId" value="" />
+            <input type="hidden" name="garageId" id="garageId" placeholder="garageId" value="" />
+            
+            <input type="hidden" name="act" id="act" value="selecttaxi" />
+            <input type="submit" class="btn btn-primary" value="เรียกแท๊กซี่">
+        </form>
+    </div>
+    <div class="span3"></div>
+</div>
+
+
