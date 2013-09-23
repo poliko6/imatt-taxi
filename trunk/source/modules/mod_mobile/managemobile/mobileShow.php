@@ -105,11 +105,12 @@ if ($garageId == ''){
                     <th width="15%">รายละเีอียดโทรศัพท์</th>
                     <th width="13%">วันที่เพิ่ม</th>
                     <th width="10%">เครื่องมือ</th>
+                    <th>สถานะ</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td colspan="5" class="dataTables_empty">กำลังโหลดข้อมูล</td>
+                    <td colspan="8" class="dataTables_empty">กำลังโหลดข้อมูล</td>
                 </tr>
             </tbody>	
          </table>

@@ -8,9 +8,9 @@
                     	<img src="modules/mod_driver/images/managedriver-icon.png" alt="" width="50" height="50"/>
                     </div>
                 </div>
-                <div class="span4">
+                <div class="span6">
                     <div><a href="index.php?p=driver.managedriver&menu=main_taxi" style="text-decoration:none;"><?=$lang_menu["driver.managedriver"]?></a></div>
-                    <div class="normal">เมนูเพิ่ม แก้ไข และลบ รายละเีอียดคนขับแท๊กซี่ในระบบ</div>
+                    <div class="normal">เมนูเพิ่ม แก้ไข และลบ รายละเอียดคนขับแท๊กซี่ในระบบ</div>
                 </div>
                 <div class="span7">
                     <div class="alert" id="alert1" style="display:none; margin-top:5px; margin-bottom:5px;">
@@ -39,7 +39,7 @@
     
  
 	<?
-	if ($handle_managedriver = opendir('modules/mod_driver/managedriver')) {
+/*	if ($handle_managedriver = opendir('modules/mod_driver/managedriver')) {
  		while (false !== ($file_managedriver = readdir($handle_managedriver)))
       	{
         	if ($file_managedriver != "." && $file_managedriver != "..")
@@ -64,8 +64,25 @@
 		if($file_menu_managedriver[$ii_managedriver]){
 			include("modules/mod_driver/managedriver/$file_menu_managedriver[$ii_managedriver]");									
 		}
-	}	
+	}	*/
+	
+	switch ($act) {
+		case 'add' :
+			include("modules/mod_driver/managedriver/driver.add.php");		
+			break;
+		case 'saveadd' :
+			include("modules/mod_driver/managedriver/adddriver.php");		
+			break;		
+		case 'edit' :
+			echo "Editing";
+			break;
+		default :
+			include("modules/mod_driver/managedriver/driver.show.php");		
+	}
 	?>
+    
+    
+    
     </td>
   </tr>
 </table>   

@@ -39,7 +39,6 @@
     
     
 	<?
-		echo "Act Here ".$act;
 		switch($act) {
 			case 'edit':
 				$majorId = $mjId;
@@ -55,8 +54,7 @@
 				$stat = "saveadd";
 				include("modules/mod_user/major/addmajor.php");	
 				break;				
-			default:			
-				echo "Status = ".$stat;
+			default:
 				include("modules/mod_user/major/major.show.php");
 		}
 	?>

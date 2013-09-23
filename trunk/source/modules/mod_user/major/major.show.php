@@ -2,9 +2,9 @@
 	//pre($_SESSION);
 
 	$strSQL = "SELECT majortype.majorType,garagelist.garageShortName,garagelist.garagePassword,";
-	$strSQL .= "majoradmin.majorId,majoradmin.thaiCompanyName,majoradmin.englishCompanyName,majoradmin.username,majoradmin.garageId ";
+	$strSQL .= "majoradmin.majorId,majoradmin.thaiCompanyName,majoradmin.englishCompanyName,majoradmin.username,majoradmin.garageId,majoradmin.lock ";
 	$strSQL .= "FROM garagelist,majoradmin,majortype WHERE majoradmin.garageId=garagelist.garageId && majoradmin.majorTypeId=majortype.majorTypeId ";
-	$strSQL .= "&& majoradmin.username != '".$_SESSION['u_username']."'";
+	$strSQL .= "&& majoradmin.username != '".$_SESSION['u_username']."' ORDER BY majorId";
 	//$strSQL2 = "SELECT  FROM garagelist,majoradmin WHERE garagelist.garageId=majoradmin.garageId";
 	mysql_query("SET NAMES UTF8");
 	$objQuery = mysql_query($strSQL) or die (mysql_error());
@@ -112,6 +112,12 @@
 				}
 			});		
 	}
+	
+	function fn_changeLock(id,sval){
+		$.post('modules/mod_user/major/edit.statuslock.php', {status:sval, id:id} , function(data) {
+			$('#div_lock'+id+'').html(data);	
+		});	
+	}	
 </script>
 
 <div class="row-fluid">
@@ -120,15 +126,15 @@
     <div class="pull-left">รายการข้อมูลทั้งหมด <strong>
       <?=$total?>
       </strong> รายการ</div>
-<!--    <div class="pull-right"> <a href="index.php?p=user.major&menu=main_user">
+    <!--    <div class="pull-right"> <a href="index.php?p=user.major&menu=main_user">
       <button class="btn btn-success" onClick="">เพิ่มข้อมูล</button>      
       </a></div>-->
-	<form action="" method="post">
-                    <input type="hidden" name="act" value="add" />   
-                    <div class="pull-right">
-                    <input class="btn btn-success" type="submit" value="เพิ่มข้อมูล" />        
-                    </div>
-    </form>          
+    <form action="" method="post">
+      <input type="hidden" name="act" value="add" />
+      <div class="pull-right">
+        <input class="btn btn-success" type="submit" value="เพิ่มข้อมูล" />
+      </div>
+    </form>
     <br />
     <br />
     <table class="table table-bordered table-striped table_vam" id="dt_a">
@@ -144,50 +150,68 @@
         </tr>
       </thead>
       <tbody>
-	<?
+        <?
     $i=1;
 		
     while($objResult = mysql_fetch_array($objQuery))
     { ?>
-    <tr>
-      <td style="text-align:center"><?=$i?></td>
-      <td><a href="#" class="ttip_t" title="ดูข้อมูลทั้งหมด" onclick="fn_showInfo(<?=$objResult['majorId']?>);">
-        <?=$objResult['thaiCompanyName']?>
-        <br/>
-        <?=$objResult['englishCompanyName']?>
-        </a></td>
-      <td><?=$objResult['garageShortName']?></td>
-      <td><?=$objResult['username']?></td>
-      <td><?=$objResult['majorType']?></td>
-      <td><?=$objResult['garagePassword']?></td>
-      <td>
-        <a href="index.php?p=user.major&menu=main_user&act=edit&mjId=<?=$objResult['majorId']?>" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> 
-
-        <a href="#myModalDel<?=$objResult['majorId']?>" data-toggle="modal" title="ลบ"><i class="icon-trash"></i></a>
-      </td>          
-    </tr>          
+        <tr>
+          <td style="text-align:center"><?=$i?></td>
+          <td><a href="#" class="ttip_t" title="ดูข้อมูลทั้งหมด" onclick="fn_showInfo(<?=$objResult['majorId']?>);">
+            <?=$objResult['thaiCompanyName']?>
+            <br/>
+            <?=$objResult['englishCompanyName']?>
+            </a></td>
+          <td><?=$objResult['garageShortName']?></td>
+          <td><?=$objResult['username']?></td>
+          <td><?=$objResult['majorType']?></td>
+          <td><?=$objResult['garagePassword']?></td>
+          <td><a href="index.php?p=user.major&menu=main_user&act=edit&mjId=<?=$objResult['majorId']?>" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> <a href="#myModalDel<?=$objResult['majorId']?>" data-toggle="modal" title="ลบ"><i class="icon-trash"></i></a>
+            <div id="div_lock<?=$objResult['majorId']?>">
+              <?
+								if ($objResult['lock'] == 0) {
+									?>
+              <a href="#" class="ttip_t" title="สถานะล๊อค" onclick="fn_changeLock('<?=$objResult['majorId']?>',1);"><i class="splashy-thumb_down"></i></a>
+              <?
+								} else {
+									?>
+              <a href="#" class="ttip_t" title="สถานะไม่ล๊อค" onclick="fn_changeLock('<?=$objResult['majorId']?>',0);"><i class="splashy-thumb_up"></i></a>
+              <?
+								}
+								?>
+            </div></td>
+        </tr>
         <!-- POP UP -->
-        <div class="modal hide fade" id="myModalDel<?=$objResult['majorId']?>" style="text-align:center; width:500px;">
-            <div class="alert alert-block alert-error fade in">
-                <h4 class="alert-heading">คุณต้องการลบข้อมูลอู่บัญชี "<?=$objResult['username']?>"</h4>
-                <div style="height:50px;"></div>
-                <p><center>
-	              	<label for="u_fname" class="control-label"><font color="#FF0000"><i>กรุณากรอกรหัสผ่านของอู่ <b><?=$objResult['username']?></b> เพื่อยืนยันการลบ</i></font></label>	
-                  	<div class="controls">
-              		<input type="password" name="confirmGPW" id="confirmGPW" class="input-xlarge" value="" onchange="chkConfirmDel('<?=$objResult['garageId']?>',this.value)" />
-                    <font color="#666666"><i><div id="chk_confirm<?=$objResult['garageId']?>"></div></i></font>                  
-              		</div>
-              <br />                         
-                <!--<a href="#" class="btn btn-inverse" onclick="delMJ('<?=$objResult['username']?>');"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> -->
-                <a href="#" onclick="delMJ('<?=$objResult['username']?>','<?=$objResult['majorId']?>');"><button id="confirmBtn<?=$objResult['majorId']?>" name="confirmBtn" disabled="disabled" class="btn btn-danger"><i class="splashy-error"></i> ยืนยันการลบข้อมูล</button></a>
-                หรือ <a href="#" id="cancelBtn<?=$objResult['majorId']?>" class="btn" data-dismiss="modal"><i class="splashy-error_x"></i> ยกเลิก</a>
-                </center></p>
-            </div>
+      <div class="modal hide fade" id="myModalDel<?=$objResult['majorId']?>" style="text-align:center; width:500px;">
+        <div class="alert alert-block alert-error fade in">
+          <h4 class="alert-heading">คุณต้องการลบข้อมูลอู่บัญชี "
+            <?=$objResult['username']?>
+            "</h4>
+          <div style="height:50px;"></div>
+          <p>
+          <center>
+            <label for="u_fname" class="control-label"><font color="#FF0000"><i>กรุณากรอกรหัสผ่านของอู่ <b>
+              <?=$objResult['username']?>
+              </b> เพื่อยืนยันการลบ</i></font></label>
+            <div class="controls">
+              <input type="password" name="confirmGPW" id="confirmGPW" class="input-xlarge" value="" onchange="chkConfirmDel('<?=$objResult['garageId']?>',this.value)" />
+              <font color="#666666"><i>
+              <div id="chk_confirm<?=$objResult['garageId']?>"></div>
+              </i></font> </div>
+            <br />
+            <!--<a href="#" class="btn btn-inverse" onclick="delMJ('<?=$objResult['username']?>');"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> --> 
+            <a href="#" onclick="delMJ('<?=$objResult['username']?>','<?=$objResult['majorId']?>')">
+            <button id="confirmBtn<?=$objResult['majorId']?>" name="confirmBtn" disabled="disabled" class="btn btn-danger"><i class="splashy-error"></i> ยืนยันการลบข้อมูล</button>
+            </a> หรือ <a href="#" id="cancelBtn<?=$objResult['majorId']?>" class="btn" data-dismiss="modal"><i class="splashy-error_x"></i> ยกเลิก</a>
+          </center>
+            </p>
+          
         </div>
-                                  
-        <? $i++; ?>
-        <?	} ?>
-      </tbody>
+      </div>
+      <? $i++; ?>
+      <?	} ?>
+        </tbody>
+      
     </table>
   </div>
 </div>
@@ -266,34 +290,34 @@
       <!--<input type="submit" name="submit_add" id="submit_add"  class="btn btn-primary" value="บันทึก" /> --> 
       <!--        <a class="btn btn-primary" onclick="fn_formEdit('','update');"><i class="splashy-check"></i>บันทึก</a>-->
       <center>
-      <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i>ปิดหน้าต่าง</a> </center></div>
-    
+        <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i>ปิดหน้าต่าง</a>
+      </center>
+    </div>
   </form>
 </div>
 
-<!-- sticky messages -->
-<script src="lib/sticky/sticky.min.js"></script>
-<!-- fix for ios orientation change -->
-<script src="js/ios-orientationchange-fix.js"></script>
-<!-- scrollbar -->
-<script src="lib/antiscroll/antiscroll.js"></script>
-<script src="lib/antiscroll/jquery-mousewheel.js"></script>
-<!-- common functions -->
-<script src="js/gebo_common.js"></script>
+<!-- sticky messages --> 
+<script src="lib/sticky/sticky.min.js"></script> 
+<!-- fix for ios orientation change --> 
+<script src="js/ios-orientationchange-fix.js"></script> 
+<!-- scrollbar --> 
+<script src="lib/antiscroll/antiscroll.js"></script> 
+<script src="lib/antiscroll/jquery-mousewheel.js"></script> 
+<!-- common functions --> 
+<script src="js/gebo_common.js"></script> 
 
-<!-- colorbox -->
-<script src="lib/colorbox/jquery.colorbox.min.js"></script>
-<!-- datatable -->
-<script src="lib/datatables/jquery.dataTables.min.js"></script>
-<script src="lib/datatables/extras/Scroller/media/js/Scroller.min.js"></script>
-<!-- additional sorting for datatables -->
-<script src="lib/datatables/jquery.dataTables.sorting.js"></script>
-<!-- tables functions -->
-<script src="js/gebo_tables.js"></script>
+<!-- colorbox --> 
+<script src="lib/colorbox/jquery.colorbox.min.js"></script> 
+<!-- datatable --> 
+<script src="lib/datatables/jquery.dataTables.min.js"></script> 
+<script src="lib/datatables/extras/Scroller/media/js/Scroller.min.js"></script> 
+<!-- additional sorting for datatables --> 
+<script src="lib/datatables/jquery.dataTables.sorting.js"></script> 
+<!-- tables functions --> 
+<script src="js/gebo_tables.js"></script> 
 
-<!-- datatable functions -->
-<script src="js/gebo_datatables.js"></script>
-
+<!-- datatable functions --> 
+<script src="js/gebo_datatables.js"></script> 
 <script>
     $(document).ready(function() {
         //* show all elements & remove preloader

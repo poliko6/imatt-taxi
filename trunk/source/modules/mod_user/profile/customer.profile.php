@@ -1,35 +1,12 @@
 <?
-	$strSQL = "SELECT majortype.majorTypeId,garagelist.garageShortName,garagelist.garagePassword,garagelist.garageId,";
-	$strSQL .= "majoradmin.* FROM garagelist,majortype,majoradmin WHERE majoradmin.majorId ='".$u_id."' && ";
-	$strSQL .= "majoradmin.garageId = garagelist.garageId && majoradmin.majorTypeId = majortype.majorTypeId";
-	$objQuery = mysql_query($strSQL) or die (mysql_error());
-	
-	$objResult = mysql_fetch_array($objQuery);
-	
-	//majoradmin data
-	$thName = $objResult['thaiCompanyName'];
-	$engName = $objResult['englishCompanyName'];
-	$managerName = $objResult['managerName'];
-	$busType = $objResult['businessType'];
-	$mj_username = $objResult['username'];
-	$old_pw = $objResult['password'];
-	$address = $objResult['address'];
-	$zipcode = $objResult['zipcode'];
-	$province_ss = $objResult['provinceId'];
-	$amphur_ss = $objResult['amphurId'];
-	$district_ss = $objResult['districtId'];
-	$mobileNO = $objResult['mobilePhone'];
-	$teleNO = $objResult['telephone'];
-	$fax = $objResult['fax'];
-	$callcenter = $objResult['callCenter'];
-	$email = $objResult['email'];
-	
-	//garagelist data
-	$shortName = $objResult['garageShortName'];
-	$old_gpw = $objResult['garagePassword'];
-	
-	//majortype data 
-	$majorTypeId = $objResult['majorTypeId']; // 1 = supervisor admin 2 = company admin
+$cus_data = select_db('customer',"where customerId = '".$u_id."'");
+$email = $cus_data[0]['email'];
+$firstName = $cus_data[0]['firstName'];
+$lastName = $cus_data[0]['lastName'];
+$citizenId = $cus_data[0]['citizenId'];
+$telephone = $cus_data[0]['telephone'];
+$birthday = $cus_data[0]['birthday'];
+
 ?>
 <div class="row-fluid">
   <div class="span12">
@@ -38,52 +15,39 @@
         <form id="profileEdit" class="form-horizontal form_validation_ttip" action="" method="post">
          
             <div class="control-group formSep">
-            
-              <label for="u_fname" class="control-label">ชื่อย่อบริษัท* :</label>
+              <label for="u_fname" class="control-label">ชื่อจริง :</label>
               <div class="controls text_line">
-                <input type="text" class="input-xlarge" name="shortName" id="shortName" onchange="fn_chkShortName(this.value)" value="<?=$shortName?>" maxlength="15" />
-                <font color="#FF0000"><i>
-                <div id="chkExist"></div>
-                </i></font> <span class="help-block">ภาษาอังกฤษหรือตัวเลขเท่านั้น ความยาวไม่เกิน 15 ตัวอักษร</span> <span class="help-block">*สำคัญ สำหรับใช้ระบุใน URL ของหน้าเว็บบริษัทของท่าน โปรดตรวจสอบให้แน่ใจก่อนทำการบันทึก</span> </div>
-            </div>
-            <div class="control-group formSep">
-              <label for="u_fname" class="control-label">ชื่อบริษัทภาษาไทย :</label>
-              <div class="controls text_line">
-                <input type="text" id="thName" name="thName" class="input-xlarge" value="<?=$thName?>" onchange="chkThai(this.id,this.value,0)" />
+                <input type="text" id="firstName" name="firstName" class="input-xlarge" value="<?=$firstName?>" onchange="trimString(this.id,this.value)" />
                 <font color="#FF0000"><i><div id="thNamechk"></div></i></font> 
               </div>
               <br />
               <label for="u_fname" class="control-label">ชื่อบริษัทภาษาอังกฤษ :</label>
               <div class="controls">
-                <input type="text" name="engName" id="engName" class="input-xlarge" value="<?=$engName?>" onchange="chkEngNum(this.id,this.value,0)" />
+                <input type="text" name="lastName" id="lastName" class="input-xlarge" value="<?=$lastName?>" onchange="trimString(this.id,this.value)" />
                 <font color="#FF0000"><i><div id="engNamechk"></div></i></font>                
               </div>
               <br />
-              <label for="u_fname" class="control-label">ชื่อผู้บริหาร :</label>
+              <label for="u_fname" class="control-label">รหัสประชาชน :</label>
               <div class="controls">
-                <input type="text" name="managerName" id="managerName" class="input-xlarge" value="<?=$managerName?>" onchange="trimString(this.id,this.value)" />
+                <input type="text" name="citizenId" id="citizenId" class="input-xlarge" value="<?=$citizenId?>" maxlength="13" onchange="numberOrNot(this.id,this.value)" />
+                <font color="#FF0000"><i><div id="citizenIdchk" ></div></i></font>
               </div>
+              <label for="u_fname" class="control-label">วัน เดือน ปี เกิด :</label>
+              <div class="controls date" id="dp2" data-date-format="dd/mm/yyyy"> <span class="add-on">
+                <input class="input-xlarge" type="text" id="dateShow" name="dateShow" readonly="readonly" value="<?=$birthday?>" />
+                </span>
+              </div>              
               <br />
-              <label for="u_fname" class="control-label">ประเภทของธุรกิจ :</label>
-              <div class="controls">
-                <input type="text" name="typeBus" id="typeBus" class="input-xlarge" value="<?=$busType?>" onchange="trimString(this.id,this.value)" />
-              </div>
             </div>
             <div class="control-group formSep">
-              <label for="u_fname" class="control-label">Username</label>
+              <label for="u_fname" class="control-label">E-mail</label>
               <div class="controls">
                 <input type="text" class="input-xlarge" name="userName" id="userName" value="<?=$mj_username?>" disabled="disabled" /></div><br />
               <label for="u_password" class="control-label">Password</label>
               <div class="controls">
                 <div class="sepH_b">
-                <a href="#changePW" data-toggle="modal" title="เปลี่ยนรหัสผ่าน" >เปลี่ยนรหัสผ่านของ Username</a>
+                <a href="#changePW" data-toggle="modal" title="เปลี่ยนรหัสผ่าน" >เปลี่ยนรหัสผ่าน</a>
 				</div>                 
-              </div>
-              <br />
-              <label for="u_password" class="control-label">Garage Password</label>
-              <div class="controls">
-                <div class="sepH_b">
-                  <a href="#changeGPW" data-toggle="modal" title="เปลี่ยนรหัสผ่าน" >เปลี่ยนรหัสผ่านของอู่</a>
               </div>
             </div>
             </div>
@@ -339,73 +303,6 @@ function trim(s)
    return s.substring(l, r+1);
 }
 
-function fn_chkShortName(shortName){
-		//console.log(id);		
-		shortName = jQuery.trim(shortName);
-		$('#shortName').val(jQuery.trim(shortName));
-									
-		jQuery.ajax({
-			url :'modules/mod_user/major/add.validation/chkShortName.php',
-			type: 'GET',
-			data: 'garageShortName='+shortName+'',
-			dataType: 'jsonp',
-			dataCharset: 'jsonp',
-			success: function (data){
-				console.log(data.garageShortName);
-				console.log(data.canPass);
-				if(data.canPass!=true)
-				{	$('#chkExist').text("กรุณากรอกแต่ภาษาอังกฤษหรือตัวเลขเท่านั้น");
-					$('#shortName').val("");
-				}
-				else if(data.exist==true && data.canPass==true && $('#shortName').val() != '<?=$shortName?>')
-				{
-					$('#chkExist').text($('#shortName').val()+" ชื่อย่อนี้ถูกใช้ไปแล้ว กรุณาใช้ชื่ออื่น");
-					$('#shortName').val("");
-				}
-				else
-					$('#chkExist').text("");
-			}
-		});	
-}
-
-function chkGPW(id) {
-	var username = $('#userName').val();
-	var garagePW = $('#g_password').val();
-
-	$('#newGPW1stok').text("");
-	
-	if(id=="newGPW1st")
-		var chkGaragePW = chk1stGPW("newGPW1st",$('#newGPW1st').val(),8);
-
-	if(chkGaragePW != false)
-	{	console.log("Go Checking");
-		jQuery.ajax({
-			url :'modules/mod_user/major/add.validation/chkUNandGPW.php',
-			type : 'GET',
-			data : 'username='+username+'&garagePassword='+garagePW+'',
-			dataType: 'jsonp',
-			dataCharset: 'jsonp',
-			success: function (data){
-
-				console.log(data.garagePassword);
-				console.log(data.garagePW_exist);	
-						
-				if(data.garagePW_exist==true)					
-				{
-					$('#newGPW1stchk').text("รหัสนี้ถูกใช้งานไปแล้ว กรุณาตั้งใหม่");
-					$('#newGPW1st').val("");					
-					$('#newGPW1stok').text("");					
-				}
-				else if(data.garagePW_exist == false && data.garagePassword !="" )
-				{
-					$('#newGPW1stok').text("รหัสนี้สามารถใช้งานได้");
-					$('#newGPW1stchk').text("");					
-				}			
-			}		
-		});
-	}
-}
-
 function saveEdit() {
 	jQuery.ajax({
 	url :'modules/mod_user/profile/JSON/major.profile.saveEdit.php',
@@ -417,56 +314,6 @@ function saveEdit() {
 			reloadPage2();
 		}
 	});	
-}
-
-function chgPWorGPW(type) {
-	var garageId = '<?=$objResult['garageId']?>';
-	
-	if(type == 'PW')
-	{
-		var modalId = 'changePW';
-		var type = 1;
-		var newPW = $('#newPW2nd').val();
-	}
-	else
-	{
-		var modalId = 'changeGPW';
-		var type = 2;
-		var newPW = $('#newGPW2nd').val();
-	}
-		
-	jQuery.ajax({
-	url :'modules/mod_user/major/JSON/major.edit.chgPWorGPW.php',
-	type: 'GET',
-	data: 'type='+type+'&newPW='+newPW+'&garageId='+garageId+'',
-	dataType: 'jsonp',
-	dataCharset: 'jsonp',
-		success: function (data){
-				alertPopup('msg3','alert3',''+data.message+'');
-				$('#'+modalId+'').modal('toggle');	
-		}
-	});
-	
-		
-	switch (type) {
-		case 1:
-			$('#oldPW').val("");
-			$('#oldGPWok').text("");
-			$('#oldPW').attr("disabled",false);
-			$('#newPW1st').val("");
-			$('#newPW2nd').val("");
-			$('#btnPWConfirm').attr("disabled",true);
-			break;
-		case 2:
-			$('#oldGPW').val("");
-			$('#oldGPWok').text("");
-			$('#oldGPW').attr("disabled",false);
-			$('#newGPW1stok').text("");
-			$('#newGPW1st').val("");
-			$('#newGPW2nd').val("");
-			$('#btnPWConfirm').attr("disabled",true);			
-			break;
-	}
 }
 
 function chkEmail(email) {	
@@ -643,11 +490,11 @@ function chk2ndGPW(pw2) {
 		
 }
 
-function numberOrNot(id,number,errortxt){
+function numberOrNot(id,number){
 	
 	number = jQuery.trim(number)
 	if ( /[^0-9-]/.test(number))
-	{	$('#'+id+"chk").text(""+errortxt+' ถ้าไม่มีให้ใส่เครื่องหมาย -');
+	{	$('#'+id+"chk").text("กรุณากรอกเฉพาะตัวเลข");
 		$('#'+id).val("");		
 	}
 	else
