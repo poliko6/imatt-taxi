@@ -388,7 +388,7 @@
                         <!-- POP UP -->
                         <div class="modal hide fade" id="myModalDel<?=$car_banner[$i]['carBannerId']?>" style="text-align:center; width:500px;">
                             <div class="alert alert-block alert-error fade in">
-                                <h4 class="alert-heading">คุณต้องการลบข้อมูลยี่ห้อรถยนต์ "<?=$car_banner[$i]['carฺBannerNameEng']?>"</h4>
+                                <h4 class="alert-heading">คุณต้องการลบข้อมูลยี่ห้อรถยนต์ "<?=$car_banner[$i]['carBannerNameEng']?>"</h4>
                                 <div style="height:50px;"></div>
                                 <p>
                                 <a href="#" class="btn btn-inverse" onclick="fn_formDel(<?=$car_banner[$i]['carBannerId']?>);"><i class="splashy-check"></i> ยืนยันการลบข้อมูล</a> 
