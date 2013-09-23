@@ -66,6 +66,9 @@
 			case 3 :	
 					include("modules/mod_user/profile/minor.profile.php");
 					break;
+			case 4 :
+					include("modules/mod_user/profile/customer.profile.php");
+					break;
 		}
 	?>
     </td>

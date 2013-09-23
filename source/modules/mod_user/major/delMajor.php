@@ -39,15 +39,16 @@
 	$mobQuery = mysql_query($mobSQL);
 	$mobResult = mysql_fetch_array($mobQuery);
 	
-	$data['monSQL'] = $mobSQL;
-	
+		
 	//SQL delete data
 	$delGarage = "DELETE FROM garagelist WHERE garageId = '".$strResult['garageId']."'";
 	$delMJ = "DELETE FROM majoradmin WHERE username = '".$username."'";
 	$delMN = "DELETE FROM minoradmin WHERE garageId = '".$strResult['garageId']."'";
 	$delCar = "DELETE FROM car WHERE garageId = '".$strResult['garageId']."'";
 	$delTrans = "DELETE FROM transportsection WHERE garageId = '".$strResult['garageId']."'";
-
+	$delNews = "DELETE FROM news WHERE garageId = '".$strResult['garageId']."'";
+	$delPro = "DELETE FROM newspromotion WHERE garageId = '".$strResult['garageId']."'";
+	
 	$delMobile = "DELETE FROM mobile WHERE garageId = '".$strResult['garageId']."'";
 	$delTaxipos = "DELETE FROM taxiposition WHERE mobileId = '".$mobResult['mobileId']."'";
 	

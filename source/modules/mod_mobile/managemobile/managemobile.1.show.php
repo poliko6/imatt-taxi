@@ -180,6 +180,8 @@
 		});		
 	});
 	
+
+	
 	function alertFadeOut(id){
 		$('#'+id+'').fadeOut(1000); 
 	}
@@ -212,7 +214,16 @@
 		});
 	}
 	
-	
+	function fn_callModel(id){
+		//alert(id);
+		$.post('modules/mod_mobile/mobilemanage/get_model.php', {id:id} , function(data) {
+			if (data != '') {
+				$('#mobileModelId').html(data);
+			} else {
+				$('#mobileModelId').html('<option value="">กรุณาเลือกรุ่นมือถือ</option>');
+			}
+		});	
+	}	
 	
 	function fn_chkNumberDuplicate(act){
 		var mobileNumber = $('#mobileNumber').val();

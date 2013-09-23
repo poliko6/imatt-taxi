@@ -100,7 +100,7 @@
                 <div class="span6">
                   <div id="genamphur">
                     <select name="amphur_add" id="amphur">
-                      <option>กรุณาเลือกอำเภอ</option>
+                      <option value="">กรุณาเลือกอำเภอ</option>
                     </select>
                   </div>
                 </div>
@@ -112,7 +112,7 @@
                 <div class="span6">
                   <div id="gendistrict">
                     <select name="district_add" id="district">
-                      <option>กรุณาเลือกตำบล</option>
+                      <option value="">กรุณาเลือกตำบล</option>
                     </select>
                   </div>
                 </div>
@@ -467,19 +467,14 @@ function numberOrNot(id,number,errortxt){
 
 </script> 
 
-<script src="js/jquery.min.js"></script>
 <!-- smart resize event -->
 <script src="js/jquery.debouncedresize.min.js"></script>
 <!-- hidden elements width/height -->
 <script src="js/jquery.actual.min.js"></script>
 <!-- js cookie plugin -->
 <script src="js/jquery.cookie.min.js"></script>
-<!-- main bootstrap js -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
 <!-- tooltips -->
 <script src="lib/qtip2/jquery.qtip.min.js"></script>
-<!-- jBreadcrumbs -->
-<script src="lib/jBreadcrumbs/js/jquery.jBreadCrumb.1.1.min.js"></script>
 <!-- sticky messages -->
 <script src="lib/sticky/sticky.min.js"></script>
 <!-- fix for ios orientation change -->

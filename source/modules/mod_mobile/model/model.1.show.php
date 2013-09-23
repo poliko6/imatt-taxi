@@ -65,7 +65,6 @@
                         <th style="width:250px">ชื่อรุ่นมือถือ</th>
                         <th style="width:120px">วันที่เพิ่ม</th>
                         <th style="width:100px">เครื่องมือ</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,7 +86,6 @@
                                 
                                 <a href="#myModalDel<?=$mobile_model[$i]['mobileModelId']?>" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a>
                             </td>
-                            <td></td>
                         </tr>
                         
                         <!-- POP UP -->
@@ -331,7 +329,7 @@
         <div class="formSep">
             <label>ชื่อรุ่นมือถือ</label>
             <input type="text" name="model_name" id="model_name" value="" />
-            <span class="help-inline">ตัวอย่าง : Corolla</span>
+            <span class="help-inline">ตัวอย่าง : iPhone 5S</span>
             <span class="help-block" id="errtxt" style="color:#900; display:none;">กรุณาป้อนรุ่นมือถือ</span>
         </div> 
     </div>

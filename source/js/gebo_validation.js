@@ -58,7 +58,7 @@
 					txtAddress_add: { required: true},					
 					province_add: { required: true},					
 					amphur_add: { required: true},					
-					//district_add: { required: true},					
+					district_add: { required: true},					
 					txtZipcode_add: { required: true},						
 					radMjtype: { required: true},					
 					/////////////////////////////////
