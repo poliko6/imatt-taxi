@@ -1,9 +1,9 @@
 <?php
 
 	$_config['database']['hostname'] = "imattioapp.com";
-	$_config['database']['username'] = "taxi";
+	$_config['database']['username'] = "imattioa_taxi";
 	$_config['database']['password'] = "taxi2013";
-	$_config['database']['database'] = "taxi_db2";
+	$_config['database']['database'] = "imattioa_taxi";
 	
 	
 	/*$_config['database']['hostname'] = "localhost";

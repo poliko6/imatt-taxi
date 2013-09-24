@@ -1,7 +1,7 @@
 <?
-	$gaSql['user']       = "taxi";
+	$gaSql['user']       = "imattioa_taxi";
 	$gaSql['password']   = "taxi2013";
-	$gaSql['db']         = "taxi_db2";
+	$gaSql['db']         = "imattioa_taxi";
 	$gaSql['server']     = "imattioapp.com";
 	
 ?>
