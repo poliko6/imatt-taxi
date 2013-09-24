@@ -3,6 +3,10 @@
 //เลือกวัน
 //ค้นหา transportsection -> mobileId
 //เอาข้อมูลจาก taxiposition -> date + mobileId 
+
+$sql_historsy = "SELECT * FROM taxiposition ";
+$sql_historsy .= "INNER JOIN transportsection ON taxiposition.mobileId = transportsection.mobileId ";
+$sql_historsy .= "WHERE taxiposition.timeServer LIKE '2013-09-05%' AND transportsection.driverId = '".$driverId."' ";
 ?>
 
 
