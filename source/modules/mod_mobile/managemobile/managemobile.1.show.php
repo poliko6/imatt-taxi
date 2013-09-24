@@ -216,7 +216,7 @@
 	
 	function fn_callModel(id){
 		//alert(id);
-		$.post('modules/mod_mobile/mobilemanage/get_model.php', {id:id} , function(data) {
+		$.post('modules/mod_mobile/managemobile/get_model.php', {id:id} , function(data) {
 			if (data != '') {
 				$('#mobileModelId').html(data);
 			} else {
