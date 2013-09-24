@@ -39,6 +39,42 @@ if ($gender == 'female'){
 .table10 tr{border:none;}
 </style>
 
+
+
+<?
+//Dsta EX
+$customerId = 1;
+if (empty($dateSearch)) {
+	//$dateSearch = date('Y-m-d');;
+	$dateSearch = '2013-09-05';
+}
+?>
+
+
+<form action="" name="fmReload" id="fmReload" method="post">
+	<input type="hidden" name="customerId" value="<?=$customerId?>" />
+    <input type="hidden" name="dateSearch" id="dateSearch" value="<?=$dateSearch?>" />
+</form>
+
+
+
+<!-- datatable -->
+<link rel="stylesheet" type="text/css" href="lib/datatables/css/demo_table_jui.css"/> 
+<script src="lib/datatables/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript">
+$(function(){
+	$('#dateShow').change(function () {
+		//console.log($('#dateShow').val());
+		var thisdate = $('#dateShow').val();
+	    $('#dateSearch').val(thisdate);
+		$('#fmReload').submit();
+	});
+});
+</script>
+
+
+
 <div class="row-fluid">
   <div class="span12">
   
@@ -60,7 +96,15 @@ if ($gender == 'female'){
               
             </div><!--chat_content -->
         
-        
+            <div class="span4 pull-right" style="padding-top:10px;">                    
+                <div><strong>เลือกวันที่ต้องการดู </strong>: &nbsp;</div>
+                <div class="controls input-append date" id="dp2" data-date-format="yyyy-mm-dd">                    	
+                    <input type="text" id="dateShow" name="dateShow" readonly="readonly" value="<?=$dateSearch?>" />
+                    <span class="add-on"><i class="splashy-calendar_day"></i></span>
+                </div>                
+            </div>  
+            
+            <div style="clear:both;"></div>
         
             <div class="tabbable" style="margin-top:10px; margin-bottom:10px;">
                 <ul class="nav nav-tabs">
