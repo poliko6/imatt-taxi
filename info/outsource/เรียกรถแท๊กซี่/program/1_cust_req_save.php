@@ -24,3 +24,4 @@ $mysqli->query($sql);
 echo "ลูกค้าส่งคำขอรถแท๊กซี่ มาแล้ว  ";
 echo "<a href='2_cust.php?custid=$custid'>คลิก ดูจอภาพ ของลูกค้า</a>";
 ?>
+
