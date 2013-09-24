@@ -59,6 +59,8 @@ if ($driverImage == ''){
 		$pathimage  = 'gallery/Image10_tn.jpg'; 	
 	}
 }	
+
+
 ?>
 <style type="text/css">
 .nanstyle {
@@ -74,6 +76,42 @@ if ($driverImage == ''){
 }
 .table10 tr{border:none;}
 </style>
+
+
+<?
+//Dsta EX
+$driverId = 1;
+if (empty($dateSearch)) {
+	//$dateSearch = date('Y-m-d');;
+	$dateSearch = '2013-09-05';
+}
+?>
+
+
+<form action="" name="fmReload" id="fmReload" method="post">
+	<input type="hidden" name="driverId" value="<?=$driverId?>" />
+    <input type="hidden" name="dateSearch" id="dateSearch" value="<?=$dateSearch?>" />
+</form>
+
+
+
+<!-- datatable -->
+<link rel="stylesheet" type="text/css" href="lib/datatables/css/demo_table_jui.css"/> 
+<script src="lib/datatables/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript">
+$(function(){
+	$('#dateShow').change(function () {
+		//console.log($('#dateShow').val());
+		var thisdate = $('#dateShow').val();
+	    $('#dateSearch').val(thisdate);
+		$('#fmReload').submit();
+	});
+});
+</script>
+
+
+
 
 <div class="row-fluid">
   <div class="span12">
@@ -92,6 +130,18 @@ if ($driverImage == ''){
           </div>          
           <div class="msg_window"></div>          
         </div> <!--chat_content -->
+        
+        
+        
+        <div class="span4 pull-right" style="padding-top:10px;">                    
+            <div><strong>เลือกวันที่ต้องการดู </strong>: &nbsp;</div>
+            <div class="controls input-append date" id="dp2" data-date-format="yyyy-mm-dd">                    	
+                <input type="text" id="dateShow" name="dateShow" readonly="readonly" value="<?=$dateSearch?>" />
+                <span class="add-on"><i class="splashy-calendar_day"></i></span>
+            </div>                
+        </div>  
+        
+        <div style="clear:both;"></div>
         
         <div class="tabbable" style="margin-top:10px; margin-bottom:10px;">
             <ul class="nav nav-tabs">
