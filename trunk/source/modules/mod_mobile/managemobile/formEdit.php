@@ -8,9 +8,26 @@ $mobileNetworkId = $mobile_data[0]['mobileNetworkId'];
 
 $simId = $mobile_data[0]['simId'];
 $EmiMsi = $mobile_data[0]['EmiMsi'];
-$mobileBanner = $mobile_data[0]['mobileBanner'];
-$mobileModel = $mobile_data[0]['mobileModel'];
+$mobileBannerId = $mobile_data[0]['mobileBannerId'];
+$mobileModelId = $mobile_data[0]['mobileModelId'];
 ?>
+
+<script type="text/javascript">
+$(document).ready( function () {
+	
+	if ($('#mobileBannerId').val() != ''){
+		var bannerId = $('#mobileBannerId').val();
+		fn_callModel(bannerId);
+	}
+	
+	$('#mobileBannerId').change(function () {
+		fn_callModel($('#mobileBannerId').val());
+	});
+
+});
+
+</script>
+
 
 <div class="row-fluid">
     <div class="span12">
@@ -80,26 +97,29 @@ $mobileModel = $mobile_data[0]['mobileModel'];
                     		</div>    
                             
                            
-                           	<div class="row-fluid">
-                                <div class="span12">
-                           		 	<label for="fileinput" class="control-label">ยี่ห้อโทรศัพท์ <span class="f_req">*</span></label>
-                                    <div class="controls text_line">
-                                  		<input type="text" name="mobileBanner" id="mobileBanner" class="span5"  value="<?=$mobileBanner?>"  />
-                                        <span class="help-inline">ตัวอย่าง : Samsung</span>                                        
-                                    </div>
-                                 </div>
-                            </div>
+                           	<br />
+                            <label for="mobileBannerId" class="control-label">ยี่ห้อมือถือ <span class="f_req">*</span></label>
+                            <div class="controls">
+                            	<? $banner_data = select_db('mobilebanner',"order by mobileBannerId"); ?>
+                                <select class="span3" name="mobileBannerId" id="mobileBannerId">
+                                	<option value="">กรุณาเลือกยี่ห้อมือถือ</option>
+                                	<? foreach($banner_data as $valBanner){?>
+                                    <option value="<?=$valBanner['mobileBannerId']?>" <? if ($mobileBannerId == $valBanner['mobileBannerId']) { echo "selected=\"selected\""; } ?> ><?=$valBanner['mobileBannerNameEng']?></option>
+                                    <? } ?>                                    
+                                </select>
+                            </div> 
                             
-                            
+                           	<br /> 
                            	<div class="row-fluid">
                                 <div class="span12">
                            		 	<label for="fileinput" class="control-label">รุ่นโทรศพท์ <span class="f_req">*</span></label>
-                                    <div class="controls text_line">                                    	
-                                        <input type="text" name="mobileModel" id="mobileModel" class="span5"  value="<?=$mobileModel?>"  />
-                                        <span class="help-inline">ตัวอย่าง : Galaxy s4</span>                                        
-                                    </div>
+                                        <div class="controls">                            	
+                                            <select class="span3" name="mobileModelId" id="mobileModelId">
+                                                <option value="">กรุณาเลือกรุ่น</option>                              
+                                            </select>
+                                        </div> 
                                  </div>
-                            </div>                          
+                            </div>                        
                          	
                          </div>                       
                        
@@ -115,6 +135,7 @@ $mobileModel = $mobile_data[0]['mobileModel'];
                     <input type="hidden" name="menu" value="<?=$menu?>" />
                     <input type="hidden" name="garageId" value="<?=$garageId?>" />        
                     <input type="hidden" name="act" value="saveedit" />
+                    <input type="hidden" name="current_page" id="current_page" value="<?=$current_page?>" />
                 </form>
             </div>
         </div>

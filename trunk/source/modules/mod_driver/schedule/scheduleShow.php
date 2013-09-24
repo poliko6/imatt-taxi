@@ -29,11 +29,32 @@ $total = $time_data;
 
 $major_data = select_db('majoradmin',"where garageId = '".$thisgarageId."'");
 $major_name = $major_data[0]['thaiCompanyName'];
+
+
+if (empty($current_page)){ $current_page = 0;}
+
 ?>
 
 <script type="text/javascript" charset="utf-8">
+
+	var current_page = <?=$current_page?>;	
+	
+	 $.fn.dataTableExt.oApi.fnPagingInfo = function ( oSettings )
+      {
+        return {
+          "iStart":         oSettings._iDisplayStart,
+          "iEnd":           oSettings.fnDisplayEnd(),
+          "iLength":        oSettings._iDisplayLength,
+          "iTotal":         oSettings.fnRecordsTotal(),
+          "iFilteredTotal": oSettings.fnRecordsDisplay(),
+          "iPage":          Math.ceil( oSettings._iDisplayStart / oSettings._iDisplayLength ),
+          "iTotalPages":    Math.ceil( oSettings.fnRecordsDisplay() / oSettings._iDisplayLength )
+        };
+      };
+	  
+	  
 	$(document).ready(function() {
-		$('#example').dataTable( {			
+		var oTable = $('#example').dataTable( {			
 			"bProcessing": true,
 			"bServerSide": true,
 			"sAjaxSource": "modules/mod_driver/schedule/scripts/server_processing.php?garageId=<?=$thisgarageId?>&d=<?=$dchk?>",
@@ -43,6 +64,7 @@ $major_name = $major_data[0]['thaiCompanyName'];
 			"bLengthChange": true, // แสดงจำนวน record ที่จะแสดงในตาราง
 			"iDisplayLength": 10, // กำหนดค่า default ของจำนวน record 
 			"bFilter": true, // แสดง search box
+			"iDisplayStart" : current_page,
 			//"sScrollY": "400px", // กำหนดความสูงของ ตาราง
 
 			"oTableTools": {
@@ -57,9 +79,21 @@ $major_name = $major_data[0]['thaiCompanyName'];
 				"sInfoEmpty": "แสดง 0 ถึง 0 ของ 0 เร็คคอร์ด",
 				"sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
 				"sSearch": "ค้นหา :"
-			 }
-		} );
-	} );
+			 },
+			 
+			 "fnDrawCallback": function (oSettings) {
+				//console.log( '_iDisplayStart : '+ oSettings._iDisplayStart );
+				//console.log( 'Now on page : '+ this.fnPagingInfo().iPage );
+				//$('#current_pageAdd').val(oSettings._iDisplayStart);
+				$('#current_pageEdit').val(oSettings._iDisplayStart);	
+				$('#current_pageLoad').val(oSettings._iDisplayStart);	
+			}
+			 
+		});
+		
+		var oSettings = oTable.fnSettings();
+            oSettings._iDisplayStart = current_page;
+	});
 </script>
 
 
@@ -71,8 +105,8 @@ $major_name = $major_data[0]['thaiCompanyName'];
                 <div class="pull-left">จำนวนการลงเวลาเข้างาน ของอู่ "<span style="color:#C30; font-weight:bold;"><?=$major_name?></span>" มีจำนวน <strong><?=$total?></strong></div>
        	
                 <div class="span2 pull-right" style="text-align:right;">  
-                    <form action="" name="fm_addminor" id="fm_addminor" method="post" style="margin-bottom:0px;"> 
-                        <input type="hidden" name="act" value="addschedule" />                  
+                    <form action="index.php?p=driver.schedule&menu=main_taxi" name="fm_addminor" id="fm_addminor" method="post" style="margin-bottom:0px;"> 
+                        <input type="hidden" name="act" value="addschedule" />                
                         <input type="submit" class="btn btn-success" name="btnSubmit" id="btnSubmit" value="ลงเวลางาน">
                     </form>
                 </div>               

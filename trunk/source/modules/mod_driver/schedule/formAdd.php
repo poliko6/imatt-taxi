@@ -49,7 +49,7 @@ $major_name = $major_data[0]['thaiCompanyName'];
 						$driver_data = select_db('drivertaxi',"where `lock` = 1 order by firstName"); 
 						/*foreach($driver_data as $valDriver){
 								//$driver_working = select_db('transportsection',"where driverId = '".$valDriver['driverId']."' and dateAdd Like '".date('Y-m-d')."%' and ('".date('H:i:s')."' BETWEEN timeStart and timeEnd) ");
-								$driver_working = select_db('transportsection',"where driverId = '".$valDriver['driverId']."' and dateAdd Like '".date('Y-m-d')."%'  and statusWork = 'online' ");
+								$driver_working = select_db('transportsection',"where driverId = '".$valDriver['driverId']."' and dateAdd Like '".date('Y-m-d')."%' and statusWork = 'online' ");
 								echo count($driver_working);
 						}*/
 						?>          		
@@ -58,7 +58,7 @@ $major_name = $major_data[0]['thaiCompanyName'];
                             <? 
 							foreach($driver_data as $valDriver){
 								//$driver_working = select_db('transportsection',"where driverId = '".$valDriver['driverId']."' and dateAdd Like '".date('Y-m-d')."%' and ('".date('H:i:s')."' BETWEEN timeStart and timeEnd) ");<br />
-								$driver_working = select_db('transportsection',"where driverId = '".$valDriver['driverId']."' and dateAdd Like '".date('Y-m-d')."%' and statusWork = 'online' ");
+								$driver_working = select_db('transportsection',"where driverId = '".$valDriver['driverId']."' and statusWork = 'online' ");
 								if (count($driver_working) == 0){
 									$major_driver_data = select_db('majoradmin',"where garageId = '".$valDriver['garageId']."'");
 									$major_driver_name = $major_driver_data[0]['thaiCompanyName'];
@@ -80,12 +80,17 @@ $major_name = $major_data[0]['thaiCompanyName'];
                     <div class="span10">    
                         <? 
 						$car_data = select_db('car',"where garageId = '".$u_garage."' and `lock` = 1 order by carRegistration"); 					
+						/*foreach($car_data as $valCar){
+								$car_working = select_db('transportsection',"where carId = '".$valCar['carId']."' and dateAdd Like '".date('Y-m-d')."%' and statusWork = 'online' ");
+								//echo count($car_working);
+						}*/
+						
 						?>          		
                         <select name="thiscarId" id="thiscarId" data-placeholder="เลือกรถแท๊กซี่..." class="chzn_a span6">
                             <option value=""></option> 
                             <? 
 							foreach($car_data as $valCar){
-								$car_working = select_db('transportsection',"where carId = '".$valCar['carId']."' and dateAdd Like '".date('Y-m-d')."%' and statusWork = 'online' ");
+								$car_working = select_db('transportsection',"where carId = '".$valCar['carId']."' and statusWork = 'online' ");
 								if (count($car_working) == 0){
 									$province_car_data = select_db('province',"where provinceId = '".$valCar['provinceId']."'");
 									$province_car_name = $province_car_data[0]['provinceName'];	
@@ -114,7 +119,7 @@ $major_name = $major_data[0]['thaiCompanyName'];
                             <option value=""></option> 
                             <? 
 							foreach($mobile_data as $valMobile){
-								$mobile_working = select_db('transportsection',"where carId = '".$valMobile['mobileId']."' and dateAdd Like '".date('Y-m-d')."%' and statusWork = 'online' ");
+								$mobile_working = select_db('transportsection',"where carId = '".$valMobile['mobileId']."'  and statusWork = 'online' ");
 								if (count($mobile_working) == 0){
 									?>
 									<option value="<?=$valMobile['mobileId']?>" <? if ($thismobileId == $valMobile['mobileId']) { echo "selected=\"selected\""; } ?> ><?=$valMobile['mobileNumber']?> [EMI/MSI : <?=$valMobile['EmiMsi']?>]</option>

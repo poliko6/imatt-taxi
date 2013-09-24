@@ -79,6 +79,16 @@
 
 
 
+
+<form action="index.php?p=driver.schedule&menu=main_taxi" name="fmReload" id="fmReload" method="post">
+	<input type="hidden" name="garageId" value="<?=$garageId?>" />
+    <input type="hidden" name="current_page" id="current_pageLoad" value="<?=$current_page?>" />
+</form>
+
+
+
+
+
 <script type="text/javascript">
 	var delayAlert=null; 
 		
@@ -96,8 +106,8 @@
 	});	
 	
 	function reloadPage(){
-		window.location = 'index.php?p=driver.schedule&menu=main_driver'; 
-		//$('#fmReload').submit();
+		//window.location = 'index.php?p=driver.schedule&menu=main_driver'; 
+		$('#fmReload').submit();
 	}	
 	
 	function alertPopup(msgid,alertid,message,newload){

@@ -126,28 +126,28 @@
 			//Taxi Time
 			$('#time1').timepicker({
 				defaultTime: 'current',
-				minuteStep: 1,
+				minuteStep: 30,
 				disableFocus: true,
 				template: 'dropdown',
 				showMeridian: false
 			});
 			$('#time2').timepicker({
 				defaultTime: 'current',
-				minuteStep: 1,
+				minuteStep: 30,
 				disableFocus: true,
 				template: 'dropdown',
 				showMeridian: false
 			});
 			$('#time1_edit').timepicker({
 				defaultTime: 'current',
-				minuteStep: 1,
+				minuteStep: 30,
 				disableFocus: true,
 				template: 'dropdown',
 				showMeridian: false
 			});
 			$('#time2_edit').timepicker({
 				defaultTime: 'current',
-				minuteStep: 1,
+				minuteStep: 30,
 				disableFocus: true,
 				template: 'dropdown',
 				showMeridian: false

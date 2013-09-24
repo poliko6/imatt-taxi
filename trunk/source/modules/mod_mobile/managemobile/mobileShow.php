@@ -26,11 +26,30 @@ if ($garageId == ''){
 	$major_name = $major_data[0]['thaiCompanyName'];
 	$garageId = $major_data[0]['garageId'];
 }
+
+
+if (empty($current_page)){ $current_page = 0;}
 ?>
 
 <script type="text/javascript" charset="utf-8">
+
+	var current_page = <?=$current_page?>;	
+	
+	 $.fn.dataTableExt.oApi.fnPagingInfo = function ( oSettings )
+      {
+        return {
+          "iStart":         oSettings._iDisplayStart,
+          "iEnd":           oSettings.fnDisplayEnd(),
+          "iLength":        oSettings._iDisplayLength,
+          "iTotal":         oSettings.fnRecordsTotal(),
+          "iFilteredTotal": oSettings.fnRecordsDisplay(),
+          "iPage":          Math.ceil( oSettings._iDisplayStart / oSettings._iDisplayLength ),
+          "iTotalPages":    Math.ceil( oSettings.fnRecordsDisplay() / oSettings._iDisplayLength )
+        };
+      };
+	  
 	$(document).ready(function() {
-		$('#example').dataTable( {			
+		var oTable = $('#example').dataTable( {			
 			"bProcessing": true,
 			"bServerSide": true,
 			"sAjaxSource": "modules/mod_mobile/managemobile/scripts/server_processing.php?garageId=<?=$garageId?>",
@@ -40,6 +59,7 @@ if ($garageId == ''){
 			"bLengthChange": true, // แสดงจำนวน record ที่จะแสดงในตาราง
 			"iDisplayLength": 10, // กำหนดค่า default ของจำนวน record 
 			"bFilter": true, // แสดง search box
+			"iDisplayStart" : current_page,
 			//"sScrollY": "400px", // กำหนดความสูงของ ตาราง
 
 			"oTableTools": {
@@ -54,9 +74,21 @@ if ($garageId == ''){
 				"sInfoEmpty": "แสดง 0 ถึง 0 ของ 0 เร็คคอร์ด",
 				"sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
 				"sSearch": "ค้นหา :"
-			 }
-		} );
-	} );
+			 },
+			 
+			 "fnDrawCallback": function (oSettings) {
+				//console.log( '_iDisplayStart : '+ oSettings._iDisplayStart );
+				//console.log( 'Now on page : '+ this.fnPagingInfo().iPage );
+				//$('#current_pageAdd').val(oSettings._iDisplayStart);
+				$('#current_pageEdit').val(oSettings._iDisplayStart);	
+				$('#current_pageLoad').val(oSettings._iDisplayStart);	
+			}
+			 
+		});
+		
+		var oSettings = oTable.fnSettings();
+            oSettings._iDisplayStart = current_page;
+	});
 </script>
 
 <div class="row-fluid search_page">
@@ -82,8 +114,8 @@ if ($garageId == ''){
 							</select>	        
                         <? } else { ?>	
                         	<input type="hidden" name="garageId" value="<?=$garageId?>" /> 
-                        <? } ?>		
-    
+                        <? } ?>	                      
+                        
                         <input type="button" class="btn btn-success" name="btnSubmit" id="btnSubmit" onClick="fn_goToPage('add');" value="เพิ่มโทรศัพท์">
 
               	 	</div>
@@ -104,8 +136,8 @@ if ($garageId == ''){
                     <th width="30%">ชื่ออู่รถ</th>
                     <th width="15%">รายละเีอียดโทรศัพท์</th>
                     <th width="13%">วันที่เพิ่ม</th>
-                    <th width="10%">เครื่องมือ</th>
-                    <th>สถานะ</th>
+                    <th width="7%">เครื่องมือ</th>
+                    <th width="4%">สถานะ</th>
                 </tr>
             </thead>
             <tbody>
@@ -135,10 +167,11 @@ if ($garageId == ''){
 </div> 
  
  
-<form action="" method="post" name="fm_Edit" id="fm_Edit">
+<form action="index.php?p=mobile.managemobile&menu=main_mobile" method="post" name="fm_Edit" id="fm_Edit">
+	<input type="hidden" name="current_page" id="current_pageEdit" value="" />
     <input type="hidden" name="mobileId" id="mobileId_edit" value="" />
     <input type="hidden" name="garageId" id="garageId_edit"  value="" />
-    <input type="hidden" name="act" value="editmobile" />
+    <input type="hidden" name="act" value="editmobile" />    
 </form>
  
  
@@ -184,7 +217,8 @@ if ($garageId == ''){
 	
 	function fn_changeLock(id,sval){
 		$.post('modules/mod_mobile/managemobile/edit.statuslock.php', {status:sval, id:id} , function(data) {			  
-			window.location = 'index.php?p=mobile.managemobile&menu=main_mobile&garageId=<?=$garageId?>'; 
+			//window.location = 'index.php?p=mobile.managemobile&menu=main_mobile&garageId=<?=$garageId?>'; 
+			reloadPage();
 		});	
 	}	
 	
