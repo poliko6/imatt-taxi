@@ -182,6 +182,12 @@ if ($garageId == ''){
 		$('#fm_Edit').submit();
 	}
 	
+	function fn_changeLock(id,sval){
+		$.post('modules/mod_mobile/managemobile/edit.statuslock.php', {status:sval, id:id} , function(data) {			  
+			window.location = 'index.php?p=mobile.managemobile&menu=main_mobile&garageId=<?=$garageId?>'; 
+		});	
+	}	
+	
 </script>
 
  
