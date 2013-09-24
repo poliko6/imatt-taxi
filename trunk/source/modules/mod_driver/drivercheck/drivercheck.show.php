@@ -78,27 +78,55 @@ if ($driverImage == ''){
 <div class="row-fluid">
   <div class="span12">
     <div class="chat_box">
-      <div class="row-fluid">
-        <div class="span8 chat_content">
-          
+      
+      <div class="span8">
+        
+        
+        <div class="chat_content">          
           <div class="chat_heading clearfix">
             <div class="btn-group pull-right"> 
                 <a href="#" class="btn btn-mini ttip_t" title="Refresh list">
                 <i class="icon-refresh"></i></a> 
             </div>
             ตำแหน่งปัจจุบัน 
-          </div>
-          
-          <div class="msg_window">
+          </div>          
+          <div class="msg_window"></div>          
+        </div> <!--chat_content -->
+        
+        <div class="tabbable" style="margin-top:10px; margin-bottom:10px;">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab1" data-toggle="tab">ประวัติการเดินทาง</a></li>
+                <li><a href="#tab2" data-toggle="tab">ประวัติการรับผู้โดยสาร</a></li>
+            </ul>
             
-          </div>
-          
+            <div class="tab-content">
+               
+                <div class="tab-pane active" id="tab1">
+                    <div class="row-fluid">
+                        <? include('modules/mod_driver/drivercheck/history.transport.php'); ?>
+                    </div>
+                </div>
+                
+                
+                <div class="tab-pane" id="tab2">
+                    <div class="row-fluid">
+                        <? include('modules/mod_driver/drivercheck/history.passenger.php'); ?>
+                    </div>
+                </div>             
+            </div>
         </div>
+        
+        
+      </div> <!--span8 -->  
+        
+        
         
         
         
      
-        <div class="span4 chat_sidebar">
+      <div class="span4">  
+        
+        <div class="chat_sidebar">
           <div class="chat_heading clearfix"> รายละเอียดส่วนตัว </div>
             <table class="table table-striped table-bordered" style="margin-bottom:0px; border:none;">         
               <tr>
@@ -165,99 +193,66 @@ if ($driverImage == ''){
               <? } ?>
               
             </table>        
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-<div class="row-fluid">
-  <div class="span8">
-    <div class="chat_box">
-    
-        <div class="tabbable">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab1" data-toggle="tab">ประวัติการเดินทาง</a></li>
-                <li><a href="#tab2" data-toggle="tab">ประวัติการรับผู้โดยสาร</a></li>
-            </ul>
-            
-            <div class="tab-content">
-               
-                <div class="tab-pane active" id="tab1">
-                    <div class="row-fluid">
-                        <? include('modules/mod_driver/drivercheck/history.transport.php'); ?>
-                    </div>
-                </div>
-                
-                
-                <div class="tab-pane" id="tab2">
-                    <div class="row-fluid">
-                        <? include('modules/mod_driver/drivercheck/history.passenger.php'); ?>
-                    </div>
-                </div>             
-            </div>
-        </div>
-
-    </div>
-  </div>
-  
-  
-  
-  
-  	<?
-	//จาก driverhistory รวมคะแนน
-	//driverPunctual คะแนนความตรงต่อเวลาที่ลูกค้าให้ผู้ขับ
-	$sql_Punctual = "SELECT SUM(driverPunctual) as sumPunctual FROM driverhistory WHERE driverId='".$driverId."'";
-	$rs_Punctual = mysql_query($sql_Punctual) or trigger_error(mysql_error(),E_USER_ERROR);
-	$sum_Punctual =  mysql_result ($rs_Punctual,0);
-	
-	//driverCourtesy คะแนนมารยาทของผู้ขับที่ลูกค้าให้
-	$sql_Courtesy = "SELECT SUM(driverCourtesy) as sumCourtesy FROM driverhistory WHERE driverId='".$driverId."'";
-	$rs_Courtesy = mysql_query($sql_Courtesy) or trigger_error(mysql_error(),E_USER_ERROR);
-	$sum_Courtesy =  mysql_result ($rs_Courtesy,0);
-	
-	//driverCarLook คะแนนสภาพรถแท๊กซี่ที่ลูกค้าให้ผู้ขับ
-	$sql_CarLook = "SELECT SUM(driverCarLook) as sumCarLook FROM driverhistory WHERE driverId='".$driverId."'";
-	$rs_CarLook = mysql_query($sql_CarLook) or trigger_error(mysql_error(),E_USER_ERROR);
-	$sum_CarLook =  mysql_result ($rs_CarLook,0);
-	
-	//driverDrivingSkill คะแนนเรื่องการขับขี่ที่ลูกค้าให้ผู้ขับ	
-	$sql_DrivingSkill = "SELECT SUM(driverDrivingSkill) as sumDrivingSkill FROM driverhistory WHERE driverId='".$driverId."'";
-	$rs_DrivingSkill = mysql_query($sql_DrivingSkill) or trigger_error(mysql_error(),E_USER_ERROR);
-	$sum_DrivingSkill =  mysql_result ($rs_DrivingSkill,0);
-	?>
-
-     <div class="span4 chat_box" style="border:#CCC 1px solid; border-radius: 5px;">
-         <div class="chat_heading clearfix"> รายละเอียดคะแนน </div>      
-         <table id="mytable" class="table table-striped table-bordered table-condensed" style="border:none; margin-bottom:0px;">
+        </div><!--chat_sidebar -->
         
-            <tr>
-                <th>คะแนนความตรงต่อเวลาที่ลูกค้าให้ผู้ขับ</th>
-                <td><?=$sum_Punctual?></td>
-            </tr>
-            <tr>
-                <th>คะแนนมารยาทของผู้ขับที่ลูกค้าให้</th>
-                <td><?=$sum_Courtesy?></td>
-            </tr>
-            <tr>
-                <th>คะแนนสภาพรถแท๊กซี่ที่ลูกค้าให้ผู้ขับ</th>
-                <td><?=$sum_CarLook?></td>
-            </tr>
-            <tr>
-                <th>คะแนนเรื่องการขับขี่ที่ลูกค้าให้ผู้ขับ</th>
-                <td><?=$sum_DrivingSkill?></td>
-             </tr>           
-        </table>
+        
+        <?
+		//จาก driverhistory รวมคะแนน
+		//driverPunctual คะแนนความตรงต่อเวลาที่ลูกค้าให้ผู้ขับ
+		$sql_Punctual = "SELECT SUM(driverPunctual) as sumPunctual FROM driverhistory WHERE driverId='".$driverId."'";
+		$rs_Punctual = mysql_query($sql_Punctual) or trigger_error(mysql_error(),E_USER_ERROR);
+		$sum_Punctual =  mysql_result ($rs_Punctual,0);
+		
+		//driverCourtesy คะแนนมารยาทของผู้ขับที่ลูกค้าให้
+		$sql_Courtesy = "SELECT SUM(driverCourtesy) as sumCourtesy FROM driverhistory WHERE driverId='".$driverId."'";
+		$rs_Courtesy = mysql_query($sql_Courtesy) or trigger_error(mysql_error(),E_USER_ERROR);
+		$sum_Courtesy =  mysql_result ($rs_Courtesy,0);
+		
+		//driverCarLook คะแนนสภาพรถแท๊กซี่ที่ลูกค้าให้ผู้ขับ
+		$sql_CarLook = "SELECT SUM(driverCarLook) as sumCarLook FROM driverhistory WHERE driverId='".$driverId."'";
+		$rs_CarLook = mysql_query($sql_CarLook) or trigger_error(mysql_error(),E_USER_ERROR);
+		$sum_CarLook =  mysql_result ($rs_CarLook,0);
+		
+		//driverDrivingSkill คะแนนเรื่องการขับขี่ที่ลูกค้าให้ผู้ขับ	
+		$sql_DrivingSkill = "SELECT SUM(driverDrivingSkill) as sumDrivingSkill FROM driverhistory WHERE driverId='".$driverId."'";
+		$rs_DrivingSkill = mysql_query($sql_DrivingSkill) or trigger_error(mysql_error(),E_USER_ERROR);
+		$sum_DrivingSkill =  mysql_result ($rs_DrivingSkill,0);
+		?>
+	
+		 <div class="chat_box" style="border:#CCC 1px solid; border-radius: 5px; margin-top:10px;">
+			 <div class="chat_heading clearfix"> รายละเอียดคะแนน </div>      
+			 <table id="mytable" class="table table-striped table-bordered table-condensed" style="border:none; margin-bottom:0px;">
+			
+				<tr>
+					<th>คะแนนความตรงต่อเวลาที่ลูกค้าให้ผู้ขับ</th>
+					<td><?=$sum_Punctual?></td>
+				</tr>
+				<tr>
+					<th>คะแนนมารยาทของผู้ขับที่ลูกค้าให้</th>
+					<td><?=$sum_Courtesy?></td>
+				</tr>
+				<tr>
+					<th>คะแนนสภาพรถแท๊กซี่ที่ลูกค้าให้ผู้ขับ</th>
+					<td><?=$sum_CarLook?></td>
+				</tr>
+				<tr>
+					<th>คะแนนเรื่องการขับขี่ที่ลูกค้าให้ผู้ขับ</th>
+					<td><?=$sum_DrivingSkill?></td>
+				 </tr>           
+			</table>
+		</div>
+        
+        
+      </div> <!-- span4 -->
+      
     </div>
-    
-
-
-
+  </div>
 </div>
+
+
+
+
+
 
 <script src="lib/jquery-ui/jquery-ui-1.8.23.custom.min.js"></script>
 <!-- touch events for jquery ui-->

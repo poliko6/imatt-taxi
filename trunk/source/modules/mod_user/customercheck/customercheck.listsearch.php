@@ -15,10 +15,10 @@ if ($uni_r == 'option2'){
 	}
 }
 
-$sql_driver = "SELECT * FROM drivertaxi ".$where_tag;
-$rs_driver = mysql_query($sql_driver);
-$founddata = mysql_num_rows($rs_driver);
-#echo $sql_driver;
+$sql_customer = "SELECT * FROM customer ".$where_tag;
+$rs_customer = mysql_query($sql_customer);
+$founddata = mysql_num_rows($rs_customer);
+#echo $sql_customer;
 
 ?>
 
@@ -27,7 +27,7 @@ $founddata = mysql_num_rows($rs_driver);
     <div class="span4">
         <form class="form-horizontal well" method="post" id="fm_search">
             <fieldset>
-                <p class="f_legend">ค้นหาคนขับรถ</p>
+                <p class="f_legend">ค้นหาลูกค้า</p>
                 
                 <div class="control-group">
                     <label class="control-label">เลือกการค้นหา</label>
@@ -53,7 +53,7 @@ $founddata = mysql_num_rows($rs_driver);
                 
                 <div class="control-group">
                     <div class="controls">
-                        <input class="btn btn-danger" type="button" value="ค้นหาพนักงานขับรถ" onClick="submitSearch();">
+                        <input class="btn btn-danger" type="button" value="ค้นหาลูกค้า" onClick="submitSearch();">
                     </div>
                 </div>
             </fieldset>
@@ -73,57 +73,41 @@ $founddata = mysql_num_rows($rs_driver);
             <thead>
                 <tr>
                     <th width="5%">ลำดับ</th>
-                    <th width="10%">รูป</th>
-                    <th>ชื่อคนขับ</th>
+                    <th>อีเมล์</th>
+                    <th>ชื่อลูกค้า</th>
                     <th>หมายเลขบัตรประชาฃน</th>
                 </tr>
             </thead>
             <tbody>
 				<?		
 				$i=0;
-				while ($data_driver = @mysql_fetch_object($rs_driver)){
+				while ($data_customer = @mysql_fetch_object($rs_customer)){
 					$i++;
-					$firstName = $data_driver->firstName;
+					$firstName = $data_customer->firstName;
 					foreach($parttxt as $val){
 						$new = '<strong style="color:#F33;">'.$val.'</strong>';						
 						$firstName = str_replace($val,$new,$firstName);
 					}
 					
-					$lastName = $data_driver->lastName;
+					$lastName = $data_customer->lastName;
 					foreach($parttxt as $val){
 						$new = '<strong style="color:#F33;">'.$val.'</strong>';						
 						$lastName = str_replace($val,$new,$lastName);
 					}
 					
-					$citizenId = $data_driver->citizenId;
+					$citizenId = $data_customer->citizenId;
 					foreach($parttxt as $val){
 						$new = '<strong style="color:#F33;">'.$val.'</strong>';						
 						$citizenId = str_replace($val,$new,$citizenId);
 					}
+					$email = $data_customer->email;
 					$bgcolor = (($i%2)==0)?"#F8F8F8":"#FFFFFF"; 
 					?>
 					<tr>
 						<td style="background-color:<?=$bgcolor?>"><?=$i?></td>
-						<td style="background-color:<?=$bgcolor?>;text-align:center;">   
-                        	<?
-                             if (trim($data_driver->driverImage) == ''){
-									$pathimage  = 'gallery/Image10_tn.jpg'; 	
-								} else {			
-									
-									$pathimage  = 'stored/driver/thumbnail/'.$data_driver->driverImage;
-									if (file_exists($pathimage)) {  //check file			
-										$pathimage  = 'stored/driver/thumbnail/'.$data_driver->driverImage;
-									} else { 						
-										$pathimage  = 'gallery/Image10_tn.jpg'; 	
-									}
-									
-									
-								}		
-							?>                 	
-							<img src='<?=$pathimage?>' style="height:50px;width:80px; border:1px #CCCCCC solid; padding:3px;">                    
-						</td>
-						<td style="background-color:<?=$bgcolor?>"><a href="#" onClick="seeDataSearch(<?=$data_driver->driverId?>)"><?=$firstName?>  <?=$lastName?></a></td>
-						<td style="background-color:<?=$bgcolor?>"><a href="#" onClick="seeDataSearch(<?=$data_driver->driverId?>)"><?=$citizenId?></a></td>
+						<td style="background-color:<?=$bgcolor?>;"> <?=$email?></td>
+						<td style="background-color:<?=$bgcolor?>"><a href="#" onClick="seeDataSearch(<?=$data_customer->customerId?>)"><?=$firstName?>  <?=$lastName?></a></td>
+						<td style="background-color:<?=$bgcolor?>"><a href="#" onClick="seeDataSearch(<?=$data_customer->customerId?>)"><?=$citizenId?></a></td>
 					</tr>
                 <? } ?>
                
@@ -138,8 +122,8 @@ $founddata = mysql_num_rows($rs_driver);
 </div>
 
 
-<form method="post" id="fm_driverid">
-    <input type="hidden" name="driverId" id="driverId" value="" />
+<form method="post" id="fm_customerid">
+    <input type="hidden" name="customerId" id="customerId" value="" />
     <input type="hidden" name="p" value="<?=$p?>" />
     <input type="hidden" name="menu" value="<?=$menu?>" />
 </form>
