@@ -234,7 +234,7 @@
         
     	<div class="formSep">
             <p class="sepH_c"><span class="label label-inverse">ช่วงเวลาทำงาน</span></p>
-            <div class="row-fluid">
+            <div class="row-fluid">                       	
                 <div class="span3">
                     <input type="text" class="span8" id="time1" name="time1" />
                     <span class="help-block">เวลาเริ่มต้น</span>
@@ -419,11 +419,40 @@
 <script src="lib/complexify/jquery.complexify.min.js"></script>
 
 <!-- form functions -->
-<script src="js/gebo_forms.js"></script>
 
+ 
 <script>
 	$(document).ready(function() {
 		//* show all elements & remove preloader
 		setTimeout('$("html").removeClass("js")',1000);
+		$('#time1').timepicker({
+			defaultTime: 'current',
+			minuteStep: 30,
+			disableFocus: true,
+			template: 'dropdown',
+			showMeridian: false
+		});
+		$('#time2').timepicker({
+			defaultTime: 'current',
+			minuteStep: 30,
+			disableFocus: true,
+			template: 'dropdown',
+			showMeridian: false
+		});
+		$('#time1_edit').timepicker({
+			defaultTime: 'current',
+			minuteStep: 30,
+			disableFocus: true,
+			template: 'dropdown',
+			showMeridian: false
+		});
+		$('#time2_edit').timepicker({
+			defaultTime: 'current',
+			minuteStep: 30,
+			disableFocus: true,
+			template: 'dropdown',
+			showMeridian: false
+		});
+		//$("#mask_ssn").inputmask("99:99");
 	});
 </script>

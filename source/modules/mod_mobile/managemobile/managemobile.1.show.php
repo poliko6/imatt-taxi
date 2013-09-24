@@ -51,9 +51,9 @@
 			$TableName = 'mobile';
 			$data = array(
 				'mobileNumber'=>trim($mobileNumber),
-				'mobileBanner'=>trim($mobileBanner),	
+				'mobileBannerId'=>trim($mobileBannerId),	
 				'simId'=>trim($simId),		
-				'mobileModel'=>trim($mobileModel),
+				'mobileModelId'=>trim($mobileModelId),
 				'mobileNetworkId'=>$mobileNetworkId,
 				'EmiMsi'=>trim($EmiMsi),
 				'dateUpdate'=>date('Y-m-d H:i:s')			
@@ -108,8 +108,8 @@
 				'garageId'=>$garageId,
 				'mobileNumber'=>trim($mobileNumber),
 				'simId'=>trim($simId),
-				'mobileBanner'=>trim($mobileBanner),			
-				'mobileModel'=>trim($mobileModel),
+				'mobileBannerId'=>trim($mobileBannerId),			
+				'mobileModelId'=>trim($mobileModelId),
 				'mobileNetworkId'=>$mobileNetworkId,
 				'EmiMsi'=>trim($EmiMsi)
 				
@@ -145,6 +145,7 @@
 
 <form action="index.php?p=mobile.managemobile&menu=main_mobile" name="fmReload" id="fmReload" method="post">
 	<input type="hidden" name="garageId" value="<?=$garageId?>" />
+    <input type="hidden" name="current_page" id="current_pageLoad" value="<?=$current_page?>" />
 </form>
  
  

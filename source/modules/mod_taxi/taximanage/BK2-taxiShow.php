@@ -30,32 +30,16 @@ if ($garageId == ''){
 }
 
 
+if (empty($start_page)){ $start_page = 0;}
 
-if (empty($current_page)){ $current_page = 0;}
 ?>
 
 
 <script type="text/javascript" charset="utf-8">
-	var current_page = <?=$current_page?>;
-	
-	
-	 $.fn.dataTableExt.oApi.fnPagingInfo = function ( oSettings )
-      {
-        return {
-          "iStart":         oSettings._iDisplayStart,
-          "iEnd":           oSettings.fnDisplayEnd(),
-          "iLength":        oSettings._iDisplayLength,
-          "iTotal":         oSettings.fnRecordsTotal(),
-          "iFilteredTotal": oSettings.fnRecordsDisplay(),
-          "iPage":          Math.ceil( oSettings._iDisplayStart / oSettings._iDisplayLength ),
-          "iTotalPages":    Math.ceil( oSettings.fnRecordsDisplay() / oSettings._iDisplayLength )
-        };
-      };
-	  
-	  
+	var startpage = <?=$start_page?>;
 	$(document).ready(function() {
 	
-		var oTable = $('#example').dataTable( {			
+		var dataTable = $('#example').dataTable( {			
 			"bProcessing": true,
 			"bServerSide": true,
 			"sAjaxSource": "modules/mod_taxi/taximanage/scripts/server_processing.php?garageId=<?=$garageId?>",
@@ -63,11 +47,10 @@ if (empty($current_page)){ $current_page = 0;}
 			
 			"sPaginationType" : "full_numbers",// แสดงตัวแบ่งหน้า
 			"bLengthChange": true, // แสดงจำนวน record ที่จะแสดงในตาราง
-			"iDisplayLength": 10, // กำหนดค่า default ของจำนวน record 						
-			"bFilter": true, // แสดง search box			
-			"iDisplayStart" : current_page,
+			"iDisplayLength": 10, // กำหนดค่า default ของจำนวน record 			
+			"bFilter": true, // แสดง search box
 			//"sScrollY": "400px", // กำหนดความสูงของ ตาราง
-			
+
 			"oTableTools": {
 				"sRowSelect": "single" // คลิกที่ record มีแถบสีขึ้น
 			},
@@ -79,39 +62,31 @@ if (empty($current_page)){ $current_page = 0;}
 				"sInfoEmpty": "แสดง 0 ถึง 0 ของ 0 เร็คคอร์ด",
 				"sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
 				"sSearch": "ค้นหา :"
-			},
-			
-			
-			"fnDrawCallback": function (oSettings) {
-				//console.log( '_iDisplayStart : '+ oSettings._iDisplayStart );
-				//console.log( 'Now on page : '+ this.fnPagingInfo().iPage );
-				//$('#current_pageAdd').val(oSettings._iDisplayStart);
-				$('#current_pageEdit').val(oSettings._iDisplayStart);	
-				$('#current_pageLoad').val(oSettings._iDisplayStart);	
-			}
-			
-			//_iDisplayLength 2
-			//_iDisplayStart 0
-
-			//_iDisplayLength 2
-			//_iDisplayStart 4
+			 },
+			 
+			  "fnDrawCallback": function (oSettings) {
+				//self.selectedPageLength = oSettings._iDisplayStart; //Storing this for use by <a href="/ref#fnPreDrawCallback">fnPreDrawCallback</a>       
+				 //console.log(oSettings._iDisplayStart);
+				 $('#start_page').val(oSettings._iDisplayStart);
+				 
+			  }
+			  
 			 
 			 
 		});//Datatable
 		
 		
+		//var oSettings = dataTable.fnSettings();
+    		//console.log( oSettings._iDisplayLength);
+		
+	
 		
 		
-		var oSettings = oTable.fnSettings();
-            oSettings._iDisplayStart = current_page; //for example is 3rd page if page size is 5             
-            //oTable.fnDraw(true);
-			//console.log('_iDisplayStart : '+oSettings._iDisplayStart);
 	});
 	
 	function fn_changeLock(id,sval){
 		$.post('modules/mod_taxi/taximanage/edit.statuslock.php', {status:sval, id:id} , function(data) {			  
-			//window.location = 'index.php?p=taxi.taximanage&menu=main_taxi&garageId=<?=$garageId?>'; 
-			reloadPage();
+			window.location = 'index.php?p=taxi.taximanage&menu=main_taxi&garageId=<?=$garageId?>'; 
 		});	
 	}
 </script>
@@ -141,7 +116,7 @@ if (empty($current_page)){ $current_page = 0;}
                             <? } else { ?>	
                                 <input type="hidden" name="garageId" value="<?=$garageId?>" /> 
                             <? } ?>		
-        					                           
+        
                             <input type="button" class="btn btn-success" name="btnSubmit" id="btnSubmit" onClick="fn_goToPage('add');" value="เพิ่มรถแท๊กซี่">
     
                         </div>
@@ -189,8 +164,8 @@ if (empty($current_page)){ $current_page = 0;}
     </div> 
      
      
-    <form action="index.php?p=taxi.taximanage&menu=main_taxi" method="post" name="fm_Edit" id="fm_Edit">
-    	<input type="hidden" name="current_page" id="current_pageEdit" value="" />
+    <form action="" method="post" name="fm_Edit" id="fm_Edit">
+    	<input type="hidden" name="start_page" id="start_page" value="" />
         <input type="hidden" name="carId" id="carId_edit" value="" />
         <input type="hidden" name="garageId" id="garageId_edit"  value="" />
         <input type="hidden" name="act" value="edittaxi" />

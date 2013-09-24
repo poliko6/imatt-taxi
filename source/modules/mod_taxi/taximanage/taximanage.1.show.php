@@ -1,7 +1,7 @@
  <?
  foreach($_REQUEST as $key => $value)  {
 	$$key = $value;
-	#echo $key ."=". $value."<br>";
+	//echo $key ."=". $value."<br>";
  }
  //pre($_FILES);
  //pre($_SESSION);
@@ -423,6 +423,7 @@
 
 <form action="index.php?p=taxi.taximanage&menu=main_taxi" name="fmReload" id="fmReload" method="post">
 	<input type="hidden" name="garageId" value="<?=$garageId?>" />
+    <input type="hidden" name="current_page" id="current_pageLoad" value="<?=$current_page?>" />
 </form>
  
  

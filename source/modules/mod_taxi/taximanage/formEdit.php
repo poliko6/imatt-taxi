@@ -218,6 +218,7 @@ function fn_callModel(id){
                     <input type="hidden" name="menu" value="<?=$menu?>" />
                     <input type="hidden" name="garageId" value="<?=$garageId?>" />        
                     <input type="hidden" name="act" value="saveedit" />
+                    <input type="hidden" name="current_page" id="current_page" value="<?=$current_page?>" />
                 </form>
             </div>
         </div>
