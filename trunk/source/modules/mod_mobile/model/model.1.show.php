@@ -352,7 +352,7 @@
         <div class="formSep">
             <label>ชื่อรุ่นมือถือ</label>
             <input type="text" name="model_name_edit" id="model_name_edit" value="<?=$model_name_edit?>" />
-            <span class="help-inline">ตัวอย่าง : Corolla</span>
+            <span class="help-inline">ตัวอย่าง : iPhone 5S</span>
             <span class="help-block" id="errtxt_edit" style="color:#900; display:none;">กรุณาป้อนรุ่นมือถือ</span>
         </div> 
     </div>
