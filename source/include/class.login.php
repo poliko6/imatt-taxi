@@ -1,4 +1,4 @@
-<?  //ob_start();
+<?  ob_start();
 	session_start();
 
 	foreach($_REQUEST as $key => $value)  {
@@ -88,8 +88,13 @@
 	
 			//มีปัญหาเรื่อง Cookie
 			if($chkMem) { 			
-				//setcookie("ID", $username, time()+3600*24*365);
-				//setcookie("uname",$username,time()+3600*24*365,'/','.taxi.imattioapp.com');
+				setcookie("u_id",$u_id,time()+3600*24*365,'/','.imattioapp.com');
+				setcookie("u_username",$u_username,time()+3600*24*365,'/','.imattioapp.com');
+				setcookie("u_garage",$u_garageid,time()+3600*24*365,'/','.imattioapp.com');
+				setcookie("u_garagepass",$garageid,time()+3600*24*365,'/','.imattioapp.com');
+				setcookie("u_type",$u_type,time()+3600*24*365,'/','.imattioapp.com');
+				setcookie("u_password",$password,time()+3600*24*365,'/','.imattioapp.com');
+				setcookie("chkMem",'1',time()+3600*24*365,'/','.imattioapp.com');
 				//setcookie("taximeter_[username]", $username, $time + 3600); // Sets the cookie username 
 				//setcookie("taximeter_[password]", $password, $time + 3600); // Sets the cookie password 
 				//setcookie("taximeter_[garageid]", $garageid, $time + 3600); // Sets the cookie password 
@@ -106,5 +111,5 @@
 		session_destroy();
 		$user = NULL; 
 	}
-	//ob_end_flush();
+	ob_end_flush();
 ?>

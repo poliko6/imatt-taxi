@@ -11,9 +11,28 @@
 	include("include/config.inc.php");
 	include("include/class.function.php");
 	include("include/class.login.facebook.php");
-	
-	//$password = '';
+
+
 	//print_r($_COOKIE);
+
+	if (($_COOKIE['u_id'] != '') && ($_COOKIE['u_username'] != '') 
+		&& ($_COOKIE['u_garage'] != '') && ($_COOKIE['u_type'] != '')){
+		
+		$username = $_COOKIE['u_username'];
+		$password = $_COOKIE['u_password'];
+		$garageid = $_COOKIE['u_garagepass'];
+		
+		$_SESSION['u_garage'] = $_COOKIE['u_garage']; //ถ้าเป็นพนักงานให้เป็น 3
+		$_SESSION['u_username'] = $username;
+		$_SESSION['u_id'] = $_COOKIE['u_id'];	 //id มาจากตาราง major และ minor
+		$_SESSION['u_type'] = $_COOKIE['u_type']; //ถ้าเป็นพนักงานให้เป็น 3
+		$_SESSION['pass_actived'] = 'actived';
+		$chkMem = $_COOKIE['chkMem'];
+		?>
+         <META HTTP-EQUIV="Refresh" CONTENT="0;URL=index.php">
+        <?
+		//echo "Pass";
+	}
 	//pre($user);
 	//pre($_SESSION);
 	//echo '<br>logout fb = '.$logoutUrl;
@@ -23,6 +42,15 @@
 	if (!empty($logout)){
 		session_destroy();
 		$user = NULL;
+		
+		$time = time(); 	
+		setcookie("u_id",'', $time - 3600,'/','.imattioapp.com'); 
+		setcookie("u_username",'', $time - 3600,'/','.imattioapp.com'); 
+		setcookie("u_garage",'', $time - 3600,'/','.imattioapp.com'); 
+		setcookie("u_garagepass",'', $time - 3600,'/','.imattioapp.com'); 
+		setcookie("u_type",'', $time - 3600,'/','.imattioapp.com'); 
+		setcookie("u_password",'', $time - 3600,'/','.imattioapp.com'); 
+		setcookie("chkMem",'', $time - 3600,'/','.imattioapp.com');
 	}
 	
 ?>
@@ -287,7 +315,7 @@
                         <div class="formRow clearfix">
                             <div class="input-prepend">
                                 <span class="add-on"><i class="icon-user"></i></span>
-                                <input type="text" id="username" name="username" placeholder="Username" value="" />
+                                <input type="text" id="username" name="username" placeholder="Username" value="<?=$username?>" />
                             </div>
                         </div>
       
@@ -295,7 +323,7 @@
                         <div class="formRow clearfix">
                             <div class="input-prepend">
                                 <span class="add-on"><i class="icon-lock"></i></span>                             
-                                <input type="password" id="password" name="password" placeholder="Password" value="" />
+                                <input type="password" id="password" name="password" placeholder="Password" value="<?=$password?>" />
                                 <!--<span class="help-block">help block</span> -->
                             </div>
                         </div>
@@ -303,12 +331,12 @@
                         <div class="formRow clearfix">
                             <div class="input-prepend">
                                 <span class="add-on"><i class="icon-briefcase"></i></span>
-                                <input type="text" id="garageid" name="garageid" placeholder="Garage ID" value="" />
+                                <input type="text" id="garageid" name="garageid" placeholder="Garage ID" value="<?=$garageid?>" />
                             </div>
                         </div>
                         
                         <div class="formRow clearfix">
-                            <label class="checkbox"><input type="checkbox"  id="chkMem" name="chkMem"/> Remember me</label>
+                            <label class="checkbox"><input type="checkbox"  id="chkMem" name="chkMem" <? if ($chkMem == 1) { echo "checked"; } ?>  /> Remember me</label>
                         </div>
                     </div>
          
