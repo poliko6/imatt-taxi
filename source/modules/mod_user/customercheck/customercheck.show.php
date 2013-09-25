@@ -1,4 +1,5 @@
 <?
+//====================================  Data Customer
 $data_search = select_db('customer',"where customerId = '".$customerId."'"); 
 $firstName = $data_search[0]['firstName'];
 $lastName = $data_search[0]['lastName'];
@@ -22,8 +23,130 @@ if ($gender == 'female'){
 	$gender = 'หญิง';
 } else {
 	$gender = 'ชาย';
-}				 
+}	
+
+//==================================== End Data Customer			 
+
+
+
+
+
+//Dsta EX
+//$customerId = 1;
+if (empty($dateSearch)) {
+	$dateSearch = date('Y-m-d');;
+	//$dateSearch = '2013-09-05';
+}
+
+
+//Start latitude and longitude
+//18.711100,98.972633
+$sql_startlat = "SELECT latitudeCustomer,longitudeCustomer FROM customermap ";
+$sql_startlat .= "WHERE timeServer LIKE '".$dateSearch."%' AND customerId = '".$customerId."' Limit 0,1";
+$rs_startlat = mysql_query($sql_startlat);
+$data_startlat = mysql_fetch_object($rs_startlat);
+$lat_start = $data_startlat->latitudeCustomer;
+$lon_start = $data_startlat->longitudeCustomer;
+
+if ($lat_start == ''){
+	$lat_start = 18.711100;
+	$lon_start = 98.972633;
+}
+
+//echo $sql_startlat;
 ?>
+
+
+<form action="" name="fmReload" id="fmReload" method="post">
+	<input type="hidden" name="customerId" value="<?=$customerId?>" />
+    <input type="hidden" name="dateSearch" id="dateSearch" value="<?=$dateSearch?>" />
+</form>
+
+
+
+<!-- datatable -->
+<link rel="stylesheet" type="text/css" href="lib/datatables/css/demo_table_jui.css"/> 
+<script src="lib/datatables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"> </script>
+
+
+
+<!-- Date Select -->
+<script type="text/javascript">
+$(function(){
+	$('#dateShow').change(function () {
+		//console.log($('#dateShow').val());
+		var thisdate = $('#dateShow').val();
+	    $('#dateSearch').val(thisdate);
+		$('#fmReload').submit();
+	});
+});
+</script>
+
+
+<script type="text/javascript"> 
+
+ function initialize() {  
+    var latlng = new google.maps.LatLng(<?=$lat_start?>,<?=$lon_start?>);  
+    var myOptions = {  
+      zoom: 10,  
+      center: latlng,  
+      mapTypeId: google.maps.MapTypeId.ROADMAP  ,
+	  navigationControl: true,
+    };
+
+    var map = new google.maps.Map(document.getElementById("map_canvas"),  
+        myOptions);  
+
+		
+		/*var route = [
+			new google.maps.LatLng(37.7671, -122.4206) ,
+			new google.maps.LatLng(34.0485, -118.2568) ,
+			new google.maps.LatLng(35.0605, -118.2388)
+		];*/
+		
+
+		var route = [
+			<?php		
+			$sql = "SELECT latitudeCustomer,longitudeCustomer FROM customermap ";			
+			$sql .= "WHERE timeServer LIKE '".$dateSearch."%' AND customerId = '".$customerId."' ";
+			$result = mysql_query($sql);
+			
+			while($row = mysql_fetch_array($result)){
+				$latitude = $row['latitudeCustomer'];
+				$longitude = $row['longitudeCustomer'];
+				?>
+			   new google.maps.LatLng(<?php echo $latitude; ?>, <?php echo $longitude; ?>)
+			   <?php if ($latitude > 0) { ?>, 	<?php } ?>
+			
+			
+			<?php 
+			} 
+			?>		
+		];
+
+
+		var polyline = new google.maps.Polyline({
+		  path: route,
+			strokeColor : "#ff0000",
+			strokeOpacity: 0.6,
+			strokeWeight: 5
+		});
+		
+		polyline.setMap(map);
+
+}  
+
+
+window.onload = function() {
+	initialize();	
+};
+</script>
+
+
+
+
+
 <style type="text/css">
 .nanstyle {
 	padding:5px;
@@ -38,42 +161,6 @@ if ($gender == 'female'){
 }
 .table10 tr{border:none;}
 </style>
-
-
-
-<?
-//Dsta EX
-$customerId = 1;
-if (empty($dateSearch)) {
-	//$dateSearch = date('Y-m-d');;
-	$dateSearch = '2013-09-05';
-}
-?>
-
-
-<form action="" name="fmReload" id="fmReload" method="post">
-	<input type="hidden" name="customerId" value="<?=$customerId?>" />
-    <input type="hidden" name="dateSearch" id="dateSearch" value="<?=$dateSearch?>" />
-</form>
-
-
-
-<!-- datatable -->
-<link rel="stylesheet" type="text/css" href="lib/datatables/css/demo_table_jui.css"/> 
-<script src="lib/datatables/jquery.dataTables.min.js"></script>
-
-<script type="text/javascript">
-$(function(){
-	$('#dateShow').change(function () {
-		//console.log($('#dateShow').val());
-		var thisdate = $('#dateShow').val();
-	    $('#dateSearch').val(thisdate);
-		$('#fmReload').submit();
-	});
-});
-</script>
-
-
 
 <div class="row-fluid">
   <div class="span12">
@@ -92,7 +179,9 @@ $(function(){
                 ตำแหน่งปัจจุบัน 
               </div>
               
-              <div class="msg_window"></div>        
+              <div class="msg_window" style="height:500px;">
+          		<div id="map_canvas" style="width:100%; height:100%;"></div> 
+              </div>        
               
             </div><!--chat_content -->
         
