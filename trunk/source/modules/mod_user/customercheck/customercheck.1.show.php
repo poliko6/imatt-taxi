@@ -5,6 +5,9 @@ foreach($_REQUEST as $key => $value)  {
 }
 
 
+if ($u_type == 4){ $customerId = $u_id;}
+
+
 if ($customerId == '') {
 	
 	switch ($act) {

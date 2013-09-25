@@ -3,13 +3,16 @@ session_start();
 session_unset(); 
 session_destroy();
 $user = NULL; 
-/*if(isset($_COOKIE['taximeter_imattio'])) // If the cookie 'taximeter_imattio is set, do the following; 
-{ 
-	$time = time(); 
-	setcookie("taximeter_imattio[username]", $time - 3600); 
-	setcookie("taximeter_imattio[password]", $time - 3600); 
-	setcookie("taximeter_imattio[garageid]", $time - 3600); 
-} */
+
+$time = time(); 	
+setcookie("u_id",'', $time - 3600,'/','.imattioapp.com'); 
+setcookie("u_username",'', $time - 3600,'/','.imattioapp.com'); 
+setcookie("u_garage",'', $time - 3600,'/','.imattioapp.com'); 
+setcookie("u_garagepass",'', $time - 3600,'/','.imattioapp.com'); 
+setcookie("u_type",'', $time - 3600,'/','.imattioapp.com'); 
+setcookie("u_password",'', $time - 3600,'/','.imattioapp.com'); 
+setcookie("chkMem",'', $time - 3600,'/','.imattioapp.com');
+
 header('Location: ../login.php?typeuser=1');
 ?>
 <!--<META HTTP-EQUIV="Refresh" CONTENT="0;URL=login.php"> -->
