@@ -1,30 +1,59 @@
 <?
 	echo pre($_SESSION);
+	echo $garageId;
+	if($garageId != '0')
+	{	$strSQL = "SELECT drivertaxi.*,majoradmin.thaiCompanyName ";
+		$strSQL .= "FROM drivertaxi,majoradmin WHERE drivertaxi.driverId ='".$driverId."' ";
+		$strSQL .= "&& drivertaxi.garageId = majoradmin.garageId"; }
+	else
+	{	$strSQL = "SELECT * FROM drivertaxi WHERE drivertaxi.driverId ='".$driverId."'";	}
+	$objQuery = mysql_query($strSQL);	
+	$objResult = mysql_fetch_array($objQuery);
+	
+	$driverId = $objResult['driverId'];
+	$citizenId = $objResult['citizenId'];
+	$firstName = $objResult['firstName'];
+	$lastName = $objResult['lastName'];
+	
+	if($objResult['driverImage']=='')
+	{	$imgSrc = "gallery/80x80.gif"; }
+	else
+	{	$imgSrc = "stored/driver/".$objResult['driverImage'];	 }
+	$licenseNumber = $objResult['licenseNumber'];
+	$driverBirthday = $objResult['driverBirthday'];
+	$address = $objResult['address'];
+	$province_ss = $objResult['provinceId'];
+	$amphur_ss = $objResult['amphurId'];
+	$district_ss = $objResult['districtId'];
+	$zipcode = $objResult['zipcode'];
+	$mobilePhone = $objResult['mobilePhone'];
+	$telephone = $objResult['telephone'];
+	$username = $objResult['username'];
 ?>
 
 <div class="row-fluid">
   <div class="span12">
-    <h3 class="heading">เพิ่มข้อมูล</h3>
+    <h3 class="heading">แก้ไขข้อมูล</h3>
     <div class="row-fluid">
       <div class="span8">
         <form class="form-horizontal">
           <div class="control-group formSep">
             <label for="u_fname" class="control-label">หมายเลขประชาชน :</label>
             <div class="controls text_line">
-              <input type="text" class="input-xlarge" name="chkCitizen" id="chkCitizen" onkeyup="checkID(this.id,this.value)" maxlength="13" />
+              <input type="text" class="input-xlarge" name="chkCitizen" id="chkCitizen" maxlength="13" value="<?=$citizenId?>" />
               <font id="chkIdFont"><i>
               <div id="chkID"></div>
               </i></font> </div>
           </div>
         </form>
-        <form id="formInfo" class="form-horizontal form_validation_ttip" style="visibility:hidden" method="post" enctype="multipart/form-data">
+        <form id="formInfo" class="form-horizontal form_validation_ttip" method="post" enctype="multipart/form-data">
           <fieldset>
             <div class="control-group formSep">
               <label for="fileinput" class="control-label">รูปประจำตัวผู้ขับ</label>
               <div class="controls">
                 <div data-provides="fileupload" class="fileupload fileupload-new">
                   <input type="hidden" />
-                  <div style="width: 80px; height: 80px;" class="fileupload-new thumbnail"><img id="driverImg" src="gallery/80x80.gif" alt="" /></div>
+                  <div style="width: 80px; height: 80px;" class="fileupload-new thumbnail"><img id="driverImg" src="<?=$imgSrc?>" alt="" /></div>
                   <div style="width: 80px; height: 80px; line-height: 80px;" class="fileupload-preview fileupload-exists thumbnail"></div>
                   <span id="btnUppic" class="btn btn-file"><span class="fileupload-new">เลือกไฟล์รูป</span><span class="fileupload-exists">Change</span>
                   <input type="file" id="fileinput" name="fileinput" />
@@ -34,55 +63,42 @@
             <div class="control-group formSep">
               <label for="u_fname" class="control-label">ชื่อจริง :</label>
               <div class="controls text_line">
-                <input type="text" name="fName" id="fName" class="input-xlarge" value="" onchange="chkThai(this.id,this.value)" />
+                <input type="text" name="fName" id="fName" class="input-xlarge" value="<?=$firstName?>" onchange="chkThai(this.id,this.value)" />
                 <font color="#FF0000"><i>
                 <div id="fNamechk"></div>
                 </i></font> </div>
               <br />
               <label for="u_fname" class="control-label">นามสกุล :</label>
               <div class="controls">
-                <input type="text" name="lName" id="lName" class="input-xlarge" value="" onchange="chkThai(this.id,this.value)" />
+                <input type="text" name="lName" id="lName" class="input-xlarge" value="<?=$lastName?>" onchange="chkThai(this.id,this.value)" />
                 <font color="#FF0000"><i>
                 <div id="lNamechk"></div>
                 </i></font> </div>
               <br />
               <label for="u_fname" class="control-label">วัน เดือน ปี เกิด :</label>
               <div class="controls date" id="dp2" data-date-format="dd/mm/yyyy"> <span class="add-on">
-                <input class="input-xlarge" type="text" id="birthDay" name="birthDay" readonly="readonly" value="" />
+                <input class="input-xlarge" type="text" id="birthDay" name="birthDay" readonly="readonly" value="<?=$driverBirthday?>" />
                 </span><span class="help-block">คลิกเพื่อเลือกวันที่จากปฏิทิน</span></div>
               <br />
               <label for="u_fname" class="control-label">เลขใบขับขี่ :</label>
               <div class="controls">
-                <input type="text" name="dLicense" id="dLicense" class="input-xlarge" value="" onchange="numberOrNot(this.id,this.value)" />
+                <input type="text" name="dLicense" id="dLicense" class="input-xlarge" value="<?=$licenseNumber?>" onchange="numberOrNot(this.id,this.value)" />
               </div>
             </div>
             <div class="control-group formSep">
               <label for="u_fname" class="control-label">Username</label>
               <div class="controls">
-                <input type="text" class="input-xlarge" name="userName" id="userName" value="" maxlength="20" onchange="chkUN(this.id)" />
-                <font color="#006600">
-                <div id="userNameOK"></div>
-                </font> <font color="#FF0000"><i>
-                <div id="userNamechk"></div>
-                </i></font> <span id="spanUN" class="help-block">ตัวอักษรภาษาอังกฤษเท่านั้น ความยาวไม่เกิน 20 ตัวอักษร</span> </div>
-              <div id="pwChg"> <br />
+                <input type="text" class="input-xlarge" name="userName" id="userName" value="<?=$username?>" maxlength="20" disabled="disabled" />              </div><br />
                 <label for="u_password" class="control-label">Password</label>
                 <div class="controls">
-                  <div class="sepH_b">
-                    <input type="password" class="input-xlarge" name="u_password" id="u_password" placeholder="ความยาวอย่างน้อย 8 ตัวอักษร" maxlength="20" onchange="chk1stPW(this.id,this.value,8)" />
-                    <font color="#FF0000"><i>
-                    <div id="u_passwordchk"></div>
-                    </i></font> <span class="help-block">ตัวอักษรภาษาอังกฤษหรือตัวเลขเท่านั้น ความยาว 8-20 ตัวอักษร</span> </div>
-                  <input type="password" class="input-xlarge" name="u_password2" id="u_password2" placeholder="พิมพ์พาสเวิร์ดเดิมอีกครั้ง" maxlength="20" onchange="chk2ndPW(this.value)" />
-                  <font color="#FF0000"><i>
-                  <div id="u_password2chk"></div>
-                  </i></font> </div>
-              </div>
+                  <div class="sepH_b"> <a href="#changePW" data-toggle="modal" title="เปลี่ยนรหัสผ่าน" >เปลี่ยนรหัสผ่านใหม่</a> </div>
+                </div>
             </div>
             <div class="control-group formSep">
               <label class="control-label">ที่อยู่</label>
               <div class="controls">
-                <textarea class="input-xlarge" name="txtAddress_add" id="txtAddress" placeholder="(บ้านเลขที่ ซอย ถนน)"></textarea>
+                <textarea class="input-xlarge" name="txtAddress_add" id="txtAddress" placeholder="(บ้านเลขที่ ซอย ถนน)"><?=$address?>
+</textarea>
               </div>
               <br />
               <label class="control-label">จังหวัด</label>
@@ -130,21 +146,21 @@
               <br />
               <label class="control-label">รหัสไปรษณีย์</label>
               <div class="controls">
-                <input type="text" name="txtZipcode_add" id="txtZipcode" class="input-xlarge" value="" onchange="numberOrNot(this.id,this.value,'รหัสไปรษณีย์ไม่ถูกต้อง')" />
+                <input type="text" name="txtZipcode_add" id="txtZipcode" class="input-xlarge" value="<?=$zipcode?>" onchange="numberOrNot(this.id,this.value,'รหัสไปรษณีย์ไม่ถูกต้อง')" />
                 <font color="#FF0000"><i>
                 <div id="txtZipcodechk" ></div>
                 </i></font> </div>
               <br />
               <label for="u_email" class="control-label">เบอร์โทรศัพท์มือถือ</label>
               <div class="controls">
-                <input type="text" class="input-xlarge" name="txtMobilePhone" id="txtMobilePhone" value="" maxlength="10" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
+                <input type="text" class="input-xlarge" name="txtMobilePhone" id="txtMobilePhone" value="<?=$mobilePhone?>" maxlength="10" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
                 <font color="#FF0000"><i>
                 <div id="txtMobilePhonechk" ></div>
                 </i></font> </div>
               <br />
               <label for="u_email" class="control-label">เบอร์โทรศัพท์บ้าน</label>
               <div class="controls">
-                <input type="text" name="txtTel" id="txtTel" class="input-xlarge" value="" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
+                <input type="text" name="txtTel" id="txtTel" class="input-xlarge" value="<?=$telephone?>" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
                 <font color="#FF0000"><i>
                 <div id="txtTelchk" ></div>
                 </i></font> </div>
@@ -153,6 +169,7 @@
               <label class="control-label">อู่สำหรับผู้ขับนี้</label>
               <div class="controls">
                 <select class="input-xlarge" name="selGarage" id="selGarage">
+                	<option value="0">ไม่สังกัดอู่ใด</option>
                   <?PHP									
 					$sql = "SELECT * FROM majoradmin WHERE garageId ='".$u_garage."'";		
                     $exe = mysql_query($sql);
@@ -182,30 +199,45 @@
             </div>
             <div class="control-group">
             <div class="controls">
-              <button class="btn btn-gebo" type="submit">บันทึกการเพิ่มข้อมูล</button>
+              <button class="btn btn-gebo" type="submit">บันทึกการแก้ไขข้อมูล</button>
               <input type="button" class="btn" value="ยกเลิก" onclick="reloadPage()" />
             </div>
           </fieldset>
           <input type="hidden" name="p" value="<?=$p?>" />
           <input type="hidden" name="menu" value="<?=$menu?>" />
           <input type="hidden" name="citizenId" id="citizenId" />
-          <input type="hidden" name="act" value="saveadd" />
-          <input type="hidden" name="statusAdd" id="statusAdd" />
+          <input type="hidden" name="act" value="saveedit" />
           <input type="hidden" name="current_page" id="current_page" value="<?=$current_page?>" />
         </form>
       </div>
     </div>
   </div>
 </div>
+
+<!-- POP UP --> 
+<!-- Change Username Password -->
+<div class="modal hide fade" id="changePW" style="text-align:center; width:500px;">
+  <div class="alert alert-block alert-error fade in">
+    <h4 class="alert-heading">เปลี่ยนรหัสผ่านใหม่สำหรับUsernameของ "
+      <?=$firstName?>
+      <?=$lastName?>
+      "</h4>
+    <br />
+      <input type="password" class="input-xlarge" name="u_password" id="u_password" placeholder="ความยาวอย่างน้อย 8 ตัวอักษร" maxlength="20" onchange="chk1stPW(this.id,this.value,8)" />
+      <font color="#FF0000"><i>
+      <div id="u_passwordchk"></div>
+      </i></font> <span class="help-block">ตัวอักษรภาษาอังกฤษหรือตัวเลขเท่านั้น ความยาว 8-20 ตัวอักษร</span>
+    <input type="password" class="input-xlarge" name="u_password2" id="u_password2" placeholder="พิมพ์พาสเวิร์ดเดิมอีกครั้ง" maxlength="20" onkeyup="chk2ndPW(this.value)" />
+    <font color="#FF0000"><i>
+    <div id="u_password2chk"></div>
+    </i></font>
+  <a href="#" onclick="">
+  <button id="btnPWConfirm" name="btnPWConfirm" disabled="disabled" class="btn btn-success" onclick="chgPW()">เปลี่ยนรหัสผ่าน</button>
+  </a> หรือ <a href="#" class="btn" onclick="resetmodal()" data-dismiss="modal"><i class="splashy-error_x"></i> ยกเลิก</a> </div>
+</div>
+</div>
 <script type="text/javascript">
-	var amphur_ss = '';
-	var district_ss = '';
-
-
-function reloadPage(){
-	window.location = 'index.php?p=user.major&menu=main_user'; 
-	//$('#fmReload').submit();
-}
+var oldpwtemp=null;
 
 function checkID(tagid,id) {
 //ตรวจว่าป้อนถูกตามรูปแบบที่กำหนดมั้ย x-xxxx-xxxxx-xx-x
@@ -223,7 +255,7 @@ function checkID(tagid,id) {
 		}
 		else
 		{	
-			var u_type = '<?=$u_type?>';
+			
 			jQuery.ajax({
 				url :'modules/mod_driver/managedriver/JSON/driver.add.chkCitizenId.php',
 				type : 'GET',
@@ -300,8 +332,21 @@ function checkID(tagid,id) {
 
 //function ใส่ จังหวัด อำเภอ ตำบล	
 $(document).ready( function () {
-	
+	var u_type = '<?=$u_type?>';
 	var province_ss = '<?=$province_ss?>';	
+	var amphur_ss = '<?=$amphur_ss?>';
+	var district_ss = '<?=$district_ss?>';
+	
+	if(u_type == '1')
+	{
+		$('#allGarage').attr("style","visibility:visible")
+		$('#fixGarage').fadeOut();
+	}
+	if(u_type != '1')
+	{
+		$('#fixGarage').attr("style","visibility:visible")
+		$('#allGarage').fadeOut();
+	}
 	
 	if ($('#province').val() != ''){
 		fn_callamphur(province_ss, amphur_ss);
@@ -315,7 +360,17 @@ $(document).ready( function () {
 
 });
 
-
+function alertPopup(msgid,alertid,message){
+	$('#'+msgid+'').text(''+message+'');
+	$('#'+alertid+'').fadeIn(500, function() {
+		clearTimeout(delayAlert);  
+		delayAlert=setTimeout(function(){  
+//				alertFadeOut(''+alertid+'');
+			$('#'+alertid+'').fadeOut(500);
+			delayAlert=null;  
+		},2000);  
+	});
+}
 
 function fn_callamphur(province, amphur){
 	//alert(id);
@@ -331,6 +386,35 @@ function fn_calldistrict(amphur, district){
 	});	
 }
 
+function chgPW(type) {
+	var customerId = '<?=$driverId?>';
+	var modalId = 'changePW';
+	var type = 1;
+	var newPW = $('#newPW2nd').val();
+		
+	jQuery.ajax({
+	url :'modules/mod_driver/managedriver/JSON/driver.edit.chgPW.php',
+	type: 'GET',
+	data: '&newPW='+newPW+'&driverId='+driverId+'',
+	dataType: 'jsonp',
+	dataCharset: 'jsonp',
+		success: function (data){
+				alertPopup('msg3','alert3',''+data.message+'');
+				$('#'+modalId+'').modal('toggle');	
+				oldpwtemp = data.savpw;
+		}
+	});	
+	
+	switch (type) {
+		case 1:
+			$('#newPW1st').val("");
+			$('#newPW2nd').val("");
+			$('#btnPWConfirm').attr("disabled",true);
+			break;
+	}
+}
+
+
 function trim(s)
 {
    var l=0; var r=s.length -1;
@@ -339,45 +423,6 @@ function trim(s)
    while(r > l && s[r] == ' ')
    {   r-=1;   }
    return s.substring(l, r+1);
-}
-
-function chkUN(id) {
-	var username = $('#'+id+'').val();
-	
-	$('#'+id+'OK').text("");
-
-	if(id=="userName")
-		var chkUsername = chkValid("userName",$('#'+id+'').val(),8);
-
-
-	if(chkUsername != false)
-	{	console.log("Go Checking");
-		jQuery.ajax({
-			url :'modules/mod_driver/managedriver/JSON/driver.add.chkUN.php',
-			type : 'GET',
-			data : 'username='+username+'',
-			dataType: 'jsonp',
-			dataCharset: 'jsonp',
-			success: function (data){
-				console.log(data.status);
-				console.log(data.exist);
-				if(data.exist==true)
-				{
-						$('#'+id+'chk').text(username+" ถูกใช้งานไปแล้ว กรุณาใช้ชื่ออื่น");
-						$('#'+id).val("");
-						$('#'+id+'OK').text("");						
-				}
-				else if(data.exist==false)
-				{
-						$('#'+id+'OK').text("Username นี้สามารถใช้งานได้");
-						$('#'+id+'chk').text("");						
-				}
-			}		
-		});
-	}
-}
-function datePickIt(id) {
-	$('#'+id+'').datepicker();
 }
 
 function chkEmail(email) {	
@@ -443,11 +488,10 @@ function chkValid(id,str,long) {
 		$('#'+id+"chk").text("");
 }
 
-
-
 function chk1stPW(id,str,long) {
 	$('#'+id).val(jQuery.trim(str));
 	$('#u_password2').val("");
+	$('#btnPWConfirm').attr("disabled",true);		
 
 	var newstr = jQuery.trim(str);	
 	if ( /[^A-Za-z0-9]/.test(newstr))
@@ -463,11 +507,12 @@ function chk1stPW(id,str,long) {
 function chk2ndPW(pw2) {
 	if(pw2!=$('#u_password').val())
 	{
-		$('#u_password2chk').text("พาสเวิร์ดไม่ตรงกัน กรุณากรอกใหม่");
-		$('#u_password2').val("");
+		$('#btnPWConfirm').attr("disabled",true);		
 	}
 	else
-		$('#u_password2chk').text("");
+	{
+		$('#btnPWConfirm').attr("disabled",false);
+	}
 }
 
 function numberOrNot(id,number){

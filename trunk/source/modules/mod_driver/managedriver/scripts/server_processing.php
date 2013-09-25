@@ -28,7 +28,8 @@
 		'drivertaxi.dateAdd',
 		'drivertaxi.garageId',
 		'thaiCompanyName',
-		'englishCompanyName'
+		'englishCompanyName',
+		'drivertaxi.lock'
 	);
 	
 	/* Indexed column (used for fast and accurate table cardinality) */
@@ -228,7 +229,7 @@
 					
 			if($aColumns[$i] == 'firstName')
 			{
-				$row[1] = $aRow['firstName'].' '.$aRow['lastName'];	
+				$row[1] = "<a href=\"index.php?p=driver.drivercheck&menu=main_driver&driverId=".$aRow['driverId']."\" title=\"ข้อมูลการใช้งานคนขับ\">".$aRow['firstName'].' '.$aRow['lastName']."</a>";	
 			}
 			if($aColumns[$i] == 'drivertaxi.username')
 			{
@@ -259,12 +260,23 @@
 			
 			if ( $aColumns[$i] == 'driverId' )
 			{
-				$set_tools = "<a style=\"cursor:pointer;\" class=\"ttip_t\" title=\"แก้ไข\" onClick=\"fn_Edit(".$aRow[ $aColumns[$i] ].",".$aRow['driverId'].")\" ><i class=\"icon-pencil\"></i></a>";
-				$set_tools = $set_tools."<a style=\"cursor:pointer;margin-left:5px;\" class=\"ttip_t\" title=\"ลบ\" onClick=\"fn_callDel(".$aRow['driverId'].",'".$aRow['firstName'].' '.$aRow['lastName']."')\" ><i class=\"icon-trash\"></i></a>";
+				$set_tools = "<a style=\"cursor:pointer;\" class=\"ttip_t\" title=\"แก้ไข\" onClick=\"fn_Edit(".$aRow[ $aColumns[$i] ].",".$aRow['garageId'].")\" ><i class=\"icon-pencil\"></i></a>";
+				if($aRow['garageId'] != 0)
+				{	$set_tools = $set_tools."<a style=\"cursor:pointer;margin-left:5px;\" class=\"ttip_t\" title=\"ลบออกจากสังกัด\" onClick=\"fn_callDel(".$aRow['driverId'].",'".$aRow['firstName'].' '.$aRow['lastName']."')\" ><i class=\"icon-trash\"></i></a>"; }
 				if($aRow['garageId']==$u_garage || $u_garage == 1 || $aRow['garageId'] == 0)
-					$row[8] = $set_tools;
+				{	$row[8] = $set_tools; }
 				else
-					$row[8] = "";
+				{	$row[8] = ""; }
+					
+				$set_tools2 = "<div id=\"div_lock".$aRow[ $aColumns[$i] ]." style=\"float:left; margin-left:5px;\">";   
+				if ($aRow['lock'] == 0) {						
+					$set_tools2 = $set_tools2."<a href=\"#\" class=\"ttip_t\" title=\"สถานะล๊อค\" onclick=\"fn_changeLock('".$aRow[ $aColumns[$i] ]."',1);\"><i class=\"splashy-thumb_down\"></i></a>";
+				} else {
+					$set_tools2 = $set_tools2."<a href=\"#\" class=\"ttip_t\" title=\"สถานะไม่ล๊อค\" onclick=\"fn_changeLock('".$aRow[ $aColumns[$i] ]."',0);\"><i class=\"splashy-thumb_up\"></i></a>";
+				}					
+              	$set_tools2 = $set_tools2."</div>";
+				
+				$row[9] = $set_tools2;
 			}			
 		}
 		$output['aaData'][] = $row;

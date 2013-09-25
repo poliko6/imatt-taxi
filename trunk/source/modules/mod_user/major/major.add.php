@@ -300,10 +300,6 @@ function chkUNandGPW(id) {
 			dataType: 'jsonp',
 			dataCharset: 'jsonp',
 			success: function (data){
-				console.log(data.username);
-				console.log(data.username_exist);
-				console.log(data.garagePassword);
-				console.log(data.garagePW_exist);
 				if(data.username_exist==true)
 				{
 						$('#userNamechk').text(username+" ถูกใช้งานไปแล้ว กรุณาใช้ชื่อื่น");
@@ -466,6 +462,7 @@ function numberOrNot(id,number,errortxt){
 }
 
 </script> 
+<script src="js/jquery.min.js"></script> 
 
 <!-- smart resize event -->
 <script src="js/jquery.debouncedresize.min.js"></script>

@@ -38,10 +38,29 @@
 			$major_name = $major_data[0]['thaiCompanyName'];
 			$garageId = $major_data[0]['garageId'];
 		}
+		
+		if (empty($current_page)){ $current_page = 0;}
 		?>
+
 <script type="text/javascript" charset="utf-8">
+
+	var current_page = <?=$current_page?>;	
+	
+	 $.fn.dataTableExt.oApi.fnPagingInfo = function ( oSettings )
+      {
+        return {
+          "iStart":         oSettings._iDisplayStart,
+          "iEnd":           oSettings.fnDisplayEnd(),
+          "iLength":        oSettings._iDisplayLength,
+          "iTotal":         oSettings.fnRecordsTotal(),
+          "iFilteredTotal": oSettings.fnRecordsDisplay(),
+          "iPage":          Math.ceil( oSettings._iDisplayStart / oSettings._iDisplayLength ),
+          "iTotalPages":    Math.ceil( oSettings.fnRecordsDisplay() / oSettings._iDisplayLength )
+        };
+      };
+	  
 	$(document).ready(function() {
-		$('#example').dataTable( {			
+		var oTable = $('#example').dataTable( {			
 			"bProcessing": true,
 			"bServerSide": true,
 			"sAjaxSource": "modules/mod_driver/managedriver/scripts/server_processing.php?garageId=<?=$garageId?>&u_garage=<?=$u_garage?>",
@@ -51,6 +70,7 @@
 			"bLengthChange": true, // แสดงจำนวน record ที่จะแสดงในตาราง
 			"iDisplayLength": 10, // กำหนดค่า default ของจำนวน record 
 			"bFilter": true, // แสดง search box
+			"iDisplayStart" : current_page,
 			//"sScrollY": "400px", // กำหนดความสูงของ ตาราง
 
 			"oTableTools": {
@@ -65,9 +85,21 @@
 				"sInfoEmpty": "แสดง 0 ถึง 0 ของ 0 เร็คคอร์ด",
 				"sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
 				"sSearch": "ค้นหา :"
-			 }
-		} );
-	} );
+			 },
+			 
+			 "fnDrawCallback": function (oSettings) {
+				//console.log( '_iDisplayStart : '+ oSettings._iDisplayStart );
+				//console.log( 'Now on page : '+ this.fnPagingInfo().iPage );
+				//$('#current_pageAdd').val(oSettings._iDisplayStart);
+				$('#current_pageEdit').val(oSettings._iDisplayStart);	
+				$('#current_pageLoad').val(oSettings._iDisplayStart);	
+			}
+			 
+		});
+		
+		var oSettings = oTable.fnSettings();
+            oSettings._iDisplayStart = current_page;
+	});
 </script>
 
 <input type="hidden" name="hide_garageid" id="hide_garageid" value="<?=$garageid?>" />
@@ -124,11 +156,12 @@
           <th style="text-align:center; width:270px">ชื่ออู่ที่สังกัดอยู่</th>
           <th style="text-align:center; width:110px">วันที่เพิ่มข้อมูล</th>
           <th style="text-align:center; width:70px">การจัดการ</th>
+          <th style="text-align:center">สถานะล็อค</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td colspan="9" class="dataTables_empty">กำลังโหลดข้อมูล</td>
+          <td colspan="10" class="dataTables_empty">กำลังโหลดข้อมูล</td>
         </tr>
       </tbody>
     </table>
@@ -139,7 +172,7 @@
 <!-- POP UP DEL -->
 <div class="modal hide fade" id="myModalDel" style="text-align:center; width:500px;">
   <div class="alert alert-block alert-error fade in"> <font color="#000000">
-    <h4 class="alert-heading">คุณต้องการลบข้อมูลรถแท๊กซี่ทะเบียน "<span id="carReg"></span>"</h4>
+    <h4 class="alert-heading">คุณต้องการลบข้อมูลสังกัดอู่ของผู้ขับชื่อ "<span id="driverReg"></span>"</h4>
     </font>
     <div style="height:50px;"></div>
     <center>
@@ -150,21 +183,59 @@
       </b></font> กรุณากรอกตัวเลข 4 ตัวด้านบน เพื่อยืนยันการลบ
       <input type="text" id="txtDelConfirm" maxlength="4" onkeyup="chkNumDelete(this.value)" on />
     </center>
-    <input type="hidden" name="carId" id="carId_del" value="" />
+    <input type="hidden" name="driverId" id="driverId_del" value="" />
     <br />
-    <a href="#" onclick="">
+    <a href="#" onclick="delDriver()">
     <button id="confirmDelBtn" name="confirmDelBtn" disabled="disabled" class="btn btn-danger"><i class="splashy-error"></i> ยืนยันการลบข้อมูล</button>
-    </a> หรือ <a href="#" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a> </div>
+    </a> หรือ <a href="#" id="cancelBtn" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a> </div>
 </div>
+
+<form action="index.php?p=driver.managedriver&menu=main_driver" method="post" name="fm_Edit" id="fm_Edit">
+	<input type="hidden" name="current_page" id="current_pageEdit" value="" />
+    <input type="hidden" name="driverId" id="driverId_edit" value="" />
+    <input type="hidden" name="garageId" id="garageId_edit"  value="" />
+    <input type="hidden" name="act" value="editdriver" />    
+</form>
+
 <script>
 var w,x,y,z,numstr;
 
+
+function fn_Edit(id,garageid){
+	//console.log(id+' '+garageid);
+	$('#driverId_edit').val(id);
+	$('#garageId_edit').val(garageid);
+	$('#fm_Edit').submit();
+}
+
 function fn_callDel(id,text){
 	//console.log(id+' '+text);
-	$('#carId_del').val(id);
-	$('#carReg').text(text);
+	$('#driverId_del').val(id);
+	$('#driverReg').text(text);
 	genNumForDel();
 	$('#myModalDel').modal('toggle');
+}
+
+function delDriver() {
+	$('#confirmDelBtn').attr("disabled",true);
+	$('#cancelBtn').attr("disabled",true);
+	driverId = $('#driverId_del').val();
+		jQuery.ajax({
+			url :'modules/mod_driver/managedriver/delDriver.php',
+			type: 'GET',
+			data: 'driverId='+driverId+'',
+			dataType: 'jsonp',
+			dataCharset: 'jsonp',
+			success: function (data){
+				console.log(data.success);
+				if (data.success){ 
+					reloadPage();
+				} else {
+					reloadPage();					
+				}	
+				$('#myModalDel').modal('toggle');
+			}
+		});		
 }
 	
 function genNumForDel()
@@ -188,6 +259,12 @@ function chkNumDelete(value) {
 		$('#confirmDelBtn').attr("disabled",true);
 }
 
+function fn_changeLock(id,sval){
+	$.post('modules/mod_driver/managedriver/edit.statuslock.php', {status:sval, id:id} , function(data) {			  
+		//window.location = 'index.php?p=mobile.managemobile&menu=main_mobile&garageId=<?=$garageId?>'; 
+		reloadPage();
+	});	
+}	
 
 </script> 
 

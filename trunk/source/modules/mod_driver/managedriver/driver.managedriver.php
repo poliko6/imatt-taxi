@@ -73,16 +73,27 @@
 		case 'saveadd' :
 			include("modules/mod_driver/managedriver/adddriver.php");		
 			break;		
-		case 'edit' :
-			echo "Editing";
+		case 'editdriver' :
+			include("modules/mod_driver/managedriver/driver.edit.php");
 			break;
 		default :
 			include("modules/mod_driver/managedriver/driver.show.php");		
 	}
 	?>
-    
-    
+<form action="index.php?p=driver.managedriver&menu=main_driver" name="fmReload" id="fmReload" method="post">
+	<input type="hidden" name="garageId" value="<?=$garageId?>" />
+    <input type="hidden" name="current_page" id="current_pageLoad" value="<?=$current_page?>" />
+</form>
+
+
     
     </td>
   </tr>
 </table>   
+
+<script type="text/javascript">
+	function reloadPage(){
+		//window.location = 'index.php?p=driver.managedriver&menu=main_driver&garageId=<?=$garageId?>'; 
+		$('#fmReload').submit();
+	}    
+</script>  
