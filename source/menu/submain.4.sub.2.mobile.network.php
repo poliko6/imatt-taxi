@@ -1,0 +1,1 @@
+<a href="index.php?p=mobile.network&menu=main_mobile"><?=$lang_menu["mobile.network"]?></a>

@@ -44,6 +44,7 @@ $lang_menu = array(
 	
 	//การจัดการข้อมูลโทรศัพท์
 	"mobile.managemobile" 	=>  "จัดการโทรศัพท์",
+	"mobile.network" 		=>  "เครือข่ายโทรศัพท์",
 	"mobile.banner" 		=>  "ยี่ห้อโทรศัพท์",
 	"mobile.model" 			=>  "รุ่นโทรศัพท์",
 	"mobile.configtime" 	=>  "ตั้งเวลามือถือ",
