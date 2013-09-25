@@ -268,8 +268,8 @@ function alertPopup(msgid,alertid,message){
 		clearTimeout(delayAlert);  
 		delayAlert=setTimeout(function(){  
 //				alertFadeOut(''+alertid+'');
-			$('#'+alertid+'').fadeOut(500);
-			delayAlert=null;  
+			$('#'+alertid+'').fadeOut(500);			
+			delayAlert=null;			  
 		},2000);  
 	});
 }
@@ -442,8 +442,7 @@ function chgPWorGPW(type) {
 	dataType: 'jsonp',
 	dataCharset: 'jsonp',
 		success: function (data){
-				alertPopup('msg3','alert3',''+data.message+'');
-				$('#'+modalId+'').modal('toggle');	
+			reloadPage2();
 		}
 	});
 	
@@ -451,10 +450,12 @@ function chgPWorGPW(type) {
 	switch (type) {
 		case 1:
 			$('#oldPW').val("");
-			$('#oldGPWok').text("");
+			$('#oldPWok').text("");
 			$('#oldPW').attr("disabled",false);
 			$('#newPW1st').val("");
+			$('#newPW1st').attr("disabled",true);
 			$('#newPW2nd').val("");
+			$('#newPW2nd').attr("disabled",true);
 			$('#btnPWConfirm').attr("disabled",true);
 			break;
 		case 2:
@@ -463,8 +464,10 @@ function chgPWorGPW(type) {
 			$('#oldGPW').attr("disabled",false);
 			$('#newGPW1stok').text("");
 			$('#newGPW1st').val("");
+			$('#newGPW1st').attr("disabled",true);
 			$('#newGPW2nd').val("");
-			$('#btnPWConfirm').attr("disabled",true);			
+			$('#newGPW2nd').attr("disabled",true);
+			$('#btnGPWConfirm').attr("disabled",true);			
 			break;
 	}
 }

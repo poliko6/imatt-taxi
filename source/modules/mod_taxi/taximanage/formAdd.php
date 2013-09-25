@@ -63,7 +63,7 @@ $(document).ready( function () {
                             <div class="controls">
                                 <div data-provides="fileupload" class="fileupload fileupload-new">
                                     <input type="hidden" />
-                                    <div style="width: 80px; height: 80px;" class="fileupload-new thumbnail"><img src="http://www.placehold.it/80x80/EFEFEF/AAAAAA" alt="" /></div>
+                                    <div style="width: 80px; height: 80px;" class="fileupload-new thumbnail"><img src="gallery/80x80.gif" alt="" /></div>
                                     <div style="width: 80px; height: 80px; line-height: 80px;" class="fileupload-preview fileupload-exists thumbnail"></div>
                                     <span class="btn btn-file"><span class="fileupload-new">เลือกไฟล์รูป</span><span class="fileupload-exists">Change</span><input type="file" id="fileinput" name="fileinput" /></span>
                                     <a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
