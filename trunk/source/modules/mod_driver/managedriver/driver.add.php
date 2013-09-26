@@ -1,5 +1,5 @@
 <?
-	echo pre($_SESSION);
+	//echo pre($_SESSION);
 ?>
 
 <div class="row-fluid">
