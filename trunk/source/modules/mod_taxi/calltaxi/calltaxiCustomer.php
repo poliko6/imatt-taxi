@@ -38,18 +38,9 @@
 	//จุดของลูกค้า
 	$cust_latitude = $custLat;
 	$cust_longitude = $custLong;
-	
-	$car1_lat = $arr_distance[0]['latitude'];
-	$car1_long = $arr_distance[0]['longitude'];
-	$car1_mobile = $arr_distance[0]['mobileId'];
-	
-	$car2_lat = $arr_distance[1]['latitude'];
-	$car2_long = $arr_distance[1]['longitude'];
-	$car2_mobile = $arr_distance[1]['mobileId'];
-	
-	$car3_lat = $arr_distance[2]['latitude'];
-	$car3_long = $arr_distance[2]['longitude'];
-	$car3_mobile = $arr_distance[2]['mobileId'];
+
+	$cust_data = select_db('customer',"where customerId = '".$customerId."'");
+	$cust_name = $cust_data[0]['firstName'].' '.$cust_data[0]['lastName'];
 	
 ?>
 
@@ -61,6 +52,7 @@
 <div id='map_canvas' style='height:700px; width:100%; border:#CCCCCC solid 1px;'> </div>
 
 <script type="text/javascript"> 
+
  function initialize() {  
     var latlng = new google.maps.LatLng(<?=$cust_latitude;?>,<?=$cust_longitude;?>);  
 	
@@ -80,15 +72,22 @@
 			icon: 'http://gmaps-samples.googlecode.com/svn/trunk/markers/green/blank.png',
 
 	});
-
+	
+	
+	var infowindow = new google.maps.InfoWindow({ 
+		content: '<?=$cust_name?>'
+	}); 
+	
+	infowindow.open(map, marker); 
 
 
 
 	var places=[];
 
-	places.push(new google.maps.LatLng(<?=$car1_lat;?>,<?=$car1_long;?>));
-	places.push(new google.maps.LatLng(<?=$car2_lat;?>,<?=$car2_long;?>));
-	places.push(new google.maps.LatLng(<?=$car3_lat;?>,<?=$car3_long;?>));
+	<? for($i=0; $i<10; $i++) { ?>
+		places.push(new google.maps.LatLng(<?=$arr_distance[$i]['latitude'];?>,<?=$arr_distance[$i]['longitude'];?>));
+	<? } ?>
+	
 
 	for(var i = 0 ; i< places.length; i++){
 		j=i+1;
@@ -106,9 +105,9 @@
 			
 			xx = j+1;
 			
-			if (j == 0){ mobileId = '<?=$car1_mobile?>'; }
-			if (j == 1){ mobileId = '<?=$car2_mobile?>'; }
-			if (j == 2){ mobileId = '<?=$car3_mobile?>'; }
+			<? for($n=0; $n<10; $n++) { ?>
+				if (j == <?=$n;?>){ mobileId = '<?=$arr_distance[$n]['mobileId'];?>'; }
+			<? } ?>	
 			
 			//console.log(mobileId);
 			
@@ -125,11 +124,11 @@
 					}); 
 					
 					infowindow.open(map, marker); 
-					document.getElementById('carRegistration').value = data.carRegistration+' '+data.province;
-					document.getElementById('driverId').value = data.driverId;
-					document.getElementById('carId').value = data.carId;
-					document.getElementById('mobileId').value = data.mobileId;
-					document.getElementById('garageId').value = data.garageId;
+					//document.getElementById('carRegistration').value = data.carRegistration+' '+data.province;
+					//document.getElementById('driverId').value = data.driverId;
+					//document.getElementById('carId').value = data.carId;
+					//document.getElementById('mobileId').value = data.mobileId;
+					//document.getElementById('garageId').value = data.garageId;
 				}
 			});	
 
@@ -155,26 +154,14 @@ window.onload = function()
 
 
 <div class="row-fluid" style="margin-top:10px;">
-	<div class="span3"></div>
+
     <div class="span6">
-        <form class="well form-inline" action="" name="fm_selecttaxi" id="fm_selecttaxi" method="post">
-            <p class="f_legend">เรียกรถแท๊กซี่ ทะเบียน </p>
-            <input type="text" name="carRegistration" id="carRegistration" value=""  disabled="disabled" />
-            <input type="hidden" name="customerId" id="customerId" value="<?=$customerId?>" />
-            <input type="hidden" name="custLat" id="custLat" value="<?=$custLat?>" />
-            <input type="hidden" name="custLong" id="custLong" value="<?=$custLong?>" />
-            <input type="hidden" name="historyId" id="historyId" value="<?=$historyId?>" />
-            
-            <input type="hidden" name="mobileId" id="mobileId" placeholder="mobileId" value="" />
-            <input type="hidden" name="carId" id="carId" placeholder="carId" value="" />
-            <input type="hidden" name="driverId" id="driverId" placeholder="driverId" value="" />
-            <input type="hidden" name="garageId" id="garageId" placeholder="garageId" value="" />
-            
-            <input type="hidden" name="act" id="act" value="selecttaxi" />
-            <input type="submit" class="btn btn-primary" value="เรียกแท๊กซี่">
+        <form action="" name="fm_showcustomer" id="fm_showcustomer" method="post">   
+            <input type="hidden" name="act" id="act" value="" />
+            <input type="submit" class="btn btn-primary" value="กลับหน้าเรียกแท๊กซี่">
         </form>
     </div>
-    <div class="span3"></div>
+
 </div>
 
 

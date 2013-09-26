@@ -3,6 +3,24 @@
 <script src="lib/datatables/jquery.dataTables.min.js"></script>
 
 
+<!--
+/*===============================
+อธิบาย ความหมายของ flag 
+===============================
+table likit_cust_select_car
+flag = 1  	หมายถึง   ลูกค้าแจ้งเข้ามา ว่าต้องการ รถแท๊กซี่
+flag = ว่าง	หมายถึง   ลูกค้า เมื่อได้รับ หน้าจอ มีรถให้เลือก 10 คัน และลูกค้าตอบ "ไม่เลือกรถใดๆ"
+flag = 2    หมายถึง   ลูกค้า เมื่อได้รับ หน้าจอ มีรถให้เลือก 10 คัน และลูกค้าตอบ "ให้บริษัทเลือกรถให้"
+flag = 3    หมายถึง   call center ส่งรถให้ ลูกค้า
+flag = 4    หมายถึง   ลูกค้า เมื่อได้รับ หน้าจอ มีรถให้เลือก 10 คัน และลูกค้าตอบ "เลือกรถแท๊กซี่ 1 คัน ที่จะให้มารับ"
+
+*/ 
+
+ส่วน status นี้ยังไม่ได้ใช้
+-->
+
+
+
 <?
 $garageId  = $u_garage;
 
@@ -76,6 +94,17 @@ $total = $cus_calltaxi_data;
 		$('#fm_calltaxi').submit();
 		
 	}
+	
+	function showCustomer(cusID,Lat,Lon,historyId){
+		//console.log(cusID+','+Lat+','+Lon);		
+		//window.location = 'index.php?p=<?=$p?>&menu=<?=$menu?>&act=calltaxi&customerId='+cusID+'&custLat='+Lat+'&custLong='+Lon+'';
+		$('#historyId2').val(historyId);
+		$('#customerId2').val(cusID);
+		$('#custLat2').val(Lat);
+		$('#custLong2').val(Lon);
+		$('#fm_showcustomer').submit();
+		
+	}
 </script>
 
 
@@ -86,6 +115,19 @@ $total = $cus_calltaxi_data;
     <input type="hidden" name="historyId" id="historyId" value="" />
     <input type="hidden" name="act" id="act" value="calltaxi" />
 </form>
+
+
+
+
+<form action="" name="fm_showcustomer" id="fm_showcustomer" method="post">
+	<input type="hidden" name="customerId" id="customerId2" value="" />
+    <input type="hidden" name="custLat" id="custLat2" value="" />
+    <input type="hidden" name="custLong" id="custLong2" value="" />
+    <input type="hidden" name="historyId" id="historyId2" value="" />
+    <input type="hidden" name="act" id="act" value="showcustomer" />
+</form>
+
+
 
 <table class="table table-striped table-bordered table-condensed">
   <tr>

@@ -1319,7 +1319,7 @@ CREATE TABLE IF NOT EXISTS `configuration` (
   PRIMARY KEY (`configId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=tis620;
 
--- Dumping data for table imattioa_taxi.configuration: ~0 rows (approximately)
+-- Dumping data for table imattioa_taxi.configuration: ~1 rows (approximately)
 DELETE FROM `configuration`;
 /*!40000 ALTER TABLE `configuration` DISABLE KEYS */;
 INSERT INTO `configuration` (`configId`, `configName`, `configValue`) VALUES
@@ -10342,7 +10342,7 @@ INSERT INTO `drivertaxi` (`driverId`, `firstName`, `lastName`, `citizenId`, `loc
 	(1, 'เขียว', 'แท๊กซี่', '2147483647', 1, '53115574', '12/8/2528', '124', '55000', '1150223_561708987220928_894109795_n.jpg', '0874546545', '053121478', '2013-08-27 12:35:36', '0000-00-00 00:00:00', 1, 1, 1, 0, 'greendriver', '7c222fb2927d828af22f592134e8932480637c0d', 5),
 	(2, 'ดำ', 'แท๊กซี่', '214748', 1, '54128874', '1/5/2512', '54', '10100', 'd_561708987220928_894109795_n.jpg', '0915541247', '027845412', '2013-08-27 12:37:20', '0000-00-00 00:00:00', 2, 2, 2, 0, 'blackdriver', '7c222fb2927d828af22f592134e8932480637c0d', 0),
 	(4, 'james', 'jamess', '12222', 1, '33333', '1/5/2512', 'james', 'james', '1150223_d_894109795_n.jpg', 'james', 'james', '2013-09-03 10:26:45', '0000-00-00 00:00:00', 191, 33, 1, 0, 'james', '7c222fb2927d828af22f592134e8932480637c0d', 1),
-	(5, 'ห้ามลบ', 'ทดสอบวิ่ง', '1234567893', 1, '1234567893', '1/5/2512', '49/78', '50200', '', '0821522233', '053821263', '2013-09-13 14:32:32', '0000-00-00 00:00:00', 0, 0, 0, 0, '', '', 0),
+	(5, 'ห้ามลบ', 'ทดสอบวิ่ง', '1102700122655', 1, '1234567893', '1/5/2512', '49/78', '50200', '1_20130924180855_balloon.png', '0821522233', '053821263', '2013-09-13 14:32:32', '0000-00-00 00:00:00', 6385, 717, 49, 0, 'testtest', '7c222fb2927d828af22f592134e8932480637c0d', 0),
 	(15, 'หว่าง', 'สุกไส', '3543546541651', 1, '7894313513', '25/09/2013', '120 ม.2', '12457', '1_20130924180855_balloon.png', '0834587898', '0278798745', '2013-09-24 18:08:56', '0000-00-00 00:00:00', 6385, 717, 49, 0, 'wangwang', '7c222fb2927d828af22f592134e8932480637c0d', 9);
 /*!40000 ALTER TABLE `drivertaxi` ENABLE KEYS */;
 
@@ -10473,7 +10473,7 @@ CREATE TABLE IF NOT EXISTS `menulist` (
   `dateAdded` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dateUpdated` datetime NOT NULL,
   PRIMARY KEY (`menuId`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='<double-click to overwrite multiple objects>';
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COMMENT='<double-click to overwrite multiple objects>';
 
 -- Dumping data for table imattioa_taxi.menulist: 26 rows
 DELETE FROM `menulist`;
@@ -10504,7 +10504,8 @@ INSERT INTO `menulist` (`menuId`, `menuName`, `supervisorAllowed`, `majorAllowed
 	(23, 'user.customercheck', 1, 1, 1, '2013-09-11 15:46:58', '0000-00-00 00:00:00'),
 	(24, 'mobile.banner', 1, 1, 0, '2013-09-20 17:58:22', '0000-00-00 00:00:00'),
 	(25, 'mobile.model', 1, 1, 0, '2013-09-20 17:58:35', '0000-00-00 00:00:00'),
-	(26, 'mobile.configtime', 1, 0, 0, '2013-09-25 11:07:50', '0000-00-00 00:00:00');
+	(26, 'mobile.configtime', 1, 0, 0, '2013-09-25 11:07:50', '0000-00-00 00:00:00'),
+	(27, 'mobile.network', 1, 1, 0, '2013-09-25 15:25:48', '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `menulist` ENABLE KEYS */;
 
 
@@ -10544,7 +10545,7 @@ INSERT INTO `minoradmin` (`minorId`, `firstName`, `lastName`, `address`, `zipcod
 	(1, 'นายอดิศักดิ๋', 'ธำรง', '11/123', '51000', '0879496654', '053121445', 'hs5xrk@gmail.com', 'adminminor', '7c222fb2927d828af22f592134e8932480637c0d', '2013-09-03 17:04:04', '2013-09-06 18:27:21', 1, 17, 204, 1676, 1, 1),
 	(5, 'นายเอก', 'มากมี', '505 หมู่ 7', '10500', '0521364211', '0213654212', 'eak@email.com', 'adminmini', '7c222fb2927d828af22f592134e8932480637c0d', '2013-09-09 16:48:28', '2013-09-10 19:42:03', 1, 58, 811, 7310, 2, 1),
 	(3, 'นางสาวเกษร', 'สกุลหนึ่ง', '1/55', '52100', '', '051246221', 'test@email.com', 'adminminor1', '4de69ee6b12b7fc91070873b71ba6e2929b90619', '2013-09-04 16:12:49', '2013-09-04 22:35:53', 1, 69, 915, 8150, 1, 1),
-	(6, 'บวร', 'พลเชี่ยวชาญ', '43 / 127  ม.1', '11130', '0869011572', '026536119', 'boworn24@gmail.com', 'boworn24', '75b5b1096667a5b0eb4ccf1c20480115f6f7783e', '2013-09-10 19:45:17', '2013-09-10 19:45:41', 1, 3, 59, 318, 9, 1),
+	(6, 'บวร', 'พลเชี่ยวชาญ', '43 / 127  ม.1', '11130', '0869011572', '026536119', 'boworn24@gmail.com', 'boworn24', '75b5b1096667a5b0eb4ccf1c20480115f6f7783e', '2013-09-10 19:45:17', '2013-09-25 12:45:29', 1, 3, 59, 318, 9, 1),
 	(7, 'บวร', 'พลเชี่ยวชาญ', '43 / 212', '10200', '0811755685', '', 'boworn24@gmail.com', 'boworn24', '75b5b1096667a5b0eb4ccf1c20480115f6f7783e', '2013-09-19 21:48:11', '0000-00-00 00:00:00', 12, 1, 26, 171, 11, 1);
 /*!40000 ALTER TABLE `minoradmin` ENABLE KEYS */;
 
@@ -10735,6 +10736,7 @@ CREATE TABLE IF NOT EXISTS `mobilecustomer` (
   `imei` varchar(50) NOT NULL,
   `simId` varchar(50) NOT NULL,
   `customerId` int(11) NOT NULL,
+  `dateAdd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`mobileCustomerId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=tis620;
 
@@ -10770,14 +10772,14 @@ CREATE TABLE IF NOT EXISTS `mobilenetwork` (
   `mobileNetworkName` varchar(50) NOT NULL DEFAULT '',
   `dateAdd` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`mobileNetworkId`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='<double-click to overwrite multiple objects>';
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='<double-click to overwrite multiple objects>';
 
 -- Dumping data for table imattioa_taxi.mobilenetwork: 6 rows
 DELETE FROM `mobilenetwork`;
 /*!40000 ALTER TABLE `mobilenetwork` DISABLE KEYS */;
 INSERT INTO `mobilenetwork` (`mobileNetworkId`, `mobileNetworkName`, `dateAdd`) VALUES
 	(1, 'DTAC', '2013-08-30 16:36:57'),
-	(2, 'AIS', '2013-08-27 12:46:59'),
+	(2, 'AIS', '2013-09-25 15:47:47'),
 	(3, 'Truemove H', '2013-08-27 12:47:08'),
 	(4, 'GSM 1800', '2013-08-30 16:31:48'),
 	(5, 'CAT CDMA', '2013-08-30 16:32:30'),

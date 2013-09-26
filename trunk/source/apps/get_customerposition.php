@@ -1,6 +1,9 @@
 <?php
-$conn = mysql_connect("imattioapp.com", "taxi", "taxi2013");
-mysql_select_db("taxi_db2", $conn);
+include("../include/class.mysqldb.php");
+include("../include/config.inc.php");
+
+//$conn = mysql_connect("imattioapp.com", "taxi", "taxi2013");
+//mysql_select_db("taxi_db2", $conn);
 
 $customerId = $_REQUEST["customerId"];
 
@@ -30,7 +33,7 @@ while ($row = mysql_fetch_array($result)) {
 $json_array = array("record" => $multipleD);
 
 mysql_free_result($result);
-mysql_close($conn);
+//mysql_close($conn);
 
 echo json_encode($json_array);
 ?>

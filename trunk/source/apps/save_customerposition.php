@@ -1,6 +1,9 @@
 <?php
-$conn = mysql_connect("imattioapp.com", "taxi", "taxi2013");
-mysql_select_db("taxi_db2", $conn);
+include("../include/class.mysqldb.php");
+include("../include/config.inc.php");
+
+//$conn = mysql_connect("imattioapp.com", "taxi", "taxi2013");
+//mysql_select_db("taxi_db2", $conn);
 
 $customerId = trim($_REQUEST["customerId"]);
 $latitude = trim($_REQUEST["lat"]);
@@ -40,8 +43,9 @@ if ($total != 0) {
 	$iresult["msg"] = "Don't have customerId";
 }
 
-mysql_close($conn);
+//mysql_close($conn);
 
 $json_array = array("result" => array($iresult));
+
 echo json_encode($json_array);
 ?>
