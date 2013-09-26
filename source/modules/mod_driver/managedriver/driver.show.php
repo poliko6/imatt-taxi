@@ -109,8 +109,8 @@
     <h3 class="heading">รายชื่อข้อมูลคนขับ "<span style="color:#C30; font-weight:bold;">
       <?=$major_name?>
       </span>"</h3>
-    <div class="well clearfix"><br />
-      <div class="pull-left">รายการข้อมูลมีจำนวน <strong>
+    <div class="well clearfix"  style="padding-bottom:0px;">
+      <div class="pull-left" style="margin-right:5px;">รายการข้อมูลมีจำนวน <strong>
         <?=$total?>
         </strong> รายการ</div>
       <div class="pull-right">
@@ -144,19 +144,19 @@
       </div>
     </div>
     <!--<table cellpadding="0" cellspacing="0" border="0" class="display" id="example"> -->
-    <table class="table table-striped table-bordered display" id="example">
+    <table class="table table-striped table-bordered display" id="example" style="font-size:12px;">
       <thead>
         <tr>
-          <th style="text-align:center; width:50px">ลำดับ</th>
-          <th style="text-align:center">ชื่อ - นามสกุล</th>
-          <th style="text-align:center">Username</th>
-          <th style="text-align:center; width:120px">เลขประจำตัวประชาชน</th>
-          <th style="text-align:center">เลขใบขับขี่</th>
-          <th style="text-align:center; width:100px">เบอร์โทรศัพท์</th>
-          <th style="text-align:center; width:270px">ชื่ออู่ที่สังกัดอยู่</th>
-          <th style="text-align:center; width:110px">วันที่เพิ่มข้อมูล</th>
-          <th style="text-align:center; width:70px">การจัดการ</th>
-          <th style="text-align:center">สถานะล็อค</th>
+          <th style="text-align:center;" width="5%">ลำดับ</th>
+          <th style="text-align:center" width="12%">ชื่อ - นามสกุล</th>
+          <th style="text-align:center" width="8%">Username</th>
+          <th style="text-align:center;" width="10%">เลขประจำตัวประชาชน</th>
+          <th style="text-align:center" width="9%">เลขใบขับขี่</th>
+          <th style="text-align:center;" width="9%">เบอร์โทรศัพท์</th>
+          <th style="text-align:center;" width="28%">ชื่ออู่ที่สังกัดอยู่</th>
+          <th style="text-align:center;" width="10%">วันที่เพิ่มข้อมูล</th>
+          <th style="text-align:center;" width="5%">การจัดการ</th>
+          <th style="text-align:center" width="4%">สถานะล็อค</th>
         </tr>
       </thead>
       <tbody>

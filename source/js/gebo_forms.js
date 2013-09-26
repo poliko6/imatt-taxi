@@ -18,7 +18,7 @@
 		//* nice form elements
         gebo_uniform.init();
 		//* jQuery UI sliders
-		gebo_sliders.init();
+		//gebo_sliders.init();
 		//* animated jQuery UI progressbars
 		gebo_progressbars.init();
 		//* 2col multiselect
@@ -262,7 +262,7 @@
 	};
 
 	//* sliders
-	gebo_sliders = {
+	/*gebo_sliders = {
 		init: function(){
 			//* default slider
 			$( ".ui_slider1" ).slider({
@@ -305,11 +305,11 @@
 					select[ 0 ].selectedIndex = ui.value - 1;
 				}
 			});*/
-			$( "#ui_slider3_sel" ).change(function() {
+			/*$( "#ui_slider3_sel" ).change(function() {
 				slider.slider( "value", this.selectedIndex + 1 );
 			});
 		}
-	};
+	};*/
 	
 	//* multiselect
 	gebo_multiselect = {

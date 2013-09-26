@@ -1,6 +1,6 @@
 <?
-	echo pre($_SESSION);
-	echo $garageId;
+	//echo pre($_SESSION);
+	//echo $garageId;
 	if($garageId != '0')
 	{	$strSQL = "SELECT drivertaxi.*,majoradmin.thaiCompanyName ";
 		$strSQL .= "FROM drivertaxi,majoradmin WHERE drivertaxi.driverId ='".$driverId."' ";
