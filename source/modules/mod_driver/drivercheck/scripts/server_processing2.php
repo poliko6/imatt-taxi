@@ -22,7 +22,8 @@
 	/* DB table to use */
    	$sTable = "driverhistory";
 	$driverId = $_REQUEST['driverId'];
- 	$dateSearch = $_REQUEST['dateSearch'];
+ 	$dateStart = $_REQUEST['dateStart'];
+ 	$dateEnd = $_REQUEST['dateEnd'];
 	
    	// Joins
 	$sJoin = 'JOIN customer ON(customer.customerId = driverhistory.customerId)';
@@ -145,11 +146,11 @@
 
 		if ($sWhere == "" )
 		{			
-			$sWhere = " WHERE callTime LIKE '".$dateSearch."%' AND driverId = '".$driverId."' ";			
+			$sWhere = " WHERE (callTime BETWEEN '".$dateStart."' AND '".$dateEnd."') AND driverId = '".$driverId."' ";			
 		}
 		else
 		{
-			$sWhere = $sWhere." AND callTime LIKE '".$dateSearch."%' AND driverId = '".$driverId."' ";
+			$sWhere = $sWhere." AND (callTime BETWEEN '".$dateStart."' AND '".$dateEnd."') AND driverId = '".$driverId."' ";
 			
 		}
 

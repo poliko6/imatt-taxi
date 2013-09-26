@@ -33,8 +33,9 @@ if ($gender == 'female'){
 
 //Dsta EX
 //$customerId = 1;
-if (empty($dateSearch)) {
-	$dateSearch = date('Y-m-d');;
+if (empty($dateStart)) {
+	$dateStart = date('Y-m-d');
+	$dateEnd = date('Y-m-d');
 	//$dateSearch = '2013-09-05';
 }
 
@@ -42,7 +43,7 @@ if (empty($dateSearch)) {
 //Start latitude and longitude
 //18.711100,98.972633
 $sql_startlat = "SELECT latitudeCustomer,longitudeCustomer FROM customermap ";
-$sql_startlat .= "WHERE timeServer LIKE '".$dateSearch."%' AND customerId = '".$customerId."' Limit 0,1";
+$sql_startlat .= "WHERE (timeServer BETWEEN '".$dateStart."' AND '".$dateEnd."') AND customerId = '".$customerId."' Limit 0,1";
 $rs_startlat = mysql_query($sql_startlat);
 $data_startlat = mysql_fetch_object($rs_startlat);
 $lat_start = $data_startlat->latitudeCustomer;
@@ -59,7 +60,8 @@ if ($lat_start == ''){
 
 <form action="" name="fmReload" id="fmReload" method="post">
 	<input type="hidden" name="customerId" value="<?=$customerId?>" />
-    <input type="hidden" name="dateSearch" id="dateSearch" value="<?=$dateSearch?>" />
+    <input type="hidden" name="dateStart" id="dateStart" value="<?=$dateStart?>" />
+    <input type="hidden" name="dateEnd" id="dateEnd" value="<?=$dateEnd?>" />
 </form>
 
 
@@ -74,12 +76,12 @@ if ($lat_start == ''){
 <!-- Date Select -->
 <script type="text/javascript">
 $(function(){
-	$('#dateShow').change(function () {
+	/*$('#dateShow').change(function () {
 		//console.log($('#dateShow').val());
 		var thisdate = $('#dateShow').val();
 	    $('#dateSearch').val(thisdate);
 		$('#fmReload').submit();
-	});
+	});*/
 });
 </script>
 
@@ -109,7 +111,7 @@ $(function(){
 		var route = [
 			<?php		
 			$sql = "SELECT latitudeCustomer,longitudeCustomer FROM customermap ";			
-			$sql .= "WHERE timeServer LIKE '".$dateSearch."%' AND customerId = '".$customerId."' ";
+			$sql .= "WHERE (timeServer BETWEEN '".$dateStart."' AND '".$dateEnd."') AND customerId = '".$customerId."' ";
 			$result = mysql_query($sql);
 			
 			while($row = mysql_fetch_array($result)){
@@ -162,6 +164,45 @@ window.onload = function() {
 .table10 tr{border:none;}
 </style>
 
+<div class="formSep">
+    <div class="row-fluid">
+    	<form method="post" name="fm_date" id="fm_date" action="" >
+        <div class="span10" style="">                    
+            <div class="span3" style="text-align:right;"><strong>เลือกวันที่ต้องการดู </strong>: &nbsp;</div>
+            <!--<div class="controls input-append date" id="dp2" data-date-format="yyyy-mm-dd">                    	
+                <input type="text" id="dateShow" name="dateShow" readonly="readonly" value="<?=$dateSearch?>" />
+                <span class="add-on"><i class="splashy-calendar_day"></i></span>
+            </div> -->  
+            
+            <div class="span2" style="">
+                <div class="input-append date" id="dp_start">
+                    <input class="span6" type="text" name="dateStart" readonly="readonly" style="width:80%" value="<?=$dateStart?>" /><span class="add-on"><i class="splashy-calendar_day_up"></i></span>
+                </div>
+              <!--  <span class="help-block">Daterange - date start</span> -->
+            </div>
+            
+            <div class="span1" style="text-align:center;"><strong>ถึง</strong></div>
+            
+            <div class="span2" style="">
+                <div class="input-append date" id="dp_end">
+                    <input class="span6" type="text" name="dateEnd" readonly="readonly" style="width:80%" value="<?=$dateEnd?>" /><span class="add-on"><i class="splashy-calendar_day_down"></i></span>
+                </div>
+                <!--<span class="help-block">Daterange - date end</span> -->
+            </div>   
+            
+            <div class="span2" style="">
+         	<input class="btn btn-warning" name="submitDate" type="submit" value="แสดง">
+            </div>
+                  
+             <input type="hidden" name="customerId" value="<?=$customerId?>" />            
+        </div> 
+        </form>
+         
+    </div>
+</div>
+
+
+
 <div class="row-fluid">
   <div class="span12">
   
@@ -185,14 +226,7 @@ window.onload = function() {
               
             </div><!--chat_content -->
         
-            <div class="span4 pull-right" style="padding-top:10px;">                    
-                <div><strong>เลือกวันที่ต้องการดู </strong>: &nbsp;</div>
-                <div class="controls input-append date" id="dp2" data-date-format="yyyy-mm-dd">                    	
-                    <input type="text" id="dateShow" name="dateShow" readonly="readonly" value="<?=$dateSearch?>" />
-                    <span class="add-on"><i class="splashy-calendar_day"></i></span>
-                </div>                
-            </div>  
-            
+      
             <div style="clear:both;"></div>
         
             <div class="tabbable" style="margin-top:10px; margin-bottom:10px;">

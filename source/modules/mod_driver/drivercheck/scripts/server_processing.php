@@ -19,7 +19,8 @@
 	/* DB table to use */
    	$sTable = "taxiposition";
 	$driverId = $_REQUEST['driverId'];
- 	$dateSearch = $_REQUEST['dateSearch'];
+	$dateStart = $_REQUEST['dateStart'];
+ 	$dateEnd = $_REQUEST['dateEnd'];
 	
    	// Joins
 	$sJoin = 'JOIN transportsection ON(transportsection.mobileId = taxiposition.mobileId)';
@@ -142,11 +143,11 @@
 
 		if ($sWhere == "" )
 		{			
-			$sWhere = " WHERE taxiposition.timeServer LIKE '".$dateSearch."%' AND transportsection.driverId = '".$driverId."' ";			
+			$sWhere = " WHERE (taxiposition.timeServer BETWEEN '".$dateStart."' AND '".$dateEnd."') AND transportsection.driverId = '".$driverId."' ";			
 		}
 		else
 		{
-			$sWhere = $sWhere." AND taxiposition.timeServer LIKE '".$dateSearch."%' AND transportsection.driverId = '".$driverId."' ";
+			$sWhere = $sWhere." AND (taxiposition.timeServer BETWEEN '".$dateStart."' AND '".$dateEnd."') AND transportsection.driverId = '".$driverId."' ";
 			
 		}
 

@@ -1,6 +1,6 @@
 <?
 $sql_history = "SELECT * FROM customermap ";
-$sql_history .= "WHERE timeServer LIKE '".$dateSearch."%' AND customerId = '".$customerId."' ";
+$sql_history .= "WHERE (timeServer BETWEEN '".$dateStart."' AND '".$dateEnd."') AND customerId = '".$customerId."' ";
 $rs_history = mysql_query($sql_history);
 $founddata1 = mysql_num_rows($rs_history);
 //echo $sql_history ;
@@ -14,7 +14,7 @@ $founddata1 = mysql_num_rows($rs_history);
 		var oTable1 = $('#example1').dataTable( {			
 			"bProcessing": true,
 			"bServerSide": true,
-			"sAjaxSource": "modules/mod_user/customercheck/scripts/server_processing.php?customerId=<?=$customerId?>&dateSearch=<?=$dateSearch?>",
+			"sAjaxSource": "modules/mod_user/customercheck/scripts/server_processing.php?customerId=<?=$customerId?>&dateStart=<?=$dateStart?>&dateEnd=<?=$dateEnd?>",
 			
 			
 			"sPaginationType" : "full_numbers",// แสดงตัวแบ่งหน้า

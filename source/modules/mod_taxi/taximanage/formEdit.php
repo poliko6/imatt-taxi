@@ -58,6 +58,31 @@ function fn_callModel(id){
   		$('#carModelId').html(data);	
 	});	
 }
+
+
+function checkRegis(str,obj){
+	fn_chkRegisDuplicate('edit');
+	var orgi_text="กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถท ธนบปผฝพฟภมยรฤลฦวศษสหฬอฮ0123456789";
+	var str_length=str.length;
+	var str_length_end=str_length-1;
+	var isThai=true;
+	var Char_At="";
+	for(i=0;i<str_length;i++){
+		Char_At=str.charAt(i);
+		if(orgi_text.indexOf(Char_At)==-1){
+			isThai=false;
+		}   
+	}
+	if(str_length>=1){
+		if(isThai==false){
+			obj.value=str.substr(0,str_length_end);
+		}
+	}
+	
+	return isThai; // ถ้าเป็น true แสดงว่าเป็นภาษาไทยทั้งหมด
+	
+	
+}
 </script>
 
 
@@ -76,7 +101,8 @@ function fn_callModel(id){
                                     <label for="fileinput" class="control-label">ทะเบียนรถ <span class="f_req">*</span></label>
                                     <div class="controls text_line">
                                     	<div class="help-block" id="errRegistration" style="display:none; color:#C00;">หมายเลขทะเบียนซ้ำ</div>
-                                        <input type="text" name="carRegistration" id="carRegistration" class="span5"  value="<?=$carRegistration?>"  onkeyup="fn_chkRegisDuplicate('edit');" />
+                                         <!--<input type="text" name="carRegistration" id="carRegistration" class="span5"  value="<?=$carRegistration?>" onkeyup="fn_chkRegisDuplicate('edit');"  /> -->
+                                        <input type="text" name="carRegistration" id="carRegistration" class="span5"  value="<?=$carRegistration?>" onkeyup="checkRegis(this.value,this);"  />       
                                         <span class="help-block">ตัวอย่าง : กก 0001</span>
                                         <input type="hidden" name="carRegistrationTmp" id="carRegistrationTmp" value="<?=$carRegistration?>"  />
                                     </div>
