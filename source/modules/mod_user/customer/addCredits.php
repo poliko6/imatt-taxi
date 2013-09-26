@@ -12,7 +12,7 @@
 	}
 		
 	//SQL update credits data
-	$addCredit = "UPDATE drivertaxi SET credits = credits + ".$credits." WHERE driverId ='".$driverId."'";
+	$addCredit = "UPDATE customer SET credits = credits + ".$credits." WHERE customerId ='".$customerId."'";
 			
 	////////////////// DELETE BEGIN //////////////////////
 	

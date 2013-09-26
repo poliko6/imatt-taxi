@@ -39,33 +39,6 @@
     
  
 	<?
-/*	if ($handle_managedriver = opendir('modules/mod_driver/managedriver')) {
- 		while (false !== ($file_managedriver = readdir($handle_managedriver)))
-      	{
-        	if ($file_managedriver != "." && $file_managedriver != "..")
-			{   				
-				if(strstr("$file_managedriver", "managedriver" ))
-				{	
-					$data_managedriver = explode('.', $file_managedriver);
-					$file_menu_managedriver[$data_managedriver[1]]=$file_managedriver;
-				}
-			}
-		}	
-		
-		closedir($handle_managedriver);
-	}
-	
-	$ii_managedriver=0;
-	
-	foreach($file_menu_managedriver as $values)
-	{		
-		$ii_managedriver++;							
-		
-		if($file_menu_managedriver[$ii_managedriver]){
-			include("modules/mod_driver/managedriver/$file_menu_managedriver[$ii_managedriver]");									
-		}
-	}	*/
-	
 	switch ($act) {
 		case 'add' :
 			include("modules/mod_driver/managedriver/driver.add.php");		
@@ -76,6 +49,9 @@
 		case 'editdriver' :
 			include("modules/mod_driver/managedriver/driver.edit.php");
 			break;
+		case 'saveedit' :
+			include("modules/mod_driver/managedriver/editdriver.php");		
+			break;				
 		default :
 			include("modules/mod_driver/managedriver/driver.show.php");		
 	}

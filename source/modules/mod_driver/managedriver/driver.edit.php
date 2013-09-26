@@ -203,7 +203,7 @@
           </fieldset>
           <input type="hidden" name="p" value="<?=$p?>" />
           <input type="hidden" name="menu" value="<?=$menu?>" />
-          <input type="hidden" name="citizenId" id="citizenId" />
+          <input type="hidden" name="citizenId" id="citizenId" value="<?=$citizenId?>" />
           <input type="hidden" name="act" value="saveedit" />
           <input type="hidden" name="current_page" id="current_page" value="<?=$current_page?>" />
         </form>

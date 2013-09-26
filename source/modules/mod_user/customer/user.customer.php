@@ -37,33 +37,71 @@
   <tr>
   	<td>
 	<?
-	if ($handle_customer = opendir('modules/mod_user/customer')) {
- 		while (false !== ($file_customer = readdir($handle_customer)))
-      	{
-        	if ($file_customer != "." && $file_customer != "..")
-			{   				
-				if(strstr("$file_customer", "customer" ))
-				{	
-					$data_customer = explode('.', $file_customer);
-					$file_menu_customer[$data_customer[1]]=$file_customer;
-				}
-			}
-		}	
-		
-		closedir($handle_customer);
+	if($done=="yes")
+	{	
+		$message = "แก้ไขข้อมูลเรียบร้อยแล้วค่ะ";
+		?>
+			<script type="text/javascript">			
+			$(document).ready(function() {
+				alertPopup('msg3','alert3','<?=$message?>');
+				
+				$(document).on("keydown.NewActionOnF5", function(e){
+					var charCode = e.which || e.keyCode;
+					switch(charCode){
+						case 116: // F5
+							e.preventDefault();
+							window.location = "index.php?p=user.customer&menu=main_user&current_page="+<?=$current_page?>;
+							break;
+					}
+				});										
+			});							
+	
+			</script>        
+        <?	
 	}
 	
-	$ii_customer=0;
-	
-	foreach($file_menu_customer as $values)
-	{		
-		$ii_customer++;							
-		
-		if($file_menu_customer[$ii_customer]){
-			include("modules/mod_user/customer/$file_menu_customer[$ii_customer]");									
-		}
-	}	
+	switch ($act) {
+		case 'add' :
+			include("modules/mod_user/customer/customer.add.php");
+			break;
+		case 'saveadd' :
+			include("modules/mod_user/customer/addcustomer.php");		
+			break;		
+		case 'edit' :
+			include("modules/mod_user/customer/customer.edit.php");
+			break;
+		case 'saveedit' :
+			include("modules/mod_user/customer/editcustomer.php");
+			break;
+		default :
+			include("modules/mod_user/customer/customer.show.php");		
+			
+	}
 	?>
+    
+    <form action="index.php?p=user.customer&menu=main_user" name="fmReload" id="fmReload" method="post">
+        <input type="hidden" name="customerId" value="<?=$customerId?>" />
+        <input type="hidden" name="current_page" id="current_pageLoad" value="<?=$current_page?>" />
+    </form>    
     </td>
   </tr>
 </table>   
+<script type="text/javascript">
+var delayAlert=null
+
+	function reloadPage(){
+		$('#fmReload').submit();
+	}    
+	
+	function alertPopup(msgid,alertid,message){
+		$('#'+msgid+'').text(''+message+'');
+		$('#'+alertid+'').fadeIn(500, function() {
+			clearTimeout(delayAlert);  
+			delayAlert=setTimeout(function(){  
+	//				alertFadeOut(''+alertid+'');
+				$('#'+alertid+'').fadeOut(500);
+				delayAlert=null;  
+			},2000);  
+		});
+	}	
+</script>  
