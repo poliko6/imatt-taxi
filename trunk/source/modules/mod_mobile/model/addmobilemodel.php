@@ -8,7 +8,7 @@
 	
 	foreach($_REQUEST as $key => $value)  {
 		$$key = $value;
-		echo $key ."=". $value."<br>";
+		//echo $key ."=". $value."<br>";
 	}
 	
 	
@@ -29,7 +29,8 @@
 		$TableName = 'mobilemodel';
 		$data = array(
 			'mobileModelName'=>$model_name,
-			'mobileBannerId'=>$bannerid
+			'mobileBannerId'=>$bannerid,
+			'garageId'=>$garageId
 		);
 		$sql = insert_db($TableName, $data);
 		mysql_query($sql);
@@ -39,5 +40,5 @@
 	}
 	
 	
-	//echo $_GET['callback'].'('.$json->encode($data).')';
+	echo $_GET['callback'].'('.$json->encode($data).')';
 ?>

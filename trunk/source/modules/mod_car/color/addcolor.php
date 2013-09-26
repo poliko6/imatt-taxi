@@ -25,7 +25,8 @@
 		
 		$TableName = 'carcolor';
 		$data = array(
-			'carColorName'=>$color_name
+			'carColorName'=>$color_name,
+			'garageId'=>$garageId
 		);
 		$sql = insert_db($TableName, $data);
 		mysql_query($sql);

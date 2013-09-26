@@ -86,7 +86,7 @@
 			jQuery.ajax({
    				url :'modules/mod_car/color/addcolor.php',
    				type: 'GET',
-  				data: 'act=addcolor&color_name='+$('#color_name').val()+'',
+  				data: 'act=addcolor&color_name='+$('#color_name').val()+'&garageId=<?=$u_garage?>',
    				dataType: 'jsonp',
    				dataCharset: 'jsonp',
    				success: function (data){
@@ -290,11 +290,13 @@
                             <td><?=$car_color[$i]['carColorName']?></td>
                             <td><?=Thai_date($car_color[$i]['dateAdd'])?></td>
                             <td>
+                            	<? if (($u_garage == $car_color[$i]['garageId']) || ($u_type == 1)) {?>
                             	<!--<a data-toggle="modal" data-backdrop="static" href="#myModalAdd"> -->
                                 <!--<a href="index.php?p=car.type&menu=main_car&act=edit&id=<?=$car_color[$i]['carColorId']?>" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> -->
                                	<a href="#" data-toggle="modal" data-backdrop="static" title="Edit" onclick="fn_formEdit(<?=$car_color[$i]['carColorId']?>, 'select');"><i class="icon-pencil"></i></a>
                                 
                                 <a href="#myModalDel<?=$car_color[$i]['carColorId']?>" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a>
+                            	<? } ?>
                             </td>
                             <td></td>
                         </tr>

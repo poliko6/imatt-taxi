@@ -113,7 +113,7 @@
 			jQuery.ajax({
    				url :'modules/mod_mobile/banner/addbanner.php',
    				type: 'GET',
-  				data: 'act=addbanner&banner_name_eng='+$('#banner_name_eng').val()+'&banner_name_thai='+$('#banner_name_thai').val()+'',
+  				data: 'act=addbanner&banner_name_eng='+$('#banner_name_eng').val()+'&banner_name_thai='+$('#banner_name_thai').val()+'&garageId=<?=$u_garage?>',
    				dataType: 'jsonp',
    				dataCharset: 'jsonp',
    				success: function (data){
@@ -375,11 +375,13 @@
                             </td>
                             <td><?=Thai_date($mobile_banner[$i]['dateAdd'])?></td>
                             <td>
+                            	<? if (($u_garage == $mobile_banner[$i]['garageId']) || ($u_type == 1)) {?>
                             	<!--<a data-toggle="modal" data-backdrop="static" href="#myModalAdd"> -->
                                 <!--<a href="index.php?p=mobile.type&menu=main_mobile&act=edit&id=<?=$mobile_banner[$i]['mobileBannerId']?>" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> -->
                                	<a href="#" data-toggle="modal" data-backdrop="static" title="Edit" onclick="fn_formEdit(<?=$mobile_banner[$i]['mobileBannerId']?>, 'select');"><i class="icon-pencil"></i></a>
                                 
                                 <a href="#myModalDel<?=$mobile_banner[$i]['mobileBannerId']?>" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a>
+                            	<? } ?>
                             </td>
                         </tr>
                         
