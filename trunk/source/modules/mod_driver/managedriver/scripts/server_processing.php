@@ -24,6 +24,7 @@
 		'drivertaxi.username',
 		'citizenId',
 		'licenseNumber',
+		'credits',
 		'drivertaxi.mobilePhone',
 		'drivertaxi.dateAdd',
 		'drivertaxi.garageId',
@@ -239,9 +240,9 @@
 			{
 				$row[3] = $aRow['citizenId'];	
 			}
-			if($aColumns[$i] == 'licenseNumber')
+			if($aColumns[$i] == 'credits')
 			{
-				$row[4] = $aRow['licenseNumber'];	
+				$row[4] = $aRow['credits'];	
 			}
 			if($aColumns[$i] == 'drivertaxi.mobilePhone')
 			{
@@ -263,6 +264,8 @@
 				$set_tools = "<a style=\"cursor:pointer;\" class=\"ttip_t\" title=\"แก้ไข\" onClick=\"fn_Edit(".$aRow[ $aColumns[$i] ].",".$aRow['garageId'].")\" ><i class=\"icon-pencil\"></i></a>";
 				if($aRow['garageId'] != 0)
 				{	$set_tools = $set_tools."<a style=\"cursor:pointer;margin-left:5px;\" class=\"ttip_t\" title=\"ลบออกจากสังกัด\" onClick=\"fn_callDel(".$aRow['driverId'].",'".$aRow['firstName'].' '.$aRow['lastName']."')\" ><i class=\"icon-trash\"></i></a>"; }
+				$set_tools .= " <a style=\"cursor:pointer;\" class=\"ttip_t\" title=\"เพิ่มเครดิต\" onClick=\"fn_addCredit(".$aRow['driverId'].",'".$aRow['firstName'].' '.$aRow['lastName']."')\" ><i class=\"splashy-heart_add\"></i></a>";
+				
 				if($aRow['garageId']==$u_garage || $u_garage == 1 || $aRow['garageId'] == 0)
 				{	$row[8] = $set_tools; }
 				else

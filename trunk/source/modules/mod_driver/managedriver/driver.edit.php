@@ -1,6 +1,4 @@
 <?
-	//echo pre($_SESSION);
-	//echo $garageId;
 	if($garageId != '0')
 	{	$strSQL = "SELECT drivertaxi.*,majoradmin.thaiCompanyName ";
 		$strSQL .= "FROM drivertaxi,majoradmin WHERE drivertaxi.driverId ='".$driverId."' ";
@@ -40,7 +38,7 @@
           <div class="control-group formSep">
             <label for="u_fname" class="control-label">หมายเลขประชาชน :</label>
             <div class="controls text_line">
-              <input type="text" class="input-xlarge" name="chkCitizen" id="chkCitizen" maxlength="13" value="<?=$citizenId?>" />
+              <input type="text" class="input-xlarge" name="chkCitizen" id="chkCitizen" disabled="disabled" maxlength="13" value="<?=$citizenId?>" />
               <font id="chkIdFont"><i>
               <div id="chkID"></div>
               </i></font> </div>

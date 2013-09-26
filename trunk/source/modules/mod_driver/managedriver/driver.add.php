@@ -17,7 +17,7 @@
               </i></font> </div>
           </div>
         </form>
-        <form id="formInfo" class="form-horizontal form_validation_ttip" style="visibility:hidden" method="post" enctype="multipart/form-data">
+        <form id="formInfo" class="form-horizontal form_validation_ttip" action="" style="visibility:hidden" method="post" enctype="multipart/form-data">
           <fieldset>
             <div class="control-group formSep">
               <label for="fileinput" class="control-label">รูปประจำตัวผู้ขับ</label>
@@ -130,17 +130,17 @@
               <br />
               <label class="control-label">รหัสไปรษณีย์</label>
               <div class="controls">
-                <input type="text" name="txtZipcode_add" id="txtZipcode" class="input-xlarge" value="" onchange="numberOrNot(this.id,this.value,'รหัสไปรษณีย์ไม่ถูกต้อง')" />
+                <input type="text" name="txtZipcode_add" id="txtZipcode" maxlength="5" class="input-xlarge" value="" onchange="numberOrNot(this.id,this.value,'รหัสไปรษณีย์ไม่ถูกต้อง')" />
                 <font color="#FF0000"><i>
                 <div id="txtZipcodechk" ></div>
                 </i></font> </div>
               <br />
               <label for="u_email" class="control-label">เบอร์โทรศัพท์มือถือ</label>
               <div class="controls">
-                <input type="text" class="input-xlarge" name="txtMobilePhone" id="txtMobilePhone" value="" maxlength="10" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
+                <input type="text" class="input-xlarge" name="txtMobilePhone" id="txtMobilePhone" value="" maxlength="10" onchange="mobOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
                 <font color="#FF0000"><i>
                 <div id="txtMobilePhonechk" ></div>
-                </i></font> </div>
+                </i></font> <span class="help-block">ตัวอย่างการกรอกเบอร์โทรศัพท์ : 0812345678</span></div>
               <br />
               <label for="u_email" class="control-label">เบอร์โทรศัพท์บ้าน</label>
               <div class="controls">
@@ -479,6 +479,30 @@ function numberOrNot(id,number){
 	}
 	else
 		$('#'+id+"chk").text("");
+}
+
+function mobOrNot(id,number){
+	
+	number = jQuery.trim(number)
+	if ( /^(0)[0-9-]/.test(number) && number.length == 10)
+	{	$('#'+id+"chk").text("");	}
+	else
+	{
+		$('#'+id+"chk").text("รูปแบบเบอร์โทรศัพท์ไม่ถูกต้อง");
+		$('#'+id).val("");
+	}
+}
+
+function telOrNot(id,number){
+	
+	number = jQuery.trim(number)
+	if ( /^(0)[0-9-]/.test(number))
+	{	$('#'+id+"chk").text("");	}
+	else
+	{
+		$('#'+id+"chk").text("รูปแบบเบอร์โทรศัพท์ไม่ถูกต้อง ถ้าไม่มีให้เว้นไว้");
+		$('#'+id).val("");
+	}
 }
 
 </script> 

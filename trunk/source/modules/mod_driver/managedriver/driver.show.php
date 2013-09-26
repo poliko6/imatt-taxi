@@ -178,16 +178,41 @@
     <center>
       <font color="#FF0000"><b>
       <h4>
-        <div id="rannum"></div>
+        <div id="rannumdel"></div>
       </h4>
-      </b></font> กรุณากรอกตัวเลข 4 ตัวด้านบน เพื่อยืนยันการลบ
-      <input type="text" id="txtDelConfirm" maxlength="4" onkeyup="chkNumDelete(this.value)" on />
+      </b></font> <i class="help-block">กรุณากรอกตัวเลข 4 ตัวด้านบน เพื่อยืนยันการลบ</i>
+      <input type="text" style="text-align:center" id="txtDelConfirm" maxlength="4" onkeyup="chkNumDelete(this.value)" on />
     </center>
     <input type="hidden" name="driverId" id="driverId_del" value="" />
     <br />
     <a href="#" onclick="delDriver()">
     <button id="confirmDelBtn" name="confirmDelBtn" disabled="disabled" class="btn btn-danger"><i class="splashy-error"></i> ยืนยันการลบข้อมูล</button>
-    </a> หรือ <a href="#" id="cancelBtn" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a> </div>
+    </a> หรือ <a href="#" id="cancelBtn" class="btn" onclick="reset_delmodal()" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a> </div>
+</div>
+
+<!-- POP UP DEL -->
+<div class="modal hide fade" id="myModalAddCre" style="text-align:center; width:500px;">
+  <div class="alert alert-block alert-error fade in"> <font color="#000000">
+    <h4 class="alert-heading">คุณต้องการเพิ่มเครดิตของผู้ขับชื่อ "<span id="addCreName"></span>"</h4>
+    </font>
+    <div style="height:50px;"></div>
+    <center>
+    <font color="#003300"><b>จำนวนเครดิตที่ต้องการ : </b></font>
+    <input type="text" id="credits_val" onchange="chkCreditVal(this.id,this.value)" />
+    <font color="#FF0000"><i><div id="credits_valchk"></div></i></font>
+    <br /><br />
+      <font color="#FF0000"><b>
+      <h4>
+        <div id="rannumadd"></div>
+      </h4>
+      </b></font><i class="help-block">กรุณากรอกตัวเลข 4 ตัวด้านบน เพื่อยืนยันการเพิ่มเครดิต</i>
+      <input type="text" style="text-align:center" id="txtAddConfirm" maxlength="4" onkeyup="chkNumAddCredit(this.value)" on />
+    </center>
+    <input type="hidden" name="driverId_addCre" id="driverId_addCre" value="" />
+    <br />
+    <a href="#" onclick="addCredits()">
+    <button id="confirmAddCreBtn" name="confirmAddCreBtn" disabled="disabled" class="btn btn-danger"><i class="splashy-error"></i> ยืนยันการเพิ่มเครดิต</button>
+    </a> หรือ <a href="#" id="cancelAddCreBtn" onclick="reset_addmodal()" class="btn" data-dismiss="modal"><i class="splashy-error_small"></i> ยกเลิก</a> </div>
 </div>
 
 <form action="index.php?p=driver.managedriver&menu=main_driver" method="post" name="fm_Edit" id="fm_Edit">
@@ -208,14 +233,21 @@ function fn_Edit(id,garageid){
 	$('#fm_Edit').submit();
 }
 
+// >>>>>>>>>>>>>>>>>>> Function Delete Modal Part <<<<<<<<<<<<<<<<
 function fn_callDel(id,text){
 	//console.log(id+' '+text);
 	$('#driverId_del').val(id);
 	$('#driverReg').text(text);
 	genNumForDel();
+	reset_delmodal();
 	$('#myModalDel').modal('toggle');
 }
-
+function reset_delmodal(){
+	$('#txtDelConfirm').val("");	
+	$('#txtDelConfirm').attr("disabled",false);
+	$('#confirmDelBtn').attr("disabled",true);
+	$('#cancelBtn').attr("disabled",false);
+}
 function delDriver() {
 	$('#confirmDelBtn').attr("disabled",true);
 	$('#cancelBtn').attr("disabled",true);
@@ -237,7 +269,6 @@ function delDriver() {
 			}
 		});		
 }
-	
 function genNumForDel()
 {	
 	//generate 4 digit(w-z) in format number 1-9 
@@ -245,11 +276,10 @@ function genNumForDel()
 	x = Math.floor(Math.random()*10);
 	y = Math.floor(Math.random()*10);
 	z = Math.floor(Math.random()*10);
-	$('#rannum').text(w+' '+x+' '+y+' '+z);
+	$('#rannumdel').text(w+' '+x+' '+y+' '+z);
 	numstr = w+''+x+''+y+''+z;
 	console.log(numstr);
 }
-
 function chkNumDelete(value) {
 	if(value==numstr){	
 		$('#confirmDelBtn').attr("disabled",false);
@@ -257,6 +287,92 @@ function chkNumDelete(value) {
 	}
 	else
 		$('#confirmDelBtn').attr("disabled",true);
+}
+////////////////////////////////////////////////////////////
+
+
+// >>>>>>>>>>>>>>>>> Function Add Credits Part <<<<<<<<<<<<<
+function fn_addCredit(id,text) {
+	//console.log(id+' '+text);
+	$('#driverId_addCre').val(id);
+	$('#addCreName').text(text);
+	genNumForAdd();
+	reset_addmodal();
+	$('#myModalAddCre').modal('toggle');	
+}
+function reset_addmodal() {
+	$('#txtAddConfirm').val("");
+	$('#txtAddConfirm').attr("disabled",false);
+	$('#confirmAddCreBtn').attr("disabled",true);
+	$('#cancelAddCreBtn').attr("disabled",false);
+	$('#credits_val').val("");
+	$('#credits_valchk').text("");
+}
+function addCredits() {
+	$('#confirmAddCreBtn').attr("disabled",true);
+	$('#cancelAddCreBtn').attr("disabled",true);
+	driverId = $('#driverId_addCre').val();
+	credits_val = $('#credits_val').val();
+		jQuery.ajax({
+			url :'modules/mod_driver/managedriver/addCredits.php',
+			type: 'GET',
+			data: 'driverId='+driverId+'&credits='+credits_val+'',
+			dataType: 'jsonp',
+			dataCharset: 'jsonp',
+			success: function (data){
+				console.log(data.success);
+				if (data.success){ 
+					reloadPage();
+				} else {
+					reloadPage();					
+				}	
+				$('#myModalDel').modal('toggle');
+			}
+		});		
+	
+}
+function genNumForAdd()
+{	
+	//generate 4 digit(w-z) in format number 1-9 
+	w = Math.floor(Math.random()*10);
+	x = Math.floor(Math.random()*10);
+	y = Math.floor(Math.random()*10);
+	z = Math.floor(Math.random()*10);
+	$('#rannumadd').text(w+' '+x+' '+y+' '+z);
+	numstr = w+''+x+''+y+''+z;
+	console.log(numstr);
+}
+function chkNumAddCredit(value) {
+	if(value==numstr && $('#credits_val').val() != '') {	
+		$('#confirmAddCreBtn').attr("disabled",false);
+		$('#txtAddConfirm').attr("disabled",true);
+	}
+	else
+		$('#confirmAddCreBtn').attr("disabled",true);
+}
+function chkCreditVal(id,value) {
+	$('#confirmAddCreBtn').attr("disabled",true);	
+	var chkFormat = numberOrNot(id,value);
+	if($('#txtAddConfirm').val() ==numstr && chkFormat != false && $('#'+id+'').val() != '')	
+	{
+		$('#confirmAddCreBtn').attr("disabled",false);
+	}
+}
+/////////////////////////////////////////////////////
+
+function numberOrNot(id,number){
+	
+	number = jQuery.trim(number)
+	if ( /[^0-9-]/.test(number))
+	{	$('#'+id+"chk").text("กรุณาใส่เฉพาะตัวเลข");
+		$('#'+id).val("");
+		return false;		
+	}
+	else
+	{
+		$('#'+id+"chk").text("");
+		return true;
+	}
 }
 
 function fn_changeLock(id,sval){
