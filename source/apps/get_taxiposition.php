@@ -1,6 +1,9 @@
 <?php
-$conn = mysql_connect("imattioapp.com", "taxi", "taxi2013");
-mysql_select_db("taxi_db2", $conn);
+include("../include/class.mysqldb.php");
+include("../include/config.inc.php");
+
+//$conn = mysql_connect("imattioapp.com", "taxi", "taxi2013");
+//mysql_select_db("taxi_db2", $conn);
 
 $mobileId = $_REQUEST["mobileId"];
 
@@ -10,7 +13,7 @@ $sql .= "INNER JOIN mobile ON mobile.mobileId = taxiposition.mobileId ";
 $sql .= "WHERE taxiposition.mobileId='".$mobileId."' AND timeGPS LIKE '".date('Y-m-d')."%' ";
 $sql .= "ORDER BY timeGPS DESC ";
 
-#echo $sql;
+//echo $sql;
 $result = mysql_query($sql);
 
 $multipleD = array();
@@ -40,7 +43,7 @@ while ($row = mysql_fetch_array($result)) {
 $json_array = array("record" => $multipleD);
 
 mysql_free_result($result);
-mysql_close($conn);
+//mysql_close($conn);
 
 echo json_encode($json_array);
 ?>

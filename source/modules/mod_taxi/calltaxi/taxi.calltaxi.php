@@ -9,6 +9,10 @@ switch ($act) {
 		include('modules/mod_taxi/calltaxi/calltaxiSelect.php');		
 		break;
 	
+	case 'showcustomer':
+		include('modules/mod_taxi/calltaxi/calltaxiCustomer.php');		
+		break;
+	
 	case 'selecttaxi':
 		$TableName = 'driverhistory';
 		$data = array(

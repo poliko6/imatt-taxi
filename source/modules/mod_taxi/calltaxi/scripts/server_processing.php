@@ -245,7 +245,7 @@
 			
 			if ( $aColumns[$i] == 'historyId' )
 			{
-				$set_tools = " <a href=\"#\" class=\"show_on_map btn btn-gebo btn-mini\" onclick=\"mapload('".$aRow['latitude']."','".$aRow['longitude']."',15);\">ดูตำแหน่ง</a> ";
+				$set_tools = " <a href=\"#\" class=\"show_on_map btn btn-gebo btn-mini\" onclick=\"showCustomer('".$aRow['customerId']."','".$aRow['startLatitude']."','".$aRow['startLongitude']."','".$aRow['historyId']."');\">ดูตำแหน่ง</a> ";
 				
 				if ($aRow['statusWork'] == 'waitselect' ){
 					$set_tools .= " <a href=\"#\" class=\"show_on_map btn btn-warning btn-mini\" onclick=\"callTaxi('".$aRow['customerId']."','".$aRow['startLatitude']."','".$aRow['startLongitude']."','".$aRow['historyId']."');\">เลือกแท๊กซี่</a> ";	
