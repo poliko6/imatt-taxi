@@ -6,7 +6,7 @@
 
 $sql_history = "SELECT * FROM taxiposition ";
 $sql_history .= "INNER JOIN transportsection ON taxiposition.mobileId = transportsection.mobileId ";
-$sql_history .= "WHERE taxiposition.timeServer LIKE '".$dateSearch."%' AND transportsection.driverId = '".$driverId."' ";
+$sql_history .= "WHERE (taxiposition.timeServer BETWEEN '".$dateStart."' AND '".$dateEnd."') AND transportsection.driverId = '".$driverId."' ";
 
 $rs_history = mysql_query($sql_history);
 $founddata1 = mysql_num_rows($rs_history);
@@ -23,7 +23,7 @@ $founddata1 = mysql_num_rows($rs_history);
 		var oTable1 = $('#example1').dataTable( {			
 			"bProcessing": true,
 			"bServerSide": true,
-			"sAjaxSource": "modules/mod_driver/drivercheck/scripts/server_processing.php?driverId=<?=$driverId?>&dateSearch=<?=$dateSearch?>",
+			"sAjaxSource": "modules/mod_driver/drivercheck/scripts/server_processing.php?driverId=<?=$driverId?>&dateStart=<?=$dateStart?>&dateEnd=<?=$dateEnd?>",
 			
 			
 			"sPaginationType" : "full_numbers",// แสดงตัวแบ่งหน้า

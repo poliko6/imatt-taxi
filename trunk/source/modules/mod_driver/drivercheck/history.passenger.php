@@ -2,7 +2,7 @@
 //จาก driverhistory
 $sql_passenger = "SELECT * FROM driverhistory ";
 $sql_passenger .= "INNER JOIN customer ON customer.customerId = driverhistory.customerId ";
-$sql_passenger .= "WHERE callTime LIKE '".$dateSearch."%' AND driverId = '".$driverId."' ";
+$sql_passenger .= "WHERE (callTime BETWEEN '".$dateStart."' AND '".$dateEnd."') AND driverId = '".$driverId."' ";
 
 $rs_passenger = mysql_query($sql_passenger);
 $founddata2 = mysql_num_rows($rs_passenger);
@@ -15,7 +15,7 @@ $founddata2 = mysql_num_rows($rs_passenger);
 		var oTable2 = $('#example2').dataTable( {			
 			"bProcessing": true,
 			"bServerSide": true,
-			"sAjaxSource": "modules/mod_driver/drivercheck/scripts/server_processing2.php?driverId=<?=$driverId?>&dateSearch=<?=$dateSearch?>",
+			"sAjaxSource": "modules/mod_driver/drivercheck/scripts/server_processing2.php?driverId=<?=$driverId?>&dateStart=<?=$dateStart?>&dateEnd=<?=$dateEnd?>",
 			
 			
 			"sPaginationType" : "full_numbers",// แสดงตัวแบ่งหน้า

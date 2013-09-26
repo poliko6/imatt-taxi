@@ -19,7 +19,8 @@
 	/* DB table to use */
    	$sTable = "customermap";
 	$customerId = $_REQUEST['customerId'];
- 	$dateSearch = $_REQUEST['dateSearch'];
+ 	$dateStart = $_REQUEST['dateStart'];
+	$dateEnd = $_REQUEST['dateEnd'];
 	
    	// Joins
 	$sJoin = 'JOIN customer ON(customer.customerId = customermap.customerId)';
@@ -141,11 +142,11 @@
 
 		if ($sWhere == "" )
 		{			
-			$sWhere = " WHERE timeServer LIKE '".$dateSearch."%' AND customer.customerId = '".$customerId."' ";			
+			$sWhere = " WHERE (timeServer BETWEEN '".$dateStart."' AND '".$dateEnd."') AND customer.customerId = '".$customerId."' ";			
 		}
 		else
 		{
-			$sWhere = $sWhere." AND timeServer LIKE '".$dateSearch."%' AND customer.customerId = '".$customerId."' ";
+			$sWhere = $sWhere." AND (timeServer BETWEEN '".$dateStart."' AND '".$dateEnd."') AND customer.customerId = '".$customerId."' ";
 			
 		}
 

@@ -20,6 +20,42 @@ $(document).ready( function () {
 
 });
 
+
+/*function checkRegis(valuex){  
+	 var ValidChar = /[^A-Za-z0-9\-\d]/;   
+	 if (valuex != "") {         
+		if (ValidChar.test(valuex)) {     
+			//alert("ห้ามกรอกอักขระพิเศษ กรุณากรอกใหม่อีกครั้ง");     
+			$('#carRegistration').val('');     
+			return (false);  
+		}
+	 } 
+}*/
+
+
+function checkRegis(str,obj){
+	fn_chkRegisDuplicate('add');
+	var orgi_text="กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถท ธนบปผฝพฟภมยรฤลฦวศษสหฬอฮ0123456789";
+	var str_length=str.length;
+	var str_length_end=str_length-1;
+	var isThai=true;
+	var Char_At="";
+	for(i=0;i<str_length;i++){
+		Char_At=str.charAt(i);
+		if(orgi_text.indexOf(Char_At)==-1){
+			isThai=false;
+		}   
+	}
+	if(str_length>=1){
+		if(isThai==false){
+			obj.value=str.substr(0,str_length_end);
+		}
+	}
+	return isThai; // ถ้าเป็น true แสดงว่าเป็นภาษาไทยทั้งหมด
+	
+	
+}
+
 </script>
 
 
@@ -30,7 +66,7 @@ $(document).ready( function () {
         <h3 class="heading" style="font-size:12px; text-align:center;">เพิ่มรถแท๊กซี่ในระบบ ของอู่ "<span style="color:#06C;"><?=$major_name?></span>"</h3>
         <div class="row-fluid">
             <div class="span8">
-                <form class="form-horizontal form_validation_ttip" enctype="multipart/form-data" method="post">
+                <form class="form-horizontal form_validation_ttip" id="form1" name="form1" enctype="multipart/form-data" method="post">
                     <fieldset>
    						<div class="formSep">
                         	<div class="row-fluid">
@@ -38,7 +74,8 @@ $(document).ready( function () {
                                     <label for="fileinput" class="control-label">ทะเบียนรถ <span class="f_req">*</span></label>
                                     <div class="controls text_line">
                                     	<div class="help-block" id="errRegistration" style="display:none; color:#C00;">หมายเลขทะเบียนซ้ำ</div>
-                                        <input type="text" name="carRegistration" id="carRegistration" class="span5"  value="<?=$carRegistration?>" onkeyup="fn_chkRegisDuplicate('add');"  />
+                                        <!--<input type="text" name="carRegistration" id="carRegistration" class="span5"  value="<?=$carRegistration?>" onkeyup="fn_chkRegisDuplicate('add');"  /> -->
+                                        <input type="text" name="carRegistration" id="carRegistration" class="span5"  value="<?=$carRegistration?>" onkeyup="checkRegis(this.value,this);"  />
                                         <span class="help-block">ตัวอย่าง : กก 0001</span>                                        
                                     </div>
                             	</div>
