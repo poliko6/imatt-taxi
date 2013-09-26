@@ -80,11 +80,13 @@
                             <td><?=$mobile_model[$i]['mobileModelName']?></td>
                             <td><?=Thai_date($mobile_model[$i]['dateAdd'])?></td>
                             <td>
-                            	<!--<a data-toggle="modal" data-backdrop="static" href="#myModalAdd"> -->
-                                <!--<a href="index.php?p=mobile.type&menu=main_mobile&act=edit&id=<?=$mobile_model[$i]['mobileModelId']?>" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> -->
-                               	<a href="#" data-toggle="modal" data-backdrop="static" title="Edit" onclick="fn_formEdit(<?=$mobile_model[$i]['mobileModelId']?>, 'select');"><i class="icon-pencil"></i></a>
-                                
-                                <a href="#myModalDel<?=$mobile_model[$i]['mobileModelId']?>" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a>
+                            	<? if (($u_garage == $mobile_model[$i]['garageId']) || ($u_type == 1)) {?>
+                                    <!--<a data-toggle="modal" data-backdrop="static" href="#myModalAdd"> -->
+                                    <!--<a href="index.php?p=mobile.type&menu=main_mobile&act=edit&id=<?=$mobile_model[$i]['mobileModelId']?>" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> -->
+                                    <a href="#" data-toggle="modal" data-backdrop="static" title="Edit" onclick="fn_formEdit(<?=$mobile_model[$i]['mobileModelId']?>, 'select');"><i class="icon-pencil"></i></a>
+                                    
+                                    <a href="#myModalDel<?=$mobile_model[$i]['mobileModelId']?>" data-toggle="modal" title="Delete"><i class="icon-trash"></i></a>
+                          		<? } ?>
                             </td>
                         </tr>
                         
@@ -204,7 +206,7 @@
 			jQuery.ajax({
    				url :'modules/mod_mobile/model/addmobilemodel.php',
    				type: 'GET',
-  				data: 'act=addmodel&model_name='+$('#model_name').val()+'&bannerid='+bannerid+'',
+  				data: 'act=addmodel&model_name='+$('#model_name').val()+'&bannerid='+bannerid+'&garageId=<?=$u_garage?>',
    				dataType: 'jsonp',
    				dataCharset: 'jsonp',
    				success: function (data){

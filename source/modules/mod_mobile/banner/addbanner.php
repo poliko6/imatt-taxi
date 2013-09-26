@@ -26,7 +26,8 @@
 		$TableName = 'mobilebanner';
 		$data = array(
 			'mobileBannerNameEng'=>$banner_name_eng,
-			'mobileBannerNameThai'=>$banner_name_thai
+			'mobileBannerNameThai'=>$banner_name_thai,
+			'garageId'=>$garageId
 		);
 		$sql = insert_db($TableName, $data);
 		mysql_query($sql);
