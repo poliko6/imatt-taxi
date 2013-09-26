@@ -129,13 +129,13 @@
             <div class="control-group formSep">
               <label for="u_email" class="control-label">เบอร์โทรศัพท์มือถือ</label>
               <div class="controls">
-                <input type="text" class="input-xlarge" name="txtMobilePhone" id="txtMobilePhone" value="" maxlength="10" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
+                <input type="text" class="input-xlarge" name="txtMobilePhone" id="txtMobilePhone" value="" maxlength="10" onchange="mobOrNot(this.id,this.value)" />
                 <font color="#FF0000"><i><div id="txtMobilePhonechk" ></div></i></font>
               </div>
               <br />
               <label for="u_email" class="control-label">เบอร์สำนักงาน</label>
               <div class="controls">
-                <input type="text" name="txtTel" id="txtTel" class="input-xlarge" value="" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
+                <input type="text" name="txtTel" id="txtTel" class="input-xlarge" value="" onchange="telOrNot(this.id,this.value)" />
                 <font color="#FF0000"><i><div id="txtTelchk" ></div></i></font>                
               </div>
               <br />
@@ -461,6 +461,29 @@ function numberOrNot(id,number,errortxt){
 		$('#'+id+"chk").text("");
 }
 
+function mobOrNot(id,number){
+	
+	number = jQuery.trim(number)
+	if ( /^(0)[0-9-]/.test(number) && number.length == 10)
+	{	$('#'+id+"chk").text("");	}
+	else
+	{
+		$('#'+id+"chk").text("รูปแบบเบอร์โทรศัพท์ไม่ถูกต้อง ถ้าไม่มีให้เว้นไว้");
+		$('#'+id).val("");
+	}
+}
+
+function telOrNot(id,number){	
+	number = jQuery.trim(number)
+	if ( /^(0)[0-9-]/.test(number))
+	{	$('#'+id+"chk").text("");	}
+	else
+	{
+		$('#'+id+"chk").text("รูปแบบเบอร์โทรศัพท์ไม่ถูกต้อง ถ้าไม่มีให้เว้นไว้");
+		$('#'+id).val("");
+	}
+}
+
 </script> 
 <script src="js/jquery.min.js"></script> 
 
@@ -481,8 +504,7 @@ function numberOrNot(id,number,errortxt){
 <script src="lib/antiscroll/jquery-mousewheel.js"></script>
 <!-- lightbox -->
 <script src="lib/colorbox/jquery.colorbox.min.js"></script>
-<!-- common functions -->
-<script src="js/gebo_common.js"></script>
+
 
 <!-- validation -->
 <script src="lib/validation/jquery.validate.min.js"></script>

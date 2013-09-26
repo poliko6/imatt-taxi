@@ -141,12 +141,13 @@
       <thead>
         <tr>
           <th style="text-align:center">ลำดับที่</th>
-          <th width="400px">ชื่อภาษาไทย-ชื่อภาษาอังกฤษ</th>
-          <th>ชื่อย่อ</th>
-          <th>Username</th>
-          <th>ประเภทของ Username</th>
-          <th>รหัสผ่านของอู่</th>
-          <th>การจัดการ</th>
+          <th style="text-align:center" width="30%">ชื่อภาษาไทย-ชื่อภาษาอังกฤษ</th>
+          <th style="text-align:center">ชื่อย่อ</th>
+          <th style="text-align:center">Username</th>
+          <th style="text-align:center">ประเภทของ Username</th>
+          <th style="text-align:center">รหัสผ่านของอู่</th>
+          <th style="text-align:center">การจัดการ</th>
+          <th style="text-align:center">สถานะล็อค</th>
         </tr>
       </thead>
       <tbody>
@@ -162,12 +163,13 @@
             <br/>
             <?=$objResult['englishCompanyName']?>
             </a></td>
-          <td><?=$objResult['garageShortName']?></td>
-          <td><?=$objResult['username']?></td>
-          <td><?=$objResult['majorType']?></td>
-          <td><?=$objResult['garagePassword']?></td>
-          <td><a href="index.php?p=user.major&menu=main_user&act=edit&mjId=<?=$objResult['majorId']?>" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> <a href="#myModalDel<?=$objResult['majorId']?>" data-toggle="modal" title="ลบ"><i class="icon-trash"></i></a>
-            <div id="div_lock<?=$objResult['majorId']?>">
+          <td style="text-align:center"><?=$objResult['garageShortName']?></td>
+          <td style="text-align:center"><?=$objResult['username']?></td>
+          <td style="text-align:center"><?=$objResult['majorType']?></td>
+          <td style="text-align:center"><?=$objResult['garagePassword']?></td>
+          <td style="text-align:center"><a href="index.php?p=user.major&menu=main_user&act=edit&mjId=<?=$objResult['majorId']?>" class="sepV_a" title="Edit"><i class="icon-pencil"></i></a> <a href="#myModalDel<?=$objResult['majorId']?>" data-toggle="modal" title="ลบ"><i class="icon-trash"></i></a>
+            </td>
+            <td style="text-align:center"><div id="div_lock<?=$objResult['majorId']?>">
               <?
 								if ($objResult['lock'] == 0) {
 									?>
