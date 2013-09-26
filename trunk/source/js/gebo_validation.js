@@ -63,6 +63,19 @@
 					radMjtype: { required: true},					
 					/////////////////////////////////
 					
+					//FROM driver.add.php
+					fName: { required: true},
+					lName: { required: true},
+					birthDay: { required: true},
+					dLicense: { required: true},
+					txtMobilePhone: { required: true},
+					/////////////////////////////////
+					
+					//FROM customer
+					txtEmail: { required: true},
+					citizenId: { required: true},
+					/////////////////////////////////
+					
 					days: { required: true, minlength: 2 },
 					gender: { required: true },
 					address2: { required: true, minlength: 5 },

@@ -176,5 +176,5 @@ if($filename != '')
 $act="";
 ?>
 <SCRIPT language="JavaScript">
-	window.location="index.php?p=driver.managedriver&menu=main_user";
+	window.location="index.php?p=driver.managedriver&menu=main_driver";
 </SCRIPT>

@@ -1,10 +1,11 @@
 <?
-$cus_data = select_db('customer',"where customerId = '".$u_id."'");
+$cus_data = select_db('customer',"where customerId = '".$customerId."'");
 $cusId = $cus_data[0]['customerId'];
 $email = $cus_data[0]['email'];
 $oldPW = $cus_data[0]['password'];
 $firstName = $cus_data[0]['firstName'];
 $lastName = $cus_data[0]['lastName'];
+$gender = $cus_data[0]['gender'];
 $citizenId = $cus_data[0]['citizenId'];
 $telephone = $cus_data[0]['telephone'];
 $birthday = $cus_data[0]['birthday'];
@@ -29,6 +30,22 @@ $address = $cus_data[0]['location'];
                 <input type="text" name="lastName" id="lastName" class="input-xlarge" value="<?=$lastName?>" onchange="trimString(this.id,this.value)" />
                 <font color="#FF0000"><i><div id="lastNamechk"></div></i></font>                
               </div>
+              <label for="u_fname" class="control-label">เพศ :</label>
+              <div class="controls">
+                <label class="uni-radio">
+                  <input type="radio" class="uni_style" name="radSex" value="female" id="radSex_0"
+                  <? if($gender == "female") echo "checked=\"checked\""; ?> />
+                  หญิง</label>
+                <label class="uni-radio">
+                  <input type="radio" class="uni_style" name="radSex" value="male" id="radSex_1"
+                  <? if($gender == "male") echo "checked=\"checked\""; ?> />
+                  ชาย</label>
+                <label class="uni-radio">
+                  <input type="radio" class="uni_style" name="radSex" value="" id="radSex_2"
+                  <? if($gender != 'female' && $gender != 'male') echo "checked=\"checked\""; ?> />
+                  ยังไม่ระบุ</label>
+                  </div>
+              
               <br />
               <label for="u_fname" class="control-label">รหัสประชาชน :</label>
               <div class="controls">
@@ -71,17 +88,17 @@ $address = $cus_data[0]['location'];
             
             <div class="control-group">
               <div class="controls">
-                <button class="btn btn-gebo" type="button" onclick="saveEdit()">บันทึกการเพิ่มข้อมูล</button>
+                <button class="btn btn-gebo" type="submit">บันทึกการเพิ่มข้อมูล</button>
 				<input type="button" class="btn" value="ยกเลิก" onclick="reloadPage()" />
                 </div>
             </div>
 
           			<!-- sent value to select and update -->
-          			<input type="hidden" name="customerId" value="<?=$cusId?>" />
-          		
+          			<input type="hidden" name="customerId" value="<?=$cusId?>" />          		
                     <input type="hidden" name="p" value="<?=$p?>" />
                     <input type="hidden" name="menu" value="<?=$menu?>" />
-                    <input type="hidden" name="act" value="saveedit" />           
+                    <input type="hidden" name="act" value="saveedit" />
+                    <input type="hidden" name="current_page" id="current_page" value="<?=$current_page?>" />
         </form>
       </div>
     </div>
@@ -114,8 +131,7 @@ $address = $cus_data[0]['location'];
     </div>
 <? //////////////////////////////////////////////////////////////////////////////////////////////////////////////?>        
         
-        
-        
+    
 <script type="text/javascript">	
 var delayAlert=null; 
 var oldpwtemp=null;
@@ -134,12 +150,12 @@ function alertPopup(msgid,alertid,message){
 }
 
 function reloadPage(){
-	window.location = 'index.php?p=user.profile&menu=main_user'; 
+	window.location = 'index.php?p=user.customer&menu=main_user'; 
 	//$('#fmReload').submit();
 }
 
 function reloadPage2(){
-	window.location = 'index.php?p=user.profile&menu=main_user&sav=yes'; 
+	window.location = 'index.php?p=user.customer&menu=main_user&sav=yes'; 
 	//$('#fmReload').submit();
 }
 
@@ -162,7 +178,7 @@ $(document).ready( function () {
         switch(charCode){
             case 116: // F5
                 e.preventDefault();
-                window.location = "index.php?p=user.profile&menu=main_user";
+                window.location = "index.php?p=user.customer&menu=main_user";
                 break;
         }
     });	
@@ -186,7 +202,7 @@ function chgPW(type) {
 	var newPW = $('#newPW2nd').val();
 		
 	jQuery.ajax({
-	url :'modules/mod_user/profile/JSON/customer.profile.chgPW.php',
+	url :'modules/mod_user/customer/JSON/customer.edit.chgPW.php',
 	type: 'GET',
 	data: '&newPW='+newPW+'&customerId='+customerId+'',
 	dataType: 'jsonp',
@@ -212,19 +228,6 @@ function chgPW(type) {
 	}
 }
 
-function saveEdit() {
-	jQuery.ajax({
-	url :'modules/mod_user/profile/JSON/customer.profile.saveEdit.php',
-	type: 'GET',
-	data: $('#profileEdit').serialize(),
-	dataType: 'jsonp',
-	dataCharset: 'jsonp',
-		success: function (data){
-			reloadPage2();
-		}
-	});	
-}
-
 function chkEmail(email) {	
 	if(email!='-')
 	{
@@ -242,17 +245,52 @@ function chkEmail(email) {
 function checkID(tagid,id) {
 //ตรวจว่าป้อนถูกตามรูปแบบที่กำหนดมั้ย x-xxxx-xxxxx-xx-x
 	var temp;
- 	if(id.length != 13) 
- 		$('#'+tagid+'chk').text("รหัสบัตรประชาชนไม่ถูกต้อง");
-	for(i=0, sum=0; i < 12; i++)
-		sum += parseFloat(id.charAt(i))*(13-i); 
-	if((11-sum%11)%10!=parseFloat(id.charAt(12)))
- 		$('#'+tagid+'chk').text("รหัสบัตรประชาชนไม่ถูกต้อง");
+	$('#'+tagid+'chk').text("");	
+ 	if(id.length == 13) 
+	{
+		for(i=0, sum=0; i < 12; i++)
+			sum += parseFloat(id.charAt(i))*(13-i); 
+		if((11-sum%11)%10!=parseFloat(id.charAt(12)))
+		{
+			$('#'+tagid+'chk').attr("style","color:#FF0000");
+			$('#'+tagid+'chk').text("รหัสบัตรประชาชนไม่ถูกต้อง");	
+			$('#'+tagid+'').val("");	
+		}
+		else
+		{	
+			var u_type = '<?=$u_type?>';
+			jQuery.ajax({
+				url :'modules/mod_user/customer/JSON/customer.add.chkCitizenId.php',
+				type : 'GET',
+				data : 'citizenId='+id+'',
+				dataType: 'jsonp',
+				dataCharset: 'jsonp',
+				success: function (data){
+					console.log(data.status);
+					console.log(data.exist);
+					if(data.exist==true)
+					{
+						$('#'+tagid+'chk').attr("style","color:#333333");
+						$('#'+tagid+'chk').html(data.response);
+						$('#'+tagid+'').val("");
+					}
+					else if(data.exist==false)
+					{
+						$('#'+tagid+'').val($('#'+tagid+'').val());	
+						$('#'+tagid+'chk').text("");
+					}
+				}		
+			});		
+		}
+	}
 	else
-	{	
- 		$('#'+tagid+'chk').text("");		
+	{
+		$('#'+tagid+'chk').attr("style","color:#FF0000");	
+		$('#'+tagid+'chk').text("กรุณากรอกรหัสประชาชนให้ถูกต้อง");
+		$('#'+tagid+'').val("");	
 	}
 }
+
 
 
 function trimString(id,str) {
@@ -312,7 +350,7 @@ function chkOldPW(id,value) {
 	console.log("pwtemp here "+pwtemp);
 	var pwtochk;
 	jQuery.ajax({
-		url :'modules/mod_user/profile/JSON/customer.profile.chkOldPW.php',
+		url :'modules/mod_user/customer/JSON/customer.edit.chkOldPW.php',
 		type: 'GET',
 		data: 'oldPW='+value+'',
 		dataType: 'jsonp',
@@ -366,6 +404,7 @@ function numberOrNot(id,number){
 	else
 		$('#'+id+"chk").text("");
 }
+
 
 </script> 
 
