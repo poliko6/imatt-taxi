@@ -1,9 +1,7 @@
 <?php
-include("../include/class.mysqldb.php");
-include("../include/config.inc.php");
-
-//$conn = mysql_connect("imattioapp.com", "taxi", "taxi2013");
-//mysql_select_db("taxi_db2", $conn);
+include("../include/db_connect");
+$conn = mysql_connect("$gaSql[server] ", "$gaSql[user]", "$gaSql[password]");
+mysql_select_db("$gaSql[db]", $conn);
 
 $mobileId = $_REQUEST["mobileId"];
 
