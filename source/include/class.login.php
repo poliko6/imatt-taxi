@@ -29,7 +29,8 @@
 		$sql_major .= "AND garagelist.garagePassword = '".trim($garageid)."'";
 		
 		$rs_major = mysql_query($sql_major);
-		$data_major = mysql_fetch_object($rs_major);
+		$data_major = mysql_fetch_object($rs_major);		
+		
 		
 		$u_id = $data_major->majorId;
 		$u_garageid = $data_major->garageId;	
@@ -47,6 +48,7 @@
 		$exe = mysql_query($sql) or die(mysql_error());
 		$data = mysql_fetch_object($exe);
 		$finddata_minor = $data->finddata;
+		//echo $sql;
 		
 		if ($finddata_minor > 0) {
 			$sql_minor = "SELECT * FROM minoradmin INNER JOIN garagelist ON minoradmin.garageId = garagelist.garageId ";
@@ -60,7 +62,7 @@
 			$u_garageid = $data_minor->garageId;	
 			$u_type = 3;	
 			$u_username = $username;
-			$u_lock = $data_major->lock;
+			$u_lock = $data_minor->lock;
 			$find = 1;			
 				
 		}
