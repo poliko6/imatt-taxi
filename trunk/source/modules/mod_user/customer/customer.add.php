@@ -20,14 +20,14 @@
         <form id="formInfo" class="form-horizontal form_validation_ttip" action="" style="visibility:hidden" method="post">
           <fieldset>
             <div class="control-group formSep">
-              <label for="u_fname" class="control-label">ชื่อจริง :</label>
+              <label for="u_fname" class="control-label">ชื่อจริง* :</label>
               <div class="controls text_line">
                 <input type="text" name="fName" id="fName" class="input-xlarge" value="" onchange="trimString(this.id,this.value)" />
                 <font color="#FF0000"><i>
                 <div id="fNamechk"></div>
                 </i></font> </div>
               <br />
-              <label for="u_fname" class="control-label">นามสกุล :</label>
+              <label for="u_fname" class="control-label">นามสกุล* :</label>
               <div class="controls">
                 <input type="text" name="lName" id="lName" class="input-xlarge" value="" onchange="trimString(this.id,this.value)" />
                 <font color="#FF0000"><i>
@@ -48,13 +48,13 @@
                   </div>
 
               <br />
-              <label for="u_fname" class="control-label">วัน เดือน ปี เกิด :</label>
+              <label for="u_fname" class="control-label">วัน เดือน ปี เกิด* :</label>
               <div class="controls date" id="dp2" data-date-format="dd/mm/yyyy"> <span class="add-on">
                 <input class="input-xlarge" type="text" id="birthDay" name="birthDay" readonly="readonly" value="" />
                 </span><span class="help-block">คลิกเพื่อเลือกวันที่จากปฏิทิน</span></div>
             </div>
             <div class="control-group formSep">
-              <label for="u_fname" class="control-label">E-mail :</label>
+              <label for="u_fname" class="control-label">E-mail* :</label>
               <div class="controls">
                 <input type="text" class="input-xlarge" name="txtEmail" id="txtEmail" value="" onkeyup="reType(this.id)" onchange="chkEmail(this.value)" />
                 <font color="#006600"><i>
@@ -63,7 +63,7 @@
                 <div id="txtEmailchk"></div>
                 </i></font> <span id="spanUN" class="help-block">E-mail จะใช้แทน Username ในการล็อคอินเข้าสู่ระบบสำหรับลูกค้า</span> </div>
               <div id="pwChg"> <br />
-                <label for="u_password" class="control-label">Password :</label>
+                <label for="u_password" class="control-label">Password* :</label>
                 <div class="controls">
                   <div class="sepH_b">
                     <input type="password" class="input-xlarge" name="u_password" id="u_password" placeholder="ความยาวอย่างน้อย 8 ตัวอักษร" maxlength="20" onchange="chk1stPW(this.id,this.value,8)" />
@@ -77,12 +77,12 @@
               </div>
             </div>
             <div class="control-group formSep">
-              <label class="control-label">ที่อยู่ :</label>
+              <label class="control-label">ที่อยู่* :</label>
               <div class="controls">
                 <textarea class="input-xlarge" name="txtAddress_add" id="txtAddress" placeholder="(บ้านเลขที่ ซอย ถนน)"></textarea>
               </div>
               <br />
-              <label for="u_email" class="control-label">เบอร์โทรศัพท์ :</label>
+              <label for="u_email" class="control-label">เบอร์โทรศัพท์* :</label>
               <div class="controls">
                 <input type="text" class="input-xlarge" name="txtMobilePhone" id="txtMobilePhone" value="" maxlength="10" onchange="mobOrNot(this.id,this.value)" />
                 <font color="#FF0000"><i>
@@ -375,12 +375,8 @@ function telOrNot(id,number){
 <script src="js/jquery.actual.min.js"></script> 
 <!-- js cookie plugin --> 
 <script src="js/jquery.cookie.min.js"></script> 
-<!-- main bootstrap js --> 
-<script src="bootstrap/js/bootstrap.min.js"></script> 
 <!-- tooltips --> 
 <script src="lib/qtip2/jquery.qtip.min.js"></script> 
-<!-- jBreadcrumbs --> 
-<script src="lib/jBreadcrumbs/js/jquery.jBreadCrumb.1.1.min.js"></script> 
 <!-- sticky messages --> 
 <script src="lib/sticky/sticky.min.js"></script> 
 <!-- fix for ios orientation change --> 
@@ -390,8 +386,6 @@ function telOrNot(id,number){
 <script src="lib/antiscroll/jquery-mousewheel.js"></script> 
 <!-- lightbox --> 
 <script src="lib/colorbox/jquery.colorbox.min.js"></script> 
-<!-- common functions --> 
-<script src="js/gebo_common.js"></script> 
 
 <!-- validation --> 
 <script src="lib/validation/jquery.validate.min.js"></script> 

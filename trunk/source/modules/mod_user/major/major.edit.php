@@ -48,30 +48,30 @@
                 </i></font> <span class="help-block">ภาษาอังกฤษหรือตัวเลขเท่านั้น ความยาวไม่เกิน 15 ตัวอักษร</span> <span class="help-block">*สำคัญ สำหรับใช้ระบุใน URL ของหน้าเว็บบริษัทของท่าน โปรดตรวจสอบให้แน่ใจก่อนทำการบันทึก</span> </div>
             </div>
             <div class="control-group formSep">
-              <label for="u_fname" class="control-label">ชื่อบริษัทภาษาไทย :</label>
+              <label for="u_fname" class="control-label">ชื่อบริษัทภาษาไทย* :</label>
               <div class="controls text_line">
                 <input type="text" id="thName" name="thName" class="input-xlarge" value="<?=$thName?>" onchange="chkThai(this.id,this.value,0)" />
                 <font color="#FF0000"><i><div id="thNamechk"></div></i></font> 
               </div>
               <br />
-              <label for="u_fname" class="control-label">ชื่อบริษัทภาษาอังกฤษ :</label>
+              <label for="u_fname" class="control-label">ชื่อบริษัทภาษาอังกฤษ* :</label>
               <div class="controls">
                 <input type="text" name="engName" id="engName" class="input-xlarge" value="<?=$engName?>" onchange="chkEngNum(this.id,this.value,0)" />
                 <font color="#FF0000"><i><div id="engNamechk"></div></i></font>                
               </div>
               <br />
-              <label for="u_fname" class="control-label">ชื่อผู้บริหาร :</label>
+              <label for="u_fname" class="control-label">ชื่อผู้บริหาร* :</label>
               <div class="controls">
                 <input type="text" name="managerName" id="managerName" class="input-xlarge" value="<?=$managerName?>" onchange="trimString(this.id,this.value)" />
               </div>
               <br />
-              <label for="u_fname" class="control-label">ประเภทของธุรกิจ :</label>
+              <label for="u_fname" class="control-label">ประเภทของธุรกิจ* :</label>
               <div class="controls">
                 <input type="text" name="typeBus" id="typeBus" class="input-xlarge" value="<?=$busType?>" onchange="trimString(this.id,this.value)" />
               </div>
             </div>
             <div class="control-group formSep">
-              <label for="u_fname" class="control-label">Username</label>
+              <label for="u_fname" class="control-label">Username* :</label>
               <div class="controls">
                 <input type="text" class="input-xlarge" name="userName" id="userName" value="<?=$mj_username?>" disabled="disabled" /></div><br />
               <label for="u_password" class="control-label">Password</label>
@@ -89,12 +89,12 @@
             </div>
             </div>
             <div class="control-group formSep">
-              <label class="control-label">ที่อยู่</label>
+              <label class="control-label">ที่อยู่* :</label>
               <div class="controls">
                 <textarea class="input-xlarge" name="txtAddress_add" id="txtAddress" placeholder="(บ้านเลขที่ ซอย ถนน)"><?=$objResult['address']?></textarea>
               </div>
               <br />
-              <label class="control-label">จังหวัด</label>
+              <label class="control-label">จังหวัด* :</label>
               <div class="controls">
                 <div class="span6">
                   <select name="province_add" id="province">
@@ -114,7 +114,7 @@
               </div>
                   <br />
                   <br />              
-              <label class="control-label">อำเภอ</label>
+              <label class="control-label">อำเภอ* :</label>
               <div class="controls">
                 <div class="span6">
                   <div id="genamphur">
@@ -126,7 +126,7 @@
               </div>
                   <br /> 
               <br />
-              <label class="control-label">ตำบล</label>
+              <label class="control-label">ตำบล* :</label>
               <div class="controls">
                 <div class="span6">
                   <div id="gendistrict">
@@ -138,7 +138,7 @@
               </div>
               <br />
               <br />              
-              <label class="control-label">รหัสไปรษณีย์</label>
+              <label class="control-label">รหัสไปรษณีย์* :</label>
               <div class="controls">
                 <input type="text" name="txtZipcode_add" id="txtZipcode" class="input-xlarge" value="<?=$objResult['zipcode']?>" onchange="numberOrNot(this.id,this.value,'รหัสไปรษณีย์ไม่ถูกต้อง')" />
                 <font color="#FF0000"><i><div id="txtZipcodechk" ></div></i></font>
@@ -146,31 +146,31 @@
             </div>
             
             <div class="control-group formSep">
-              <label for="u_email" class="control-label">เบอร์โทรศัพท์มือถือ</label>
+              <label for="u_email" class="control-label">เบอร์โทรศัพท์มือถือ* :</label>
               <div class="controls">
                 <input type="text" class="input-xlarge" name="txtMobilePhone" id="txtMobilePhone" value="<?=$objResult['mobilePhone']?>" maxlength="10" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
                 <font color="#FF0000"><i><div id="txtMobilePhonechk" ></div></i></font>
               </div>
               <br />
-              <label for="u_email" class="control-label">เบอร์สำนักงาน</label>
+              <label for="u_email" class="control-label">เบอร์สำนักงาน :</label>
               <div class="controls">
                 <input type="text" name="txtTel" id="txtTel" class="input-xlarge" value="<?=$objResult['telephone']?>" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
                 <font color="#FF0000"><i><div id="txtTelchk" ></div></i></font>                
               </div>
               <br />
-              <label for="u_email" class="control-label">แฟกซ์</label>
+              <label for="u_email" class="control-label">แฟกซ์ :</label>
               <div class="controls">
                 <input type="text" name="txtFax" id="txtFax" class="input-xlarge" value="<?=$objResult['fax']?>" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
                 <font color="#FF0000"><i><div id="txtFaxchk" ></div></i></font> 
               </div>
               <br />
-              <label for="u_email" class="control-label">Call Center</label>
+              <label for="u_email" class="control-label">Call Center :</label>
               <div class="controls">
                 <input type="text" name="txtCallcenter" id="txtCallcenter" class="input-xlarge" value="<?=$objResult['callCenter']?>" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')"/>
                 <font color="#FF0000"><i><div id="txtCallcenter" ></div></i></font> 
               </div>
               <br />
-              <label for="u_email" class="control-label">E-mail</label>
+              <label for="u_email" class="control-label">E-mail* :</label>
               <div class="controls">
                 <input type="text" name="txtEmail" id="txtEmail" class="input-xlarge" value="<?=$objResult['email']?>" onchange="chkEmail(this.value)" />
                 <font color="#FF0000"><i><div id="chkEmail"></div></i></font>                
