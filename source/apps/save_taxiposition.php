@@ -1,7 +1,9 @@
 <?php
-include("../include/db_connect");
-$conn = mysql_connect("$gaSql[server] ", "$gaSql[user]", "$gaSql[password]");
-mysql_select_db("$gaSql[db]", $conn);
+include("../include/db_connect.php");
+include ('class.function.php');
+$conn = mysql_connect($gaSql['server'], $gaSql['user'], $gaSql['password']);
+mysql_select_db($gaSql['db'], $conn);
+mysql_query("SET NAMES 'utf8'");
 
 $mobileId = trim($_REQUEST["mobileId"]);
 $latitude = trim($_REQUEST["lat"]);
@@ -10,7 +12,6 @@ $time = trim($_REQUEST["time"]);
 //$accuracy = trim($_REQUEST["accuracy"]);
 //$speed = trim($_REQUEST["speed"]);
 //$bearing = trim($_REQUEST["bearing"]);
-
 
 
 

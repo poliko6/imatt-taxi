@@ -1,15 +1,17 @@
 <?php
-include("../include/db_connect");
-$conn = mysql_connect("$gaSql[server] ", "$gaSql[user]", "$gaSql[password]");
-mysql_select_db("$gaSql[db]", $conn);
+include("../include/db_connect.php");
+include ('class.function.php');
+$conn = mysql_connect($gaSql['server'], $gaSql['user'], $gaSql['password']);
+mysql_select_db($gaSql['db'], $conn);
+mysql_query("SET NAMES 'utf8'");
 
-$customerId = $_REQUEST["customerId"];
+$mobileId = $_REQUEST["mobileId"];
 
 $sql = "SELECT customer.*, customermap.latitudeCustomer, customermap.longitudeCustomer, ";
-$sql .= "customermap.dateMapping FROM customermap ";
+$sql .= "customermap.timeServer FROM customermap ";
 $sql .= "INNER JOIN customer ON customer.customerId = customermap.customerId ";
-$sql .= "WHERE customermap.customerId='".$customerId."' AND dateMapping LIKE '".date('Y-m-d')."%' ";
-$sql .= "ORDER BY dateMapping DESC ";
+$sql .= "WHERE customermap.customerId='".$customerId."' AND timeServer LIKE '".date('Y-m-d')."%' ";
+$sql .= "ORDER BY timeServer DESC ";
 
 $result = mysql_query($sql, $conn);
 
