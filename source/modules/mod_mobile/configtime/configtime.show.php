@@ -29,21 +29,21 @@
                         <input type="text" name="time_ready" id="time_ready" class="span2" value="<?=$time_ready?>" disabled="disabled" /> &nbsp; วินาที                     
                     </div>
                 </div>
-                
+
                 <div class="control-group">
-                    <label class="control-label">เวลาสถานะไม่ว่าง (Working) </label>
-                    <div class="controls">                        
-                        <input type="text" name="time_working" id="time_working" class="span2" value="<?=$time_working?>" disabled="disabled" /> &nbsp; วินาที                     
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <label class="control-label">เวลาสถานะไม่ว่าง (Order job) </label>
+                    <label class="control-label">เวลาสถานะกำลังไปรับงาน (Order job) </label>
                     <div class="controls">                        
                         <input type="text" name="time_orderjob" id="time_orderjob" class="span2" value="<?=$time_orderjob?>" disabled="disabled" /> &nbsp; วินาที                     
                     </div>
                 </div>
                 
+                <div class="control-group">
+                    <label class="control-label">เวลาสถานะกำลังทำงาน (Working) </label>
+                    <div class="controls">                        
+                        <input type="text" name="time_working" id="time_working" class="span2" value="<?=$time_working?>" disabled="disabled" /> &nbsp; วินาที                     
+                    </div>
+                </div>
+                                
                 <div class="control-group">
                     <label class="control-label">เวลาสถานะอื่นๆ  (Other) </label>
                     <div class="controls">                        
