@@ -4,7 +4,7 @@
 	$sql= " SELECT transportsection.mobileId, mobile.latitude, mobile.longitude
 			FROM transportsection
 			JOIN mobile ON mobile.mobileId = transportsection.mobileId
-			JOIN car ON car.carId = car.carId
+			JOIN car ON car.carId = transportsection.carId
 			WHERE transportsection.statusWork = 'online' AND car.carStatusId = 1";
 	$result = mysql_query($sql);
 	
