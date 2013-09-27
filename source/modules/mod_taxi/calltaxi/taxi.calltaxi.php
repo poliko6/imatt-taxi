@@ -20,10 +20,18 @@ switch ($act) {
 			'carId'=>trim($carId),			
 			'driverId'=>trim($driverId),
 			'garageId'=>trim($garageId),
-			'statusWork'=>'wait',
+			'statusWork'=>'4',
 			'driveTime'=>date('Y-m-d H:i:s')
 		);
 		$sql = update_db($TableName, array('historyId='=>$historyId), $data);
+		mysql_query($sql);	
+		
+		
+		$TableName = 'car';
+		$data = array(
+			'carStatusId'=>'5'			
+		);
+		$sql = update_db($TableName, array('carId='=>$carId), $data);
 		mysql_query($sql);	
 		//echo $sql;
 		//exit;
@@ -50,6 +58,7 @@ switch ($act) {
 		break;
 }
 ?>
+
 
 
 
