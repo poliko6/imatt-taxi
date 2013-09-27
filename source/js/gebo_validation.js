@@ -76,6 +76,12 @@
 					citizenId: { required: true},
 					/////////////////////////////////
 					
+					//FROM Profile
+					firstName: { required: true},
+					lastName: { required: true},
+					telephone_profile: { required: true},
+					
+					////////////////////////////////
 					days: { required: true, minlength: 2 },
 					gender: { required: true },
 					address2: { required: true, minlength: 5 },

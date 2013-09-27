@@ -19,13 +19,13 @@ $address = $cus_data[0]['location'];
         <form id="profileEdit" class="form-horizontal form_validation_ttip" action="" method="post">
          
             <div class="control-group formSep">
-              <label for="u_fname" class="control-label">ชื่อจริง :</label>
+              <label for="u_fname" class="control-label">ชื่อจริง* :</label>
               <div class="controls text_line">
                 <input type="text" id="firstName" name="firstName" class="input-xlarge" value="<?=$firstName?>" onchange="trimString(this.id,this.value)" />
                 <font color="#FF0000"><i><div id="firstNamechk"></div></i></font> 
               </div>
               <br />
-              <label for="u_fname" class="control-label">นามสกุล :</label>
+              <label for="u_fname" class="control-label">นามสกุล* :</label>
               <div class="controls">
                 <input type="text" name="lastName" id="lastName" class="input-xlarge" value="<?=$lastName?>" onchange="trimString(this.id,this.value)" />
                 <font color="#FF0000"><i><div id="lastNamechk"></div></i></font>                
@@ -47,13 +47,13 @@ $address = $cus_data[0]['location'];
                   </div>
               
               <br />
-              <label for="u_fname" class="control-label">รหัสประชาชน :</label>
+              <label for="u_fname" class="control-label">รหัสประชาชน* :</label>
               <div class="controls">
                 <input type="text" name="citizenId" id="citizenId" class="input-xlarge" value="<?=$citizenId?>" maxlength="13" onchange="checkID(this.id,this.value)" onkeyup="numberOrNot(this.id,this.value)" />
                 <font color="#FF0000"><i><div id="citizenIdchk" ></div></i></font>
               </div>
               <br />
-              <label for="u_fname" class="control-label">วัน เดือน ปี เกิด :</label>
+              <label for="u_fname" class="control-label">วัน เดือน ปี เกิด* :</label>
               <div class="controls text_line date" id="dp2" data-date-format="dd/mm/yyyy"> <span class="add-on">
                 <input class="input-xlarge" type="text" id="birthday" name="birthday" readonly="readonly" value="<?=$birthday?>" />
                 </span>
@@ -61,10 +61,10 @@ $address = $cus_data[0]['location'];
               </div>              
             </div>
             <div class="control-group formSep">
-              <label for="u_fname" class="control-label">E-mail</label>
+              <label for="u_fname" class="control-label">E-mail :</label>
               <div class="controls">
                 <input type="text" class="input-xlarge" name="emailCus" id="emailCus" value="<?=$email?>" disabled="disabled" /></div><br />
-              <label for="u_password" class="control-label">Password</label>
+              <label for="u_password" class="control-label">Password :</label>
               <div class="controls">
                 <div class="sepH_b">
                 <a href="#changePW" data-toggle="modal" title="เปลี่ยนรหัสผ่าน" onclick="resetModal()">เปลี่ยนรหัสผ่าน</a>
@@ -72,14 +72,14 @@ $address = $cus_data[0]['location'];
               </div>
             </div>
             <div class="control-group formSep">
-              <label class="control-label">ที่อยู่</label>
+              <label class="control-label">ที่อยู่* :</label>
               <div class="controls">
                 <textarea class="input-xlarge" required="required" name="location" id="location" placeholder="(บ้านเลขที่ ซอย ถนน)"><?=$address?></textarea>
               </div> 
             </div>
             
             <div class="control-group formSep">
-              <label for="u_email" class="control-label">เบอร์โทรศัพท์มือถือ</label>
+              <label for="u_email" class="control-label">เบอร์โทรศัพท์มือถือ* :</label>
               <div class="controls">
                 <input type="text" class="input-xlarge" name="telephone" id="telephone" value="<?=$telephone?>" maxlength="10" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
                 <font color="#FF0000"><i><div id="txtMobilePhonechk" ></div></i></font>

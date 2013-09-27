@@ -165,7 +165,7 @@ $minorTypeId = $minor_data[0]['minorTypeId'];
               </div>
               <br />            
              
-              <label for="email" class="control-label">E-mail</label>
+              <label for="email" class="control-label">E-mail <span class="f_req">*</span></label>
               <div class="controls">
                 <input type="text" name="txtemail" id="txtemail" class="input-xlarge" value="<?=$email?>" />
                 <div class="help-block" id="txtemail_err" style="display:none; color:#C00;">กรุณาป้อน EMail</div>

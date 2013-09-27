@@ -32,32 +32,32 @@
                 <span id="picHelp" class="help-block">ความกว้าง-ยาวของรูป ห้ามมีขนาดเกิน 1024x1024</span> </div>
             </div>
             <div class="control-group formSep">
-              <label for="u_fname" class="control-label">ชื่อจริง :</label>
+              <label for="u_fname" class="control-label">ชื่อจริง* :</label>
               <div class="controls text_line">
                 <input type="text" name="fName" id="fName" class="input-xlarge" value="" onchange="chkThai(this.id,this.value)" />
                 <font color="#FF0000"><i>
                 <div id="fNamechk"></div>
                 </i></font> </div>
               <br />
-              <label for="u_fname" class="control-label">นามสกุล :</label>
+              <label for="u_fname" class="control-label">นามสกุล* :</label>
               <div class="controls">
                 <input type="text" name="lName" id="lName" class="input-xlarge" value="" onchange="chkThai(this.id,this.value)" />
                 <font color="#FF0000"><i>
                 <div id="lNamechk"></div>
                 </i></font> </div>
               <br />
-              <label for="u_fname" class="control-label">วัน เดือน ปี เกิด :</label>
+              <label for="u_fname" class="control-label">วัน เดือน ปี เกิด* :</label>
               <div class="controls date" id="dp2" data-date-format="dd/mm/yyyy"> <span class="add-on">
                 <input class="input-xlarge" type="text" id="birthDay" name="birthDay" readonly="readonly" value="" />
                 </span><span class="help-block">คลิกเพื่อเลือกวันที่จากปฏิทิน</span></div>
               <br />
-              <label for="u_fname" class="control-label">เลขใบขับขี่ :</label>
+              <label for="u_fname" class="control-label">เลขใบขับขี่* :</label>
               <div class="controls">
                 <input type="text" name="dLicense" id="dLicense" class="input-xlarge" value="" onchange="numberOrNot(this.id,this.value)" />
               </div>
             </div>
             <div class="control-group formSep">
-              <label for="u_fname" class="control-label">Username</label>
+              <label for="u_fname" class="control-label">Username* :</label>
               <div class="controls">
                 <input type="text" class="input-xlarge" name="userName" id="userName" value="" maxlength="20" onchange="chkUN(this.id)" />
                 <font color="#006600">
@@ -66,7 +66,7 @@
                 <div id="userNamechk"></div>
                 </i></font> <span id="spanUN" class="help-block">ตัวอักษรภาษาอังกฤษเท่านั้น ความยาวไม่เกิน 20 ตัวอักษร</span> </div>
               <div id="pwChg"> <br />
-                <label for="u_password" class="control-label">Password</label>
+                <label for="u_password" class="control-label">Password* :</label>
                 <div class="controls">
                   <div class="sepH_b">
                     <input type="password" class="input-xlarge" name="u_password" id="u_password" placeholder="ความยาวอย่างน้อย 8 ตัวอักษร" maxlength="20" onchange="chk1stPW(this.id,this.value,8)" />
@@ -80,12 +80,12 @@
               </div>
             </div>
             <div class="control-group formSep">
-              <label class="control-label">ที่อยู่</label>
+              <label class="control-label">ที่อยู่* :</label>
               <div class="controls">
                 <textarea class="input-xlarge" name="txtAddress_add" id="txtAddress" placeholder="(บ้านเลขที่ ซอย ถนน)"></textarea>
               </div>
               <br />
-              <label class="control-label">จังหวัด</label>
+              <label class="control-label">จังหวัด* :</label>
               <div class="controls">
                 <div class="span6">
                   <select name="province_add" id="province">
@@ -104,7 +104,7 @@
               </div>
               <br />
               <br />
-              <label class="control-label">อำเภอ</label>
+              <label class="control-label">อำเภอ* :</label>
               <div class="controls">
                 <div class="span6">
                   <div id="genamphur">
@@ -116,7 +116,7 @@
               </div>
               <br />
               <br />
-              <label class="control-label">ตำบล</label>
+              <label class="control-label">ตำบล* :</label>
               <div class="controls">
                 <div class="span6">
                   <div id="gendistrict">
@@ -128,14 +128,14 @@
               </div>
               <br />
               <br />
-              <label class="control-label">รหัสไปรษณีย์</label>
+              <label class="control-label">รหัสไปรษณีย์* :</label>
               <div class="controls">
                 <input type="text" name="txtZipcode_add" id="txtZipcode" maxlength="5" class="input-xlarge" value="" onchange="numberOrNot(this.id,this.value,'รหัสไปรษณีย์ไม่ถูกต้อง')" />
                 <font color="#FF0000"><i>
                 <div id="txtZipcodechk" ></div>
                 </i></font> </div>
               <br />
-              <label for="u_email" class="control-label">เบอร์โทรศัพท์มือถือ</label>
+              <label for="u_email" class="control-label">เบอร์โทรศัพท์มือถือ* :</label>
               <div class="controls">
                 <input type="text" class="input-xlarge" name="txtMobilePhone" id="txtMobilePhone" value="" maxlength="10" onchange="mobOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
                 <font color="#FF0000"><i>
@@ -548,12 +548,8 @@ function telOrNot(id,number){
 <script src="js/jquery.actual.min.js"></script> 
 <!-- js cookie plugin --> 
 <script src="js/jquery.cookie.min.js"></script> 
-<!-- main bootstrap js --> 
-<script src="bootstrap/js/bootstrap.min.js"></script> 
 <!-- tooltips --> 
 <script src="lib/qtip2/jquery.qtip.min.js"></script> 
-<!-- jBreadcrumbs --> 
-<script src="lib/jBreadcrumbs/js/jquery.jBreadCrumb.1.1.min.js"></script> 
 <!-- sticky messages --> 
 <script src="lib/sticky/sticky.min.js"></script> 
 <!-- fix for ios orientation change --> 
@@ -563,8 +559,6 @@ function telOrNot(id,number){
 <script src="lib/antiscroll/jquery-mousewheel.js"></script> 
 <!-- lightbox --> 
 <script src="lib/colorbox/jquery.colorbox.min.js"></script> 
-<!-- common functions --> 
-<script src="js/gebo_common.js"></script> 
 
 <!-- validation --> 
 <script src="lib/validation/jquery.validate.min.js"></script> 

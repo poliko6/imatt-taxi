@@ -1,30 +1,4 @@
 <?
-/*
-act	saveedit
-amphur_add	1
-callback	jQuery181017730965046212077_1378446816806
-district_add	1
-engName	Taxi Blue Ocean Deepblue Green Yellow Orange Red Company
-garageId	1
-managerName	ManyColorful Color
-menu	main_user
-p	user.profile
-province_add	1
-radMjtype	supervisor
-shortName	superv
-thName	บริษัทแท๊กซี่สีฟ้าครามน้ำเงินเขียวเหลืองแสดแดง
-txtAddress_add	521
-txtCallcenter	1711
-txtEmail	taxiwithsomanycolor@taxi.com
-txtFax	-
-txtMobilePhone	0874451245
-txtTel	021547895
-txtZipcode_add	10100
-typeBus	Supervisor
-*/
-
-    require_once '../../../../include/Zend/JSON.php';
-    $json = new Services_JSON();
 	
 	include("../../../../include/class.mysqldb.php");
 	include("../../../../include/config.inc.php");
@@ -86,8 +60,7 @@ $dataMJ = array(
 $udMJ = update_db('majoradmin', array('garageId = '=>$garageId), $dataMJ);
 mysql_query($udMJ) or die ("Can't insert user");
 
-	$data['success'] = true;
-	$data['message'] = "บันทึกการแก้ไขข้อมูลเรียบร้อยแล้ว";
-
-echo $_GET['callback'].'('.$json->encode($data).')';
 ?>
+<SCRIPT language="JavaScript">
+	window.location="../../../../index.php?p=user.profile&menu=main_user&sav=yes";
+</SCRIPT>

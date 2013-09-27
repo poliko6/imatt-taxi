@@ -15,28 +15,28 @@ $address = $cus_data[0]['location'];
   <div class="span12">
     <h3 class="heading">แก้ไขข้อมูล</h3>
     <div class="row-fluid">
-        <form id="profileEdit" class="form-horizontal form_validation_ttip" action="" method="post">
+        <form id="profileEdit" class="form-horizontal form_validation_ttip" action="modules/mod_user/profile/JSON/customer.profile.saveEdit.php" method="post">
          
             <div class="control-group formSep">
-              <label for="u_fname" class="control-label">ชื่อจริง :</label>
+              <label for="u_fname" class="control-label">ชื่อจริง* :</label>
               <div class="controls text_line">
                 <input type="text" id="firstName" name="firstName" class="input-xlarge" value="<?=$firstName?>" onchange="trimString(this.id,this.value)" />
                 <font color="#FF0000"><i><div id="firstNamechk"></div></i></font> 
               </div>
               <br />
-              <label for="u_fname" class="control-label">นามสกุล :</label>
+              <label for="u_fname" class="control-label">นามสกุล* :</label>
               <div class="controls">
                 <input type="text" name="lastName" id="lastName" class="input-xlarge" value="<?=$lastName?>" onchange="trimString(this.id,this.value)" />
                 <font color="#FF0000"><i><div id="lastNamechk"></div></i></font>                
               </div>
               <br />
-              <label for="u_fname" class="control-label">รหัสประชาชน :</label>
+              <label for="u_fname" class="control-label">รหัสประชาชน* :</label>
               <div class="controls">
                 <input type="text" name="citizenId" id="citizenId" class="input-xlarge" value="<?=$citizenId?>" maxlength="13" onchange="checkID(this.id,this.value)" onkeyup="numberOrNot(this.id,this.value)" />
                 <font color="#FF0000"><i><div id="citizenIdchk" ></div></i></font>
               </div>
               <br />
-              <label for="u_fname" class="control-label">วัน เดือน ปี เกิด :</label>
+              <label for="u_fname" class="control-label">วัน เดือน ปี เกิด* :</label>
               <div class="controls text_line date" id="dp2" data-date-format="dd/mm/yyyy"> <span class="add-on">
                 <input class="input-xlarge" type="text" id="birthday" name="birthday" readonly="readonly" value="<?=$birthday?>" />
                 </span>
@@ -55,23 +55,23 @@ $address = $cus_data[0]['location'];
               </div>
             </div>
             <div class="control-group formSep">
-              <label class="control-label">ที่อยู่</label>
+              <label class="control-label">ที่อยู่* :</label>
               <div class="controls">
                 <textarea class="input-xlarge" required="required" name="location" id="location" placeholder="(บ้านเลขที่ ซอย ถนน)"><?=$address?></textarea>
               </div> 
             </div>
             
             <div class="control-group formSep">
-              <label for="u_email" class="control-label">เบอร์โทรศัพท์มือถือ</label>
+              <label for="u_email" class="control-label">เบอร์โทรศัพท์มือถือ* :</label>
               <div class="controls">
-                <input type="text" class="input-xlarge" name="telephone" id="telephone" value="<?=$telephone?>" maxlength="10" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
+                <input type="text" class="input-xlarge" name="telephone_profile" id="telephone" value="<?=$telephone?>" maxlength="10" onchange="numberOrNot(this.id,this.value,'กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่')" />
                 <font color="#FF0000"><i><div id="txtMobilePhonechk" ></div></i></font>
               </div>
             </div>
             
             <div class="control-group">
               <div class="controls">
-                <button class="btn btn-gebo" type="button" onclick="saveEdit()">บันทึกการเพิ่มข้อมูล</button>
+                <button class="btn btn-gebo" type="submit">บันทึกการเพิ่มข้อมูล</button>
 				<input type="button" class="btn" value="ยกเลิก" onclick="reloadPage()" />
                 </div>
             </div>
@@ -243,14 +243,38 @@ function checkID(tagid,id) {
 //ตรวจว่าป้อนถูกตามรูปแบบที่กำหนดมั้ย x-xxxx-xxxxx-xx-x
 	var temp;
  	if(id.length != 13) 
+	{
  		$('#'+tagid+'chk').text("รหัสบัตรประชาชนไม่ถูกต้อง");
+		$('#'+tagid+'').val("");
+	}
 	for(i=0, sum=0; i < 12; i++)
 		sum += parseFloat(id.charAt(i))*(13-i); 
 	if((11-sum%11)%10!=parseFloat(id.charAt(12)))
  		$('#'+tagid+'chk').text("รหัสบัตรประชาชนไม่ถูกต้อง");
 	else
-	{	
- 		$('#'+tagid+'chk').text("");		
+	{			
+		jQuery.ajax({
+			url :'modules/mod_user/customer/JSON/customer.add.chkCitizenId.php',
+			type : 'GET',
+			data : 'citizenId='+id+'',
+			dataType: 'jsonp',
+			dataCharset: 'jsonp',
+			success: function (data){
+				console.log(data.status);
+				console.log(data.exist);
+				if(data.exist==true)
+				{
+					$('#'+tagid+'chk').attr("style","color:#333333");
+					$('#'+tagid+'chk').html(data.response);
+					$('#'+tagid+'').val("");
+				}
+				else if(data.exist==false)
+				{
+					$('#'+tagid+'').val($('#'+tagid+'').val());	
+					$('#'+tagid+'chk').text("");
+				}
+			}		
+		});		
 	}
 }
 
