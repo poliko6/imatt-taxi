@@ -14,12 +14,17 @@ switch ($act) {
 		break;
 	
 	case 'selecttaxi':
+		
+		$invID = str_pad($customerId, 4, '0', STR_PAD_LEFT);
+		$genCode = 'G'.$invID.createRandomPassword();
+	
 		$TableName = 'driverhistory';
 		$data = array(
 			'mobileId'=>trim($mobileId),
 			'carId'=>trim($carId),			
 			'driverId'=>trim($driverId),
 			'garageId'=>trim($garageId),
+			'generateCode'=>trim($genCode),
 			'statusWork'=>'4',
 			'driveTime'=>date('Y-m-d H:i:s')
 		);

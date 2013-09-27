@@ -140,16 +140,16 @@
 		}		
 	}
 	
-	if ($garageId != ''){
-		if ( $sWhere == "" )
-		{
-			$sWhere = "WHERE statusWork != '7' AND statusWork != '5' AND  statusWork != '6' AND  statusWork != '99' AND  statusWork != '88'";
-		}
-		else
-		{
-			$sWhere .= " AND statusWork != '7' AND statusWork != '5' AND  statusWork != '6' AND  statusWork != '99' AND  statusWork != '88'";
-		}
-	} 
+
+	if ( $sWhere == "" )
+	{
+		$sWhere = "WHERE statusWork != '7' AND statusWork != '5' AND  statusWork != '6' AND  statusWork != '99' AND  statusWork != '88'";
+	}
+	else
+	{
+		$sWhere .= " AND statusWork != '7' AND statusWork != '5' AND  statusWork != '6' AND  statusWork != '99' AND  statusWork != '88'";
+	}
+ 
 	
 	
 	/*

@@ -5,7 +5,7 @@
 			FROM transportsection
 			JOIN mobile ON mobile.mobileId = transportsection.mobileId
 			JOIN car ON car.carId = car.carId
-			WHERE transportsection.statusWork = 'online'  AND car.carStatusId = 1";
+			WHERE transportsection.statusWork = 'online' AND car.carStatusId = 1";
 	$result = mysql_query($sql);
 	
 	$arr_distance = array();
