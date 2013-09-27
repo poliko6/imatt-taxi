@@ -226,11 +226,11 @@ function createMarker(name,address, latlng,v_post,v_kind,pic,lat,lng,id) {
 
 	shadow=iconshadow;
 
-	if(v_kind==1){ /* แดง  ไม่มีลูกค้า รถวิ่ง  */
+	if(v_kind==1) { /* แดง ไม่มีลูกค้า รถวิ่ง  */
 		image=c_red;
-	}else if(v_kind==2){ /* เขียว มีลูกค้า รถวิ่ง  */
+	}else if(v_kind==2) { /* เขียว มีลูกค้า รถวิ่ง  */
 		image=c_green;
-	}else if(v_kind==3){ /*  เหลือง  จอด  */
+	} else if (v_kind==3) { /*  เหลือง  จอด  */
 		image=c_yellow;
 	}
 

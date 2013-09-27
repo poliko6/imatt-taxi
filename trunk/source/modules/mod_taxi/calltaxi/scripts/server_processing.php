@@ -143,16 +143,31 @@
 	if ($garageId != ''){
 		if ( $sWhere == "" )
 		{
-			$sWhere = "WHERE statusWork = 'wait' OR  statusWork = 'waitselect'";
+			$sWhere = "WHERE statusWork != '7' AND statusWork != '5' AND  statusWork != '6' AND  statusWork != '99' AND  statusWork != '88'";
 		}
 		else
 		{
-			$sWhere .= " AND statusWork = 'wait' OR  statusWork = 'waitselect'";
+			$sWhere .= " AND statusWork != '7' AND statusWork != '5' AND  statusWork != '6' AND  statusWork != '99' AND  statusWork != '88'";
 		}
 	} 
 	
 	
-	
+	/*
+	===============================
+	อธิบาย ความหมายของ flag 
+	===============================
+	table likit_cust_select_car
+	flag = 1     หมายถึง   ลูกค้าแจ้งเข้ามา ว่าต้องการ รถแท๊กซี่
+	flag = ว่าง    หมายถึง   ลูกค้า เมื่อได้รับ หน้าจอ มีรถให้เลือก 10 คัน และลูกค้าตอบ "ไม่เลือกรถใดๆ" //ให้ไปที่ 99
+	flag = 2     หมายถึง   ลูกค้า เมื่อได้รับ หน้าจอ มีรถให้เลือก 10 คัน และลูกค้าตอบ "ให้บริษัทเลือกรถให้"
+	flag = 3     หมายถึง   call center ส่งรถให้ ลูกค้า
+	flag = 4     หมายถึง   ลูกค้า เมื่อได้รับ หน้าจอ มีรถให้เลือก 10 คัน และลูกค้าตอบ "เลือกรถแท๊กซี่ 1 คัน ที่จะให้มารับ" 
+	flag = 5     หมายถึง   ลูกค้า ขึ้นรถ
+	flag = 6     หมายถึง   ลูกค้า ลงรถ
+	flag = 7     หมายถึง   คนขับรับงาน
+	flag = 99    หมายถึง   ลูกค้า ยกเลิก
+	flag = 88    หมายถึง   แท๊กซี่ ยกเลิก
+	*/
 	
 	/*
 	 * SQL queries
@@ -232,13 +247,23 @@
 			}
 			
 			if ( $aColumns[$i] == "statusWork" ){
-				if ( $aRow['statusWork'] == 'wait' ){
+				if ( $aRow['statusWork'] == '1' ){
+					$set_text = "<div style=\"color:#090;\">เรียกแท๊กซี่</div>";			
+				}				
+				if ( $aRow['statusWork'] == '' ){
 					$set_text = "<div style=\"color:#090;\">กำลังเลือกแท๊กซี่</div>";			
+				} 																
+				if ( $aRow['statusWork'] == '2' ){
+					$set_text = "<div style=\"color:#C00;\">ให้บริษัทเลือกรถให้</div>";			
+				} 
+				if ( $aRow['statusWork'] == '3' ){
+					$set_text = "<div style=\"color:#060;\">ส่งรถให้ลูกค้า</div>";			
+				} 
+				if ( $aRow['statusWork'] == '4' ){
+					$set_text = "<div style=\"color:#666;\">เลือกรถแท๊กซี่แล้ว</div>";			
 				} 
 				
-				if ( $aRow['statusWork'] == 'waitselect' ){
-					$set_text = "<div style=\"color:#C00;\">รอให้เลือกแท๊กซี่ให้</div>";			
-				}
+
 				$row[5] = $set_text."<div style=\"font-style:italic; color:#999; font-size:12px;\">".$aRow['generateCode']."</div>";
 			}
 			
@@ -247,7 +272,7 @@
 			{
 				$set_tools = " <a href=\"#\" class=\"show_on_map btn btn-gebo btn-mini\" onclick=\"showCustomer('".$aRow['customerId']."','".$aRow['startLatitude']."','".$aRow['startLongitude']."','".$aRow['historyId']."');\">ดูตำแหน่ง</a> ";
 				
-				if ($aRow['statusWork'] == 'waitselect' ){
+				if ($aRow['statusWork'] == '2' ){
 					$set_tools .= " <a href=\"#\" class=\"show_on_map btn btn-warning btn-mini\" onclick=\"callTaxi('".$aRow['customerId']."','".$aRow['startLatitude']."','".$aRow['startLongitude']."','".$aRow['historyId']."');\">เลือกแท๊กซี่</a> ";	
 				} 
 				

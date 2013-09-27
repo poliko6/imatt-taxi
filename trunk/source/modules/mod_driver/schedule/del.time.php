@@ -21,6 +21,14 @@
 	$TableName = 'transportsection';
 	$sql = delete_db($TableName, array('transportSectionId='=>$id));
 	$rs = mysql_query($sql);
+	
+	$TableName = 'car';
+	$data = array(
+		'carStatus'=>1,
+		'dateUpdate'=>date('Y-m-d H:i:s')
+	);
+	$sql = update_db($TableName, array('carId='=>$carId), $data);
+	$rs = mysql_query($sql);
 
 	if ($rs){	
 		

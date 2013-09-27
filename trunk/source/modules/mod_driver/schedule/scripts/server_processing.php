@@ -294,11 +294,11 @@
 				$set_tools = '';
 				if ($aRow['statusWork'] == 'online') {                            	
 					$set_tools .= "<div style=\"float:left; margin-right:5px;\">";
-					$set_tools .= "<a href=\"#\" class=\"ttip_t\" data-toggle=\"modal\" data-backdrop=\"static\" title=\"ออกจากงาน\" onclick=\"fn_formEdit(".$aRow['transportSectionId'].", 'select');\"><i class=\"splashy-warning\"></i></a>";
+					$set_tools .= "<a href=\"#\" class=\"ttip_t\" data-toggle=\"modal\" data-backdrop=\"static\" title=\"ออกจากงาน\" onclick=\"fn_formEdit(".$aRow['transportSectionId'].",".$aRow['carId'].", 'select');\"><i class=\"splashy-warning\"></i></a>";
 					$set_tools .= "</div>";
 				} 
 				$set_tools .= "<div style=\"float:left;\">";
-				$set_tools .= "<a style=\"cursor:pointer;margin-left:5px;\" class=\"ttip_t\" title=\"ยกเลิก\" onClick=\"fn_callDel(".$aRow[ $aColumns[$i] ].",'".$aRow['firstName']." ".$aRow['lastName']."')\" ><i class=\"splashy-remove\"></i></a>";
+				$set_tools .= "<a style=\"cursor:pointer;margin-left:5px;\" class=\"ttip_t\" title=\"ยกเลิก\" onClick=\"fn_callDel(".$aRow[ $aColumns[$i] ].",".$aRow['carId'].",'".$aRow['firstName']." ".$aRow['lastName']."')\" ><i class=\"splashy-remove\"></i></a>";
 				$row[8] = $set_tools;
 			}			
 		}

@@ -408,7 +408,7 @@ if (empty($current_page)){ $current_page = 0;}
 	});
 	
 	
-	function fn_callDel(id,text){
+	function fn_callDel(id,carId,text){
 		//console.log(id+' '+text);
 		$('#transportSectionId_del').val(id);
 		$('#drivername').text(text);
@@ -422,7 +422,7 @@ if (empty($current_page)){ $current_page = 0;}
 		jQuery.ajax({			
 			url :'modules/mod_driver/schedule/del.time.php',
 			type: 'GET',
-			data: 'act=del&id='+id+'',
+			data: 'act=del&id='+id+'&carId='+carId+'',
 			dataType: 'jsonp',
 			dataCharset: 'jsonp',
 			success: function (data){
@@ -439,7 +439,7 @@ if (empty($current_page)){ $current_page = 0;}
 	}
 	
 	
-	function fn_formEdit(id,process){
+	function fn_formEdit(id,carId,process){
 		//console.log(id);
 		
 		if (process == 'select') {
@@ -471,7 +471,7 @@ if (empty($current_page)){ $current_page = 0;}
 				jQuery.ajax({
 					url :'modules/mod_driver/schedule/edit.time.php',
 					type: 'GET',
-					data: 'act=update&id='+id+'&detail='+$('textarea#detail').val()+'',
+					data: 'act=update&id='+id+'&detail='+$('textarea#detail').val()+'&carId='+carId+'',
 					dataType: 'jsonp',
 					dataCharset: 'jsonp',
 					success: function (data){

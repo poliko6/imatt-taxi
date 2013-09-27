@@ -28,6 +28,15 @@
 	$sql = update_db($TableName, array('transportSectionId='=>$id), $data);
 	$rs = mysql_query($sql);
 	
+	
+	$TableName = 'car';
+	$data = array(
+		'carStatus'=>3,
+		'dateUpdate'=>date('Y-m-d H:i:s')
+	);
+	$sql = update_db($TableName, array('carId='=>$carId), $data);
+	$rs = mysql_query($sql);
+	
 	if($rs){
 				
 		$data['success'] = true;

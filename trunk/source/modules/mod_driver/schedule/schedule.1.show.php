@@ -55,6 +55,16 @@
 			mysql_query($sql);	
 			//echo $sql;
 			
+			
+			$TableName = 'car';
+			$data = array(
+				'carStatus'=>1,
+				'dateUpdate'=>date('Y-m-d H:i:s')
+			);
+			$sql = update_db($TableName, array('carId='=>$thiscarId), $data);
+			$rs = mysql_query($sql);
+			
+
 			$message = "ลงเวลางานพนักงานเรียบร้อยแล้วค่ะ";
 			
 			?>
