@@ -227,7 +227,7 @@
 		$row = array();
 		for($i=0;$i<count($aColumns);$i++)
 		{
-			$row[0] = $iDisplayStart + $num;
+			$row[0] = $_REQUEST['iDisplayStart'] + $num;
 					
 			if($aColumns[$i] == 'firstName')
 			{
