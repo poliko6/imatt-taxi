@@ -31,23 +31,23 @@
                         <input type="hidden" name="time_ready_tmp" value="<?=$time_ready?>" /> &nbsp; วินาที                     
                     </div>
                 </div>
-                
+
                 <div class="control-group">
-                    <label class="control-label">เวลาสถานะไม่ว่าง (Working) </label>
-                    <div class="controls">   
-                    	<input type="text" name="time_working" id="time_working_edit" class="span2" value="<?=$time_working?>"  />                      
-                        <input type="hidden" name="time_working_tmp"  value="<?=$time_working?>"  /> &nbsp; วินาที                     
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <label class="control-label">เวลาสถานะไม่ว่าง (Order job) </label>
+                    <label class="control-label">เวลาสถานะกำลังไปรับงาน (Order job) </label>
                     <div class="controls">    
                     	<input type="text" name="time_orderjob" id="time_orderjob_edit" class="span2" value="<?=$time_orderjob?>"  />                     
                         <input type="hidden" name="time_orderjob_tmp" value="<?=$time_orderjob?>" /> &nbsp; วินาที                     
                     </div>
                 </div>
                 
+                <div class="control-group">
+                    <label class="control-label">เวลาสถานะกำลังทำงาน (Working) </label>
+                    <div class="controls">   
+                    	<input type="text" name="time_working" id="time_working_edit" class="span2" value="<?=$time_working?>"  />                      
+                        <input type="hidden" name="time_working_tmp"  value="<?=$time_working?>"  /> &nbsp; วินาที                     
+                    </div>
+                </div>
+                                
                 <div class="control-group">
                     <label class="control-label">เวลาสถานะอื่นๆ  (Other) </label>
                     <div class="controls">      
