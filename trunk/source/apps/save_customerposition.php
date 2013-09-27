@@ -1,12 +1,14 @@
 <?php
-include("../include/db_connect");
-$conn = mysql_connect("$gaSql[server] ", "$gaSql[user]", "$gaSql[password]");
-mysql_select_db("$gaSql[db]", $conn);
+include("../include/db_connect.php");
+include ('class.function.php');
+$conn = mysql_connect($gaSql['server'], $gaSql['user'], $gaSql['password']);
+mysql_select_db($gaSql['db'], $conn);
+mysql_query("SET NAMES 'utf8'");
 
 $customerId = trim($_REQUEST["customerId"]);
 $latitude = trim($_REQUEST["lat"]);
 $longitude = trim($_REQUEST["lon"]);
-
+$time = trim($_REQUEST["time"]);
 
 $total = 0;
 $sqlSelect = "SELECT COUNT(*) AS total FROM customer WHERE customerId='$customerId'";
@@ -29,7 +31,7 @@ if ($total != 0) {
 		}
 		
 	} else {
-		$sql = "INSERT INTO customermap (customerId,latitudeCustomer,longitudeCustomer) VALUES ('$customerId','$latitude','$longitude')";
+		$sql = "INSERT INTO customermap (customerId,latitudeCustomer,longitudeCustomer,timeGPS) VALUES ('$customerId','$latitude','$longitude','$time')";
 		mysql_query($sql, $conn);
 
 		$iresult["code"] = "200";

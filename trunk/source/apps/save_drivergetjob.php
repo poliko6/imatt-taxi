@@ -23,7 +23,8 @@ if (($driverId == '')) {
 	
 	//Update driverhistory Data
 	$sql_status = "UPDATE driverhistory ";
-	$sql_status .= "SET statusWork = '7' ";
+	$sql_status .= "SET statusWork = '7', ";
+	$sql_status .= "driveTime = '".date('Y-m-d H:i:s')."' ";
 	$sql_status .= "WHERE historyId='".$row['historyId']."'";
 	mysql_query($sql_status);	
 	//echo $sql_status;

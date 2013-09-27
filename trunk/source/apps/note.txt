@@ -22,7 +22,3 @@ table car จะมี carStatusId ดังนี้
 4 = มีการเลือกรถ จากลูกค้า
 5 = มีการเลือกรถ จาก Call center
 */
-
-
-ลูกค้าเรียกแท๊กซี่จากมือถือ
-http://localhost/imattio/imatt-taxi/source/apps/save_customercalltaxi?customerId=1&tat=18.031406&lon=99.023514
