@@ -214,7 +214,7 @@
 			
 			//print_r($aColumns[$i]);
 			
-			$row[0] = $n+$iDisplayStart;
+			$row[0] = $n+$_REQUEST['iDisplayStart'];
 	
 			
 			if ($aColumns[$i] == "customer.firstName"){
